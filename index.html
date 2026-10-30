@@ -253,6 +253,13 @@ body.ms-dragging,body.ms-dragging *{cursor:grabbing!important;user-select:none}
 .feat-tw .ic{width:14px;height:14px;transform:rotate(-90deg);transition:transform .15s}
 .feat-tw.is-open .ic{transform:none}
 .feat-tw-pad{flex:none;width:14px}
+.feat-eye{flex:none;width:24px;height:24px;display:grid;place-items:center;border:0;background:transparent;color:var(--muted);border-radius:6px;padding:0;opacity:0;transition:opacity .12s}
+.feat-eye .ic{width:15px;height:15px}
+.fi:hover .feat-eye,.fi:focus-within .feat-eye,.fi.is-hid .feat-eye{opacity:1}
+.feat-eye:hover{color:var(--text);background:var(--panel-2)}
+.fi.is-hid>.feat,.fi.is-hid-up>.feat{opacity:.45}
+.fi.is-hid .feat-name{text-decoration:line-through;text-decoration-color:color-mix(in srgb, var(--muted) 60%, transparent)}
+@media (hover:none){.feat-eye{opacity:.7}}
 .feat-kids{font:600 10.5px var(--f-mono);color:var(--accent);background:var(--accent-weak);border-radius:20px;padding:0 6px;flex:none}
 .feat.drop-into-feat{box-shadow:inset 0 0 0 2px #ffb300;background:color-mix(in srgb, #ffb300 14%, transparent)}
 .sub-field select{width:100%}
@@ -3671,6 +3678,14 @@ ru: { 'sub.count': ['Содержит {n} объект', 'Содержит {n} �
   'sub.drawNow': 'Рисуйте сейчас: объект попадёт в «{name}».', 'sub.nested': ['{n} объект помещён в «{name}»', '{n} объекта помещены в «{name}»', '{n} объектов помещены в «{name}»'], 'sub.toTop': ['{n} объект вынесен на верхний уровень «{name}»', '{n} объекта вынесены на верхний уровень «{name}»', '{n} объектов вынесены на верхний уровень «{name}»'],
   'sub.kept': ['{n} объект внутри остаётся на карте', '{n} объекта внутри остаются на карте', '{n} объектов внутри остаются на карте'], 'sub.cant': 'Сюда нельзя (не в саму себя и не в то, что она содержит).' }
 });
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: { 'fv.hide': 'Hide this on the map', 'fv.show': 'Show this on the map', 'fv.upHidden': 'Hidden because the item it’s inside is hidden' },
+uk: { 'fv.hide': 'Сховати на карті', 'fv.show': 'Показати на карті', 'fv.upHidden': 'Приховано, бо прихований об’єкт, у якому він лежить' },
+pl: { 'fv.hide': 'Ukryj na mapie', 'fv.show': 'Pokaż na mapie', 'fv.upHidden': 'Ukryte, bo ukryty jest obiekt, w którym leży' },
+de: { 'fv.hide': 'Auf der Karte ausblenden', 'fv.show': 'Auf der Karte zeigen', 'fv.upHidden': 'Ausgeblendet, weil das Objekt, in dem es liegt, ausgeblendet ist' },
+fr: { 'fv.hide': 'Masquer sur la carte', 'fv.show': 'Afficher sur la carte', 'fv.upHidden': 'Masqué car l’élément qui le contient est masqué' },
+ru: { 'fv.hide': 'Скрыть на карте', 'fv.show': 'Показать на карте', 'fv.upHidden': 'Скрыто, потому что скрыт объект, в котором оно лежит' }
+});
 
 </script>
 <script>
@@ -5787,13 +5802,14 @@ function getGeom(lyr) {
 const cleanStyle = s => Object.fromEntries(Object.entries(s || {}).filter(([, v]) => v !== null && v !== undefined && !(typeof v === 'number' && isNaN(v))));
 
 function normalizeRec(rec, lr) {
-  const cb = rec.cb || '', osm = typeof rec.osm === 'string' ? rec.osm.slice(0, 40) : '', pf = typeof rec.parentF === 'string' ? rec.parentF.slice(0, 40) : '';
+  const cb = rec.cb || '', osm = typeof rec.osm === 'string' ? rec.osm.slice(0, 40) : '', pf = typeof rec.parentF === 'string' ? rec.parentF.slice(0, 40) : '', hid = rec.hidden === true;
   rec = { id: rec.id || uid(), layerId: lr.id, kind: rec.kind, name: rec.name ?? '', desc: rec.desc ?? '', showLabel: !!rec.showLabel, style: Object.assign(defaultStyle(rec.kind, lr.color), cleanStyle(rec.style)), from: normDate(rec.from), until: normDate(rec.until) };
   if (!rec.from) delete rec.from;
   if (!rec.until) delete rec.until;
   if (cb) rec.cb = cb;                 // who added the shape (shared maps)
   if (osm) rec.osm = osm;              // a settlement fill: the OpenStreetMap outline it was made from
   if (pf && pf !== rec.id) rec.parentF = pf;   // sits inside another shape of the same layer (a sub-item)
+  if (hid) rec.hidden = true;                  // hidden on its own (its eye in the layer list)
   if (rec.style.icon && !S.icons.has(rec.style.icon)) delete rec.style.icon;
   if (rec.style.scale !== undefined) { const v = msNorm(rec.style.scale); if (v === 1 || rec.kind !== 'marker') delete rec.style.scale; else rec.style.scale = v; }
   if (rec.style.dash && !DASHES.includes(rec.style.dash)) delete rec.style.dash;
@@ -5823,6 +5839,26 @@ const featParent = r => { const p = r && r.parentF && feats.get(r.parentF); retu
 function featAncestors(r) { const out = []; let p = featParent(r); while (p && out.length < 50 && !out.includes(p)) { out.push(p); p = featParent(p._pw); } return out; }
 const featKids = r => { const l = getLayer(r.layerId); return l ? l.group.getLayers().filter(f => f._pw && f._pw.parentF === r.id && featParent(f._pw) && featParent(f._pw)._pw.id === r.id) : []; };
 function featDescendants(r) { const out = [], q = [r]; while (q.length && out.length < 5000) { const cur = q.shift(); featKids(cur).forEach(k => { if (!out.includes(k)) { out.push(k); q.push(k._pw); } }); } return out; }
+/* ---------- Hiding single items ----------
+   Each marker or shape has its own eye in the layer list. Hiding one also hides what's inside it.
+   In a map of your own the choice is saved with the map (rec.hidden). In a shared map it's yours only,
+   kept in this browser like the layer eyes; what the map was saved with is the starting point. */
+const FV = { key: '', o: {} };
+const fvisKey = () => 'frontline:fvis:' + S.mapId;
+function fvis() { const k = fvisKey(); if (FV.key !== k) { FV.key = k; try { FV.o = JSON.parse(store.get(k) || '{}'); } catch (e) { FV.o = {}; } } return FV.o; }
+function featHiddenOwn(r) { if (S.mode === 'online') { const o = fvis(); if (r.id in o) return !!o[r.id]; } return !!r.hidden; }
+const featShown = r => !featHiddenOwn(r) && featAncestors(r).every(a => !featHiddenOwn(a._pw));
+// Returns true when the map file itself changed (a map of your own), so the caller commits.
+function setFeatHidden(r, on) {
+  if (S.mode === 'online') {
+    const o = fvis(); if (!!r.hidden === on) delete o[r.id]; else o[r.id] = on;
+    store.set(fvisKey(), JSON.stringify(o)); return false;
+  }
+  if (on) r.hidden = true; else delete r.hidden;
+  return true;
+}
+// Show an item that's been hidden, and anything it sits in.
+function revealFeat(r) { let file = false, any = false; [r, ...featAncestors(r).map(a => a._pw)].forEach(x => { if (featHiddenOwn(x)) { any = true; file = setFeatHidden(x, false) || file; } }); return { any, file }; }
 // Can `fid` be put inside `pid`? Not inside itself or one of its own sub-items.
 const canNestIn = (fid, pid) => { const p = feats.get(pid), f = feats.get(fid); return !!(p && f && fid !== pid && !featAncestors(p._pw).some(a => a._pw.id === fid)); };
 function createFeature(rec, geom) {
@@ -6947,6 +6983,7 @@ document.addEventListener('click', e => {
   e.preventDefault(); e.stopPropagation();
   const l = getLayer(f._pw.layerId);
   if (l && revealLayer(l)) { syncLayerOrder(); renderLayers(); }
+  const rv = revealFeat(f._pw); if (rv.any) { applyTimeFilter(); renderLayers(); if (rv.file) commit(); }
   if (TL.on && !featureAt(f._pw, TL.date)) setTLDate(f._pw.from || addDays(f._pw.until, -1));
   setTool('select'); select(f._pw.id, { zoom: true });
   const ll = f.getLatLng ? f.getLatLng() : f.getBounds().getCenter();
@@ -7287,9 +7324,11 @@ function featRows(fs) {
   const row = (f, d, seen) => {
     const r = f._pw, kids = kidsBy.get(r.id) || [], open = FT.open.has(r.id);
     const lk = lockedBy(r.id), hidden = TL.on && !featureAt(r, TL.date);
+    const own = featHiddenOwn(r), up = !own && !featShown(r);
     const ic = r.kind === 'marker' && r.style.icon && S.icons.get(r.style.icon);
+    const eye = `<button type="button" class="feat-eye" data-feye="${r.id}" aria-pressed="${own}" aria-label="${esc(t(own ? 'fv.show' : 'fv.hide'))}" title="${esc(t(own ? 'fv.show' : up ? 'fv.upHidden' : 'fv.hide'))}">${icon(own ? 'eyeoff' : 'eye')}</button>`;
     const tw = kids.length ? `<button type="button" class="feat-tw ${open ? 'is-open' : ''}" data-ftw="${r.id}" aria-expanded="${open}" aria-label="${esc(t(open ? 'sub.close' : 'sub.open'))}">${icon('chevron')}</button>` : (d ? '<span class="feat-tw-pad"></span>' : '');
-    const self = `<li class="fi ${d ? 'is-sub' : ''}" style="--d:${d}">${tw}<button class="feat ${r.id === selectedId ? 'is-sel' : ''} ${MS.ids.has(r.id) && MS.ids.size > 1 ? 'is-msel' : ''} ${hidden ? 'is-off' : ''}" data-fid="${r.id}"><span class="feat-ico" style="--c:${r.style.color}">${ic ? `<img src="${esc(ic.src)}" alt="">` : KIND_GLYPH[r.kind]}</span><span class="feat-name">${esc(r.name || KIND(r.kind))}</span>${kids.length ? `<span class="feat-kids" title="${esc(tn('sub.count', kids.length))}">${nf(kids.length, 0)}</span>` : ''}${lk ? `<span class="avatar xs" style="--c:${lk.color || userColor(lk.uid)}" title="${esc(t('sync.lockedBy', { name: lk.name || '?' }))}">${esc(initials(lk.name))}</span>` : ''}<span class="feat-meta">${shortMetric(f)}</span></button></li>`;
+    const self = `<li class="fi ${d ? 'is-sub' : ''} ${own ? 'is-hid' : ''} ${up ? 'is-hid-up' : ''}" style="--d:${d}">${tw}<button class="feat ${r.id === selectedId ? 'is-sel' : ''} ${MS.ids.has(r.id) && MS.ids.size > 1 ? 'is-msel' : ''} ${hidden ? 'is-off' : ''}" data-fid="${r.id}"><span class="feat-ico" style="--c:${r.style.color}">${ic ? `<img src="${esc(ic.src)}" alt="">` : KIND_GLYPH[r.kind]}</span><span class="feat-name">${esc(r.name || KIND(r.kind))}</span>${kids.length ? `<span class="feat-kids" title="${esc(tn('sub.count', kids.length))}">${nf(kids.length, 0)}</span>` : ''}${lk ? `<span class="avatar xs" style="--c:${lk.color || userColor(lk.uid)}" title="${esc(t('sync.lockedBy', { name: lk.name || '?' }))}">${esc(initials(lk.name))}</span>` : ''}<span class="feat-meta">${shortMetric(f)}</span></button>${eye}</li>`;
     if (!open || seen.has(r.id)) return self;
     seen.add(r.id);
     return self + kids.map(k => row(k, d + 1, seen)).join('');
@@ -7323,6 +7362,15 @@ function renderLayers() {
 }
 $('#layerList').addEventListener('click', e => {
   if (Date.now() - MS.eatClick < 350) { e.stopPropagation(); return; }   // the end of a drag, not a click
+  const fe = e.target.closest('[data-feye]');
+  if (fe) {
+    // One item's eye: hides it (and what's inside it) on the map.
+    const f = feats.get(fe.dataset.feye); if (!f) return;
+    const on = !featHiddenOwn(f._pw), file = setFeatHidden(f._pw, on);
+    applyTimeFilter(); renderLayers();
+    if (file) commit();
+    return;
+  }
   const tw = e.target.closest('[data-ftw]');
   if (tw) { const id = tw.dataset.ftw; if (FT.open.has(id)) FT.open.delete(id); else FT.open.add(id); renderLayers(); return; }
   const fb = e.target.closest('.feat');
@@ -8759,7 +8807,7 @@ function applyTimeFilter() {
     const lOn = !TL.on || layerAtTree(l, d);
     l.group.getLayers().forEach(f => {
       if (!f._pw) return;
-      const show = lOn && (!TL.on || featureAt(f._pw, d));
+      const show = lOn && (!TL.on || featureAt(f._pw, d)) && featShown(f._pw);
       if (show && !map.hasLayer(f)) map.addLayer(f);
       else if (!show && map.hasLayer(f)) map.removeLayer(f);
       if (show && f._path) f._path.classList.toggle('pw-new', TL.on && f._pw.from === d);
@@ -10489,7 +10537,7 @@ function parseKML(text, fallbackName) {
     const fb = myMapsColor(url), ext = {};
     allOf(pm, 'Data').forEach(d => { const k = d.getAttribute('name'); const v = allOf(d, 'value')[0]; if (k) ext[k] = v ? v.textContent.trim() : ''; });
     const geoms = []; collect(pm, geoms);
-    const showLabel = ext.pw_showLabel === '1', tm = timeOf(pm), when = { from: tm.from, until: tm.until, pwId: ext.pw_id || '', pwParent: ext.pw_parent || '' };
+    const showLabel = ext.pw_showLabel === '1', tm = timeOf(pm), when = { from: tm.from, until: tm.until, pwId: ext.pw_id || '', pwParent: ext.pw_parent || '', ...(kidText(pm, 'visibility') === '0' ? { hidden: true } : {}) };
     return geoms.map(gm => ({ ...when, ...one(gm) }));
     function one(gm) {
       if (gm.t === 'point') {
@@ -10889,7 +10937,7 @@ function toKML(onlyLayerIds, assets, nest = !!assets) {
       }
       if (f.showLabel && f.kind !== 'marker' && f.kind !== 'label') ext.pw_showLabel = '1';
       const extXml = Object.keys(ext).length ? `<ExtendedData>${Object.entries(ext).map(([k, v]) => `<Data name="${k}"><value>${xesc(v)}</value></Data>`).join('')}</ExtendedData>` : '';
-      return `<Placemark><name>${xesc(f.name || KIND(f.kind))}</name>${f.desc ? `<description>${cdata(f.desc)}</description>` : ''}${span(f.from, f.until)}<styleUrl>${sid}</styleUrl>${extXml}${geom}</Placemark>`;
+      return `<Placemark><name>${xesc(f.name || KIND(f.kind))}</name>${f.hidden ? '<visibility>0</visibility>' : ''}${f.desc ? `<description>${cdata(f.desc)}</description>` : ''}${span(f.from, f.until)}<styleUrl>${sid}</styleUrl>${extXml}${geom}</Placemark>`;
     }).join('\n');
     const own = `<Folder><name>${xesc(nest ? l.name : pathName(l))}</name>${l.visible ? '' : '<visibility>0</visibility>'}${span(l.from, l.until)}\n${pms}`;
     const kids = p.layers.filter(x => x.parent === l.id && wanted.has(x.id)).map(folderOf);
@@ -12199,6 +12247,7 @@ function renderMapResults(q) {
 function goFeature(f) {
   const r = f._pw, l = getLayer(r.layerId);
   if (l && revealLayer(l)) { syncLayerOrder(); renderLayers(); }
+  const rv = revealFeat(r); if (rv.any) { applyTimeFilter(); renderLayers(); if (rv.file) commit(); }
   if (TL.on && !featureAt(r, TL.date)) setTLDate(r.from || addDays(r.until, -1));
   zoomTo(f); select(r.id);
 }
