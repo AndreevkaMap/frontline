@@ -6,7 +6,16 @@ window.FA_SITE = {
   // Firebase web config: turns on publishing, share links, embeds and live editing.
   // Paste the firebaseConfig object from Firebase (Project settings → Your apps → Web), e.g.
   // firebase: { apiKey: "AIza...", authDomain: "...firebaseapp.com", databaseURL: "https://...firebasedatabase.app", projectId: "...", appId: "1:...:web:..." },
-  firebase: null,
+  firebase: {
+     apiKey: "AIzaSyBxbHXc4VMVmLx2GX4UL55XVeOIp0K3--s",
+    authDomain: "andreevka-map.firebaseapp.com",
+    databaseURL: "https://andreevka-map-default-rtdb.firebaseio.com",
+    projectId: "andreevka-map",
+    storageBucket: "andreevka-map.firebasestorage.app",
+    messagingSenderId: "442405426413",
+    appId: "1:442405426413:web:f604480fe7215707c128e4",
+    measurementId: "G-E23S6605HR"
+  },
 
   // Google API key for Google satellite, offered to every visitor (restrict it to your site's address).
   googleKey: '',
