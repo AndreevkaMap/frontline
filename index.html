@@ -196,7 +196,7 @@ body.readonly .desc-view:hover{background:transparent}
 #layerList{display:flex;flex-direction:column;gap:8px;padding-bottom:18px}
 .lyr{border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
 .lyr.is-active{border-color:color-mix(in srgb, var(--accent) 55%, var(--line));background:color-mix(in srgb, var(--accent-weak) 45%, var(--panel))}
-.lyr.is-hidden .feat-list,.lyr.is-hidden .lyr-name{opacity:.5}
+.lyr.is-hidden>.feat-list,.lyr.is-hidden>.lyr-head .lyr-name{opacity:.5}
 .lyr-head{display:flex;align-items:center;gap:2px;padding:4px 4px 4px 2px}
 .lyr-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);background:var(--c);margin:0 6px 0 2px;padding:0;flex:none}
 .lyr-name{flex:1;min-width:0;display:flex;align-items:center;gap:8px;border:0;background:transparent;text-align:left;padding:6px 2px;font-weight:600}
@@ -204,8 +204,8 @@ body.readonly .desc-view:hover{background:transparent}
 .lyr-count{font:500 11.5px var(--f-mono);color:var(--muted);background:var(--panel-2);border-radius:20px;padding:1px 7px;flex:none}
 .lyr-active-note{font-size:11.5px;color:var(--accent);padding:0 10px 4px 32px;font-weight:600;margin-top:-4px}
 .lyr .chev{display:inline-grid;transition:transform .15s}
-.lyr.is-collapsed .chev{transform:rotate(-90deg)}
-.lyr.is-collapsed .feat-list{display:none}
+.lyr.is-collapsed>.lyr-head .chev{transform:rotate(-90deg)}
+.lyr.is-collapsed>.feat-list{display:none}
 .feat-list{list-style:none;margin:0;padding:0 4px 6px;display:flex;flex-direction:column;max-height:420px;overflow-y:auto}
 .feat{width:100%;display:flex;align-items:center;gap:8px;border:0;background:transparent;border-radius:7px;padding:5px 8px;text-align:left}
 .feat:hover{background:var(--panel-2)}
@@ -225,6 +225,13 @@ body.dropping #layerList .feat:hover{box-shadow:inset 0 0 0 1.5px #ffb300}
 .lyr.drop-before{box-shadow:0 -3px 0 0 #ffb300}
 .lyr.drop-after{box-shadow:0 3px 0 0 #ffb300}
 .lyr.is-dragged{opacity:.45}
+.lyr-kids{display:flex;flex-direction:column;gap:6px;margin:2px 6px 6px 14px;padding-left:8px;border-left:2px solid color-mix(in srgb, var(--line) 80%, transparent)}
+.lyr.is-sub{background:color-mix(in srgb, var(--panel-2) 55%, var(--panel))}
+.lyr.is-sub .lyr-head{padding-top:2px;padding-bottom:2px}
+.lyr.is-collapsed>.lyr-kids{display:none}
+.lyr.is-hidden>.lyr-kids{opacity:.55}
+.lyr-subn{display:inline-flex;align-items:center;gap:2px;font:500 11px var(--f-mono);color:var(--muted);flex:none}
+.lyr-subn .ic{width:12px;height:12px}
 body.ms-dragging,body.ms-dragging *{cursor:grabbing!important;user-select:none}
 .drag-ghost{position:fixed;z-index:3000;pointer-events:none;background:#ffb300;color:#1a1300;font:600 12px var(--f-ui);padding:4px 10px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.4);white-space:nowrap}
 .ms-band{position:fixed;z-index:2999;pointer-events:none;border:1.5px solid #ffb300;background:rgba(255,179,0,.12);border-radius:3px}
@@ -603,7 +610,7 @@ body.np-meta .desc-view:hover{background:transparent}
 .two input[type=date]{width:100%;min-width:0;border:1px solid var(--line);background:var(--panel-2);border-radius:7px;padding:6px 8px}
 .lyr-tag{display:inline-grid;color:var(--muted);flex:none}
 .lyr-tag .ic{width:14px;height:14px}
-.lyr.is-off .lyr-name,.feat.is-off{opacity:.42}
+.lyr.is-off>.lyr-head .lyr-name,.feat.is-off{opacity:.42}
 .feat.is-off .feat-name{text-decoration:line-through;text-decoration-color:color-mix(in srgb, var(--muted) 60%, transparent)}
 .feat-ico img{width:16px;height:16px;object-fit:contain}
 .danger-link{color:var(--danger)}
@@ -3601,6 +3608,20 @@ ru: { 'mf.bdCityDist': 'Районы городов', 'mf.bdCityDistHelp': 'Ра
   'pl.busy': 'Серверы карты заняты: часть границ ещё не загрузилась.', 'pl.retryIn': 'Повтор через {n} с', 'pl.retrying': 'Пробую снова…', 'pl.retryNow': 'Попробовать сейчас',
   'stl.suburb': 'Район', 'stl.quarter': 'Квартал', 'stl.neighbourhood': 'Микрорайон', 'stl.microdistrict': 'Микрорайон', 'stl.qlayer': 'Микрорайоны' }
 });
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: { 'ms.dragLayer': 'Drag to reorder layers, or onto the middle of another layer to put it inside as a sub-layer', 'lyr.addSub': 'Add sub-layer', 'lyr.unnest': 'Move out of “{name}”',
+  'lyr.subCount': ['{n} sub-layer', '{n} sub-layers'], 'lyr.delQsub': 'Delete “{name}” with its {ns} and {nf}?', 'ms.layerNested': 'Moved “{name}” into “{parent}”' },
+uk: { 'ms.dragLayer': 'Перетягніть, щоб змінити порядок шарів, або на середину іншого шару, щоб вкласти як підшар', 'lyr.addSub': 'Додати підшар', 'lyr.unnest': 'Винести з «{name}»',
+  'lyr.subCount': ['{n} підшар', '{n} підшари', '{n} підшарів'], 'lyr.delQsub': 'Видалити «{name}» разом із підшарами ({ns}) і вмістом ({nf})?', 'ms.layerNested': '«{name}» перенесено в «{parent}»' },
+pl: { 'ms.dragLayer': 'Przeciągnij, aby zmienić kolejność warstw, albo na środek innej warstwy, aby wstawić jako podwarstwę', 'lyr.addSub': 'Dodaj podwarstwę', 'lyr.unnest': 'Wyjmij z „{name}”',
+  'lyr.subCount': ['{n} podwarstwa', '{n} podwarstwy', '{n} podwarstw'], 'lyr.delQsub': 'Usunąć „{name}” z podwarstwami ({ns}) i zawartością ({nf})?', 'ms.layerNested': 'Przeniesiono „{name}” do „{parent}”' },
+de: { 'ms.dragLayer': 'Ziehen, um die Ebenen umzuordnen, oder auf die Mitte einer anderen Ebene, um sie als Unterebene einzufügen', 'lyr.addSub': 'Unterebene hinzufügen', 'lyr.unnest': 'Aus „{name}“ herausnehmen',
+  'lyr.subCount': ['{n} Unterebene', '{n} Unterebenen'], 'lyr.delQsub': '„{name}“ mit {ns} und {nf} löschen?', 'ms.layerNested': '„{name}“ in „{parent}“ verschoben' },
+fr: { 'ms.dragLayer': 'Glisser pour réordonner les calques, ou au milieu d’un autre calque pour l’y placer comme sous-calque', 'lyr.addSub': 'Ajouter un sous-calque', 'lyr.unnest': 'Sortir de « {name} »',
+  'lyr.subCount': ['{n} sous-calque', '{n} sous-calques'], 'lyr.delQsub': 'Supprimer « {name} » avec {ns} et {nf} ?', 'ms.layerNested': '« {name} » déplacé dans « {parent} »' },
+ru: { 'ms.dragLayer': 'Перетащите, чтобы изменить порядок слоёв, или на середину другого слоя, чтобы вложить как подслой', 'lyr.addSub': 'Добавить подслой', 'lyr.unnest': 'Вынести из «{name}»',
+  'lyr.subCount': ['{n} подслой', '{n} подслоя', '{n} подслоёв'], 'lyr.delQsub': 'Удалить «{name}» вместе с подслоями ({ns}) и содержимым ({nf})?', 'ms.layerNested': '«{name}» перенесён в «{parent}»' }
+});
 
 </script>
 <script>
@@ -5616,15 +5637,37 @@ function addLayer(props = {}) {
   const l = {
     id: props.id || uid(), name: props.name || t('lyr.default', { n: S.layers.length + 1 }), visible: props.visible !== false,
     color: normHex(props.color) || nextColor(), from: normDate(props.from), until: normDate(props.until), source: props.source || null,
-    role: props.role === 'changes' ? 'changes' : null, defHidden: !!props.defHidden, mscale: msNorm(props.mscale), collapsed: false, group: L.featureGroup()
+    role: props.role === 'changes' ? 'changes' : null, defHidden: !!props.defHidden, mscale: msNorm(props.mscale), parent: props.parent || null, collapsed: false, group: L.featureGroup()
   };
   S.layers.push(l);
   if (l.visible) l.group.addTo(map);
   return l;
 }
+/* ---------- Sub-layers ----------
+   A sub-layer is an ordinary layer with a `parent`. S.layers is always kept in tree order (each layer
+   followed by its sub-layers), so the list, the drawing order (top of the list on top) and saving all
+   work as before. Hiding a layer hides its sub-layers too; a layer's dates apply to its sub-layers. */
+const layerParent = l => { const p = l && l.parent && getLayer(l.parent); return p && p !== l ? p : null; };
+function ancestors(l) { const out = []; let p = layerParent(l); while (p && out.length < 50 && !out.includes(p)) { out.push(p); p = layerParent(p); } return out; }
+const subLayersOf = id => S.layers.filter(l => l.parent === id);
+const isInside = (l, anc) => ancestors(l).includes(anc);
+const layerShown = l => !!l && l.visible && ancestors(l).every(a => a.visible);
+function subtree(l) { const out = [l]; for (let i = 0; i < out.length && out.length < 5000; i++) subLayersOf(out[i].id).forEach(k => { if (!out.includes(k)) out.push(k); }); return S.layers.filter(x => out.includes(x)); }
+// Show a layer and every layer it sits in.
+function revealLayer(l) { if (!l) return false; let changed = false; [l, ...ancestors(l)].forEach(x => { if (!x.visible) { x.visible = true; changed = true; } }); return changed; }
+// Put S.layers in tree order, dropping parents that no longer exist or would make a loop.
+function normalizeTree() {
+  S.layers.forEach(l => { if (l.parent && (l.parent === l.id || !getLayer(l.parent))) l.parent = null; });
+  S.layers.forEach(l => { const seen = new Set([l.id]); let p = layerParent(l); while (p) { if (seen.has(p.id)) { l.parent = null; break; } seen.add(p.id); p = layerParent(p); } });
+  const out = [], walk = pid => S.layers.forEach(l => { if ((l.parent || null) === pid && !out.includes(l)) { out.push(l); walk(l.id); } });
+  walk(null);
+  S.layers.forEach(l => { if (!out.includes(l)) { l.parent = null; out.push(l); } });
+  S.layers = out;
+}
 function syncLayerOrder() {
+  normalizeTree();
   S.layers.forEach(l => map.removeLayer(l.group));
-  [...S.layers].reverse().forEach(l => { if (l.visible) l.group.addTo(map); });
+  [...S.layers].reverse().forEach(l => { if (layerShown(l)) l.group.addTo(map); });
   applyTimeFilter();
   restoreZ();
 }
@@ -5808,7 +5851,7 @@ function selOutline(lyr) {
 // Shapes draw in layer order (top layer last), so a change layer always sits above the frontline it changes.
 // Showing a shape again (timeline, visibility) appends it on top, so put the order back afterwards.
 const restoreZ = debounce(() => {
-  [...S.layers].reverse().forEach(l => { if (l.visible) l.group.eachLayer(f => { if (f._path && f._map && f.bringToFront) f.bringToFront(); }); });
+  [...S.layers].reverse().forEach(l => { if (layerShown(l)) l.group.eachLayer(f => { if (f._path && f._map && f.bringToFront) f.bringToFront(); }); });
 }, 20);
 function metrics(lyr) {
   const r = lyr._pw, g = getGeom(lyr);
@@ -5953,7 +5996,7 @@ function serialize() {
   return {
     app: 'frontline-atlas', v: 3, title: S.title, desc: S.desc, mscale: S.mscale !== 1 ? S.mscale : undefined, units: S.units, sample: S.sample || undefined,
     activeLayerId: S.activeLayerId,
-    layers: S.layers.map(l => clean({ id: l.id, name: l.name, visible: l.visible, color: l.color, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale !== 1 ? l.mscale : undefined })),
+    layers: S.layers.map(l => clean({ id: l.id, name: l.name, visible: l.visible, color: l.color, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale !== 1 ? l.mscale : undefined, parent: l.parent || undefined })),
     features: S.layers.flatMap(l => l.group.getLayers().filter(f => f._pw).map(f => ({ ...f._pw, layerId: l.id, geom: getGeom(f) }))),
     icons: [...S.icons.values()].map(i => clean({ id: i.id, name: i.name, src: i.src, glyph: i.glyph || undefined })),
     styles: [...S.styles.values()].map(st => clean({ ...st }))
@@ -5962,7 +6005,7 @@ function serialize() {
 // Shared content only, keyed by id. This is what gets compared, synced and undone.
 function projectToSnap(p) {
   const snap = { meta: clean({ title: p.title || '', desc: p.desc || '', mscale: p.mscale && msNorm(p.mscale) !== 1 ? msNorm(p.mscale) : undefined }), layers: {}, features: {}, icons: {}, styles: {} };
-  (p.layers || []).forEach((l, i) => { snap.layers[l.id] = clean({ name: l.name, color: l.color, order: i, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale && msNorm(l.mscale) !== 1 ? msNorm(l.mscale) : undefined }); });
+  (p.layers || []).forEach((l, i) => { snap.layers[l.id] = clean({ name: l.name, color: l.color, order: i, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale && msNorm(l.mscale) !== 1 ? msNorm(l.mscale) : undefined, parent: l.parent || undefined }); });
   (p.styles || []).forEach(st => { if (st && st.id) { const { id, ...v } = st; snap.styles[id] = clean(v); } });
   (p.features || []).forEach(f => { snap.features[f.id] = clean({ ...f, style: clean(f.style || {}) }); });
   (p.icons || []).forEach(i => { snap.icons[i.id] = clean({ name: i.name, src: i.src, glyph: i.glyph || undefined }); });
@@ -6028,7 +6071,7 @@ function applyEntity(kind, id, val) {
     }
     if (!l) l = addLayer({ id, ...val });
     const oldMs = l.mscale;
-    Object.assign(l, { name: val.name || '', color: normHex(val.color) || l.color, from: normDate(val.from), until: normDate(val.until), source: val.source || null, role: val.role === 'changes' ? 'changes' : null, defHidden: !!val.defHidden, mscale: msNorm(val.mscale), order: val.order ?? l.order });
+    Object.assign(l, { name: val.name || '', color: normHex(val.color) || l.color, from: normDate(val.from), until: normDate(val.until), source: val.source || null, role: val.role === 'changes' ? 'changes' : null, defHidden: !!val.defHidden, mscale: msNorm(val.mscale), parent: val.parent || null, order: val.order ?? l.order });
     if (l.mscale !== oldMs) l.group.getLayers().forEach(f => { if (f._pw && f._pw.kind === 'marker') applyStyle(f); });
     if (S.mode === 'online') { const o = visOverrides(); l.visible = l.id in o ? !!o[l.id] : !l.defHidden; }
     return;
@@ -7104,7 +7147,7 @@ function moveToLayer(fid, lid) {
   to.group.addLayer(lyr);
   lyr._pw.layerId = lid;
   applyStyle(lyr);
-  if (!to.visible) { toast(t('lyr.hiddenMoved', { name: to.name })); deselect(); }
+  if (!layerShown(to)) { toast(t('lyr.hiddenMoved', { name: to.name })); deselect(); }
   commit();
 }
 function deleteFeature(fid) {
@@ -7134,15 +7177,16 @@ function duplicateFeature(fid) {
    ========================================================================= */
 function renderLayers() {
   const el = $('#layerList');
-  el.innerHTML = S.layers.map(l => {
-    const fs = l.group.getLayers().filter(f => f._pw);
+  // Layers nest: each section holds its shapes, then its sub-layers.
+  const html = l => {
+    const fs = l.group.getLayers().filter(f => f._pw), kids = subLayersOf(l.id);
     const active = l.id === S.activeLayerId;
     const off = TL.on && !layerAt(l, TL.date);
-    return `<section class="lyr ${active && !S.readOnly ? 'is-active' : ''} ${l.visible ? '' : 'is-hidden'} ${l.collapsed ? 'is-collapsed' : ''} ${off ? 'is-off' : ''}" data-lid="${l.id}">
+    return `<section class="lyr ${layerParent(l) ? 'is-sub' : ''} ${kids.length ? 'has-kids' : ''} ${active && !S.readOnly ? 'is-active' : ''} ${l.visible ? '' : 'is-hidden'} ${l.collapsed ? 'is-collapsed' : ''} ${off ? 'is-off' : ''}" data-lid="${l.id}">
       <header class="lyr-head ${can('layers') ? 'can-drag' : ''}" title="${can('layers') ? esc(t('ms.dragLayer')) : ''}">
         <button class="icon-btn sm" data-act="collapse" aria-label="${esc(t(l.collapsed ? 'lyr.expand' : 'lyr.collapse'))}" aria-expanded="${!l.collapsed}"><span class="chev">${icon('chevron')}</span></button>
         <button class="lyr-dot" data-act="menu" style="--c:${l.color}" aria-label="${esc(t('lyr.options'))}"></button>
-        <button class="lyr-name" data-act="activate" title="${esc(t(active ? 'lyr.isActive' : 'lyr.makeActive'))}"><span>${esc(l.name)}</span>${l.source ? `<span class="lyr-tag" title="${esc(t('ml.linked'))}">${icon('link')}</span>` : ''}${l.from || l.until ? `<span class="lyr-tag" title="${esc(dateRange(l.from, l.until))}">${icon('clock')}</span>` : ''}<span class="lyr-count">${nf(fs.length, 0)}</span></button>
+        <button class="lyr-name" data-act="activate" title="${esc(t(active ? 'lyr.isActive' : 'lyr.makeActive'))}"><span>${esc(l.name)}</span>${l.source ? `<span class="lyr-tag" title="${esc(t('ml.linked'))}">${icon('link')}</span>` : ''}${l.from || l.until ? `<span class="lyr-tag" title="${esc(dateRange(l.from, l.until))}">${icon('clock')}</span>` : ''}<span class="lyr-count">${nf(fs.length, 0)}</span>${kids.length ? `<span class="lyr-subn" title="${esc(tn('lyr.subCount', kids.length))}">${icon('layers')}${nf(kids.length, 0)}</span>` : ''}</button>
         <button class="icon-btn sm" data-act="vis" aria-label="${esc(t(l.visible ? 'lyr.hide' : 'lyr.show'))}" aria-pressed="${!l.visible}">${icon(l.visible ? 'eye' : 'eyeoff')}</button>
         <button class="icon-btn sm" data-act="menu" aria-label="${esc(t('lyr.options'))}">${icon('more')}</button>
       </header>
@@ -7152,9 +7196,11 @@ function renderLayers() {
         const lk = lockedBy(r.id), hidden = TL.on && !featureAt(r, TL.date);
         const ic = r.kind === 'marker' && r.style.icon && S.icons.get(r.style.icon);
         return `<li><button class="feat ${r.id === selectedId ? 'is-sel' : ''} ${MS.ids.has(r.id) && MS.ids.size > 1 ? 'is-msel' : ''} ${hidden ? 'is-off' : ''}" data-fid="${r.id}"><span class="feat-ico" style="--c:${r.style.color}">${ic ? `<img src="${esc(ic.src)}" alt="">` : KIND_GLYPH[r.kind]}</span><span class="feat-name">${esc(r.name || KIND(r.kind))}</span>${lk ? `<span class="avatar xs" style="--c:${lk.color || userColor(lk.uid)}" title="${esc(t('sync.lockedBy', { name: lk.name || '?' }))}">${esc(initials(lk.name))}</span>` : ''}<span class="feat-meta">${shortMetric(f)}</span></button></li>`;
-      }).join('') || `<li class="feat-empty">${esc(t('lyr.empty'))}</li>`}</ul>
+      }).join('') || (kids.length ? '' : `<li class="feat-empty">${esc(t('lyr.empty'))}</li>`)}</ul>
+      ${kids.length ? `<div class="lyr-kids">${kids.map(html).join('')}</div>` : ''}
     </section>`;
-  }).join('');
+  };
+  el.innerHTML = S.layers.filter(l => !layerParent(l)).map(html).join('');
   $('#sbStats').textContent = `${tn('n.layers', S.layers.length)} · ${tn('n.features', feats.size)}`;
   $('#sampleNote').hidden = !S.sample;
   msBar();
@@ -7175,11 +7221,12 @@ $('#layerList').addEventListener('click', e => {
   const act = btn.dataset.act;
   if (act === 'collapse') { l.collapsed = !l.collapsed; renderLayers(); }
   if (act === 'activate' && S.readOnly) { l.collapsed = !l.collapsed; renderLayers(); return; }
-  if (act === 'activate') { S.activeLayerId = l.id; if (!l.visible) { l.visible = true; syncLayerOrder(); } commit(); }
+  if (act === 'activate') { S.activeLayerId = l.id; if (revealLayer(l)) syncLayerOrder(); commit(); }
   if (act === 'vis') {
     l.visible = !l.visible; syncLayerOrder();
     if (S.mode === 'online') setVisOverride(l.id, l.visible === !l.defHidden ? null : l.visible);   // personal, this browser only
-    if (!l.visible && selectedId && feats.get(selectedId)?._pw.layerId === l.id) { map.closePopup(); deselect(); }
+    const sl = selectedId && getLayer(feats.get(selectedId)?._pw.layerId);
+    if (sl && !layerShown(sl)) { map.closePopup(); deselect(); }
     commit();
   }
   if (act === 'menu') openLayerMenu(l, btn);
@@ -7255,12 +7302,14 @@ function openLayerMenu(l, anchor, focusName) {
     <div style="display:flex;flex-direction:column">
       <button class="pi" data-m="apply" ${n && can('editAll') ? '' : 'disabled'}>${esc(t('lyr.apply', { nf: tn('n.features', n) }))}</button>
       <button class="pi" data-m="zoom" ${n ? '' : 'disabled'}>${esc(t('lyr.zoom'))}</button>
-      <button class="pi" data-m="up" ${idx === 0 ? 'disabled' : ''}>${esc(t('lyr.up'))}</button>
-      <button class="pi" data-m="down" ${idx === S.layers.length - 1 ? 'disabled' : ''}>${esc(t('lyr.down'))}</button>
+      <button class="pi" data-m="sub">${icon('plus')} ${esc(t('lyr.addSub'))}</button>
+      ${layerParent(l) ? `<button class="pi" data-m="unnest">${esc(t('lyr.unnest', { name: layerParent(l).name }))}</button>` : ''}
+      <button class="pi" data-m="up" ${sibIdx(l) === 0 ? 'disabled' : ''}>${esc(t('lyr.up'))}</button>
+      <button class="pi" data-m="down" ${sibIdx(l) === siblings(l).length - 1 ? 'disabled' : ''}>${esc(t('lyr.down'))}</button>
       <button class="pi" data-m="kml" ${n ? '' : 'disabled'}>${esc(t('lyr.kml'))}</button>
       <button class="pi danger" data-m="del">${esc(t('lyr.del'))}</button>
     </div>
-    <div class="confirm" hidden id="lm-confirm">${esc(n ? t('lyr.delQn', { name: l.name, nf: tn('n.features', n) }) : t('lyr.delQ', { name: l.name }))}<div class="row"><button class="btn sm danger" data-m="del-yes">${esc(t('lyr.del'))}</button><button class="btn sm" data-m="del-no">${esc(t('lyr.keep'))}</button></div></div>`;
+    <div class="confirm" hidden id="lm-confirm">${esc(subDelQ(l))}<div class="row"><button class="btn sm danger" data-m="del-yes">${esc(t('lyr.del'))}</button><button class="btn sm" data-m="del-no">${esc(t('lyr.keep'))}</button></div></div>`;
   pop.dataset.lid = l.id; pop.dataset.kind = 'layer';
   pop.hidden = false; placePop(anchor);
   if (focusName) { const i = $('#lm-name'); i.focus(); i.select(); }
@@ -7274,6 +7323,37 @@ function setLayerMs(l, v) {
   l.group.getLayers().forEach(f => { if (f._pw && f._pw.kind === 'marker') applyStyle(f); });
   if (selectedId && feats.get(selectedId)?._pw.layerId === l.id) { const n = $('#f-msnote'); if (n) n.textContent = msNote(feats.get(selectedId)._pw) || t('ms.markerHelp'); }
   scheduleCommit(500);
+}
+// Moving layers around the tree. `zone`: 'before' / 'after' put `l` next to `ref` (same parent),
+// 'into' makes it the last sub-layer of `ref`. A layer always moves with its sub-layers.
+const siblings = l => S.layers.filter(x => (x.parent || null) === (l.parent || null) && layerParent(x) === layerParent(l));
+const sibIdx = l => siblings(l).indexOf(l);
+function placeLayer(l, ref, zone) {
+  if (!l || !ref || l === ref || isInside(ref, l)) return false;
+  const block = subtree(l);
+  S.layers = S.layers.filter(x => !block.includes(x));
+  let at;
+  if (zone === 'into') { l.parent = ref.id; const s = subtree(ref); at = S.layers.indexOf(s[s.length - 1]) + 1; }
+  else { l.parent = ref.parent || null; at = S.layers.indexOf(ref); if (zone === 'after') at += subtree(ref).length; }
+  S.layers.splice(at, 0, ...block);
+  if (zone === 'into') ref.collapsed = false;
+  syncLayerOrder();
+  return true;
+}
+function addSubLayer(parent) {
+  const l = addLayer({ parent: parent.id, color: parent.color });
+  S.layers.splice(S.layers.indexOf(l), 1);            // then put it last among the parent's sub-layers
+  const s = subtree(parent);
+  S.layers.splice(S.layers.indexOf(s[s.length - 1]) + 1, 0, l);
+  parent.collapsed = false;
+  S.activeLayerId = l.id; revealLayer(l); syncLayerOrder(); commit();
+  const a = $(`.lyr[data-lid="${l.id}"] [data-act="menu"]`);
+  if (a) openLayerMenu(l, a, true);
+}
+function subDelQ(l) {
+  const sub = subtree(l), nSub = sub.length - 1, n = sub.reduce((s, x) => s + x.group.getLayers().length, 0);
+  if (nSub) return t('lyr.delQsub', { name: l.name, ns: tn('lyr.subCount', nSub), nf: tn('n.features', n) });
+  return n ? t('lyr.delQn', { name: l.name, nf: tn('n.features', n) }) : t('lyr.delQ', { name: l.name });
 }
 function closePop() { $('#pop').hidden = true; }
 $('#pop').addEventListener('input', e => {
@@ -7307,10 +7387,12 @@ $('#pop').addEventListener('click', e => {
   }
   if (m === 'vis-reset') { setVisOverride(l.id, null); l.visible = !l.defHidden; syncLayerOrder(); renderLayers(); openLayerMenu(l, $(`.lyr[data-lid="${l.id}"] [data-act="menu"]`) || $('#layerList')); return; }
   if (m === 'zoom') { const b = l.group.getBounds(); if (b.isValid()) map.flyToBounds(b, { padding: [60, 60], maxZoom: 17 }); closePop(); }
+  if (m === 'sub') { closePop(); addSubLayer(l); return; }
+  if (m === 'unnest') { const p = layerParent(l); if (p && placeLayer(l, p, 'after')) { commit(); toast(t('ms.layerMoved', { name: l.name }), '', { label: t('toast.undo'), fn: undo }); } closePop(); return; }
   if (m === 'up' || m === 'down') {
-    const j = m === 'up' ? idx - 1 : idx + 1;
-    [S.layers[idx], S.layers[j]] = [S.layers[j], S.layers[idx]];
-    syncLayerOrder(); commit();
+    const sib = siblings(l), j = sibIdx(l) + (m === 'up' ? -1 : 1);
+    if (sib[j]) placeLayer(l, sib[j], m === 'up' ? 'before' : 'after');
+    commit();
     const a = $(`.lyr[data-lid="${l.id}"] [data-act="menu"]`); if (a) openLayerMenu(l, a); else closePop();
   }
   if (m === 'ml-refresh') { closePop(); refreshLinked(l.source.mid, true); }
@@ -7319,12 +7401,16 @@ $('#pop').addEventListener('click', e => {
   if (m === 'del') $('#lm-confirm').hidden = false;
   if (m === 'del-no') $('#lm-confirm').hidden = true;
   if (m === 'del-yes') {
-    if (selectedId && feats.get(selectedId)?._pw.layerId === l.id) deselect();
-    l.group.getLayers().forEach(f => feats.delete(f._pw.id));
-    l.group.clearLayers(); map.removeLayer(l.group);
-    S.layers.splice(idx, 1);
+    // A layer goes with its sub-layers and everything in them.
+    const gone = subtree(l);
+    if (selectedId && gone.some(x => x.id === feats.get(selectedId)?._pw.layerId)) deselect();
+    gone.forEach(x => {
+      x.group.getLayers().forEach(f => feats.delete(f._pw.id));
+      x.group.clearLayers(); map.removeLayer(x.group);
+    });
+    S.layers = S.layers.filter(x => !gone.includes(x));
     if (!S.layers.length) addLayer({ name: t('lyr.untitled') });
-    if (S.activeLayerId === l.id) S.activeLayerId = S.layers[0].id;
+    if (gone.some(x => x.id === S.activeLayerId)) S.activeLayerId = S.layers[0].id;
     map.closePopup(); closePop(); commit();
     toast(t('toast.deletedLayer', { name: l.name }), '', { label: t('toast.undo'), fn: undo });
   }
@@ -7359,8 +7445,10 @@ $('#pop').addEventListener('change', e => {
      from the last one clicked (Ctrl+Shift adds the run). On the map, Ctrl/Cmd/Shift+click works too.
    - Drag on empty space in the list (or Shift+drag anywhere) draws a box that picks everything it
      touches; with Ctrl or Shift held, the box adds to what's already picked.
-   - Drag picked shapes onto another layer to move them there. Drag a layer's header above or
-     below another layer to reorder them (the top of the list draws on top).
+   - Drag picked shapes onto another layer (or sub-layer) to move them there. Drag a layer's header
+     onto the top or bottom edge of another layer's header to put it above or below that layer, or
+     onto the middle of the header to put it inside as a sub-layer (the top of the list draws on top).
+     A layer always moves with its own sub-layers.
    - The bar above the list moves, zooms to or deletes the picked shapes; Esc clears them.
    On a phone: long-press a shape to add it to the selection, then use the bar.
    ========================================================================= */
@@ -7415,9 +7503,9 @@ function moveMany(ids, lid) {
     to.group.addLayer(f); f._pw.layerId = lid; applyStyle(f); moved++;
   });
   if (!moved) { if (refused) toast(t('perm.notYours'), 'error'); return; }
-  if (selectedId && !to.visible) deselect({ keepMulti: true });
+  if (selectedId && !layerShown(to)) deselect({ keepMulti: true });
   restoreZ(); commit(); msRender();
-  toast(tn('ms.moved', moved, { name: to.name }) + (refused ? ' · ' + tn('ms.refused', refused) : '') + (!to.visible ? ' · ' + t('ms.hiddenLayer') : ''), '', { label: t('toast.undo'), fn: undo });
+  toast(tn('ms.moved', moved, { name: to.name }) + (refused ? ' · ' + tn('ms.refused', refused) : '') + (!layerShown(to) ? ' · ' + t('ms.hiddenLayer') : ''), '', { label: t('toast.undo'), fn: undo });
 }
 function deleteMany(ids) {
   let n = 0, refused = 0;
@@ -7510,7 +7598,7 @@ $('#layerList').addEventListener('pointerdown', e => {
     }
     if (mode === 'layer') { dragGhost.textContent = getLayer(lid).name; dragGhost.hidden = false; list.querySelector(`.lyr[data-lid="${lid}"]`).classList.add('is-dragged'); }
     if (mode === 'band') { base = (e.ctrlKey || e.metaKey || e.shiftKey) ? new Set(MS.ids) : new Set(); bandEl.hidden = false; }
-    const tick = () => { autoScroll(last); update(last); raf = requestAnimationFrame(tick); };
+    const tick = () => { autoScroll(last); update(last); raf = requestAnimationFrame(tick); };   // re-checks the spot as the list scrolls
     raf = requestAnimationFrame(tick);
   };
   const clearMarks = () => $$('#layerList .lyr').forEach(s => s.classList.remove('drop-into', 'drop-before', 'drop-after'));
@@ -7524,13 +7612,24 @@ $('#layerList').addEventListener('pointerdown', e => {
       if (sec) sec.classList.add('drop-into');
     }
     if (mode === 'layer') {
-      clearMarks();
-      const secs = $$('#layerList .lyr'); target = null;
-      for (let i = 0; i < secs.length; i++) {
-        const r = secs[i].getBoundingClientRect();
-        if (ev.clientY < r.top + Math.min(r.height / 2, 24)) { target = { before: secs[i].dataset.lid }; secs[i].classList.add('drop-before'); break; }
+      clearMarks(); target = null;
+      const dragged = getLayer(lid), hd = under && under.closest('#layerList .lyr-head');
+      let sec = hd ? hd.closest('.lyr') : under && under.closest('#layerList .lyr'), zone;
+      if (hd) {
+        // Top third: above; bottom third: below; middle: inside, as a sub-layer.
+        const r = hd.getBoundingClientRect(), f = (ev.clientY - r.top) / r.height;
+        zone = f < 0.3 ? 'before' : f > 0.7 && !(sec.classList.contains('has-kids') && !sec.classList.contains('is-collapsed')) ? 'after' : 'into';
+      } else if (sec) zone = 'into';                       // over a layer's shapes or sub-layers
+      else {
+        // Above or below the whole list: first or last top-level layer.
+        const roots = $$('#layerList > .lyr'); if (!roots.length) return;
+        const first = roots[0].getBoundingClientRect();
+        if (ev.clientY < first.top) { sec = roots[0]; zone = 'before'; } else { sec = roots[roots.length - 1]; zone = 'after'; }
       }
-      if (!target && secs.length) { target = { after: secs[secs.length - 1].dataset.lid }; secs[secs.length - 1].classList.add('drop-after'); }
+      const ref = sec && getLayer(sec.dataset.lid);
+      if (!ref || !dragged || ref === dragged || isInside(ref, dragged)) return;
+      target = { ref: ref.id, zone };
+      sec.classList.add(zone === 'into' ? 'drop-into' : zone === 'before' ? 'drop-before' : 'drop-after');
     }
     if (mode === 'band') {
       const x0 = Math.min(start.x, ev.clientX), y0 = Math.min(start.y, ev.clientY), x1 = Math.max(start.x, ev.clientX), y1 = Math.max(start.y, ev.clientY);
@@ -7556,12 +7655,10 @@ $('#layerList').addEventListener('pointerdown', e => {
     $$('#layerList .lyr.is-dragged').forEach(s => s.classList.remove('is-dragged'));
     if (mode === 'items' && target) moveMany([...MS.ids], target);
     if (mode === 'layer' && target) {
-      const l = getLayer(lid), ref = getLayer(target.before || target.after);
-      if (l && ref && l !== ref) {
-        S.layers.splice(S.layers.indexOf(l), 1);
-        S.layers.splice(S.layers.indexOf(ref) + (target.after ? 1 : 0), 0, l);
-        syncLayerOrder(); commit();
-        toast(t('ms.layerMoved', { name: l.name }), '', { label: t('toast.undo'), fn: undo });
+      const l = getLayer(lid), ref = getLayer(target.ref);
+      if (placeLayer(l, ref, target.zone)) {
+        commit();
+        toast(target.zone === 'into' ? t('ms.layerNested', { name: l.name, parent: ref.name }) : t('ms.layerMoved', { name: l.name }), '', { label: t('toast.undo'), fn: undo });
       }
     }
     if (mode === 'band') { MS.anchor = [...MS.ids].pop() || null; msAfterChange(); }
@@ -7744,7 +7841,7 @@ map.on('pm:create', e => {
   if (!kind) return;
   if (kind === 'marker' && pendingKind === 'label') kind = 'label';
   const lr = activeLayer();
-  if (!lr.visible) { lr.visible = true; syncLayerOrder(); }
+  if (revealLayer(lr)) syncLayerOrder();
   const tmp = e.layer;
   const geom = kind === 'circle' ? { c: llArr(tmp.getLatLng()), r: Math.round(tmp.getRadius() * 100) / 100 }
     : (kind === 'marker' || kind === 'label') ? llArr(tmp.getLatLng()) : llArr(tmp.getLatLngs());
@@ -8474,6 +8571,8 @@ function edgeStep(now) {
 const TL = { on: false, date: null, playing: false, timer: null };
 const featureAt = (r, d) => (!r.from || r.from <= d) && (!r.until || d < r.until);
 const layerAt = (l, d) => (!l.from || l.from <= d) && (!l.until || d < l.until);
+// A sub-layer is also limited by the dates of the layers it sits in.
+const layerAtTree = (l, d) => layerAt(l, d) && ancestors(l).every(a => layerAt(a, d));
 function fmtDate(d) {
   if (!d) return '';
   try { return new Date(d + 'T00:00:00Z').toLocaleDateString(langInfo().locale, { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' }); }
@@ -8500,8 +8599,8 @@ function tlRange() {
 function applyTimeFilter() {
   const d = TL.date;
   S.layers.forEach(l => {
-    if (!l.visible) return;
-    const lOn = !TL.on || layerAt(l, d);
+    if (!layerShown(l)) return;
+    const lOn = !TL.on || layerAtTree(l, d);
     l.group.getLayers().forEach(f => {
       if (!f._pw) return;
       const show = lOn && (!TL.on || featureAt(f._pw, d));
@@ -9625,8 +9724,10 @@ function fcLayer(mainLayerId) {
     if (i < mi || l.id === mainLayerId) return l;
     S.layers.splice(i, 1);
   }
+  // Same level as the main polygon's layer (inside the same parent), just above it.
+  l.parent = (getLayer(mainLayerId) || {}).parent || null;
   S.layers.splice(Math.max(0, S.layers.findIndex(x => x.id === mainLayerId)), 0, l);
-  l.visible = true;
+  revealLayer(l);
   return l;
 }
 function fcFinish() {
@@ -10260,7 +10361,8 @@ function parseKML(text, fallbackName) {
       if (n === 'Folder') {
         const nm = kidText(c, 'name') || t('lyr.untitled'), full = prefix ? `${prefix} / ${nm}` : nm;
         const lt = timeOf(c);
-        const lv = { name: full, folder: nm, visible: kidText(c, 'visibility') !== '0', from: lt.from, until: lt.until, features: [] };
+        // parentLv: the folder it sits in, so nested folders can become sub-layers.
+        const lv = { name: full, folder: nm, parentLv: layer || null, visible: kidText(c, 'visibility') !== '0', from: lt.from, until: lt.until, features: [] };
         layers.push(lv); walk(c, lv, full);
       } else if (n === 'Document') walk(c, layer, prefix);
       else if (n === 'Placemark') {
@@ -10406,15 +10508,23 @@ async function importFiles(files) {
         if (res.desc && !S.desc) { S.desc = formatPlain(res.desc); $('#mapDesc').value = S.desc; renderDesc(); }
       }
       const keyMap = importIcons(res);
-      res.layers.forEach(lv => {
-        const counts = {}; lv.features.forEach(x => { const c = normHex(x.style && x.style.color); if (c) counts[c] = (counts[c] || 0) + 1; });
+      // Folders inside folders become sub-layers (a folder holding only folders becomes an empty parent layer).
+      const made = new Map();
+      const layerFor = lv => {
+        if (made.has(lv)) return made.get(lv);
+        const parent = lv.parentLv ? layerFor(lv.parentLv) : null;
+        const counts = {}; (lv.features || []).forEach(x => { const c = normHex(x.style && x.style.color); if (c) counts[c] = (counts[c] || 0) + 1; });
         const dominant = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
-        const l = addLayer({ name: lv.name, visible: lv.visible !== false, color: dominant ? dominant[0] : null, from: lv.from, until: lv.until });
+        const nl = addLayer({ name: parent ? lv.folder || lv.name : lv.name, parent: parent ? parent.id : null, visible: lv.visible !== false, color: dominant ? dominant[0] : parent ? parent.color : null, from: lv.from, until: lv.until });
+        made.set(lv, nl); totalL++;
+        return nl;
+      };
+      res.layers.forEach(lv => {
+        const l = layerFor(lv);
         lv.features.forEach(x => {
           try { const lyr = createFeature({ ...prepImported(x, keyMap), layerId: l.id }, x.geom); totalF++; bounds.extend(lyr.getBounds ? lyr.getBounds() : L.latLngBounds([lyr.getLatLng()])); }
           catch (err) { console.warn('Skipped a feature', err); }
         });
-        totalL++;
       });
       if (blank && S.layers.length) S.activeLayerId = S.layers[0].id;
       S.sample = false;
@@ -10558,7 +10668,9 @@ const kc = ([lat, lng]) => `${lng},${lat},0`;
 const ringXml = r => `<LinearRing><coordinates>${[...r, r[0]].map(kc).join(' ')}</coordinates></LinearRing>`;
 const polyXml = poly => `<Polygon><outerBoundaryIs>${ringXml(poly[0])}</outerBoundaryIs>${poly.slice(1).map(r => `<innerBoundaryIs>${ringXml(r)}</innerBoundaryIs>`).join('')}</Polygon>`;
 // assets: optional Map that collects embedded icon files (for KMZ). Without it, embedded icons fall back to pins.
-function toKML(onlyLayerIds, assets) {
+// Sub-layers: in KMZ (Google Earth) they become folders inside folders. Plain KML is meant for Google
+// My Maps, which has no nested folders, so there each sub-layer is its own folder named "Parent / Child".
+function toKML(onlyLayerIds, assets, nest = !!assets) {
   const p = serialize(), styles = new Map();
   const span = (a, b) => a || b ? `<TimeSpan>${a ? `<begin>${a}</begin>` : ''}${b ? `<end>${b}</end>` : ''}</TimeSpan>` : '';
   const iconHref = id => {
@@ -10570,7 +10682,14 @@ function toKML(onlyLayerIds, assets) {
   };
   const style = (id, body) => { if (!styles.has(id)) styles.set(id, `<Style id="${id}">${body}</Style>`); return '#' + id; };
   const HEX = c => (normHex(c) || '#000000').slice(1).toUpperCase();
-  const folders = p.layers.filter(l => !onlyLayerIds || onlyLayerIds.includes(l.id)).map(l => {
+  const byId = new Map(p.layers.map(l => [l.id, l]));
+  const pathName = l => { const names = [l.name]; let q = byId.get(l.parent), g = 0; while (q && g++ < 50) { names.unshift(q.name); q = byId.get(q.parent); } return names.join(' / '); };
+  // Asking for one layer gives it together with its sub-layers.
+  const wanted = new Set(p.layers.filter(l => !onlyLayerIds || onlyLayerIds.includes(l.id)).map(l => l.id));
+  let grew = true;
+  while (grew) { grew = false; p.layers.forEach(l => { if (!wanted.has(l.id) && wanted.has(l.parent)) { wanted.add(l.id); grew = true; } }); }
+  const isTop = l => !wanted.has(l.parent);
+  const folderOf = l => {
     const pms = p.features.filter(f => f.layerId === l.id).map(f => {
       const s = f.style, ext = {};
       let geom = '', sid = '';
@@ -10606,8 +10725,12 @@ function toKML(onlyLayerIds, assets) {
       const extXml = Object.keys(ext).length ? `<ExtendedData>${Object.entries(ext).map(([k, v]) => `<Data name="${k}"><value>${xesc(v)}</value></Data>`).join('')}</ExtendedData>` : '';
       return `<Placemark><name>${xesc(f.name || KIND(f.kind))}</name>${f.desc ? `<description>${cdata(f.desc)}</description>` : ''}${span(f.from, f.until)}<styleUrl>${sid}</styleUrl>${extXml}${geom}</Placemark>`;
     }).join('\n');
-    return `<Folder><name>${xesc(l.name)}</name>${l.visible ? '' : '<visibility>0</visibility>'}${span(l.from, l.until)}\n${pms}\n</Folder>`;
-  }).join('\n');
+    const own = `<Folder><name>${xesc(nest ? l.name : pathName(l))}</name>${l.visible ? '' : '<visibility>0</visibility>'}${span(l.from, l.until)}\n${pms}`;
+    const kids = p.layers.filter(x => x.parent === l.id && wanted.has(x.id)).map(folderOf);
+    // Flat (My Maps): a layer holding only sub-layers adds no empty folder of its own.
+    return nest ? `${own}\n${kids.join('\n')}\n</Folder>` : [...(pms || !kids.length ? [`${own}\n</Folder>`] : []), ...kids].join('\n');
+  };
+  const folders = p.layers.filter(l => wanted.has(l.id) && isTop(l)).map(folderOf).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n<name>${xesc(p.title)}</name>${p.desc ? `<description>${cdata(p.desc)}</description>` : ''}\n${[...styles.values()].join('\n')}\n${folders}\n</Document>\n</kml>\n`;
 }
 function toGeoJSON() {
@@ -11908,7 +12031,7 @@ function renderMapResults(q) {
 // Show a found shape even when its layer is hidden or the timeline is on another date.
 function goFeature(f) {
   const r = f._pw, l = getLayer(r.layerId);
-  if (l && !l.visible) { l.visible = true; syncLayerOrder(); renderLayers(); }
+  if (l && revealLayer(l)) { syncLayerOrder(); renderLayers(); }
   if (TL.on && !featureAt(r, TL.date)) setTLDate(r.from || addDays(r.until, -1));
   zoomTo(f); select(r.id);
 }
@@ -11948,7 +12071,7 @@ resEl.addEventListener('click', e => {
   if (add) {
     const it = lastResults[+add.dataset.ra];
     const lyr = createFeature({ layerId: activeLayer().id, kind: 'marker', name: it.name, desc: it.detail }, [rnd(it.lat), rnd(it.lng)]);
-    if (!activeLayer().visible) { activeLayer().visible = true; syncLayerOrder(); }
+    if (revealLayer(activeLayer())) syncLayerOrder();
     goResult(it); resEl.hidden = true; commit(); setTool('select'); select(lyr._pw.id);
   }
 });
@@ -11960,7 +12083,7 @@ $('#zIn').addEventListener('click', () => map.zoomIn());
 $('#zOut').addEventListener('click', () => map.zoomOut());
 function fitAll() {
   const b = L.latLngBounds([]);
-  S.layers.forEach(l => { if (l.visible && l.group.getLayers().length) b.extend(l.group.getBounds()); });
+  S.layers.forEach(l => { if (layerShown(l) && l.group.getLayers().length) b.extend(l.group.getBounds()); });
   if (b.isValid()) map.flyToBounds(b, { padding: [60, 60], maxZoom: 16, duration: 0.7 });
   else toast(t('toast.noVisible'));
 }
@@ -12014,7 +12137,7 @@ toast = function (msg, type = '', action) {
 document.addEventListener('click', e => {
   const path = e.composedPath();
   const inside = sel => path.some(n => n instanceof Element && n.matches(sel));
-  if (!inside('#pop') && !inside('[data-act="menu"]') && !inside('#fileMenu')) closePop();
+  if (!inside('#pop') && !inside('[data-act="menu"]') && !inside('#fileMenu') && !inside('#addLayer')) closePop();
   if (!inside('.menu-wrap')) MENUS.forEach(m => { $('#' + m).hidden = true; $('#' + MENU_BTN[m]).setAttribute('aria-expanded', 'false'); });
   if (!inside('.search')) resEl.hidden = true;
   if (!inside('#basePanel') && !inside('#baseBtn') && !inside('#map')) $('#basePanel').hidden = true;
@@ -12112,7 +12235,7 @@ function sampleProject() {
   if (qd) { TL.date = qd; toggleTimeline(true); setTLDate(qd, { noUrl: true }); }
   else if (S.readOnly && changeDates().length) toggleTimeline(true);
   const b = L.latLngBounds([]);
-  S.layers.forEach(l => { if (l.visible && l.group.getLayers().length) b.extend(l.group.getBounds()); });
+  S.layers.forEach(l => { if (layerShown(l) && l.group.getLayers().length) b.extend(l.group.getBounds()); });
   if (b.isValid()) map.fitBounds(b, { padding: [60, 60], maxZoom: 16 });
   $('#zoomLv').textContent = 'z ' + map.getZoom();
 })();
