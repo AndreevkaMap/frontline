@@ -245,7 +245,8 @@ body.ms-dragging,body.ms-dragging *{cursor:grabbing!important;user-select:none}
 .feat-ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .feat-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .feat-meta{font:11.5px var(--f-mono);color:var(--muted);white-space:nowrap}
-.fi{display:flex;align-items:center;padding-left:calc(var(--d,0) * 14px)}
+.fi{display:flex;align-items:center;padding-left:calc(var(--d,0) * 14px);min-width:0}
+.fi>.feat{flex:1;width:auto;min-width:0}
 .fi.is-sub{position:relative}
 .fi.is-sub::before{content:"";position:absolute;left:calc(var(--d) * 14px - 6px);top:0;bottom:0;border-left:1px dashed color-mix(in srgb, var(--muted) 45%, transparent)}
 .feat-tw{flex:none;width:18px;height:22px;display:grid;place-items:center;border:0;background:transparent;color:var(--muted);padding:0;border-radius:5px;margin-right:-4px}
@@ -253,13 +254,13 @@ body.ms-dragging,body.ms-dragging *{cursor:grabbing!important;user-select:none}
 .feat-tw .ic{width:14px;height:14px;transform:rotate(-90deg);transition:transform .15s}
 .feat-tw.is-open .ic{transform:none}
 .feat-tw-pad{flex:none;width:14px}
-.feat-eye{flex:none;width:24px;height:24px;display:grid;place-items:center;border:0;background:transparent;color:var(--muted);border-radius:6px;padding:0;opacity:0;transition:opacity .12s}
+.feat-eye{flex:none;width:26px;height:26px;display:grid;place-items:center;border:0;background:transparent;color:var(--muted);border-radius:6px;padding:0;opacity:.6;transition:opacity .12s,color .12s}
 .feat-eye .ic{width:15px;height:15px}
 .fi:hover .feat-eye,.fi:focus-within .feat-eye,.fi.is-hid .feat-eye{opacity:1}
+.fi.is-hid .feat-eye{color:var(--accent)}
 .feat-eye:hover{color:var(--text);background:var(--panel-2)}
 .fi.is-hid>.feat,.fi.is-hid-up>.feat{opacity:.45}
 .fi.is-hid .feat-name{text-decoration:line-through;text-decoration-color:color-mix(in srgb, var(--muted) 60%, transparent)}
-@media (hover:none){.feat-eye{opacity:.7}}
 .feat-kids{font:600 10.5px var(--f-mono);color:var(--accent);background:var(--accent-weak);border-radius:20px;padding:0 6px;flex:none}
 .feat.drop-into-feat{box-shadow:inset 0 0 0 2px #ffb300;background:color-mix(in srgb, #ffb300 14%, transparent)}
 .sub-field select{width:100%}
