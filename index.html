@@ -348,6 +348,8 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .mf-bdDistrict::after{height:1.5px;background:repeating-linear-gradient(90deg,#fff 0 4px,transparent 4px 6px);box-shadow:none}
 .mf-bdCommunity::after{height:1px;background:repeating-linear-gradient(90deg,#e8edf5 0 3px,transparent 3px 5px);box-shadow:none}
 .mf-bdCity::after{height:2px;background:repeating-linear-gradient(90deg,#ffe27a 0 5px,transparent 5px 9px);box-shadow:none;border-top:1px solid rgba(0,0,0,.45);border-bottom:1px solid rgba(0,0,0,.45)}
+.mf-bdCityDist::after{height:1px;background:repeating-linear-gradient(90deg,#bfe9ff 0 2px,transparent 2px 4px);box-shadow:none}
+.mf-bdQuarter::after{height:2px;background:repeating-linear-gradient(90deg,#9fe3ff 0 2px,transparent 2px 5px);box-shadow:none;border-top:1px solid rgba(0,0,0,.4);border-bottom:1px solid rgba(0,0,0,.4)}
 .mf-rail::after{height:4px;top:4px;background:repeating-linear-gradient(90deg,#fff 0 4px,#1b1b1b 4px 8px);box-shadow:0 0 0 1px #1b1b1b}
 .mf-highways::after{height:4px;top:4px;background:#f7a531;box-shadow:0 0 0 1px rgba(40,25,0,.7)}
 .topo-legend{display:flex;flex-direction:column;gap:3px}
@@ -421,6 +423,7 @@ body.clean .fi-legend{display:none}
 .fi-keystat{color:var(--muted)}
 .fi-card h3{display:flex;align-items:center;gap:8px}
 .fi-dot{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1.5px rgba(40,0,0,.8)}
+.pl-qname{pointer-events:none}.pl-qname span{display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;font:600 11px/1.2 Barlow,system-ui,sans-serif;color:#dff6ff;text-shadow:0 0 3px #000,0 0 2px #000,0 1px 2px #000;letter-spacing:.02em}
 .pl-chip{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);z-index:800;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:16px;background:color-mix(in srgb, var(--panel) 92%, transparent);border:1px solid #ffe27a;color:var(--fg);font:600 12.5px var(--f-ui);box-shadow:var(--shadow);white-space:nowrap}
 .pl-chip small{font:500 11px var(--f-mono);color:var(--muted)}
 .pl-chip .spin{color:#ffe27a;margin:0}
@@ -3566,6 +3569,38 @@ ru: { 'pt.traceTip': 'Обводка: ставит точки вдоль пут�
   'ms.mapIs': 'Редакторы карты установили размер маркеров {v}.', 'ms.reset': 'Сбросить',
   'perm.meta': 'Название, описание и размер маркеров', 'perm.help.meta': 'Менять название, описание карты и общий размер маркеров.' }
 });
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: { 'mf.bdCityDist': 'City districts', 'mf.bdCityDistHelp': 'Districts inside cities and administrative microdistricts (OpenStreetMap levels 9–10). From zoom 10.',
+  'mf.bdQuarter': 'Microdistricts and neighbourhoods', 'mf.bdQuarterHelp': 'The finest level: microdistricts, housing estates, quarters and neighbourhoods, with their names. From zoom 13.',
+  'mf.zoomInQ': 'Zoom in closer to see them.', 'pl.zoomInQ': 'Zoom in to see microdistricts',
+  'pl.busy': 'Map servers are busy: some outlines haven’t loaded yet.', 'pl.retryIn': 'Trying again in {n} s', 'pl.retrying': 'Trying again…', 'pl.retryNow': 'Try now',
+  'stl.suburb': 'District', 'stl.quarter': 'Quarter', 'stl.neighbourhood': 'Neighbourhood', 'stl.microdistrict': 'Microdistrict', 'stl.qlayer': 'Microdistricts' },
+uk: { 'mf.bdCityDist': 'Райони міст', 'mf.bdCityDistHelp': 'Райони всередині міст та адміністративні мікрорайони (рівні OpenStreetMap 9–10). З масштабу 10.',
+  'mf.bdQuarter': 'Мікрорайони й квартали', 'mf.bdQuarterHelp': 'Найдрібніший рівень: мікрорайони, житлові масиви, квартали, з назвами. З масштабу 13.',
+  'mf.zoomInQ': 'Наблизьте, щоб їх побачити.', 'pl.zoomInQ': 'Наблизьте, щоб побачити мікрорайони',
+  'pl.busy': 'Сервери карти зайняті: частина меж ще не завантажилася.', 'pl.retryIn': 'Повтор за {n} с', 'pl.retrying': 'Пробую ще раз…', 'pl.retryNow': 'Спробувати зараз',
+  'stl.suburb': 'Район', 'stl.quarter': 'Квартал', 'stl.neighbourhood': 'Мікрорайон', 'stl.microdistrict': 'Мікрорайон', 'stl.qlayer': 'Мікрорайони' },
+pl: { 'mf.bdCityDist': 'Dzielnice miast', 'mf.bdCityDistHelp': 'Dzielnice w miastach i administracyjne osiedla (poziomy OpenStreetMap 9–10). Od powiększenia 10.',
+  'mf.bdQuarter': 'Osiedla i kwartały', 'mf.bdQuarterHelp': 'Najdrobniejszy poziom: mikrorejony, osiedla, kwartały, z nazwami. Od powiększenia 13.',
+  'mf.zoomInQ': 'Przybliż, aby je zobaczyć.', 'pl.zoomInQ': 'Przybliż, aby zobaczyć osiedla',
+  'pl.busy': 'Serwery map są zajęte: część granic jeszcze się nie wczytała.', 'pl.retryIn': 'Ponowna próba za {n} s', 'pl.retrying': 'Ponawiam…', 'pl.retryNow': 'Spróbuj teraz',
+  'stl.suburb': 'Dzielnica', 'stl.quarter': 'Kwartał', 'stl.neighbourhood': 'Osiedle', 'stl.microdistrict': 'Mikrorejon', 'stl.qlayer': 'Osiedla' },
+de: { 'mf.bdCityDist': 'Stadtbezirke', 'mf.bdCityDistHelp': 'Bezirke innerhalb von Städten und administrative Mikrorajons (OpenStreetMap-Ebenen 9–10). Ab Zoom 10.',
+  'mf.bdQuarter': 'Mikrorajons und Viertel', 'mf.bdQuarterHelp': 'Die feinste Ebene: Mikrorajons, Wohnsiedlungen, Quartiere und Viertel, mit Namen. Ab Zoom 13.',
+  'mf.zoomInQ': 'Näher heranzoomen, um sie zu sehen.', 'pl.zoomInQ': 'Heranzoomen, um Mikrorajons zu sehen',
+  'pl.busy': 'Die Kartenserver sind ausgelastet: einige Umrisse fehlen noch.', 'pl.retryIn': 'Neuer Versuch in {n} s', 'pl.retrying': 'Neuer Versuch…', 'pl.retryNow': 'Jetzt versuchen',
+  'stl.suburb': 'Bezirk', 'stl.quarter': 'Quartier', 'stl.neighbourhood': 'Viertel', 'stl.microdistrict': 'Mikrorajon', 'stl.qlayer': 'Mikrorajons' },
+fr: { 'mf.bdCityDist': 'Arrondissements', 'mf.bdCityDistHelp': 'Arrondissements des villes et microdistricts administratifs (niveaux OpenStreetMap 9–10). À partir du zoom 10.',
+  'mf.bdQuarter': 'Microdistricts et quartiers', 'mf.bdQuarterHelp': 'Le niveau le plus fin : microdistricts, grands ensembles, quartiers, avec leurs noms. À partir du zoom 13.',
+  'mf.zoomInQ': 'Zoomez davantage pour les voir.', 'pl.zoomInQ': 'Zoomez pour voir les microdistricts',
+  'pl.busy': 'Les serveurs de carte sont occupés : certains contours ne sont pas encore chargés.', 'pl.retryIn': 'Nouvel essai dans {n} s', 'pl.retrying': 'Nouvel essai…', 'pl.retryNow': 'Réessayer',
+  'stl.suburb': 'Arrondissement', 'stl.quarter': 'Quartier', 'stl.neighbourhood': 'Quartier', 'stl.microdistrict': 'Microdistrict', 'stl.qlayer': 'Microdistricts' },
+ru: { 'mf.bdCityDist': 'Районы городов', 'mf.bdCityDistHelp': 'Районы внутри городов и административные микрорайоны (уровни OpenStreetMap 9–10). С масштаба 10.',
+  'mf.bdQuarter': 'Микрорайоны и кварталы', 'mf.bdQuarterHelp': 'Самый мелкий уровень: микрорайоны, жилмассивы, кварталы, с названиями. С масштаба 13.',
+  'mf.zoomInQ': 'Приблизьте, чтобы их увидеть.', 'pl.zoomInQ': 'Приблизьте, чтобы увидеть микрорайоны',
+  'pl.busy': 'Серверы карты заняты: часть границ ещё не загрузилась.', 'pl.retryIn': 'Повтор через {n} с', 'pl.retrying': 'Пробую снова…', 'pl.retryNow': 'Попробовать сейчас',
+  'stl.suburb': 'Район', 'stl.quarter': 'Квартал', 'stl.neighbourhood': 'Микрорайон', 'stl.microdistrict': 'Микрорайон', 'stl.qlayer': 'Микрорайоны' }
+});
 
 </script>
 <script>
@@ -3665,7 +3700,7 @@ const prefs = Object.assign({
   lang: detectLang(), labelLang: 'match',
   dist: 'auto', areaM: 'km2', areaI: 'mi2', decimals: 'auto', coord: 'dec',
   watermark: true, sidebar: null,
-  searchMode: 'map', bdCountry: false, bdRegion: false, bdDistrict: false, bdCommunity: false, bdCity: false, rail: false, highways: false, aboutCollapsed: false, trace: false, traceRes: 'normal', traceMode: 'follow', mscaleView: 1, tlFold: false, fcGain: 'st-advance', fcLoss: 'st-liberated', fcLossOn: true,
+  searchMode: 'map', bdCountry: false, bdRegion: false, bdDistrict: false, bdCommunity: false, bdCity: false, bdCityDist: false, bdQuarter: false, rail: false, highways: false, aboutCollapsed: false, trace: false, traceRes: 'normal', traceMode: 'follow', mscaleView: 1, tlFold: false, fcGain: 'st-advance', fcLoss: 'st-liberated', fcLossOn: true,
   google: { key: '', session: '', expiry: 0, sessKey: '', method: 'auto', works: '' },
   cdse: oldPrefs.cdse || { id: '', layer: 'TRUE_COLOR', from: isoDate(new Date(Date.now() - 30 * 864e5)), to: isoDate(new Date()), cc: 30 }
 }, (() => { try { return JSON.parse(store.get(KEY_PREFS) || '{}'); } catch (e) { return {}; } })());
@@ -4202,11 +4237,11 @@ async function syncOverlays() {
    Drawn above the imagery and terrain colours, below labels and your own shapes, on any basemap.
    Border levels follow OpenStreetMap's admin_level: 2 country, 3–4 region/oblast/state,
    5–6 district/raion/county, 7–8 community (hromada in Ukraine, gmina, Gemeinde, commune).
-   Levels 9–10 are left out: they are city districts and neighbourhoods, not settlements.
+   9–10 city districts and microdistricts (shown with "City districts").
    City, town and village limits are not in the vector tiles at all: they are OpenStreetMap
    place outlines (place=city/town/village/hamlet), loaded for the view from Overpass (below). */
-const MF_KEYS = ['bdCountry', 'bdRegion', 'bdDistrict', 'bdCommunity', 'bdCity', 'rail', 'highways'];
-const MF_GL = MF_KEYS.filter(k => k !== 'bdCity');
+const MF_KEYS = ['bdCountry', 'bdRegion', 'bdDistrict', 'bdCommunity', 'bdCity', 'bdCityDist', 'bdQuarter', 'rail', 'highways'];
+const MF_GL = MF_KEYS.filter(k => k !== 'bdCity' && k !== 'bdQuarter');
 const lvl = (a, b) => ['all', ['>=', ['to-number', ['get', 'admin_level']], a], ['<=', ['to-number', ['get', 'admin_level']], b], ['!=', ['to-number', ['get', 'maritime']], 1]];
 // Width by zoom. `more` widens it, for the dark casing drawn under a line.
 const zw = (z0, w0, z1, w1, more = 0) => ['interpolate', ['linear'], ['zoom'], z0, w0 + more, z1, w1 + more];
@@ -4225,6 +4260,7 @@ function featureStyle(base) {
     line(id + '-c', 'boundary', f, { 'line-color': 'rgba(0,0,0,0.55)', 'line-width': zw(...w, 2), 'line-blur': 0.5 }, minzoom);
     line(id, 'boundary', f, { 'line-color': color, 'line-width': zw(...w), ...(dash ? { 'line-dasharray': dash } : {}) }, minzoom, dash ? { 'line-cap': 'butt' } : {});
   };
+  if (on('bdCityDist')) border('mf-cdist', lvl(9, 10), [10, 0.7, 16, 1.8], [1.5, 2], '#bfe9ff', 10);
   if (on('bdCommunity')) border('mf-comm', lvl(7, 8), [8, 0.8, 16, 2], [3, 2], '#e8edf5', 8);
   if (on('bdDistrict')) border('mf-dist', lvl(5, 6), [6, 0.9, 14, 2.4], [4, 2], '#ffffff', 6);
   if (on('bdRegion')) border('mf-reg', lvl(3, 4), [3, 1, 12, 3], [5, 2.5], '#ffffff', 2);
@@ -4283,19 +4319,32 @@ async function syncMapFeatures() {
    show up instantly. A chip on the map shows when it's loading. Drawn as a dashed outline like the
    one Google Maps shows for a searched town, above your shapes. Clicking an outline opens the
    settlement card (who controls how much of it, fill it in): see 59-settle.js. */
-const PL = { cells: new Set(), pending: new Set(), failed: new Map(), queue: [], running: 0, total: 0, done: 0, items: new Map(), group: null, renderer: null, attr: false, tm: 0 };
+const PL = { cells: new Set(), pending: new Set(), failed: new Map(), queue: [], running: 0, total: 0, done: 0, items: new Map(), group: null, qgroup: null, qlabels: null, renderer: null, attr: false, tm: 0, retryTm: 0, retryAt: 0, retries: 0, chipTm: 0 };
 map.createPane('pwPlaces').style.zIndex = 402;
 map.getPane('pwPlaces').style.pointerEvents = 'none';   // only the outlines themselves take clicks
-const PL_CELL = 0.15, PL_MINZ = 11, PL_HAMLETZ = 13, PL_BATCH = 4, PL_WORKERS = 2, PL_MAXCELLS = 80, PL_TTL = 14 * 864e5, PL_VER = 2;
-const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
+const PL_CELL = 0.15, PL_MINZ = 11, PL_HAMLETZ = 13, PL_QZ = 13, PL_BATCH = 4, PL_WORKERS = 2, PL_MAXCELLS = 80, PL_TTL = 14 * 864e5, PL_VER = 2;
+// Public Overpass servers. private.coffee (formerly overpass.kumi.systems) has no rate limit and four
+// machines; the main overpass-api.de is often overloaded and refuses parallel requests; VK Maps is a
+// third fallback.
+const OVERPASS = ['https://overpass.private.coffee/api/interpreter', 'https://overpass-api.de/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
 // The cells on screen, nearest the middle first. Each cell key carries its kind: "v" (cities, towns,
-// villages) or "h" (hamlets, only when zoomed in close).
+// villages), "h" (hamlets, only when zoomed in close) or "q" (microdistricts and neighbourhoods).
+const plOn = () => !!(prefs.bdCity || prefs.bdQuarter);
+function plKinds() {
+  const z = map.getZoom(), k = [];
+  if (prefs.bdCity && z >= PL_MINZ) { k.push('v'); if (z >= PL_HAMLETZ) k.push('h'); }
+  if (prefs.bdQuarter && z >= PL_QZ) k.push('q');
+  return k;
+}
+// What kind of place an OpenStreetMap outline is.
+const QUARTER_PLACES = ['suburb', 'quarter', 'neighbourhood'];
+const plKindOf = tags => tags.place === 'hamlet' ? 'h' : ['city', 'town', 'village'].includes(tags.place) ? 'v' : 'q';
 function plCells() {
   const b = map.getBounds(), c = map.getCenter(), out = [];
-  const kinds = map.getZoom() >= PL_HAMLETZ ? ['v', 'h'] : ['v'];
+  const kinds = plKinds();
   for (let x = Math.floor(b.getWest() / PL_CELL); x <= Math.floor(b.getEast() / PL_CELL); x++)
     for (let y = Math.floor(b.getSouth() / PL_CELL); y <= Math.floor(b.getNorth() / PL_CELL); y++)
-      kinds.forEach(k => out.push({ key: `${k}:${x},${y}`, d: Math.hypot((x + 0.5) * PL_CELL - c.lng, (y + 0.5) * PL_CELL - c.lat) + (k === 'h' ? 1e-3 : 0) }));
+      kinds.forEach(k => out.push({ key: `${k}:${x},${y}`, d: Math.hypot((x + 0.5) * PL_CELL - c.lng, (y + 0.5) * PL_CELL - c.lat) + (k === 'v' ? 0 : k === 'h' ? 1e-3 : 2e-3) }));
   return out.sort((a, b) => a.d - b.d).map(o => o.key);
 }
 const cellBox = key => { const [x, y] = key.slice(2).split(',').map(Number); return [x * PL_CELL, y * PL_CELL, (x + 1) * PL_CELL, (y + 1) * PL_CELL]; };
@@ -4322,21 +4371,51 @@ function fetchT(url, opts = {}, ms = 25000) {
   const c = new AbortController(), tm = setTimeout(() => c.abort(), ms);
   return fetch(url, { ...opts, signal: c.signal }).finally(() => clearTimeout(tm));
 }
-// The public Overpass servers are often busy: each is given a time limit, the next is tried when one
-// fails or hangs, and the one that answered last is asked first next time.
-let overpassBest = 0;
+// The public Overpass servers are often busy. Each request goes to the least busy server that isn't
+// resting; a server that says it's busy (429/503/504), times out or is unreachable rests for a while
+// (30 s, longer if it keeps failing), and the next server is tried. Requests running at the same time
+// go to different servers, so one server never gets two at once from us. A reply that is a time-out
+// in disguise (HTTP 200 with "runtime error") counts as a failure, so half-loaded areas aren't kept.
+// How many requests each server takes from us at once: private.coffee has four machines and no limit;
+// the main server refuses parallel requests from one visitor; VK gets one at a time too.
+const OVS = OVERPASS.map((u, i) => ({ rest: 0, fails: 0, busy: 0, ok: 0, max: i === 0 ? 2 : 1 }));
+class OverpassBusy extends Error {}
+function overpassPick() {
+  const now = Date.now();
+  return OVS.map((s, i) => i).filter(i => OVS[i].rest <= now && OVS[i].busy < OVS[i].max)
+    .sort((a, b) => OVS[a].busy - OVS[b].busy || OVS[b].ok - OVS[a].ok || a - b);
+}
 async function overpass(q, ms = 25000) {
   let last;
-  const order = [...OVERPASS.keys()].sort((a, b) => (a === overpassBest ? -1 : b === overpassBest ? 1 : a - b));
-  for (const i of order) {
+  const tried = new Set(), until = Date.now() + ms;
+  while (true) {
+    const i = overpassPick().find(x => !tried.has(x));
+    if (i === undefined) {
+      // Every server is resting or has already been tried for this request.
+      const waiting = OVS.some((s, j) => !tried.has(j) && s.rest <= Date.now());
+      if (!waiting || Date.now() > until) throw last || new OverpassBusy('All Overpass servers are busy');
+      await new Promise(r => setTimeout(r, 400));   // one is free soon: our own other request is using it
+      continue;
+    }
+    const st = OVS[i];
+    tried.add(i); st.busy++;
     try {
       const r = await fetchT(OVERPASS[i], { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }, ms);
-      if (r.ok) { const j = await r.json(); overpassBest = i; return j; }
-      last = new Error('Overpass ' + r.status);
-    } catch (e) { last = e; }
+      if (r.status === 400) throw Object.assign(new Error('Overpass query rejected'), { fatal: true });
+      if (!r.ok) throw new OverpassBusy('Overpass ' + r.status);
+      const j = await r.json();
+      if (j.remark && /runtime error|timed out|out of memory/i.test(j.remark)) throw new OverpassBusy('Overpass: ' + j.remark);
+      st.fails = 0; st.ok = Date.now();
+      return j;
+    } catch (e) {
+      if (e.fatal) throw e;
+      st.fails++; st.rest = Date.now() + Math.min(180000, 30000 * st.fails);
+      last = e;
+    } finally { st.busy--; }
   }
-  throw last || new Error('Overpass unavailable');
 }
+// When the next Overpass server will be ready again (0 = one is ready now).
+const overpassWait = () => { const now = Date.now(), r = OVS.map(s => s.rest - now); return r.some(x => x <= 0) ? 0 : Math.min(...r); };
 // Nominatim (OpenStreetMap's geocoder): at most one request a second, as its usage policy asks.
 let nomNext = 0;
 async function nominatim(path, ms = 20000) {
@@ -4346,55 +4425,101 @@ async function nominatim(path, ms = 20000) {
   if (!r.ok) throw new Error('Nominatim ' + r.status);
   return r.json();
 }
-const PL_STYLE = { city: [2.4, '7 5'], town: [2, '6 4'], village: [1.6, '5 4'], hamlet: [1.2, '3 3'] };
+const PL_STYLE = { city: [2.4, '7 5'], town: [2, '6 4'], village: [1.6, '5 4'], hamlet: [1.2, '3 3'], quarter: [1.3, '2 3'] };
+// Microdistricts and neighbourhoods are drawn in light blue, a step finer than settlements, with
+// their names when zoomed in (from zoom 14).
+const PL_QCOLOR = '#9fe3ff', PL_QLABELZ = 14;
 function plDraw(els) {
   els.forEach(el => {
     const k = el.type + '/' + el.id; if (PL.items.has(k)) return;
     const lines = el.type === 'way' ? [el.geometry] : (el.members || []).filter(m => m.type === 'way' && m.geometry && m.role !== 'label' && m.role !== 'admin_centre').map(m => m.geometry);
     const ll = lines.filter(g => g && g.length > 1).map(g => g.map(p => [p.lat, p.lon]));
     if (!ll.length) return;
-    const item = { k, tags: el.tags || {}, el, ll };
+    const tags = el.tags || {}, kind = plKindOf(tags), q = kind === 'q';
+    const item = { k, tags, el, ll, quarter: q };
     PL.items.set(k, item);
-    const [w, dash] = PL_STYLE[item.tags.place] || PL_STYLE.village;
+    const grp = q ? PL.qgroup : PL.group;
+    const [w, dash] = q ? PL_STYLE.quarter : PL_STYLE[tags.place] || PL_STYLE.village;
     const o = { renderer: PL.renderer, interactive: false, pmIgnore: true, lineCap: 'butt', lineJoin: 'round' };
-    L.polyline(ll, { ...o, color: '#000', opacity: 0.55, weight: w + 2 }).addTo(PL.group);
-    L.polyline(ll, { ...o, color: '#ffe27a', opacity: 0.95, weight: w, dashArray: dash }).addTo(PL.group);
+    L.polyline(ll, { ...o, color: '#000', opacity: q ? 0.45 : 0.55, weight: w + 2 }).addTo(grp);
+    L.polyline(ll, { ...o, color: q ? PL_QCOLOR : '#ffe27a', opacity: 0.95, weight: w, dashArray: dash }).addTo(grp);
     // A wide invisible stroke along the outline, so it's easy to click.
-    L.polyline(ll, { ...o, interactive: true, className: 'pl-hit', color: '#000', opacity: 0, weight: 14 })
-      .on('click', e => { L.DomEvent.stop(e); plOpen(item, e.latlng); }).addTo(PL.group);
+    L.polyline(ll, { ...o, interactive: true, className: 'pl-hit', color: '#000', opacity: 0, weight: q ? 10 : 14 })
+      .on('click', e => { L.DomEvent.stop(e); plOpen(item, e.latlng); }).addTo(grp);
+    if (q && tags.name) {
+      // Name in the middle of the biggest ring.
+      const ring = ll.reduce((a, b) => (b.length > a.length ? b : a)), n = ring.length;
+      const c = ring.reduce((s, p) => [s[0] + p[0] / n, s[1] + p[1] / n], [0, 0]);
+      L.marker(c, { pane: 'pwPlaces', interactive: false, keyboard: false, pmIgnore: true, icon: L.divIcon({ className: 'pl-qname', iconSize: null, html: `<span>${esc(plName(item))}</span>` }) }).addTo(PL.qlabels);
+    }
   });
 }
+// Microdistrict names only show from zoom 14, so they don't crowd the map.
+function plQLabels() {
+  if (!PL.qlabels) return;
+  const want = prefs.bdQuarter && map.getZoom() >= PL_QLABELZ;
+  if (want && !map.hasLayer(PL.qlabels)) PL.qlabels.addTo(map);
+  if (!want && map.hasLayer(PL.qlabels)) map.removeLayer(PL.qlabels);
+}
+map.on('zoomend', plQLabels);
 // The loading chip on the map.
 const plChip = document.createElement('div');
 plChip.className = 'pl-chip'; plChip.hidden = true;
 map.getContainer().appendChild(plChip);
 L.DomEvent.disableClickPropagation(plChip);
-plChip.addEventListener('click', e => { if (e.target.closest('[data-pl-retry]')) { PL.failed.clear(); syncPlaces(); } });
+plChip.addEventListener('click', e => { if (e.target.closest('[data-pl-retry]')) { plRetryNow(); } });
 function plChipShow() {
-  if (!prefs.bdCity) { plChip.hidden = true; return; }
+  clearTimeout(PL.chipTm);
+  if (!plOn()) { plChip.hidden = true; return; }
   const z = map.getZoom(), left = PL.queue.length + PL.running;
-  if (z < PL_MINZ) { plChip.hidden = false; plChip.className = 'pl-chip muted'; plChip.textContent = t('pl.zoomIn'); return; }
+  if ((prefs.bdCity && z < PL_MINZ) || (!prefs.bdCity && z < PL_QZ)) { plChip.hidden = false; plChip.className = 'pl-chip muted'; plChip.textContent = t(prefs.bdCity ? 'pl.zoomIn' : 'pl.zoomInQ'); return; }
   if (left) {
     plChip.hidden = false; plChip.className = 'pl-chip';
     plChip.innerHTML = `<span class="spin"></span>${esc(t('pl.loading'))}<small>${esc(t('pl.progress', { a: nf(PL.done, 0), b: nf(PL.total, 0) }))}</small>`;
     return;
   }
   const failedHere = plCells().filter(k => PL.failed.has(k)).length;
-  if (failedHere) { plChip.hidden = false; plChip.className = 'pl-chip err'; plChip.innerHTML = `${esc(t('pl.failed'))}<button type="button" data-pl-retry>${esc(t('rgn.retry'))}</button>`; return; }
+  if (failedHere) {
+    // The servers are busy: say so, count down to the automatic retry, and offer to try now.
+    const secs = PL.retryAt ? Math.max(0, Math.ceil((PL.retryAt - Date.now()) / 1000)) : 0;
+    plChip.hidden = false; plChip.className = 'pl-chip err';
+    plChip.innerHTML = `${esc(t('pl.busy'))}<small>${esc(secs ? t('pl.retryIn', { n: secs }) : t('pl.retrying'))}</small><button type="button" data-pl-retry>${esc(t('pl.retryNow'))}</button>`;
+    PL.chipTm = setTimeout(plChipShow, 1000);
+    return;
+  }
   plChip.hidden = true;
 }
+// Areas that failed are tried again by themselves: after 15 s, or when the next server has rested,
+// waiting longer each time it keeps failing (up to 2 minutes).
+function plScheduleRetry() {
+  if (PL.retryTm) return;
+  const wait = Math.max(Math.min(120000, 15000 * Math.pow(1.6, PL.retries)), overpassWait());
+  PL.retries++;
+  PL.retryAt = Date.now() + wait;
+  PL.retryTm = setTimeout(() => { PL.retryTm = 0; PL.retryAt = 0; PL.failed.clear(); syncPlaces(); }, wait);
+}
+function plRetryNow() {
+  clearTimeout(PL.retryTm); PL.retryTm = 0; PL.retryAt = 0;
+  OVS.forEach(s => { s.rest = 0; });        // you asked: try every server again
+  PL.failed.clear(); syncPlaces();
+}
 async function plLoadBatch(keys) {
-  const re = k => k[0] === 'h' ? '["place"="hamlet"]' : '["place"~"^(city|town|village)$"]';
-  const q = '[out:json][timeout:40];(' + keys.map(k => { const b = cellBox(k), bb = `(${b[1]},${b[0]},${b[3]},${b[2]})`; return `way${re(k)}${bb};relation${re(k)}${bb};`; }).join('') + ');out geom qt;';
+  // Microdistricts: OpenStreetMap places mapped as areas (suburb, quarter, neighbourhood), plus residential
+  // areas named as a microdistrict, housing estate or quarter (мікрорайон, житловий масив, квартал…).
+  const MKR = '[Мм][іи]крорайон|^мкр|[Жж]итловий масив|[Жж]илмассив|[Жж]илой массив|[Кк]вартал|[Сс]елище|[Пп]оселок|[Пп]осёлок';
+  const sel = (k, bb) => k[0] === 'h' ? `way["place"="hamlet"]${bb};relation["place"="hamlet"]${bb};`
+    : k[0] === 'q' ? `way["place"~"^(suburb|quarter|neighbourhood)$"]${bb};relation["place"~"^(suburb|quarter|neighbourhood)$"]${bb};way["landuse"="residential"]["name"~"${MKR}"]${bb};relation["landuse"="residential"]["name"~"${MKR}"]${bb};`
+    : `way["place"~"^(city|town|village)$"]${bb};relation["place"~"^(city|town|village)$"]${bb};`;
+  const q = '[out:json][timeout:40];(' + keys.map(k => { const b = cellBox(k); return sel(k, `(${b[1]},${b[0]},${b[3]},${b[2]})`); }).join('') + ');out geom qt;';
   const data = await overpass(q, 30000);
   const els = data.elements || [];
-  if (prefs.bdCity) plDraw(els);
+  plDraw(els);
   // File each place under every cell it touches, for next time.
   const per = new Map(keys.map(k => [k, []]));
   els.forEach(el => {
     const eb = elBox(el); if (!eb) return;
-    const hamlet = (el.tags || {}).place === 'hamlet';
-    keys.forEach(k => { if ((k[0] === 'h') !== hamlet) return; const b = cellBox(k); if (eb[2] >= b[0] && eb[0] <= b[2] && eb[3] >= b[1] && eb[1] <= b[3]) per.get(k).push(el); });
+    const kind = plKindOf(el.tags || {});
+    keys.forEach(k => { if (k[0] !== kind) return; const b = cellBox(k); if (eb[2] >= b[0] && eb[0] <= b[2] && eb[3] >= b[1] && eb[1] <= b[3]) per.get(k).push(el); });
   });
   per.forEach((v, k) => PLDB.set(`${PL_VER}:${k}`, { at: Date.now(), els: v }));
 }
@@ -4403,43 +4528,43 @@ function plPump() {
     const batch = PL.queue.splice(0, PL_BATCH);
     PL.running++;
     plLoadBatch(batch)
-      .then(() => batch.forEach(k => { PL.cells.add(k); PL.failed.delete(k); }))
-      .catch(err => { console.warn('Settlement limits unavailable', err); batch.forEach(k => PL.failed.set(k, Date.now())); })
+      .then(() => { PL.retries = 0; batch.forEach(k => { PL.cells.add(k); PL.failed.delete(k); }); })
+      .catch(err => { console.warn('Settlement limits unavailable', err); batch.forEach(k => PL.failed.set(k, Date.now())); plScheduleRetry(); })
       .finally(() => { batch.forEach(k => PL.pending.delete(k)); PL.running--; PL.done += batch.length; plPump(); plChipShow(); });
   }
   plChipShow();
 }
 async function syncPlaces() {
-  if (!prefs.bdCity) {
-    if (PL.group && map.hasLayer(PL.group)) map.removeLayer(PL.group);
+  if (!PL.group) { PL.renderer = L.svg({ pane: 'pwPlaces', padding: 0.4 }); PL.group = L.layerGroup(); PL.qgroup = L.layerGroup(); PL.qlabels = L.layerGroup(); }
+  const show = (g, on) => { if (on && !map.hasLayer(g)) g.addTo(map); if (!on && map.hasLayer(g)) map.removeLayer(g); };
+  show(PL.group, !!prefs.bdCity); show(PL.qgroup, !!prefs.bdQuarter); plQLabels();
+  if (!plOn()) {
     if (PL.attr) { map.attributionControl.removeAttribution(OSM_ATTR); PL.attr = false; }
     PL.queue = []; plChipShow();
     return;
   }
-  if (!PL.group) { PL.renderer = L.svg({ pane: 'pwPlaces', padding: 0.4 }); PL.group = L.layerGroup(); }
-  if (!map.hasLayer(PL.group)) PL.group.addTo(map);
   if (!PL.attr) { map.attributionControl.addAttribution(OSM_ATTR); PL.attr = true; }
-  if (map.getZoom() < PL_MINZ) { PL.queue = []; plChipShow(); return; }
+  if (!plKinds().length) { PL.queue = []; plChipShow(); return; }
   // Only what's on screen now: anything queued for a view you've moved away from is dropped.
   const visible = plCells().slice(0, PL_MAXCELLS), vis = new Set(visible);
   const dropped = PL.queue.filter(k => !vis.has(k));
   dropped.forEach(k => PL.pending.delete(k));
   PL.queue = PL.queue.filter(k => vis.has(k)); PL.total -= dropped.length;
   if (!PL.queue.length && !PL.running) { PL.total = 0; PL.done = 0; }
-  const fresh = visible.filter(k => !PL.cells.has(k) && !PL.pending.has(k) && !(PL.failed.has(k) && Date.now() - PL.failed.get(k) < 20000));
+  const fresh = visible.filter(k => !PL.cells.has(k) && !PL.pending.has(k) && !PL.failed.has(k));
   // Cells kept in this browser show at once; the rest go in the queue.
   fresh.forEach(k => PL.pending.add(k));
   const cached = await Promise.all(fresh.map(k => PLDB.get(`${PL_VER}:${k}`)));
   fresh.forEach((k, i) => {
     const c = cached[i];
-    if (c && Date.now() - c.at < PL_TTL) { if (prefs.bdCity) plDraw(c.els); PL.cells.add(k); PL.pending.delete(k); }
+    if (c && Date.now() - c.at < PL_TTL) { plDraw(c.els); PL.cells.add(k); PL.pending.delete(k); }
     else { PL.queue.push(k); PL.total++; }
   });
   const order = plCells();
   PL.queue.sort((a, b) => order.indexOf(a) - order.indexOf(b));
   plPump();
 }
-map.on('moveend', () => { if (prefs.bdCity) { clearTimeout(PL.tm); PL.tm = setTimeout(syncPlaces, 250); } else plChipShow(); });
+map.on('moveend', () => { if (plOn()) { clearTimeout(PL.tm); PL.tm = setTimeout(syncPlaces, 250); } else plChipShow(); });
 
 /* =========================================================================
    Terrain: topographic colours from open elevation tiles
@@ -4623,7 +4748,7 @@ function renderBasePanel() {
     <div class="bp-section">
       <span class="eyebrow">${esc(t('mf.title'))}</span>
       <span class="mf-sub">${esc(t('mf.borders'))}</span>
-      ${['bdCountry', 'bdRegion', 'bdDistrict', 'bdCommunity', 'bdCity'].map(k => `<label class="check mf-row"><input type="checkbox" data-mf="${k}" ${prefs[k] ? 'checked' : ''}><span class="mf-key mf-${k}"></span><span>${esc(t('mf.' + k))}<small>${esc(t('mf.' + k + 'Help'))}</small></span></label>`).join('')}
+      ${['bdCountry', 'bdRegion', 'bdDistrict', 'bdCommunity', 'bdCity', 'bdCityDist', 'bdQuarter'].map(k => `<label class="check mf-row"><input type="checkbox" data-mf="${k}" ${prefs[k] ? 'checked' : ''}><span class="mf-key mf-${k}"></span><span>${esc(t('mf.' + k))}<small>${esc(t('mf.' + k + 'Help'))}</small></span></label>`).join('')}
       <span class="mf-sub">${esc(t('mf.transport'))}</span>
       ${['rail', 'highways'].map(k => `<label class="check mf-row"><input type="checkbox" data-mf="${k}" ${prefs[k] ? 'checked' : ''}><span class="mf-key mf-${k}"></span><span>${esc(t('mf.' + k))}<small>${esc(t('mf.' + k + 'Help'))}</small></span></label>`).join('')}
     </div>
@@ -4668,7 +4793,7 @@ $('#basePanel').addEventListener('change', e => {
   if (id === 'bp-labels') { prefs.labels = e.target.checked; savePrefs(); if (prefs.base === 'google') setBase('google'); else syncOverlays(); }
   if (id === 'g-method') { prefs.google.method = e.target.value; G.results = {}; savePrefs(); if (googleKey()) setBase('google'); }
   if (id === 'bp-roads') { prefs.roads = e.target.checked; savePrefs(); syncOverlays(); }
-  if (e.target.dataset.mf) { prefs[e.target.dataset.mf] = e.target.checked; savePrefs(); syncMapFeatures(); if (e.target.dataset.mf === 'bdCity' && e.target.checked && map.getZoom() < PL_MINZ) toast(t('mf.zoomIn')); }
+  if (e.target.dataset.mf) { prefs[e.target.dataset.mf] = e.target.checked; savePrefs(); syncMapFeatures(); if (e.target.dataset.mf === 'bdCity' && e.target.checked && map.getZoom() < PL_MINZ) toast(t('mf.zoomIn')); if (e.target.dataset.mf === 'bdQuarter' && e.target.checked && map.getZoom() < PL_QZ) toast(t('mf.zoomInQ')); if (e.target.dataset.mf === 'bdCityDist' && e.target.checked && map.getZoom() < 10) toast(t('mf.zoomInQ')); }
   if (id === 'bp-topo') { prefs.topo = e.target.checked; savePrefs(); syncTerrain(); renderBasePanel(); }
   if (id === 'bp-trange') { prefs.topoRange = e.target.value; TOPO.autoKey = ''; savePrefs(); syncTerrain(); renderBasePanel(); }
   if (id === 'bp-topoop') { prefs.topoOpacity = +e.target.value; savePrefs(); if (terrainLayer) terrainLayer.setOpacity(prefs.topoOpacity); }
@@ -8793,7 +8918,7 @@ function weldPtsPreview(base) {
 // at full OpenStreetMap detail for the circled area, because the map tiles simplify them more the
 // further out you zoom. If that fails, the tile version is used.
 const BORDER_CACHE = new Map();
-const borderLevels = () => [...(prefs.bdCountry ? [2] : []), ...(prefs.bdRegion ? [3, 4] : []), ...(prefs.bdDistrict ? [5, 6] : []), ...(prefs.bdCommunity ? [7, 8] : [])];
+const borderLevels = () => [...(prefs.bdCountry ? [2] : []), ...(prefs.bdRegion ? [3, 4] : []), ...(prefs.bdDistrict ? [5, 6] : []), ...(prefs.bdCommunity ? [7, 8] : []), ...(prefs.bdCityDist ? [9, 10] : [])];
 async function exactBorders(zb, levels) {
   const px = (zb[2] - zb[0]) * 0.1 + 1e-4, py = (zb[3] - zb[1]) * 0.1 + 1e-4;
   const bb = [zb[1] - py, zb[0] - px, zb[3] + py, zb[2] + px].map(v => v.toFixed(5)).join(',');
@@ -8821,7 +8946,7 @@ function tileBorders(levels) {
   });
   return out;
 }
-const cityLines = () => prefs.bdCity ? [...PL.items.values()].flatMap(it => it.ll.map(l => l.map(([la, ln]) => [ln, la]))) : [];
+const cityLines = () => [...PL.items.values()].filter(it => (it.quarter ? prefs.bdQuarter : prefs.bdCity)).flatMap(it => it.ll.map(l => l.map(([la, ln]) => [ln, la])));
 // Full-detail borders are fetched ahead, for the whole view, as soon as you press Next, so they're
 // usually ready by the time you've drawn the loop.
 function borderPrefetch() {
@@ -8847,7 +8972,7 @@ async function exactFor(zb) {
   if (got && got.length) { $('#toast').hidden = true; return got; }
   return null;
 }
-const bordersOn = () => !!(prefs.bdCity || prefs.bdCountry || prefs.bdRegion || prefs.bdDistrict || prefs.bdCommunity);
+const bordersOn = () => !!(prefs.bdCity || prefs.bdCountry || prefs.bdRegion || prefs.bdDistrict || prefs.bdCommunity || prefs.bdCityDist || prefs.bdQuarter);
 // The border inside the circled area, as one line. Pieces are cut to the area, joined where they
 // meet (tiles split borders at their edges, and repeat a little of each other), and the longest
 // run through them is kept.
@@ -9715,7 +9840,7 @@ function plControl(item) {
 // Every polygon made from this place's outline (they remember where they came from), newest last.
 const fillsOf = item => [...feats.values()].filter(f => f._pw.osm === item.k);
 const fillOf = item => fillsOf(item).pop() || null;
-const fillLayerName = item => t(item.kind === 'region' ? 'rgn.layer' : 'stl.layer');
+const fillLayerName = item => t(item.kind === 'region' ? 'rgn.layer' : item.quarter ? 'stl.qlayer' : 'stl.layer');
 // A plain fill still sitting in the Settlements / Regions layer is the place itself, so it isn't
 // counted in that place's own shares. Once it's moved to another layer (say, cut into a front line)
 // it counts like any other shape.
@@ -9748,7 +9873,7 @@ function plFill(item, color) {
 }
 
 /* ---------- Card ---------- */
-const PLACE_KIND = { city: 'stl.city', town: 'stl.town', village: 'stl.village', hamlet: 'stl.hamlet' };
+const PLACE_KIND = { city: 'stl.city', town: 'stl.town', village: 'stl.village', hamlet: 'stl.hamlet', suburb: 'stl.suburb', quarter: 'stl.quarter', neighbourhood: 'stl.neighbourhood' };
 const FILL_COLORS = ['#d93025', '#1a73e8', '#f9ab00', '#9aa0a6', '#188038', '#7b1fa2'];
 function ensurePop() {
   if (!ST.pop) {
@@ -9772,7 +9897,7 @@ function plRender() {
   if (!el) return;
   if (item.kind === 'region' && !item.el) { rgnLoadingCard(item); return; }
   const c = plControl(item), copies = fillsOf(item);
-  const kind = item.kind === 'region' ? t(rgnKind(item.level)) : t(PLACE_KIND[item.tags.place] || 'stl.village');
+  const kind = item.kind === 'region' ? t(rgnKind(item.level)) : t(PLACE_KIND[item.tags.place] || (item.quarter ? 'stl.microdistrict' : 'stl.village'));
   if (item.kind === 'region') rgnOutline(item);
   const pct = v => v >= 99.95 ? '100%' : v > 0 && v < 0.1 ? '<0.1%' : nf(v, v < 10 ? 1 : 0) + '%';
   let body;
