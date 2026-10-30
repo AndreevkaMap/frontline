@@ -245,6 +245,29 @@ body.ms-dragging,body.ms-dragging *{cursor:grabbing!important;user-select:none}
 .feat-ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .feat-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .feat-meta{font:11.5px var(--f-mono);color:var(--muted);white-space:nowrap}
+.fi{display:flex;align-items:center;padding-left:calc(var(--d,0) * 14px)}
+.fi.is-sub{position:relative}
+.fi.is-sub::before{content:"";position:absolute;left:calc(var(--d) * 14px - 6px);top:0;bottom:0;border-left:1px dashed color-mix(in srgb, var(--muted) 45%, transparent)}
+.feat-tw{flex:none;width:18px;height:22px;display:grid;place-items:center;border:0;background:transparent;color:var(--muted);padding:0;border-radius:5px;margin-right:-4px}
+.feat-tw:hover{color:var(--text);background:var(--panel-2)}
+.feat-tw .ic{width:14px;height:14px;transform:rotate(-90deg);transition:transform .15s}
+.feat-tw.is-open .ic{transform:none}
+.feat-tw-pad{flex:none;width:14px}
+.feat-kids{font:600 10.5px var(--f-mono);color:var(--accent);background:var(--accent-weak);border-radius:20px;padding:0 6px;flex:none}
+.feat.drop-into-feat{box-shadow:inset 0 0 0 2px #ffb300;background:color-mix(in srgb, #ffb300 14%, transparent)}
+.sub-field select{width:100%}
+.sub-kids,.sub-add{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:6px}
+.sub-kids small,.sub-add small{width:100%;color:var(--muted);font-size:11.5px}
+.sub-chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--panel-2);border-radius:20px;padding:2px 9px 2px 5px;font-size:12px;max-width:100%}
+.sub-chip .feat-ico{color:var(--c);width:14px;height:14px}
+.sub-chip .feat-ico svg{width:12px;height:12px}
+.pw-pop-in{font-size:12px;color:var(--muted);margin:-2px 0 4px}
+.pw-pop-kids{margin-top:8px;border-top:1px solid var(--line);padding-top:6px}
+.pw-pop-kids summary{cursor:pointer;font-weight:600;font-size:12.5px}
+.pw-pop-kids ul{list-style:none;margin:4px 0 0;padding:0;max-height:180px;overflow:auto}
+.pw-pop-kids button{display:flex;align-items:center;gap:6px;width:100%;border:0;background:transparent;text-align:left;padding:4px 6px;border-radius:6px;color:inherit;font:inherit;font-size:13px}
+.pw-pop-kids button:hover{background:var(--panel-2)}
+.pw-pop-kids small{margin-left:auto;color:var(--muted);font-family:var(--f-mono)}
 .feat-empty{font-size:12.5px;color:var(--muted);padding:4px 10px 6px}
 
 /* ---------- Map ---------- */
@@ -3622,6 +3645,32 @@ fr: { 'ms.dragLayer': 'Glisser pour réordonner les calques, ou au milieu d’un
 ru: { 'ms.dragLayer': 'Перетащите, чтобы изменить порядок слоёв, или на середину другого слоя, чтобы вложить как подслой', 'lyr.addSub': 'Добавить подслой', 'lyr.unnest': 'Вынести из «{name}»',
   'lyr.subCount': ['{n} подслой', '{n} подслоя', '{n} подслоёв'], 'lyr.delQsub': 'Удалить «{name}» вместе с подслоями ({ns}) и содержимым ({nf})?', 'ms.layerNested': '«{name}» перенесён в «{parent}»' }
 });
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: { 'sub.count': ['Contains {n} item', 'Contains {n} items'], 'sub.open': 'Show what’s inside', 'sub.close': 'Hide what’s inside', 'sub.inside': 'Inside', 'sub.insideOf': 'Inside of',
+  'sub.none': '— Nothing (top level) —', 'sub.addIn': 'Draw a new one inside this:', 'sub.help': 'Put points and shapes inside others to group them: they’re listed under it as a drop-down and in its popup. You can also drag one onto another in the layer list.',
+  'sub.drawNow': 'Draw it now: it goes inside “{name}”.', 'sub.nested': ['Put {n} item inside “{name}”', 'Put {n} items inside “{name}”'], 'sub.toTop': ['Moved {n} item to the top of “{name}”', 'Moved {n} items to the top of “{name}”'],
+  'sub.kept': ['the {n} item inside it stays on the map', 'the {n} items inside it stay on the map'], 'sub.cant': 'Can’t put it there (not inside itself or something it contains).' },
+uk: { 'sub.count': ['Містить {n} об’єкт', 'Містить {n} об’єкти', 'Містить {n} об’єктів'], 'sub.open': 'Показати вміст', 'sub.close': 'Сховати вміст', 'sub.inside': 'Усередині', 'sub.insideOf': 'Усередині',
+  'sub.none': '— Ні в чому (верхній рівень) —', 'sub.addIn': 'Намалювати новий усередині:', 'sub.help': 'Кладіть точки й фігури в інші, щоб згрупувати: вони показуються під нею списком і в її спливному вікні. Можна й перетягнути одну на іншу в списку шарів.',
+  'sub.drawNow': 'Малюйте зараз: об’єкт потрапить у «{name}».', 'sub.nested': ['{n} об’єкт покладено в «{name}»', '{n} об’єкти покладено в «{name}»', '{n} об’єктів покладено в «{name}»'], 'sub.toTop': ['{n} об’єкт винесено на верхній рівень «{name}»', '{n} об’єкти винесено на верхній рівень «{name}»', '{n} об’єктів винесено на верхній рівень «{name}»'],
+  'sub.kept': ['{n} об’єкт усередині лишається на карті', '{n} об’єкти всередині лишаються на карті', '{n} об’єктів усередині лишаються на карті'], 'sub.cant': 'Сюди покласти не можна (не в себе саму й не в те, що вона містить).' },
+pl: { 'sub.count': ['Zawiera {n} obiekt', 'Zawiera {n} obiekty', 'Zawiera {n} obiektów'], 'sub.open': 'Pokaż zawartość', 'sub.close': 'Ukryj zawartość', 'sub.inside': 'Wewnątrz', 'sub.insideOf': 'Wewnątrz',
+  'sub.none': '— Niczego (najwyższy poziom) —', 'sub.addIn': 'Narysuj nowy wewnątrz:', 'sub.help': 'Wkładaj punkty i kształty do innych, aby je pogrupować: są wtedy wymienione pod nim jako lista i w jego dymku. Możesz też przeciągnąć jeden na drugi na liście warstw.',
+  'sub.drawNow': 'Rysuj teraz: trafi do „{name}”.', 'sub.nested': ['Włożono {n} obiekt do „{name}”', 'Włożono {n} obiekty do „{name}”', 'Włożono {n} obiektów do „{name}”'], 'sub.toTop': ['Przeniesiono {n} obiekt na najwyższy poziom „{name}”', 'Przeniesiono {n} obiekty na najwyższy poziom „{name}”', 'Przeniesiono {n} obiektów na najwyższy poziom „{name}”'],
+  'sub.kept': ['{n} obiekt wewnątrz zostaje na mapie', '{n} obiekty wewnątrz zostają na mapie', '{n} obiektów wewnątrz zostaje na mapie'], 'sub.cant': 'Nie można tam włożyć (nie do siebie ani do tego, co zawiera).' },
+de: { 'sub.count': ['Enthält {n} Objekt', 'Enthält {n} Objekte'], 'sub.open': 'Inhalt zeigen', 'sub.close': 'Inhalt ausblenden', 'sub.inside': 'In', 'sub.insideOf': 'Liegt in',
+  'sub.none': '— Nichts (oberste Ebene) —', 'sub.addIn': 'Neues darin zeichnen:', 'sub.help': 'Lege Punkte und Formen in andere, um sie zu gruppieren: Sie stehen darunter als Ausklappliste und in ihrem Popup. Du kannst auch eins in der Ebenenliste auf ein anderes ziehen.',
+  'sub.drawNow': 'Jetzt zeichnen: es kommt in „{name}“.', 'sub.nested': ['{n} Objekt in „{name}“ gelegt', '{n} Objekte in „{name}“ gelegt'], 'sub.toTop': ['{n} Objekt auf die oberste Ebene von „{name}“ verschoben', '{n} Objekte auf die oberste Ebene von „{name}“ verschoben'],
+  'sub.kept': ['das {n} Objekt darin bleibt auf der Karte', 'die {n} Objekte darin bleiben auf der Karte'], 'sub.cant': 'Dort nicht möglich (nicht in sich selbst oder in etwas, das es enthält).' },
+fr: { 'sub.count': ['Contient {n} élément', 'Contient {n} éléments'], 'sub.open': 'Afficher le contenu', 'sub.close': 'Masquer le contenu', 'sub.inside': 'Dans', 'sub.insideOf': 'À l’intérieur de',
+  'sub.none': '— Rien (niveau supérieur) —', 'sub.addIn': 'En dessiner un nouveau à l’intérieur :', 'sub.help': 'Placez des points et des formes dans d’autres pour les grouper : ils sont listés dessous en menu déroulant et dans sa bulle. Vous pouvez aussi en glisser un sur un autre dans la liste des calques.',
+  'sub.drawNow': 'Dessinez-le maintenant : il ira dans « {name} ».', 'sub.nested': ['{n} élément placé dans « {name} »', '{n} éléments placés dans « {name} »'], 'sub.toTop': ['{n} élément déplacé au niveau supérieur de « {name} »', '{n} éléments déplacés au niveau supérieur de « {name} »'],
+  'sub.kept': ['l’élément qu’il contenait reste sur la carte', 'les {n} éléments qu’il contenait restent sur la carte'], 'sub.cant': 'Impossible de le placer là (pas dans lui-même ni dans ce qu’il contient).' },
+ru: { 'sub.count': ['Содержит {n} объект', 'Содержит {n} объекта', 'Содержит {n} объектов'], 'sub.open': 'Показать содержимое', 'sub.close': 'Скрыть содержимое', 'sub.inside': 'Внутри', 'sub.insideOf': 'Внутри',
+  'sub.none': '— Ни в чём (верхний уровень) —', 'sub.addIn': 'Нарисовать новый внутри:', 'sub.help': 'Кладите точки и фигуры в другие, чтобы сгруппировать: они показываются под ней выпадающим списком и в её всплывающем окне. Можно и перетащить одну на другую в списке слоёв.',
+  'sub.drawNow': 'Рисуйте сейчас: объект попадёт в «{name}».', 'sub.nested': ['{n} объект помещён в «{name}»', '{n} объекта помещены в «{name}»', '{n} объектов помещены в «{name}»'], 'sub.toTop': ['{n} объект вынесен на верхний уровень «{name}»', '{n} объекта вынесены на верхний уровень «{name}»', '{n} объектов вынесены на верхний уровень «{name}»'],
+  'sub.kept': ['{n} объект внутри остаётся на карте', '{n} объекта внутри остаются на карте', '{n} объектов внутри остаются на карте'], 'sub.cant': 'Сюда нельзя (не в саму себя и не в то, что она содержит).' }
+});
 
 </script>
 <script>
@@ -5738,12 +5787,13 @@ function getGeom(lyr) {
 const cleanStyle = s => Object.fromEntries(Object.entries(s || {}).filter(([, v]) => v !== null && v !== undefined && !(typeof v === 'number' && isNaN(v))));
 
 function normalizeRec(rec, lr) {
-  const cb = rec.cb || '', osm = typeof rec.osm === 'string' ? rec.osm.slice(0, 40) : '';
+  const cb = rec.cb || '', osm = typeof rec.osm === 'string' ? rec.osm.slice(0, 40) : '', pf = typeof rec.parentF === 'string' ? rec.parentF.slice(0, 40) : '';
   rec = { id: rec.id || uid(), layerId: lr.id, kind: rec.kind, name: rec.name ?? '', desc: rec.desc ?? '', showLabel: !!rec.showLabel, style: Object.assign(defaultStyle(rec.kind, lr.color), cleanStyle(rec.style)), from: normDate(rec.from), until: normDate(rec.until) };
   if (!rec.from) delete rec.from;
   if (!rec.until) delete rec.until;
   if (cb) rec.cb = cb;                 // who added the shape (shared maps)
   if (osm) rec.osm = osm;              // a settlement fill: the OpenStreetMap outline it was made from
+  if (pf && pf !== rec.id) rec.parentF = pf;   // sits inside another shape of the same layer (a sub-item)
   if (rec.style.icon && !S.icons.has(rec.style.icon)) delete rec.style.icon;
   if (rec.style.scale !== undefined) { const v = msNorm(rec.style.scale); if (v === 1 || rec.kind !== 'marker') delete rec.style.scale; else rec.style.scale = v; }
   if (rec.style.dash && !DASHES.includes(rec.style.dash)) delete rec.style.dash;
@@ -5762,6 +5812,19 @@ function updateFeatureInPlace(lyr, val) {
   applyStyle(lyr);
   return true;
 }
+/* ---------- Sub-items ----------
+   A marker or shape can hold other markers and shapes of the same layer (rec.parentF = the id of the
+   one it sits in). They're listed under it as a drop-down, in the layer list and in its popup, and they
+   move to another layer together. If the outer one is deleted, its sub-items stay where they are and
+   simply show at the top level (undo puts them back inside). */
+// UI state: which sub-item drop-downs are open in the list; a parent waiting for a new sub-item.
+const FT = { open: new Set(), pending: null };
+const featParent = r => { const p = r && r.parentF && feats.get(r.parentF); return p && p._pw.layerId === r.layerId && p._pw.id !== r.id ? p : null; };
+function featAncestors(r) { const out = []; let p = featParent(r); while (p && out.length < 50 && !out.includes(p)) { out.push(p); p = featParent(p._pw); } return out; }
+const featKids = r => { const l = getLayer(r.layerId); return l ? l.group.getLayers().filter(f => f._pw && f._pw.parentF === r.id && featParent(f._pw) && featParent(f._pw)._pw.id === r.id) : []; };
+function featDescendants(r) { const out = [], q = [r]; while (q.length && out.length < 5000) { const cur = q.shift(); featKids(cur).forEach(k => { if (!out.includes(k)) { out.push(k); q.push(k._pw); } }); } return out; }
+// Can `fid` be put inside `pid`? Not inside itself or one of its own sub-items.
+const canNestIn = (fid, pid) => { const p = feats.get(pid), f = feats.get(fid); return !!(p && f && fid !== pid && !featAncestors(p._pw).some(a => a._pw.id === fid)); };
 function createFeature(rec, geom) {
   const lr = getLayer(rec.layerId) || activeLayer();
   rec = normalizeRec(rec, lr);
@@ -6872,8 +6935,23 @@ function metricLine(lyr) {
 function popupHtml(lyr) {
   const r = lyr._pw, l = getLayer(r.layerId);
   const dates = r.from || r.until ? `<div class="pw-pop-d">${esc(dateRange(r.from, r.until))}</div>` : '';
-  return `<div class="pw-pop"><div class="eyebrow">${esc(KIND(r.kind))} · ${esc(l ? l.name : '')}</div><h3>${esc(r.name || t('kind.untitled'))}</h3>${dates}${r.desc ? `<div class="pw-pop-desc">${formatDesc(r.desc)}</div>` : ''}<div class="pw-pop-m">${esc(metricLine(lyr))}</div></div>`;
+  const up = featParent(r), kids = featKids(r);
+  const inside = up ? `<div class="pw-pop-in">${esc(t('sub.inside'))} <button type="button" class="link-btn" data-kid="${up._pw.id}">${esc(up._pw.name || KIND(up._pw.kind))}</button></div>` : '';
+  const list = kids.length ? `<details class="pw-pop-kids" open><summary>${esc(tn('sub.count', kids.length))}</summary><ul>${kids.map(k => { const q = k._pw, ic = q.kind === 'marker' && q.style.icon && S.icons.get(q.style.icon), n = featKids(q).length; return `<li><button type="button" data-kid="${q.id}"><span class="feat-ico" style="--c:${q.style.color}">${ic ? `<img src="${esc(ic.src)}" alt="">` : KIND_GLYPH[q.kind]}</span><span>${esc(q.name || KIND(q.kind))}</span>${n ? `<small>${nf(n, 0)}</small>` : ''}</button></li>`; }).join('')}</ul></details>` : '';
+  return `<div class="pw-pop"><div class="eyebrow">${esc(KIND(r.kind))} · ${esc(l ? l.name : '')}</div><h3>${esc(r.name || t('kind.untitled'))}</h3>${inside}${dates}${r.desc ? `<div class="pw-pop-desc">${formatDesc(r.desc)}</div>` : ''}<div class="pw-pop-m">${esc(metricLine(lyr))}</div>${list}</div>`;
 }
+// A sub-item (or the shape it's in) clicked in a popup: select it, show it and open its own popup.
+document.addEventListener('click', e => {
+  const b = e.target.closest('.pw-popup [data-kid]'); if (!b) return;
+  const f = feats.get(b.dataset.kid); if (!f) return;
+  e.preventDefault(); e.stopPropagation();
+  const l = getLayer(f._pw.layerId);
+  if (l && revealLayer(l)) { syncLayerOrder(); renderLayers(); }
+  if (TL.on && !featureAt(f._pw, TL.date)) setTLDate(f._pw.from || addDays(f._pw.until, -1));
+  setTool('select'); select(f._pw.id, { zoom: true });
+  const ll = f.getLatLng ? f.getLatLng() : f.getBounds().getCenter();
+  setTimeout(() => L.popup({ className: 'pw-popup', maxWidth: 300, autoPanPadding: [60, 60], offset: popupOffset(f) }).setLatLng(ll).setContent(popupHtml(f)).openOn(map), 650);
+}, true);
 function select(id, opts = {}) {
   if (selectedId && selectedId !== id) { const prev = feats.get(selectedId); if (prev) setSelVisual(prev, false); stopSingleEdit(); }
   const lyr = feats.get(id);
@@ -6881,6 +6959,9 @@ function select(id, opts = {}) {
   selectedId = id;
   if (!opts.keepMulti) { MS.ids = new Set([id]); MS.anchor = id; msRender(); }
   setSelVisual(lyr, true);
+  // A sub-item picked on the map: open the drop-downs it's in, so it shows in the list.
+  const closed = featAncestors(lyr._pw).filter(a => !FT.open.has(a._pw.id));
+  if (closed.length) { closed.forEach(a => FT.open.add(a._pw.id)); renderLayers(); }
   if (opts.zoom) zoomTo(lyr);
   if (sync.override !== id) sync.override = null;
   renderInspector();
@@ -6962,7 +7043,8 @@ function renderInspector() {
       <fieldset class="ins-fs" ${dis}>
       <label class="field"><span>${esc(t('ins.name'))}</span><input id="f-name" type="text" class="ins-name" value="${esc(r.name)}" autocomplete="off" placeholder="${esc(k === 'label' ? t('ins.labelPh') : t('kind.untitled'))}"></label>
       ${k !== 'label' ? `<label class="field"><span>${esc(t('ins.desc'))}</span><textarea id="f-desc" rows="3" placeholder="${esc(t('ins.descPh'))}">${esc(r.desc)}</textarea><small>${esc(t('ins.descHelp'))}</small></label>` : ''}
-      <label class="field"><span>${esc(t('ins.layer'))}</span><select id="f-layer">${S.layers.map(l => `<option value="${l.id}" ${l.id === r.layerId ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></label>
+      <label class="field"><span>${esc(t('ins.layer'))}</span><select id="f-layer">${S.layers.map(l => `<option value="${l.id}" ${l.id === r.layerId ? 'selected' : ''}>${'\u2003'.repeat(ancestors(l).length)}${esc(l.name)}</option>`).join('')}</select></label>
+      ${subField(lyr)}
       ${isVec ? stylesField(r) : ''}
       ${k === 'marker' ? msField(r) : ''}
       <div class="drop-row"><button type="button" class="btn sm" data-ins="dropper" title="${esc(t('drop.tip'))}">${icon('dropper')}<span>${esc(t('drop.btn'))}</span></button><small>${esc(t('drop.help'))}</small></div>
@@ -7040,6 +7122,21 @@ function msField(r) {
   const v = +r.style.scale || 1, note = msNote(r);
   return `<div class="field"><span>${esc(t('ms.marker'))} ${numIn('f-mscale', Math.round(v * 100), MS_MIN * 100, MS_MAX * 100, 1, '%')}</span><input type="range" id="f-mscale" min="${MS_MIN}" max="${MS_MAX}" step="0.01" value="${v}" aria-label="${esc(t('ms.marker'))}"><small id="f-msnote">${esc(note || t('ms.markerHelp'))}</small></div>`;
 }
+// Sub-items in the panel: what this sits inside, what it holds, and buttons to draw more inside it.
+function subField(lyr) {
+  const r = lyr._pw, l = getLayer(r.layerId); if (!l) return '';
+  const others = l.group.getLayers().filter(f => f._pw && canNestIn(r.id, f._pw.id));
+  const depth = f => featAncestors(f._pw).length;
+  const order = []; const add = (f, seen = new Set()) => { if (seen.has(f)) return; seen.add(f); order.push(f); featKids(f._pw).forEach(k => add(k, seen)); };
+  others.filter(f => !featParent(f._pw) || !others.includes(featParent(f._pw))).forEach(f => add(f));
+  const opts = order.filter(f => others.includes(f)).map(f => `<option value="${f._pw.id}" ${r.parentF === f._pw.id && featParent(r) ? 'selected' : ''}>${'\u2003'.repeat(depth(f))}${esc(f._pw.name || KIND(f._pw.kind))}</option>`).join('');
+  const kids = featKids(r);
+  return `<div class="field sub-field"><span>${esc(t('sub.insideOf'))}</span>
+    <select id="f-parent"><option value="">${esc(t('sub.none'))}</option>${opts}</select>
+    ${kids.length ? `<div class="sub-kids"><small>${esc(tn('sub.count', kids.length))}</small>${kids.map(k => `<button type="button" class="sub-chip" data-kidsel="${k._pw.id}" style="--c:${k._pw.style.color}"><span class="feat-ico">${KIND_GLYPH[k._pw.kind]}</span>${esc(k._pw.name || KIND(k._pw.kind))}</button>`).join('')}</div>` : ''}
+    <div class="sub-add"><small>${esc(t('sub.addIn'))}</small>${[['marker', 'kind.marker'], ['polygon', 'kind.polygon'], ['line', 'kind.line']].filter(([k]) => toolAllowed(k)).map(([k, lab]) => `<button type="button" class="btn sm" data-ins="add-in" data-k="${k}">${icon('plus')}<span>${esc(t(lab))}</span></button>`).join('')}</div>
+    <small class="help">${esc(t('sub.help'))}</small></div>`;
+}
 const screenPick = fid => 'EyeDropper' in window ? `<button type="button" class="icon-btn sm" data-ins="screenpick" data-target="${fid}" title="${esc(t('drop.screen'))}" aria-label="${esc(t('drop.screen'))}">${icon('dropper')}</button>` : '';
 const numIn = (fid, v, min, max, step, unit) => `<span class="num-wrap"><input type="number" class="num-in" data-for="${fid}" data-scale="${unit === '%' ? 100 : 1}" min="${min}" max="${max}" step="${step}" value="${v}" inputmode="decimal">${unit}</span>`;
 function numShow(fid, v) { const n = $(`#inspector .num-in[data-for="${fid}"]`); if (n && document.activeElement !== n) n.value = v; }
@@ -7072,6 +7169,7 @@ $('#inspector').addEventListener('change', e => {
   const el = e.target;
   if (el.id === 'f-showlabel') insUpdate(r => { r.showLabel = el.checked; });
   if (el.id === 'f-layer') moveToLayer(selectedId, el.value);
+  if (el.id === 'f-parent') { if (el.value) nestMany([selectedId], el.value); else unnest(selectedId); }
   if (el.id === 'f-from' || el.id === 'f-until') {
     const lyr = feats.get(selectedId); if (!lyr) return;
     const from = $('#f-from').value || null, until = $('#f-until').value || null;
@@ -7108,9 +7206,18 @@ $('#inspector').addEventListener('click', e => {
   if (sdel) { const st = S.styles.get(sdel.dataset.stDel); if (st) { deleteStyle(st.id); commit(); renderInspector(); toast(t('st.deleted', { name: stName(st) })); } return; }
   const cp = e.target.closest('[data-copy]');
   if (cp) { copyText(cp.dataset.copy, t('ins.copied')); return; }
+  const ks = e.target.closest('[data-kidsel]');
+  if (ks) { select(ks.dataset.kidsel, { zoom: true }); return; }
   const act = e.target.closest('[data-ins]')?.dataset.ins;
   const lyr = feats.get(selectedId);
   if (!act || !lyr) return;
+  if (act === 'add-in') {
+    // Draw a new marker, shape or line that goes inside this one.
+    const k = e.target.closest('[data-k]').dataset.k, pid = lyr._pw.id, name = lyr._pw.name || KIND(lyr._pw.kind);
+    setTool(k); FT.pending = { pid };
+    toast(t('sub.drawNow', { name }));
+    return;
+  }
   if (act === 'dropper') { dropStart([selectedId]); return; }
   if (act === 'screenpick') {
     // The browser's own colour picker for anything on screen (imagery, an overlay, another app).
@@ -7140,13 +7247,8 @@ $('#inspector').addEventListener('click', e => {
 });
 async function copyText(txt, okMsg) { try { await navigator.clipboard.writeText(txt); toast(okMsg); } catch (err) { toast(txt); } }
 function moveToLayer(fid, lid) {
-  const lyr = feats.get(fid), to = getLayer(lid);
-  if (!lyr || !to) return;
-  const from = getLayer(lyr._pw.layerId);
-  if (from) from.group.removeLayer(lyr);
-  to.group.addLayer(lyr);
-  lyr._pw.layerId = lid;
-  applyStyle(lyr);
+  const to = getLayer(lid); if (!feats.get(fid) || !to) return;
+  moveFeats([fid], lid);           // its sub-items go with it
   if (!layerShown(to)) { toast(t('lyr.hiddenMoved', { name: to.name })); deselect(); }
   commit();
 }
@@ -7156,9 +7258,10 @@ function deleteFeature(fid) {
   const name = lyr._pw.name || KIND(lyr._pw.kind);
   if (fid === selectedId) deselect();
   const l = getLayer(lyr._pw.layerId); if (l) l.group.removeLayer(lyr);
+  const kids = featKids(lyr._pw).length;
   feats.delete(fid); map.closePopup();
-  commit();
-  toast(t('toast.deleted', { name }), '', { label: t('toast.undo'), fn: undo });
+  commit(); if (kids) renderLayers();
+  toast(t('toast.deleted', { name }) + (kids ? ' · ' + tn('sub.kept', kids) : ''), '', { label: t('toast.undo'), fn: undo });
 }
 function duplicateFeature(fid) {
   const lyr = feats.get(fid); if (!lyr) return;
@@ -7175,6 +7278,24 @@ function duplicateFeature(fid) {
 /* =========================================================================
    Sidebar: layers and features
    ========================================================================= */
+// A layer's shapes as list rows: sub-items sit indented under the shape they're in, as a drop-down
+// (closed until you click that shape or its arrow).
+function featRows(fs) {
+  const ids = new Set(fs.map(f => f._pw.id)), kidsBy = new Map();
+  fs.forEach(f => { const p = featParent(f._pw); if (p && ids.has(p._pw.id)) { if (!kidsBy.has(p._pw.id)) kidsBy.set(p._pw.id, []); kidsBy.get(p._pw.id).push(f); } });
+  const isKid = f => { const p = featParent(f._pw); return p && ids.has(p._pw.id); };
+  const row = (f, d, seen) => {
+    const r = f._pw, kids = kidsBy.get(r.id) || [], open = FT.open.has(r.id);
+    const lk = lockedBy(r.id), hidden = TL.on && !featureAt(r, TL.date);
+    const ic = r.kind === 'marker' && r.style.icon && S.icons.get(r.style.icon);
+    const tw = kids.length ? `<button type="button" class="feat-tw ${open ? 'is-open' : ''}" data-ftw="${r.id}" aria-expanded="${open}" aria-label="${esc(t(open ? 'sub.close' : 'sub.open'))}">${icon('chevron')}</button>` : (d ? '<span class="feat-tw-pad"></span>' : '');
+    const self = `<li class="fi ${d ? 'is-sub' : ''}" style="--d:${d}">${tw}<button class="feat ${r.id === selectedId ? 'is-sel' : ''} ${MS.ids.has(r.id) && MS.ids.size > 1 ? 'is-msel' : ''} ${hidden ? 'is-off' : ''}" data-fid="${r.id}"><span class="feat-ico" style="--c:${r.style.color}">${ic ? `<img src="${esc(ic.src)}" alt="">` : KIND_GLYPH[r.kind]}</span><span class="feat-name">${esc(r.name || KIND(r.kind))}</span>${kids.length ? `<span class="feat-kids" title="${esc(tn('sub.count', kids.length))}">${nf(kids.length, 0)}</span>` : ''}${lk ? `<span class="avatar xs" style="--c:${lk.color || userColor(lk.uid)}" title="${esc(t('sync.lockedBy', { name: lk.name || '?' }))}">${esc(initials(lk.name))}</span>` : ''}<span class="feat-meta">${shortMetric(f)}</span></button></li>`;
+    if (!open || seen.has(r.id)) return self;
+    seen.add(r.id);
+    return self + kids.map(k => row(k, d + 1, seen)).join('');
+  };
+  return fs.filter(f => !isKid(f)).map(f => row(f, 0, new Set())).join('');
+}
 function renderLayers() {
   const el = $('#layerList');
   // Layers nest: each section holds its shapes, then its sub-layers.
@@ -7191,12 +7312,7 @@ function renderLayers() {
         <button class="icon-btn sm" data-act="menu" aria-label="${esc(t('lyr.options'))}">${icon('more')}</button>
       </header>
       ${active && !S.readOnly ? `<div class="lyr-active-note">${esc(t('lyr.activeNote'))}</div>` : ''}
-      <ul class="feat-list">${fs.map(f => {
-        const r = f._pw;
-        const lk = lockedBy(r.id), hidden = TL.on && !featureAt(r, TL.date);
-        const ic = r.kind === 'marker' && r.style.icon && S.icons.get(r.style.icon);
-        return `<li><button class="feat ${r.id === selectedId ? 'is-sel' : ''} ${MS.ids.has(r.id) && MS.ids.size > 1 ? 'is-msel' : ''} ${hidden ? 'is-off' : ''}" data-fid="${r.id}"><span class="feat-ico" style="--c:${r.style.color}">${ic ? `<img src="${esc(ic.src)}" alt="">` : KIND_GLYPH[r.kind]}</span><span class="feat-name">${esc(r.name || KIND(r.kind))}</span>${lk ? `<span class="avatar xs" style="--c:${lk.color || userColor(lk.uid)}" title="${esc(t('sync.lockedBy', { name: lk.name || '?' }))}">${esc(initials(lk.name))}</span>` : ''}<span class="feat-meta">${shortMetric(f)}</span></button></li>`;
-      }).join('') || (kids.length ? '' : `<li class="feat-empty">${esc(t('lyr.empty'))}</li>`)}</ul>
+      <ul class="feat-list">${featRows(fs) || (kids.length ? '' : `<li class="feat-empty">${esc(t('lyr.empty'))}</li>`)}</ul>
       ${kids.length ? `<div class="lyr-kids">${kids.map(html).join('')}</div>` : ''}
     </section>`;
   };
@@ -7207,10 +7323,14 @@ function renderLayers() {
 }
 $('#layerList').addEventListener('click', e => {
   if (Date.now() - MS.eatClick < 350) { e.stopPropagation(); return; }   // the end of a drag, not a click
+  const tw = e.target.closest('[data-ftw]');
+  if (tw) { const id = tw.dataset.ftw; if (FT.open.has(id)) FT.open.delete(id); else FT.open.add(id); renderLayers(); return; }
   const fb = e.target.closest('.feat');
   if (fb && DROP.on) { dropFrom(feats.get(fb.dataset.fid), e.altKey); return; }
   if (fb) {
     const id = fb.dataset.fid;
+    // Clicking a shape that holds others opens its drop-down.
+    if (!e.shiftKey && !e.ctrlKey && !e.metaKey && feats.get(id) && featKids(feats.get(id)._pw).length && !FT.open.has(id)) { FT.open.add(id); renderLayers(); }
     // Like a file list: Ctrl/Cmd toggles one, Shift picks the whole run from the last one clicked.
     if (e.shiftKey && MS.anchor) { msRange(MS.anchor, id, e.ctrlKey || e.metaKey); return; }
     if (e.ctrlKey || e.metaKey) { msToggle(id); return; }
@@ -7492,20 +7612,46 @@ function msRange(a, b, add) {
 function msClear() { MS.ids.clear(); MS.anchor = null; msRender(); }
 
 /* ---------- Group actions ---------- */
+// Move shapes to a layer. Their sub-items go with them; a shape whose outer shape stays behind (or
+// that is moved to the top level of its own layer) comes out of it. Returns what happened.
+function moveFeats(ids, lid) {
+  const base = new Set(ids), all = new Set(ids);
+  ids.forEach(id => { const f = feats.get(id); if (f) featDescendants(f._pw).forEach(k => all.add(k._pw.id)); });
+  let moved = 0, refused = 0, out = 0;
+  all.forEach(id => {
+    const f = feats.get(id); if (!f) return;
+    const r = f._pw, same = r.layerId === lid, leaves = base.has(id) && !!r.parentF && !all.has(r.parentF);
+    if (same && !leaves) return;
+    if (!canEditFeature(r)) { refused++; return; }
+    if (leaves) { delete r.parentF; out++; }
+    if (!same) { const from = getLayer(r.layerId); if (from) from.group.removeLayer(f); getLayer(lid).group.addLayer(f); r.layerId = lid; applyStyle(f); moved++; }
+  });
+  return { moved, refused, out };
+}
 function moveMany(ids, lid) {
   const to = getLayer(lid); if (!to) return;
-  let moved = 0, refused = 0;
-  ids.forEach(id => {
-    const f = feats.get(id); if (!f) return;
-    if (f._pw.layerId === lid) return;
-    if (!canEditFeature(f._pw)) { refused++; return; }
-    const from = getLayer(f._pw.layerId); if (from) from.group.removeLayer(f);
-    to.group.addLayer(f); f._pw.layerId = lid; applyStyle(f); moved++;
-  });
-  if (!moved) { if (refused) toast(t('perm.notYours'), 'error'); return; }
+  const { moved, refused, out } = moveFeats(ids, lid);
+  if (!moved && !out) { if (refused) toast(t('perm.notYours'), 'error'); return; }
   if (selectedId && !layerShown(to)) deselect({ keepMulti: true });
-  restoreZ(); commit(); msRender();
-  toast(tn('ms.moved', moved, { name: to.name }) + (refused ? ' · ' + tn('ms.refused', refused) : '') + (!layerShown(to) ? ' · ' + t('ms.hiddenLayer') : ''), '', { label: t('toast.undo'), fn: undo });
+  restoreZ(); commit(); msRender(); renderLayers();
+  const msg = moved ? tn('ms.moved', moved, { name: to.name }) : tn('sub.toTop', out, { name: to.name });
+  toast(msg + (refused ? ' · ' + tn('ms.refused', refused) : '') + (!layerShown(to) ? ' · ' + t('ms.hiddenLayer') : ''), '', { label: t('toast.undo'), fn: undo });
+}
+// Put shapes inside another shape (moving them, with their own sub-items, to its layer if needed).
+function nestMany(ids, pid) {
+  const p = feats.get(pid); if (!p) return;
+  const ok = ids.filter(id => canNestIn(id, pid) && feats.get(id) && canEditFeature(feats.get(id)._pw));
+  if (!ok.length) { toast(t('sub.cant'), 'error'); return; }
+  const lid = p._pw.layerId;
+  moveFeats(ok.filter(id => feats.get(id)._pw.layerId !== lid), lid);
+  ok.forEach(id => { feats.get(id)._pw.parentF = pid; });
+  FT.open.add(pid);
+  restoreZ(); commit(); msRender(); renderLayers(); renderInspector();
+  toast(tn('sub.nested', ok.length, { name: p._pw.name || KIND(p._pw.kind) }) + (ok.length < ids.length ? ' · ' + tn('ms.refused', ids.length - ok.length) : ''), '', { label: t('toast.undo'), fn: undo });
+}
+function unnest(id) {
+  const f = feats.get(id); if (!f || !f._pw.parentF) return;
+  delete f._pw.parentF; commit(); renderLayers(); renderInspector();
 }
 function deleteMany(ids) {
   let n = 0, refused = 0;
@@ -7601,15 +7747,21 @@ $('#layerList').addEventListener('pointerdown', e => {
     const tick = () => { autoScroll(last); update(last); raf = requestAnimationFrame(tick); };   // re-checks the spot as the list scrolls
     raf = requestAnimationFrame(tick);
   };
-  const clearMarks = () => $$('#layerList .lyr').forEach(s => s.classList.remove('drop-into', 'drop-before', 'drop-after'));
+  const clearMarks = () => { $$('#layerList .lyr').forEach(s => s.classList.remove('drop-into', 'drop-before', 'drop-after')); $$('#layerList .drop-into-feat').forEach(b => b.classList.remove('drop-into-feat')); };
   const update = ev => {
     if (mode === 'items' || mode === 'layer') { dragGhost.style.left = ev.clientX + 14 + 'px'; dragGhost.style.top = ev.clientY + 10 + 'px'; }
     const under = document.elementFromPoint(ev.clientX, ev.clientY);
     if (mode === 'items') {
       clearMarks();
-      const sec = under && under.closest('#layerList .lyr');
-      target = sec ? sec.dataset.lid : null;
-      if (sec) sec.classList.add('drop-into');
+      // Over another shape's row: put the dragged ones inside it. Elsewhere in a layer: move to that layer.
+      const row = under && under.closest('#layerList .feat[data-fid]');
+      if (row && !MS.ids.has(row.dataset.fid) && [...MS.ids].every(id => canNestIn(id, row.dataset.fid))) {
+        target = { feat: row.dataset.fid }; row.classList.add('drop-into-feat');
+      } else {
+        const sec = under && under.closest('#layerList .lyr');
+        target = sec ? { layer: sec.dataset.lid } : null;
+        if (sec) sec.classList.add('drop-into');
+      }
     }
     if (mode === 'layer') {
       clearMarks(); target = null;
@@ -7653,7 +7805,7 @@ $('#layerList').addEventListener('pointerdown', e => {
     document.body.classList.remove('ms-dragging');
     dragGhost.hidden = true; bandEl.hidden = true; clearMarks();
     $$('#layerList .lyr.is-dragged').forEach(s => s.classList.remove('is-dragged'));
-    if (mode === 'items' && target) moveMany([...MS.ids], target);
+    if (mode === 'items' && target) { if (target.feat) nestMany([...MS.ids], target.feat); else moveMany([...MS.ids], target.layer); }
     if (mode === 'layer' && target) {
       const l = getLayer(lid), ref = getLayer(target.ref);
       if (placeLayer(l, ref, target.zone)) {
@@ -7782,6 +7934,7 @@ map.pm.setGlobalOptions({ snappable: true, snapDistance: SNAP_PX, allowSelfInter
 let tool = 'select', pendingKind = null, drawing = null;
 function setTool(tl) {
   if (!toolAllowed(tl)) tl = 'select';
+  FT.pending = null;                     // a "draw inside" waiting is dropped when the tool changes
   if (FC.active) fcCancel(true);
   const pickPoly = tl === 'change' && selectedId && feats.get(selectedId) && feats.get(selectedId)._pw.kind === 'polygon' ? selectedId : null;
   if (pickPoly) { fcStart(pickPoly); return; }
@@ -7840,7 +7993,9 @@ map.on('pm:create', e => {
   let kind = KIND_FROM_SHAPE[e.shape];
   if (!kind) return;
   if (kind === 'marker' && pendingKind === 'label') kind = 'label';
-  const lr = activeLayer();
+  // Drawing a sub-item ("+ Point inside"): it goes in the outer shape's layer, inside it.
+  const pend = FT.pending && feats.get(FT.pending.pid); FT.pending = null;
+  const lr = pend ? getLayer(pend._pw.layerId) : activeLayer();
   if (revealLayer(lr)) syncLayerOrder();
   const tmp = e.layer;
   const geom = kind === 'circle' ? { c: llArr(tmp.getLatLng()), r: Math.round(tmp.getRadius() * 100) / 100 }
@@ -7848,7 +8003,8 @@ map.on('pm:create', e => {
   tmp.remove();
   const base = kind === 'polygon' && e.shape === 'Rectangle' ? t('kind.rectangle') : KIND(kind);
   const name = kind === 'label' ? t('kind.label') : `${base} ${kindCount(kind)}`;
-  const lyr = createFeature({ layerId: lr.id, kind, name, showLabel: kind === 'label', from: TL.on ? TL.date : null }, geom);
+  const lyr = createFeature({ layerId: lr.id, kind, name, showLabel: kind === 'label', from: TL.on ? TL.date : null, ...(pend ? { parentF: pend._pw.id } : {}) }, geom);
+  if (pend) FT.open.add(pend._pw.id);
   if (TL.on) toast(t('time.drawnOn', { d: fmtDate(TL.date) }));
   S.sample = false;
   commit(); setTool('select'); select(lyr._pw.id);
@@ -10333,7 +10489,7 @@ function parseKML(text, fallbackName) {
     const fb = myMapsColor(url), ext = {};
     allOf(pm, 'Data').forEach(d => { const k = d.getAttribute('name'); const v = allOf(d, 'value')[0]; if (k) ext[k] = v ? v.textContent.trim() : ''; });
     const geoms = []; collect(pm, geoms);
-    const showLabel = ext.pw_showLabel === '1', tm = timeOf(pm), when = { from: tm.from, until: tm.until };
+    const showLabel = ext.pw_showLabel === '1', tm = timeOf(pm), when = { from: tm.from, until: tm.until, pwId: ext.pw_id || '', pwParent: ext.pw_parent || '' };
     return geoms.map(gm => ({ ...when, ...one(gm) }));
     function one(gm) {
       if (gm.t === 'point') {
@@ -10397,7 +10553,7 @@ function parseGeoJSON(obj, fallbackName) {
   const groups = new Map(), sw = c => c.map(p => [p[1], p[0]]);
   const recs = (g, p) => {
     if (!g) return [];
-    const base = { name: p.name || p.title || p.Name || '', desc: p.description || p.desc || '', showLabel: p.pw_showLabel === true || p.pw_showLabel === '1', from: normDate(p.from || p.begin || p.start || p.date_from), until: normDate(p.until || p.end || p.date_until) };
+    const base = { name: p.name || p.title || p.Name || '', desc: p.description || p.desc || '', showLabel: p.pw_showLabel === true || p.pw_showLabel === '1', from: normDate(p.from || p.begin || p.start || p.date_from), until: normDate(p.until || p.end || p.date_until), pwId: p.pw_id || '', pwParent: p.pw_parent || '' };
     const style = { color: p['marker-color'] || p.stroke || p.fill, fillColor: p.fill, weight: p['stroke-width'], opacity: p['stroke-opacity'], fillOpacity: p['fill-opacity'], symbol: (p['marker-symbol'] && [...String(p['marker-symbol'])].length <= 2) ? p['marker-symbol'] : (p.pw_symbol || '') };
     switch (g.type) {
       case 'Point':
@@ -10519,13 +10675,20 @@ async function importFiles(files) {
         made.set(lv, nl); totalL++;
         return nl;
       };
+      const idMap = new Map(), links = [];
       res.layers.forEach(lv => {
         const l = layerFor(lv);
         lv.features.forEach(x => {
-          try { const lyr = createFeature({ ...prepImported(x, keyMap), layerId: l.id }, x.geom); totalF++; bounds.extend(lyr.getBounds ? lyr.getBounds() : L.latLngBounds([lyr.getLatLng()])); }
-          catch (err) { console.warn('Skipped a feature', err); }
+          try {
+            const { pwId, pwParent, ...rest } = prepImported(x, keyMap);
+            const lyr = createFeature({ ...rest, layerId: l.id }, x.geom); totalF++; bounds.extend(lyr.getBounds ? lyr.getBounds() : L.latLngBounds([lyr.getLatLng()]));
+            if (pwId && !idMap.has(pwId)) idMap.set(pwId, lyr._pw.id);
+            if (pwParent) links.push([lyr, pwParent]);
+          } catch (err) { console.warn('Skipped a feature', err); }
         });
       });
+      // Put sub-items back inside the shapes they were in (same layer only).
+      links.forEach(([lyr, pid]) => { const np = idMap.get(pid), pf = np && feats.get(np); if (pf && pf._pw.layerId === lyr._pw.layerId && np !== lyr._pw.id) lyr._pw.parentF = np; });
       if (blank && S.layers.length) S.activeLayerId = S.layers[0].id;
       S.sample = false;
     } catch (err) {
@@ -10683,6 +10846,7 @@ function toKML(onlyLayerIds, assets, nest = !!assets) {
   const style = (id, body) => { if (!styles.has(id)) styles.set(id, `<Style id="${id}">${body}</Style>`); return '#' + id; };
   const HEX = c => (normHex(c) || '#000000').slice(1).toUpperCase();
   const byId = new Map(p.layers.map(l => [l.id, l]));
+  const nests = new Set(p.features.map(f => f.parentF).filter(Boolean));
   const pathName = l => { const names = [l.name]; let q = byId.get(l.parent), g = 0; while (q && g++ < 50) { names.unshift(q.name); q = byId.get(q.parent); } return names.join(' / '); };
   // Asking for one layer gives it together with its sub-layers.
   const wanted = new Set(p.layers.filter(l => !onlyLayerIds || onlyLayerIds.includes(l.id)).map(l => l.id));
@@ -10692,6 +10856,8 @@ function toKML(onlyLayerIds, assets, nest = !!assets) {
   const folderOf = l => {
     const pms = p.features.filter(f => f.layerId === l.id).map(f => {
       const s = f.style, ext = {};
+      // Sub-items: kept as ids in ExtendedData, so importing the file here puts them back inside.
+      if (f.parentF || nests.has(f.id)) { ext.pw_id = f.id; if (f.parentF) ext.pw_parent = f.parentF; }
       let geom = '', sid = '';
       const ih = f.kind === 'marker' && s.icon ? iconHref(s.icon) : null;
       if (ih) {
@@ -10741,6 +10907,7 @@ function toGeoJSON() {
     features: p.features.map(f => {
       const l = getLayer(f.layerId), s = f.style;
       const props = { name: f.name, description: f.desc, layer: l ? l.name : '' };
+      if (f.parentF || p.features.some(x => x.parentF === f.id)) { props.pw_id = f.id; if (f.parentF) props.pw_parent = f.parentF; }
       let geometry;
       if (f.kind === 'marker' || f.kind === 'label') {
         geometry = { type: 'Point', coordinates: [f.geom[1], f.geom[0]] };
