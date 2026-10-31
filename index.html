@@ -328,6 +328,39 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .ctrl-stack button{width:38px;height:36px;border:0;background:transparent;display:grid;place-items:center;color:var(--fg)}
 .ctrl-stack button + button{border-top:1px solid var(--line)}
 .ctrl-stack button:hover{background:var(--panel-2)}
+.base-row{display:flex;gap:8px;align-items:stretch}
+.om-btn{position:relative}
+.om-ic{width:38px;height:38px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(135deg,#2f5f8f,#6a3b5c);color:#fff}
+.om-ic .ic{width:20px;height:20px}
+.om-count{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--accent-fg);font:700 11px/18px var(--f-ui);text-align:center}
+.om-list{display:flex;flex-direction:column;gap:6px}
+.om-item{border:1px solid var(--line);border-radius:10px;background:var(--panel-2)}
+.om-item.on{border-color:var(--accent)}
+.om-row{display:flex;align-items:center;gap:6px;padding:8px}
+.om-tog{flex:1;min-width:0;display:flex;align-items:flex-start;gap:8px;cursor:pointer}
+.om-tog input{accent-color:var(--accent);width:16px;height:16px;margin-top:2px;flex:none}
+.om-title{display:flex;flex-direction:column;min-width:0}
+.om-title b{font-size:13.5px}
+.om-title small{font-size:11.5px;color:var(--muted)}
+.om-title small.err{color:var(--danger)}
+.om-body{display:flex;flex-direction:column;gap:9px;padding:0 10px 10px}
+.om-link{font-size:12.5px;color:var(--accent);font-weight:600}
+.om-vers{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;max-height:220px;overflow:auto}
+.om-vers button{width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 8px;border:1px solid transparent;border-radius:7px;background:var(--panel);color:inherit;font:inherit;font-size:12.5px;cursor:pointer;text-align:left}
+.om-vers button:hover{border-color:var(--line)}
+.om-vers button.on{border-color:var(--accent);background:var(--accent-weak)}
+.om-vers small{color:var(--muted);font-size:11.5px}
+.om-delta{margin:0;display:flex;gap:10px;font-size:12.5px;font-weight:600}
+.om-delta .g{color:#d50000}.om-delta .l{color:#1e88e5}
+.om-mode{display:flex}.om-mode button{flex:1}
+.om-cols{display:flex;flex-direction:column;gap:4px}
+.om-cols label{display:flex;align-items:center;gap:6px}
+.om-cols select{flex:1;min-width:0;border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:3px 6px}
+.om-sw{width:18px;height:18px;border-radius:4px;border:1px solid rgba(0,0,0,.25);flex:none}
+.om-cols small{width:28px;color:var(--muted);font-size:11px;text-align:right}
+.om-add{margin-top:2px}
+.om-pop{display:flex;flex-direction:column;gap:4px;max-width:300px}
+.om-pop p{margin:0;font-size:12.5px;line-height:1.45;max-height:220px;overflow:auto}
 .base-btn{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:var(--shadow);font-weight:600;text-align:left}
 .base-btn .bp-thumb{width:38px;height:38px;border-radius:7px}
 .base-btn small{display:block;font:500 11px var(--f-ui);color:var(--muted)}
@@ -438,6 +471,11 @@ details.sub-form:not([open]){gap:0}
 .cd-data{margin:0;font-size:12px;line-height:1.45;padding:6px 8px;border-radius:7px}
 .cd-data.ok{color:var(--muted);padding:0}
 .cd-data.warn{background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--fg)}
+.cd-cmp{display:flex;flex-direction:column;gap:4px;padding:8px;border-radius:8px;background:var(--panel);border:1px dashed var(--accent)}
+.cd-cmpbtn{align-self:flex-start}
+.cd-lbtn{font-size:15px;line-height:1;padding:3px 5px;border-radius:5px;color:var(--muted);flex:none;cursor:pointer}
+.cd-lbtn:hover{color:var(--accent);background:var(--panel-2)}
+.cd-lbtn.on{color:var(--accent-fg);background:var(--accent)}
 .cd-vdesc{display:flex;flex-direction:column;gap:5px;font-size:12px;line-height:1.45}
 .cd-vdesc:empty{display:none}
 .cd-vdesc p{margin:0;color:var(--muted)}
@@ -975,6 +1013,7 @@ body.clean .clean-date:not([hidden]){display:block;position:absolute;top:12px;le
   .coords{min-width:0}
   .hint,.save-state{display:none}
   .base-panel{left:58px;right:10px;width:auto}
+  .om-btn small{display:none}
   .sk-bar{width:100%}
   .sk-bar .vsep{display:none}
   .sk-panel{top:auto;bottom:10px;left:58px;right:10px;width:auto;max-height:48%}
@@ -1193,9 +1232,13 @@ body.clean .clean-date:not([hidden]){display:block;position:absolute;top:12px;le
         <button id="locate" data-icon="locate" data-i18n-aria="ctrl.locate" data-i18n-tip="ctrl.locate"></button>
         <button id="fitAll" data-icon="fit" data-i18n-aria="ctrl.fit" data-i18n-tip="ctrl.fit"></button>
       </div>
-      <button class="base-btn" id="baseBtn" aria-haspopup="true"><span class="bp-thumb" id="baseThumb"></span><span><span id="baseName"></span><small data-i18n="ctrl.base"></small></span></button>
+      <div class="base-row">
+        <button class="base-btn om-btn" id="omBtn" aria-haspopup="true" hidden><span class="om-ic" data-icon="layers"></span><span><span data-i18n="om.btn"></span><small data-i18n="om.btnSub"></small></span><span class="om-count" id="omCount" hidden></span></button>
+        <button class="base-btn" id="baseBtn" aria-haspopup="true"><span class="bp-thumb" id="baseThumb"></span><span><span id="baseName"></span><small data-i18n="ctrl.base"></small></span></button>
+      </div>
     </div>
     <div class="base-panel" id="basePanel" hidden></div>
+    <div class="base-panel om-panel" id="omPanel" hidden></div>
 
     <div class="compare" id="compare" hidden>
       <div class="cmp-line"></div>
@@ -3866,6 +3909,24 @@ fr: {"cdse.dataL2a": "Données : Sentinel-2 L2A, corrigées de l’atmosphère (
 ru: {"cdse.dataL2a": "Данные: Sentinel-2 L2A с атмосферной коррекцией (слой {l}).", "cdse.dataL1c": "Слой {l} читает Sentinel-2 L1C — снимок с верхней границы атмосферы, до удаления дымки. Поэтому он бледный, фиолетово-синий и малоконтрастный. Выберите встроенный вид (дымка будет уменьшена) или добавьте слой Sentinel-2 L2A в конфигурацию в панели Sentinel Hub, чтобы получить ту же картинку, что в Copernicus Browser.", "cdse.dataL1cFixed": "В вашей конфигурации есть только Sentinel-2 L1C (слой {l}) — снимок до удаления дымки, бледный и фиолетово-синий. Здесь дымка уменьшается, но для той же картинки, что в Copernicus Browser, добавьте слой с источником данных «Sentinel-2 L2A» в панели Sentinel Hub (Configuration Utility → ваша конфигурация → Add layer).", "cdse.dataOther": "Слой {l} — не Sentinel-2, поэтому встроенные виды не могут его использовать. Выберите слой Sentinel-2 в «Другие параметры»."}
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdse.cmp": "Compare with another date", "cdse.cmpLeft": "Left of the slider", "cdse.cmpOff": "Stop comparing", "cdse.cmpPick": "Pick an image with ◧ in the list", "cdse.cmpHelp": "Drag the slider on the map. The image above (On the map) is on the right. Use ◧ in the list or the arrows here to change the left one.", "cdse.setLeft": "Show on the left of the slider"},
+uk: {"cdse.cmp": "Порівняти з іншою датою", "cdse.cmpLeft": "Ліворуч від повзунка", "cdse.cmpOff": "Припинити порівняння", "cdse.cmpPick": "Виберіть знімок кнопкою ◧ у списку", "cdse.cmpHelp": "Перетягуйте повзунок на карті. Знімок вище («На карті») — праворуч. Змінити лівий: ◧ у списку або стрілки тут.", "cdse.setLeft": "Показати ліворуч від повзунка"},
+pl: {"cdse.cmp": "Porównaj z inną datą", "cdse.cmpLeft": "Po lewej od suwaka", "cdse.cmpOff": "Zakończ porównanie", "cdse.cmpPick": "Wybierz zdjęcie przyciskiem ◧ na liście", "cdse.cmpHelp": "Przeciągaj suwak na mapie. Zdjęcie powyżej („Na mapie”) jest po prawej. Lewe zmienisz przyciskiem ◧ na liście lub strzałkami tutaj.", "cdse.setLeft": "Pokaż po lewej od suwaka"},
+de: {"cdse.cmp": "Mit einem anderen Datum vergleichen", "cdse.cmpLeft": "Links vom Schieber", "cdse.cmpOff": "Vergleich beenden", "cdse.cmpPick": "Wähle ein Bild mit ◧ in der Liste", "cdse.cmpHelp": "Ziehe den Schieber auf der Karte. Das Bild oben („Auf der Karte“) ist rechts. Das linke änderst du mit ◧ in der Liste oder den Pfeilen hier.", "cdse.setLeft": "Links vom Schieber zeigen"},
+fr: {"cdse.cmp": "Comparer avec une autre date", "cdse.cmpLeft": "À gauche du curseur", "cdse.cmpOff": "Arrêter la comparaison", "cdse.cmpPick": "Choisissez une image avec ◧ dans la liste", "cdse.cmpHelp": "Faites glisser le curseur sur la carte. L’image ci-dessus (« Sur la carte ») est à droite. Changez celle de gauche avec ◧ dans la liste ou les flèches ici.", "cdse.setLeft": "Afficher à gauche du curseur"},
+ru: {"cdse.cmp": "Сравнить с другой датой", "cdse.cmpLeft": "Слева от ползунка", "cdse.cmpOff": "Закончить сравнение", "cdse.cmpPick": "Выберите снимок кнопкой ◧ в списке", "cdse.cmpHelp": "Двигайте ползунок на карте. Снимок выше («На карте») — справа. Левый меняется кнопкой ◧ в списке или стрелками здесь.", "cdse.setLeft": "Показать слева от ползунка"}
+});
+
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"om.btn": "Other maps", "om.btnSub": "View other maps", "om.panel": "Other maps", "om.intro": "Maps from Google My Maps shown beside this one. They are only displayed: nothing on this map changes. Tick several to compare them.", "om.empty": "No other maps have been added yet.", "om.emptyEd": "No other maps yet. Add a My Maps link below.", "om.untitled": "Untitled map", "om.loading": "Loading…", "om.updated": "updated {t}", "om.justNow": "just now", "om.minAgo": "{n} min ago", "om.hAgo": "{n} h ago", "om.versions": ["{n} version recorded", "{n} versions recorded"], "om.recStart": "recording started", "om.notYet": "not recorded yet on this date (first record {d})", "om.showingVer": "showing the version of {d}", "om.fit": "Zoom to this map", "om.details": "Details", "om.openGoogle": "Open in Google My Maps", "om.history": "Changes over time", "om.histLoading": "Checking recorded versions…", "om.noHist": "Changes are not being recorded yet. The site owner can switch recording on in the My Maps helper (see the README).", "om.histEmpty": "Recording is on. The first version is saved the next time the map is checked.", "om.histHelp": "A new version is saved whenever the map changes (checked about every 30 minutes), since {d}. Pick a date to see the map as it was then; on the day of a change, gained and lost ground is drawn in your frontline-change colours.", "om.first": "first record", "om.useTl": "Show on the timeline", "om.gained": "Gained", "om.lost": "Lost", "om.look": "Look", "om.sync": "Use the shared style", "om.syncHelp": "Maps with the shared style ticked all look the same; change it on one and they all follow. {n} use it now.", "om.syncOnHelp": "Changes here apply to all {n} maps using the shared style. Untick to give this map its own look.", "om.orig": "Their colours", "om.mine": "My styles", "om.keep": "Keep as is", "om.mineHelp": "Give each of their colours one of your saved styles, so their areas look like yours.", "om.loadFirst": "Switch the map on to see its colours.", "om.fill": "Fill strength", "om.weight": "Line width", "om.msize": "Marker size", "om.track": "Areas to follow for changes", "om.trackAuto": "Automatic (the colour covering most ground)", "om.trackHelp": "Gained and lost ground is worked out from the polygons in this colour.", "om.settings": "Settings", "om.title": "Title", "om.titlePh": "Leave empty to use the map’s own title", "om.def": "Show when people open this map", "om.remove": "Remove from the list", "om.removed": "Removed {name} from other maps", "om.add": "Add a map", "om.addBtn": "Add", "om.addHelp": "The My Maps map must be shared as “Anyone with the link”. Viewers of this map see the list and can switch maps on and off.", "om.dup": "That map is already in the list.", "om.showChanges": "Show gained and lost ground on change days"},
+uk: {"om.btn": "Інші карти", "om.btnSub": "Переглянути інші карти", "om.panel": "Інші карти", "om.intro": "Карти з Google My Maps, показані поруч із цією. Вони лише відображаються: на цій карті нічого не змінюється. Позначте кілька, щоб порівняти.", "om.empty": "Інших карт ще не додано.", "om.emptyEd": "Інших карт ще немає. Додайте посилання My Maps нижче.", "om.untitled": "Карта без назви", "om.loading": "Завантаження…", "om.updated": "оновлено {t}", "om.justNow": "щойно", "om.minAgo": "{n} хв тому", "om.hAgo": "{n} год тому", "om.versions": ["{n} версію записано", "{n} версії записано", "{n} версій записано"], "om.recStart": "запис почато", "om.notYet": "на цю дату ще не записано (перший запис {d})", "om.showingVer": "показано версію від {d}", "om.fit": "Наблизити до цієї карти", "om.details": "Деталі", "om.openGoogle": "Відкрити в Google My Maps", "om.history": "Зміни з часом", "om.histLoading": "Перевіряю записані версії…", "om.noHist": "Зміни ще не записуються. Власник сайту може ввімкнути запис у помічнику My Maps (див. README).", "om.histEmpty": "Запис увімкнено. Перша версія збережеться під час наступної перевірки карти.", "om.histHelp": "Нова версія зберігається щоразу, коли карта змінюється (перевірка приблизно щопівгодини), починаючи з {d}. Виберіть дату, щоб побачити карту тоді; у день зміни здобута й втрачена територія показується кольорами зміни лінії фронту.", "om.first": "перший запис", "om.useTl": "Показати на шкалі часу", "om.gained": "Здобуто", "om.lost": "Втрачено", "om.look": "Вигляд", "om.sync": "Використовувати спільний стиль", "om.syncHelp": "Карти зі спільним стилем виглядають однаково; зміните на одній — зміняться всі. Зараз його використовують: {n}.", "om.syncOnHelp": "Зміни тут застосовуються до всіх {n} карт зі спільним стилем. Зніміть позначку, щоб дати цій карті власний вигляд.", "om.orig": "Їхні кольори", "om.mine": "Мої стилі", "om.keep": "Залишити", "om.mineHelp": "Призначте кожному їхньому кольору один із ваших збережених стилів, щоб їхні області виглядали як ваші.", "om.loadFirst": "Увімкніть карту, щоб побачити її кольори.", "om.fill": "Інтенсивність заливки", "om.weight": "Товщина ліній", "om.msize": "Розмір маркерів", "om.track": "Області для відстеження змін", "om.trackAuto": "Автоматично (колір, що займає найбільше)", "om.trackHelp": "Здобута й втрачена територія обчислюється з полігонів цього кольору.", "om.settings": "Налаштування", "om.title": "Назва", "om.titlePh": "Залиште порожнім, щоб узяти назву карти", "om.def": "Показувати, коли відкривають цю карту", "om.remove": "Прибрати зі списку", "om.removed": "{name} прибрано з інших карт", "om.add": "Додати карту", "om.addBtn": "Додати", "om.addHelp": "Карта My Maps має бути відкрита для «Усіх, хто має посилання». Глядачі цієї карти бачать список і можуть вмикати й вимикати карти.", "om.dup": "Ця карта вже є у списку.", "om.showChanges": "Показувати здобуту й втрачену територію в дні змін"},
+pl: {"om.btn": "Inne mapy", "om.btnSub": "Zobacz inne mapy", "om.panel": "Inne mapy", "om.intro": "Mapy z Google My Maps wyświetlane obok tej. Są tylko pokazywane: na tej mapie nic się nie zmienia. Zaznacz kilka, by je porównać.", "om.empty": "Nie dodano jeszcze innych map.", "om.emptyEd": "Brak innych map. Dodaj link My Maps poniżej.", "om.untitled": "Mapa bez nazwy", "om.loading": "Wczytywanie…", "om.updated": "zaktualizowano {t}", "om.justNow": "przed chwilą", "om.minAgo": "{n} min temu", "om.hAgo": "{n} godz. temu", "om.versions": ["{n} wersja zapisana", "{n} wersje zapisane", "{n} wersji zapisanych"], "om.recStart": "nagrywanie rozpoczęte", "om.notYet": "jeszcze nie zapisana tego dnia (pierwszy zapis {d})", "om.showingVer": "pokazana wersja z {d}", "om.fit": "Przybliż do tej mapy", "om.details": "Szczegóły", "om.openGoogle": "Otwórz w Google My Maps", "om.history": "Zmiany w czasie", "om.histLoading": "Sprawdzam zapisane wersje…", "om.noHist": "Zmiany nie są jeszcze zapisywane. Właściciel strony może włączyć zapis w pomocniku My Maps (zob. README).", "om.histEmpty": "Zapis jest włączony. Pierwsza wersja zapisze się przy następnym sprawdzeniu mapy.", "om.histHelp": "Nowa wersja zapisuje się przy każdej zmianie mapy (sprawdzanie mniej więcej co 30 minut) od {d}. Wybierz datę, by zobaczyć mapę z tamtego dnia; w dniu zmiany zdobyty i utracony teren jest rysowany kolorami zmiany frontu.", "om.first": "pierwszy zapis", "om.useTl": "Pokaż na osi czasu", "om.gained": "Zdobyte", "om.lost": "Utracone", "om.look": "Wygląd", "om.sync": "Użyj wspólnego stylu", "om.syncHelp": "Mapy ze wspólnym stylem wyglądają tak samo; zmiana na jednej zmienia wszystkie. Teraz używa go: {n}.", "om.syncOnHelp": "Zmiany tutaj dotyczą wszystkich {n} map ze wspólnym stylem. Odznacz, by nadać tej mapie własny wygląd.", "om.orig": "Ich kolory", "om.mine": "Moje style", "om.keep": "Bez zmian", "om.mineHelp": "Przypisz każdemu ich kolorowi jeden z twoich zapisanych stylów, by ich obszary wyglądały jak twoje.", "om.loadFirst": "Włącz mapę, by zobaczyć jej kolory.", "om.fill": "Siła wypełnienia", "om.weight": "Grubość linii", "om.msize": "Rozmiar znaczników", "om.track": "Obszary śledzone pod kątem zmian", "om.trackAuto": "Automatycznie (kolor zajmujący najwięcej)", "om.trackHelp": "Zdobyty i utracony teren liczony jest z wielokątów w tym kolorze.", "om.settings": "Ustawienia", "om.title": "Tytuł", "om.titlePh": "Zostaw puste, by użyć tytułu mapy", "om.def": "Pokazuj po otwarciu tej mapy", "om.remove": "Usuń z listy", "om.removed": "Usunięto {name} z innych map", "om.add": "Dodaj mapę", "om.addBtn": "Dodaj", "om.addHelp": "Mapa My Maps musi być udostępniona „Każdemu, kto ma link”. Widzowie tej mapy widzą listę i mogą włączać i wyłączać mapy.", "om.dup": "Ta mapa jest już na liście.", "om.showChanges": "Pokazuj zdobyty i utracony teren w dni zmian"},
+de: {"om.btn": "Andere Karten", "om.btnSub": "Andere Karten ansehen", "om.panel": "Andere Karten", "om.intro": "Karten aus Google My Maps neben dieser. Sie werden nur angezeigt: An dieser Karte ändert sich nichts. Hake mehrere an, um sie zu vergleichen.", "om.empty": "Es wurden noch keine anderen Karten hinzugefügt.", "om.emptyEd": "Noch keine anderen Karten. Füge unten einen My-Maps-Link hinzu.", "om.untitled": "Karte ohne Titel", "om.loading": "Wird geladen…", "om.updated": "aktualisiert {t}", "om.justNow": "gerade eben", "om.minAgo": "vor {n} Min.", "om.hAgo": "vor {n} Std.", "om.versions": ["{n} Version aufgezeichnet", "{n} Versionen aufgezeichnet"], "om.recStart": "Aufzeichnung gestartet", "om.notYet": "an diesem Datum noch nicht aufgezeichnet (erste Aufzeichnung {d})", "om.showingVer": "Version vom {d}", "om.fit": "Auf diese Karte zoomen", "om.details": "Details", "om.openGoogle": "In Google My Maps öffnen", "om.history": "Änderungen im Lauf der Zeit", "om.histLoading": "Aufgezeichnete Versionen werden geprüft…", "om.noHist": "Änderungen werden noch nicht aufgezeichnet. Der Betreiber kann die Aufzeichnung im My-Maps-Helfer einschalten (siehe README).", "om.histEmpty": "Die Aufzeichnung läuft. Die erste Version wird bei der nächsten Prüfung gespeichert.", "om.histHelp": "Bei jeder Änderung wird eine neue Version gespeichert (Prüfung etwa alle 30 Minuten), seit {d}. Wähle ein Datum, um die Karte von damals zu sehen; am Tag einer Änderung wird gewonnenes und verlorenes Gelände in deinen Frontänderungsfarben gezeigt.", "om.first": "erste Aufzeichnung", "om.useTl": "Auf der Zeitleiste zeigen", "om.gained": "Gewonnen", "om.lost": "Verloren", "om.look": "Aussehen", "om.sync": "Gemeinsamen Stil verwenden", "om.syncHelp": "Karten mit gemeinsamem Stil sehen gleich aus; änderst du ihn an einer, folgen alle. Derzeit nutzen ihn {n}.", "om.syncOnHelp": "Änderungen hier gelten für alle {n} Karten mit gemeinsamem Stil. Haken entfernen für ein eigenes Aussehen.", "om.orig": "Ihre Farben", "om.mine": "Meine Stile", "om.keep": "Unverändert", "om.mineHelp": "Weise jeder ihrer Farben einen deiner gespeicherten Stile zu, damit ihre Flächen wie deine aussehen.", "om.loadFirst": "Schalte die Karte ein, um ihre Farben zu sehen.", "om.fill": "Füllstärke", "om.weight": "Linienbreite", "om.msize": "Markergröße", "om.track": "Flächen für Änderungen verfolgen", "om.trackAuto": "Automatisch (die Farbe mit der größten Fläche)", "om.trackHelp": "Gewonnenes und verlorenes Gelände wird aus den Flächen dieser Farbe berechnet.", "om.settings": "Einstellungen", "om.title": "Titel", "om.titlePh": "Leer lassen für den Kartentitel", "om.def": "Beim Öffnen dieser Karte zeigen", "om.remove": "Aus der Liste entfernen", "om.removed": "{name} aus anderen Karten entfernt", "om.add": "Karte hinzufügen", "om.addBtn": "Hinzufügen", "om.addHelp": "Die My-Maps-Karte muss für „Jeder mit dem Link“ freigegeben sein. Betrachter dieser Karte sehen die Liste und können Karten ein- und ausschalten.", "om.dup": "Diese Karte ist schon in der Liste.", "om.showChanges": "Gewonnenes und verlorenes Gelände an Änderungstagen zeigen"},
+fr: {"om.btn": "Autres cartes", "om.btnSub": "Voir d’autres cartes", "om.panel": "Autres cartes", "om.intro": "Des cartes Google My Maps affichées à côté de celle-ci. Elles sont seulement affichées : rien ne change sur cette carte. Cochez-en plusieurs pour les comparer.", "om.empty": "Aucune autre carte n’a encore été ajoutée.", "om.emptyEd": "Pas encore d’autres cartes. Ajoutez un lien My Maps ci-dessous.", "om.untitled": "Carte sans titre", "om.loading": "Chargement…", "om.updated": "mis à jour {t}", "om.justNow": "à l’instant", "om.minAgo": "il y a {n} min", "om.hAgo": "il y a {n} h", "om.versions": ["{n} version enregistrée", "{n} versions enregistrées"], "om.recStart": "enregistrement démarré", "om.notYet": "pas encore enregistrée à cette date (premier enregistrement {d})", "om.showingVer": "version du {d} affichée", "om.fit": "Zoomer sur cette carte", "om.details": "Détails", "om.openGoogle": "Ouvrir dans Google My Maps", "om.history": "Évolution dans le temps", "om.histLoading": "Vérification des versions enregistrées…", "om.noHist": "Les changements ne sont pas encore enregistrés. Le propriétaire du site peut activer l’enregistrement dans l’assistant My Maps (voir le README).", "om.histEmpty": "L’enregistrement est actif. La première version sera enregistrée à la prochaine vérification.", "om.histHelp": "Une nouvelle version est enregistrée à chaque changement (vérification environ toutes les 30 minutes), depuis le {d}. Choisissez une date pour voir la carte telle qu’elle était ; le jour d’un changement, le terrain gagné et perdu est dessiné avec vos couleurs de changement de front.", "om.first": "premier enregistrement", "om.useTl": "Afficher sur la frise", "om.gained": "Gagné", "om.lost": "Perdu", "om.look": "Apparence", "om.sync": "Utiliser le style partagé", "om.syncHelp": "Les cartes au style partagé ont toutes le même aspect ; le modifier sur l’une change toutes les autres. {n} l’utilisent.", "om.syncOnHelp": "Les changements ici s’appliquent aux {n} cartes au style partagé. Décochez pour donner à cette carte son propre aspect.", "om.orig": "Leurs couleurs", "om.mine": "Mes styles", "om.keep": "Garder tel quel", "om.mineHelp": "Associez à chacune de leurs couleurs un de vos styles enregistrés, pour que leurs zones ressemblent aux vôtres.", "om.loadFirst": "Activez la carte pour voir ses couleurs.", "om.fill": "Intensité du remplissage", "om.weight": "Épaisseur des lignes", "om.msize": "Taille des marqueurs", "om.track": "Zones suivies pour les changements", "om.trackAuto": "Automatique (la couleur qui couvre le plus)", "om.trackHelp": "Le terrain gagné et perdu est calculé à partir des polygones de cette couleur.", "om.settings": "Réglages", "om.title": "Titre", "om.titlePh": "Laisser vide pour reprendre le titre de la carte", "om.def": "Afficher à l’ouverture de cette carte", "om.remove": "Retirer de la liste", "om.removed": "{name} retirée des autres cartes", "om.add": "Ajouter une carte", "om.addBtn": "Ajouter", "om.addHelp": "La carte My Maps doit être partagée avec « Tous les utilisateurs disposant du lien ». Les visiteurs voient la liste et peuvent activer ou désactiver les cartes.", "om.dup": "Cette carte est déjà dans la liste.", "om.showChanges": "Afficher le terrain gagné et perdu les jours de changement"},
+ru: {"om.btn": "Другие карты", "om.btnSub": "Посмотреть другие карты", "om.panel": "Другие карты", "om.intro": "Карты из Google My Maps, показанные рядом с этой. Они только отображаются: на этой карте ничего не меняется. Отметьте несколько, чтобы сравнить.", "om.empty": "Других карт пока не добавлено.", "om.emptyEd": "Других карт пока нет. Добавьте ссылку My Maps ниже.", "om.untitled": "Карта без названия", "om.loading": "Загрузка…", "om.updated": "обновлено {t}", "om.justNow": "только что", "om.minAgo": "{n} мин назад", "om.hAgo": "{n} ч назад", "om.versions": ["{n} версия записана", "{n} версии записано", "{n} версий записано"], "om.recStart": "запись начата", "om.notYet": "на эту дату ещё не записано (первая запись {d})", "om.showingVer": "показана версия от {d}", "om.fit": "Приблизить к этой карте", "om.details": "Подробности", "om.openGoogle": "Открыть в Google My Maps", "om.history": "Изменения со временем", "om.histLoading": "Проверяю записанные версии…", "om.noHist": "Изменения пока не записываются. Владелец сайта может включить запись в помощнике My Maps (см. README).", "om.histEmpty": "Запись включена. Первая версия сохранится при следующей проверке карты.", "om.histHelp": "Новая версия сохраняется при каждом изменении карты (проверка примерно каждые 30 минут), начиная с {d}. Выберите дату, чтобы увидеть карту на тот момент; в день изменения занятая и потерянная территория рисуется цветами изменения линии фронта.", "om.first": "первая запись", "om.useTl": "Показать на шкале времени", "om.gained": "Занято", "om.lost": "Потеряно", "om.look": "Вид", "om.sync": "Использовать общий стиль", "om.syncHelp": "Карты с общим стилем выглядят одинаково; измените на одной — изменятся все. Сейчас его используют: {n}.", "om.syncOnHelp": "Изменения здесь применяются ко всем {n} картам с общим стилем. Снимите отметку, чтобы дать этой карте собственный вид.", "om.orig": "Их цвета", "om.mine": "Мои стили", "om.keep": "Оставить", "om.mineHelp": "Назначьте каждому их цвету один из ваших сохранённых стилей, чтобы их области выглядели как ваши.", "om.loadFirst": "Включите карту, чтобы увидеть её цвета.", "om.fill": "Интенсивность заливки", "om.weight": "Толщина линий", "om.msize": "Размер маркеров", "om.track": "Области для отслеживания изменений", "om.trackAuto": "Автоматически (цвет, занимающий больше всего)", "om.trackHelp": "Занятая и потерянная территория считается по полигонам этого цвета.", "om.settings": "Настройки", "om.title": "Название", "om.titlePh": "Оставьте пустым, чтобы взять название карты", "om.def": "Показывать при открытии этой карты", "om.remove": "Убрать из списка", "om.removed": "{name} убрана из других карт", "om.add": "Добавить карту", "om.addBtn": "Добавить", "om.addHelp": "Карта My Maps должна быть открыта «Всем, у кого есть ссылка». Зрители этой карты видят список и могут включать и выключать карты.", "om.dup": "Эта карта уже в списке.", "om.showChanges": "Показывать занятую и потерянную территорию в дни изменений"}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -4156,7 +4217,8 @@ const S = {
   icons: new Map(),                          // custom icon library: id -> { id, name, src, glyph }
   styles: new Map(),                         // saved styles: id -> { id, name, color, fillColor, weight, opacity, fillOpacity, dash, pattern }
   mode: 'local', mapId: null, role: 'owner', // 'online' when a shared map is open; role owner | editor | viewer
-  readOnly: false, embed: Q.has('embed'), preview: PREVIEW
+  readOnly: false, embed: Q.has('embed'), preview: PREVIEW,
+  others: new Map()                          // other people's My Maps shown beside this map (never mixed into it)
 };
 const LEN_U = { m: 1, km: 1000, ft: 0.3048, mi: 1609.344 };
 const AREA_U = { m2: 1, ha: 1e4, km2: 1e6, ft2: 0.09290304, ac: 4046.8564224, mi2: 2589988.110336 };
@@ -4404,7 +4466,7 @@ async function setBase(id) {
   $('#baseThumb').className = 'bp-thumb t-' + id;
   $('#baseName').textContent = t('b.' + id);
   syncOverlays();
-  if (prefs.compareOn) syncCompare();
+  syncCompare();
   if (!$('#basePanel').hidden) renderBasePanel();
 }
 
@@ -4440,6 +4502,16 @@ async function syncCompare() {
   const my = ++cmpToken;
   if (cmpLayer) { map.removeLayer(cmpLayer); cmpLayer = null; }
   $('#compare').hidden = true;
+  if (cdseCmpOn()) {
+    // Copernicus: a second image of the same place on the left of the slider.
+    cmpLayer = cdseCmpLayer().addTo(map);
+    cmpLayer.on('load tileload', clipCompare);
+    $('#cmpLeft').textContent = sceneLabel(prefs.cdse.cmp);
+    $('#cmpRight').textContent = sceneLabel(prefs.cdse.scene);
+    $('#compare').hidden = false;
+    clipCompare();
+    return;
+  }
   if (!prefs.compareOn) return;
   try {
     const list = await waybackList();
@@ -6055,6 +6127,7 @@ function cdseApply() {
     baseLayer._cdWarned = false;
     baseLayer.setParams(cdseParams(c));
     cdseFx(); cdseUnder(); cdseOutline(); cdsePin();
+    if (cdseCmpOn() || $('#compare').hidden === false) syncCompare();
     renderCdse();
   } else if (c.id) setBase('cdse');
   if (map.getZoom() < 6) map.setZoom(8);
@@ -6294,8 +6367,8 @@ async function cdseLatest(quiet) {
   renderCdse();
 }
 // Older / newer image at the spot, across months.
-async function cdseStep(dir) {
-  const c = prefs.cdse, cur = c.scene;
+async function cdseStep(dir, side) {
+  const c = prefs.cdse, cur = side === 'cmp' ? c.cmp : c.scene;
   const curKey = cur ? (cur.when || cur.date + 'T' + cur.time) : todayIso() + 'T23:59';
   let ym = cur ? ymOf(cur.date) : ymOf(todayIso());
   for (let i = 0; i < 6; i++) {
@@ -6303,12 +6376,40 @@ async function cdseStep(dir) {
     if (!rec || !rec.items) return;
     const list = passes(rec.items).filter(x => ccOk(x, c) || CD.showCloudy).map(x => [x.when || x.date + 'T' + x.time, x]).sort((a, b) => a[0].localeCompare(b[0]));
     const hit = dir < 0 ? list.filter(([k]) => k < curKey).pop() : list.find(([k]) => k > curKey);
-    if (hit) { showScene(hit[1]); return; }
+    if (hit) { if (side === 'cmp') setCmpScene(hit[1]); else showScene(hit[1]); return; }
     ym = ymAdd(ym, dir);
     if (ym > ymOf(todayIso())) break;
   }
   toast(t(dir < 0 ? 'cdse.noOlder' : 'cdse.noNewer'));
 }
+
+/* ---------- Compare two images with the swipe slider ----------
+   The left side of the swipe shows a second Copernicus image (same view, brightness and
+   colours), the right side the main one. Uses the same slider as Esri Wayback. */
+const cdseCmpOn = () => prefs.base === 'cdse' && cdseScene(prefs.cdse) && !!prefs.cdse.cmpOn && !!prefs.cdse.cmp;
+const sceneObj = (x, c) => ({ sat: x.sat, date: x.date, time: x.time, when: x.when || '', cc: x.cc, tile: x.tile, id: x.id, coll: cdseColl(c) });
+function setCmpScene(x) {
+  const c = prefs.cdse;
+  c.cmp = sceneObj(x, c); c.cmpOn = true; savePrefs();
+  syncCompare(); renderCdse();
+}
+// Turning compare on starts with the clear image just before the one on the map.
+async function cdseCmpStart() {
+  const c = prefs.cdse;
+  c.cmpOn = true;
+  if (!c.cmp && c.scene) { c.cmp = { ...c.scene }; savePrefs(); await cdseStep(-1, 'cmp'); }
+  savePrefs(); syncCompare(); renderCdse();
+}
+function cdseCmpLayer() {
+  const c = prefs.cdse;
+  const lyr = L.tileLayer.wms(`${CDSE_HOST}wms/${encodeURIComponent(c.id.trim())}`, {
+    pane: 'pwCompare', format: 'image/png', transparent: true, version: '1.3.0',
+    tileSize: 512, maxZoom: MAX_Z, minZoom: 6, SHOWLOGO: false, ...cdseParams({ ...c, scene: c.cmp })
+  });
+  lyr.on('add', () => { const el = lyr.getContainer(); if (el) el.style.filter = cdseFilter(c); });
+  return lyr;
+}
+const sceneLabel = sc => `${fmtDay(sc.date)}${sc.time ? ' ' + sc.time : ''}${sc.sat ? ' · ' + sc.sat : ''}`;
 
 /* ---------- Panel ---------- */
 const PRIOS = ['mostRecent', 'leastCC', 'leastRecent'];
@@ -6352,6 +6453,19 @@ function cdseSection() {
     ${scene ? sceneHtml(c) : mosaicHtml(c)}
     ${moreHtml(c)}
   </div>`;
+}
+function cmpHtml(c) {
+  if (!c.cmpOn) return `<button type="button" class="btn sm cd-cmpbtn" data-cdse="cmp">${icon('swipe')}${esc(t('cdse.cmp'))}</button>`;
+  const x = c.cmp;
+  return `<div class="cd-cmp">
+      <div class="cd-head"><span class="eyebrow">${esc(t('cdse.cmpLeft'))}</span><button type="button" class="link-btn" data-cdse="cmpoff">${esc(t('cdse.cmpOff'))}</button></div>
+      <div class="cd-nowrow">
+        <button type="button" class="icon-btn sm" data-cdcstep="-1" aria-label="${esc(t('cdse.older'))}" title="${esc(t('cdse.older'))}">${icon('chevL')}</button>
+        <div class="cd-nowmain"><b>${x ? esc(fmtWday(x.date) + ' ' + fmtDay(x.date)) : '—'}</b><small>${x ? esc([x.time ? x.time + ' UTC' : '', x.cc != null ? t('cdse.cloud', { v: Math.round(x.cc) }) : '', x.sat].filter(Boolean).join(' · ')) : esc(t('cdse.cmpPick'))}</small></div>
+        <button type="button" class="icon-btn sm" data-cdcstep="1" aria-label="${esc(t('cdse.newer'))}" title="${esc(t('cdse.newer'))}">${icon('chevR')}</button>
+      </div>
+      <small class="help">${esc(t('cdse.cmpHelp'))}</small>
+    </div>`;
 }
 function vizHtml(c) {
   const v = cdseView(c), list = cdseLayers(), known = list.some(l => l.name === c.layer);
@@ -6400,6 +6514,7 @@ function sceneHtml(c) {
         <div class="cd-nowmain"><b>${esc(fmtWday(sc.date))} ${esc(fmtDay(sc.date))}</b><small>${esc([sc.time ? sc.time + ' UTC' : '', sc.cc != null || radar ? ccTxt(sc) : '', sc.tile ? t('cdse.tile', { t: sc.tile }) : ''].filter(Boolean).join(' · '))}</small></div>
         <button type="button" class="icon-btn sm" data-cdstep="1" aria-label="${esc(t('cdse.newer'))}" title="${esc(t('cdse.newer'))}">${icon('chevR')}</button>
       </div>
+      ${cmpHtml(c)}
       ${vizHtml(c)}
       ${fxHtml(c)}
       <div class="cd-links">${link2(browserLink(c), t('cdse.openBrowser'))}${sc.id ? `<button type="button" class="link-btn" data-cdcopy="${esc(sc.id)}" title="${esc(sc.id)}">${esc(t('cdse.copyId'))}</button>` : ''}</div>
@@ -6411,6 +6526,7 @@ function sceneHtml(c) {
   else body = `<ul class="cd-list">${shown.map(x => `<li><button type="button" class="cd-row ${sceneKey(x) === cur ? 'on' : ''} ${ccOk(x, c) ? '' : 'over'}" data-cdscene="${esc(sceneKey(x))}">
         <span class="cd-rdate"><b>${esc(fmtDay(x.date))}</b><small>${esc(fmtWday(x.date))} · ${esc(x.time || '')} UTC</small></span>
         <span class="cd-sat">${esc(x.sat || '—')}</span>
+        ${c.cmpOn ? `<span class="cd-lbtn ${c.cmp && sceneKey(x) === sceneKey(c.cmp) ? 'on' : ''}" role="button" tabindex="0" data-cdleft="${esc(sceneKey(x))}" title="${esc(t('cdse.setLeft'))}">◧</span>` : ''}
         ${radar || x.cc === null ? `<span class="cd-cc radar">${esc(t('cdse.radarShort'))}</span>` : `<span class="cd-cc"><span class="cc-bar"><i style="width:${clamp(x.cc, 0, 100)}%"></i></span>${Math.round(x.cc)}%</span>`}
       </button></li>`).join('')}</ul>`;
   const more = hidden || CD.showCloudy ? `<button type="button" class="link-btn" data-cdse="cloudy">${esc(CD.showCloudy ? t('cdse.hideCloudy') : t('cdse.showCloudy', { n: hidden }))}</button>` : '';
@@ -6469,6 +6585,12 @@ bp.addEventListener('click', e => {
   let b;
   if ((b = q('[data-cdtab]'))) { const c = prefs.cdse; c.mode = b.dataset.cdtab; if (c.mode === 'scene' && !c.scene) cdseLatest(true); cdseApply(); return; }
   if ((b = q('[data-cdstep]'))) { cdseStep(+b.dataset.cdstep); return; }
+  if ((b = q('[data-cdcstep]'))) { cdseStep(+b.dataset.cdcstep, 'cmp'); return; }
+  if ((b = q('[data-cdleft]'))) {
+    const k = b.dataset.cdleft, x = [...CD.av.values()].flatMap(r => r.items || []).find(i => sceneKey(i) === k);
+    if (x) setCmpScene(x);
+    return;
+  }
   if ((b = q('[data-cdm]'))) { CD.month = ymAdd(CD.month || ymOf((prefs.cdse.scene && prefs.cdse.scene.date) || todayIso()), +b.dataset.cdm); renderCdse(); return; }
   if ((b = q('[data-cdscene]'))) {
     const k = b.dataset.cdscene, x = [...CD.av.values()].flatMap(r => r.items || []).find(i => sceneKey(i) === k);
@@ -6483,6 +6605,8 @@ bp.addEventListener('click', e => {
     if (a === 'show') setBase('cdse');
     if (a === 'setup') { CD.setup = !CD.setup; renderCdse(); }
     if (a === 'pick') cdsePick(!CD.picking);
+    if (a === 'cmp') cdseCmpStart();
+    if (a === 'cmpoff') { c.cmpOn = false; savePrefs(); syncCompare(); renderCdse(); }
     if (a === 'unpin') { c.pt = null; savePrefs(); cdsePin(); renderCdse(); }
     if (a === 'cloudy') { CD.showCloudy = !CD.showCloudy; renderCdse(); }
     if (a === 'acq') { avLoad(CD.month || ymOf((c.scene && c.scene.date) || todayIso()), true); renderCdse(); }
@@ -6535,6 +6659,437 @@ map.on('moveend', () => {
   clearTimeout(cdseMoveT);
   cdseMoveT = setTimeout(() => renderCdse(), 700);
 });
+
+/* =========================================================================
+   Other maps: Google My Maps shown beside this map
+   Editors add My Maps links with a title (saved with the map, synced like layers).
+   Anyone can switch them on, one or several at once. They are drawn read-only in
+   their own panes under this map's shapes and are never copied into it: nothing
+   in S.layers, feats or S.icons changes.
+   Looks: their own colours, or recoloured with this map's saved styles, with fill,
+   line and marker strength. A shared style lets several maps look the same.
+   History: the My Maps helper (Cloudflare Worker) can record a copy each time a map
+   changes. With the timeline on, each map shows the version it had on that date, and
+   on the day of a change the ground gained and lost is drawn with the frontline-change
+   styles.
+   ========================================================================= */
+map.createPane('pwOther').style.zIndex = 395;      // under this map's shapes (overlay pane, 400)
+map.createPane('pwOtherFx').style.zIndex = 398;    // gained/lost ground
+map.createPane('pwOtherPt').style.zIndex = 590;    // under this map's markers (marker pane, 600)
+const OM = {
+  rend: L.svg({ pane: 'pwOther' }), rendFx: L.svg({ pane: 'pwOtherFx' }),
+  live: new Map(),     // mid -> { res, at, err, loading }
+  hist: new Map(),     // mid -> { enabled, items, err, loading, at }
+  snaps: new Map(),    // `${mid}|${ts}` -> Promise<res>
+  groups: new Map(),   // oid -> L.LayerGroup on the map
+  drawn: new Map(),    // oid -> key of what is drawn
+  fx: null, fxKey: '', diffs: new Map(),
+  open: new Set(), adding: false
+};
+const omEntries = () => [...S.others.values()].filter(o => o.id !== '_style' && o.mid).sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || String(a.title).localeCompare(String(b.title)));
+const omCommon = () => (S.others.get('_style') || {}).st || {};
+const omSt = e => (e.sync ? omCommon() : e.st) || {};
+const omUrl = q => `${SITE.mymapsProxy}${SITE.mymapsProxy.includes('?') ? '&' : '?'}${q}`;
+const midOf = s => { const m = String(s || '').match(/[?&]mid=([\w-]{10,120})/) || String(s || '').match(/^([\w-]{10,120})$/); return m ? m[1] : ''; };
+const dayOfTs = ts => isoDate(new Date(+ts));
+
+/* ---------- Who sees what (personal, per map) ---------- */
+const omKey = () => 'frontline:om:' + (S.mapId || 'local');
+function omMine() { try { return JSON.parse(store.get(omKey()) || '{}'); } catch (e) { return {}; } }
+const omVisible = e => { const m = omMine(); return e.id in m ? !!m[e.id] : !!e.def; };
+function omSetVisible(e, on) {
+  const m = omMine();
+  if (on === !!e.def) delete m[e.id]; else m[e.id] = on;
+  store.set(omKey(), JSON.stringify(m));
+  omRender(e.id);
+  renderOm();
+}
+
+/* ---------- Loading ---------- */
+function omLive(mid, force) {
+  let rec = OM.live.get(mid);
+  if (rec && !force && (rec.loading || (rec.res && Date.now() - rec.at < 60000) || (rec.err && Date.now() - rec.at < 30000))) return rec.loading || Promise.resolve(rec);
+  rec = { ...(rec || {}), at: Date.now(), err: '' };
+  rec.loading = fetchMyMaps(mid).then(res => { rec.res = res; rec.at = Date.now(); return rec; })
+    .catch(err => { rec.err = err instanceof ImportError ? err.message : t('ml.fetchErr'); rec.at = Date.now(); return rec; })
+    .finally(() => { rec.loading = null; omRefreshMid(mid); });
+  OM.live.set(mid, rec);
+  renderOm();
+  return rec.loading;
+}
+// Recorded versions, if the helper keeps them (newer mymaps-worker.js with a KV store).
+function omHist(mid, force) {
+  let rec = OM.hist.get(mid);
+  if (rec && !force && (rec.loading || Date.now() - rec.at < 120000)) return rec.loading || Promise.resolve(rec);
+  rec = { ...(rec || {}), at: Date.now() };
+  rec.loading = fetch(omUrl(`mid=${encodeURIComponent(mid)}&op=history`))
+    .then(r => r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status)))
+    .then(txt => { let j = null; try { j = JSON.parse(txt); } catch (e) { j = null; } rec.enabled = !!(j && j.enabled); rec.items = j && Array.isArray(j.items) ? j.items.filter(x => x && x.ts).sort((a, b) => a.ts - b.ts) : []; rec.err = ''; return rec; })
+    .catch(err => { rec.enabled = false; rec.items = []; rec.err = err.message; return rec; })
+    .finally(() => {
+      rec.loading = null; omRefreshMid(mid); if (TL.on) renderTimeline();
+      // The helper saves the first version just after answering: ask once more shortly.
+      if (rec.enabled && !rec.items.length && !rec.retried) { rec.retried = true; setTimeout(() => omHist(mid, true), 6000); }
+    });
+  OM.hist.set(mid, rec);
+  return rec.loading;
+}
+function omSnap(mid, ts) {
+  const k = mid + '|' + ts;
+  if (!OM.snaps.has(k)) {
+    const p = fetch(omUrl(`mid=${encodeURIComponent(mid)}&op=snap&ts=${encodeURIComponent(ts)}`))
+      .then(r => r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status)))
+      .then(txt => resolveIcons(parseKML(txt, 'My Maps'), null));
+    p.catch(() => OM.snaps.delete(k));
+    OM.snaps.set(k, p);
+    if (OM.snaps.size > 40) OM.snaps.delete(OM.snaps.keys().next().value);
+  }
+  return OM.snaps.get(k);
+}
+// The recorded version in force on a date: the last one recorded on or before that day.
+function omItemAt(mid, d) {
+  const h = OM.hist.get(mid);
+  if (!h || !h.enabled || !h.items || !h.items.length) return undefined;   // no history: use the live map
+  return [...h.items].reverse().find(x => dayOfTs(x.ts) <= d) || null;     // null: nothing recorded yet then
+}
+function omRefreshMid(mid) { omEntries().filter(e => e.mid === mid).forEach(e => omRender(e.id)); renderOm(); }
+
+/* ---------- Looks ---------- */
+const colorOf = x => normHex((x.kind === 'polygon' || x.kind === 'circle') ? (x.style.fillColor || x.style.color) : x.style.color) || '#888888';
+function omMapped(x, st) {
+  if (st.mode !== 'mine') return null;
+  const sid = (st.colors || {})[colorOf(x)];
+  return sid ? getStyle(sid) : null;
+}
+function omVec(x, st) {
+  const g = omMapped(x, st);
+  const s = { weight: 2, opacity: 0.9, fillOpacity: 0.25, ...x.style, ...(g ? styleVals(g) : {}) };
+  if (!s.color) s.color = '#888888';
+  const v = vecStyle({ kind: x.kind, style: s });
+  v.fillOpacity = clamp((v.fillOpacity || 0) * (st.fill ?? 1), 0, 1);
+  v.weight = Math.max(0.5, (v.weight || 2) * (st.weight ?? 1));
+  return v;
+}
+function omMarkerIcon(x, st, icons) {
+  const g = omMapped(x, st), color = (g && (g.fillColor || g.color)) || x.style.color || '#d93f2b', k = clamp(st.mscale ?? 1, 0.3, 3);
+  const ic = x.style.iconKey && icons[x.style.iconKey];
+  if (!ic) return pinIcon(color, x.style.symbol, k);
+  if (ic.glyph) {
+    const W = Math.round(30 * k), H = Math.round(42 * k);
+    return L.divIcon({ className: 'pw-pin', iconSize: [W, H], iconAnchor: [W / 2, 40 * k], html: `<svg viewBox="0 0 30 42" width="${W}" height="${H}" aria-hidden="true"><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="${esc(color)}" stroke="rgba(0,0,0,.38)" stroke-width="1.2"/><image href="${esc(ic.src)}" x="6" y="6" width="18" height="18"/></svg>` });
+  }
+  const z = Math.max(4, Math.round(clamp(+x.style.iconSize || 32, 12, 96) * k));
+  return L.divIcon({ className: 'pw-img', iconSize: [z, z], iconAnchor: [z / 2, z / 2], html: `<img src="${esc(ic.src)}" alt="" width="${z}" height="${z}" draggable="false">` });
+}
+function omPopup(x, e, when) {
+  const txt = formatPlain(String(x.desc || ''));
+  const body = esc(txt).replace(/https?:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`).replace(/\n/g, '<br>');
+  return `<div class="om-pop"><span class="eyebrow">${esc(e.title || t('om.untitled'))}${when ? ' · ' + esc(when) : ''}</span><b>${esc(x.name || t('kind.untitled'))}</b>${body ? `<p>${body}</p>` : ''}</div>`;
+}
+
+/* ---------- Drawing ---------- */
+function omClear(oid) { const g = OM.groups.get(oid); if (g) { map.removeLayer(g); OM.groups.delete(oid); } OM.drawn.delete(oid); }
+async function omRender(oid) {
+  const e = S.others.get(oid);
+  if (!e || !e.mid || !omVisible(e)) { omClear(oid); omFx(); return; }
+  if (!SITE.mymapsProxy) { omClear(oid); return; }
+  omHist(e.mid);
+  const item = TL.on && TL.date ? omItemAt(e.mid, TL.date) : undefined;
+  let res = null, key = '';
+  if (item === null) { omClear(oid); omFx(); renderOm(); return; }
+  if (item) {
+    key = 'h' + item.ts;
+    try { res = await omSnap(e.mid, item.ts); } catch (err) { res = null; }
+    if (!res) { const live = await omLive(e.mid); res = live && live.res; key = 'live'; }
+  } else {
+    const live = OM.live.get(e.mid);
+    if (!live || (!live.res && !live.err)) { omLive(e.mid); return; }
+    res = live.res; key = 'live' + live.at;
+  }
+  const now = S.others.get(oid);
+  if (!now || !omVisible(now)) { omClear(oid); return; }
+  if (!res) { omClear(oid); renderOm(); return; }
+  const st = omSt(now), drawKey = [key, stable(st), stable(now.sync ? 1 : 0), TL.on ? TL.date : ''].join('|');
+  if (OM.drawn.get(oid) === drawKey && OM.groups.has(oid)) { omFx(); return; }
+  omClear(oid);
+  const icons = Object.fromEntries((res.icons || []).map(i => [i.key, i]));
+  const when = item ? fmtDate(dayOfTs(item.ts)) : '';
+  const g = L.layerGroup();
+  res.layers.forEach(lv => {
+    if (TL.on && TL.date && !featureAt(lv, TL.date)) return;
+    lv.features.forEach(x => {
+      if (TL.on && TL.date && !featureAt(x, TL.date)) return;
+      try {
+        const opts = { pane: 'pwOther', renderer: OM.rend, ...omVec(x, st) };
+        let lyr;
+        if (x.kind === 'polygon') lyr = L.polygon(x.geom, opts);
+        else if (x.kind === 'line') lyr = L.polyline(x.geom, opts);
+        else if (x.kind === 'circle') lyr = L.circle(x.geom.c, { ...opts, radius: x.geom.r });
+        else if (x.kind === 'label') lyr = L.marker(x.geom, { pane: 'pwOtherPt', interactive: false, icon: labelIcon({ name: x.name, style: x.style }) });
+        else lyr = L.marker(x.geom, { pane: 'pwOtherPt', icon: omMarkerIcon(x, st, icons), keyboard: false });
+        if (x.kind !== 'label') lyr.bindPopup(() => omPopup(x, S.others.get(oid) || now, when), { className: 'pw-popup om-popup', maxWidth: 320, offset: x.kind === 'marker' ? [0, -30] : [0, 0] });
+        g.addLayer(lyr);
+      } catch (err) { /* one broken shape never stops the rest */ }
+    });
+  });
+  g.addTo(map);
+  OM.groups.set(oid, g); OM.drawn.set(oid, drawKey);
+  omFx();
+}
+function omRenderAll() { [...OM.groups.keys()].forEach(oid => { if (!S.others.has(oid)) omClear(oid); }); omEntries().forEach(e => omRender(e.id)); }
+// Called when the list of other maps changes (an edit here, a collaborator, or a new map loaded).
+function omChanged(id) {
+  if (id && id !== '_style') omRender(id); else omRenderAll();
+  syncOmBtn(); renderOm();
+}
+function omOnTime() { omEntries().forEach(e => { if (omVisible(e)) omRender(e.id); }); if (TL.on && !$('#omPanel').hidden) renderOm(); }
+function omDates() {
+  const set = new Set();
+  omEntries().forEach(e => {
+    if (!omVisible(e)) return;
+    const h = OM.hist.get(e.mid);
+    if (h && h.enabled && h.items) h.items.slice(1).forEach(x => set.add(dayOfTs(x.ts)));
+  });
+  return [...set];
+}
+
+/* ---------- Changes between versions: ground gained and lost ---------- */
+function polysOf(res, color) {
+  const out = [];
+  res.layers.forEach(lv => lv.features.forEach(x => { if ((x.kind === 'polygon') && colorOf(x) === color) out.push(...toPC(x.geom)); }));
+  return out;
+}
+// The colour covering the most ground (usually the occupied area) is the one followed by default.
+function mainColor(res) {
+  const area = new Map();
+  res.layers.forEach(lv => lv.features.forEach(x => { if (x.kind !== 'polygon') return; const c = colorOf(x); try { area.set(c, (area.get(c) || 0) + toPC(x.geom).reduce((s, p) => s + polyArea(p), 0)); } catch (e) { /* skip */ } }));
+  return [...area.entries()].sort((a, b) => b[1] - a[1]).map(([c]) => c)[0] || '';
+}
+function colorsOf(res) {
+  const m = new Map();
+  (res ? res.layers : []).forEach(lv => lv.features.forEach(x => { const c = colorOf(x), o = m.get(c) || { c, n: 0, kinds: new Set() }; o.n++; o.kinds.add(x.kind); m.set(c, o); }));
+  return [...m.values()].sort((a, b) => b.n - a.n);
+}
+// Gained and lost ground of one map on the day of a change: the last version that day vs the last one before it.
+async function omDiff(e, d) {
+  const h = OM.hist.get(e.mid);
+  if (!h || !h.enabled || !h.items || h.items.length < 2) return null;
+  const cur = [...h.items].reverse().find(x => dayOfTs(x.ts) === d);
+  if (!cur) return null;
+  const prev = [...h.items].reverse().find(x => dayOfTs(x.ts) < d);
+  if (!prev) return null;
+  const [a, b] = await Promise.all([omSnap(e.mid, prev.ts), omSnap(e.mid, cur.ts)]);
+  const color = e.track || mainColor(b);
+  const k = [e.mid, prev.ts, cur.ts, color].join('|');
+  if (OM.diffs.has(k)) return OM.diffs.get(k);
+  const pc = window.polygonClipping;
+  const A = polysOf(b, color), B = polysOf(a, color);
+  const U = arr => arr.length ? pc.union(...arr.map(p => [p])) : [];
+  let out = { gain: [], loss: [], color, prev: prev.ts, cur: cur.ts, ga: 0, la: 0 };
+  try {
+    const now = U(A), before = U(B);
+    out.gain = fromPC(pc.difference(now, before)); out.loss = fromPC(pc.difference(before, now));
+    out.ga = out.gain.reduce((s, p) => s + polyArea(p), 0); out.la = out.loss.reduce((s, p) => s + polyArea(p), 0);
+  } catch (err) { console.warn('Could not compare versions', err); }
+  OM.diffs.set(k, out);
+  return out;
+}
+async function omFx() {
+  const d = TL.on && TL.date && prefs.omChanges !== false ? TL.date : '';
+  const list = d ? omEntries().filter(e => omVisible(e)) : [];
+  const key = d + '|' + list.map(e => e.id + (e.track || '')).join(',');
+  if (key === OM.fxKey) return;
+  OM.fxKey = key;
+  if (OM.fx) { map.removeLayer(OM.fx); OM.fx = null; }
+  if (!d || !list.length) return;
+  const g = L.layerGroup(), gst = getStyle(prefs.fcGain) || {}, lst = getStyle(prefs.fcLoss) || {};
+  for (const e of list) {
+    let df = null;
+    try { df = await omDiff(e, d); } catch (err) { df = null; }
+    if (OM.fxKey !== key) return;
+    if (!df) continue;
+    const mk = (geoms, st, label, a) => geoms.forEach(p => {
+      const lyr = L.polygon(p, { pane: 'pwOtherFx', renderer: OM.rendFx, ...vecStyle({ kind: 'polygon', style: { weight: 1.5, opacity: 0.95, fillOpacity: 0.6, ...styleVals(st) } }) });
+      lyr.bindTooltip(`${esc(e.title || '')}: ${esc(label)} ${esc(fmtArea(a))}`, { sticky: true });
+      g.addLayer(lyr);
+    });
+    mk(df.gain, gst, t('om.gained'), df.ga);
+    if (prefs.fcLossOn !== false) mk(df.loss, lst, t('om.lost'), df.la);
+  }
+  if (OM.fxKey !== key) return;
+  OM.fx = g.addTo(map);
+  if (!$('#omPanel').hidden) renderOm();
+}
+
+/* ---------- Panel ---------- */
+const canOm = () => !S.readOnly && can('layers');
+function syncOmBtn() {
+  const btn = $('#omBtn'); if (!btn) return;
+  const n = omEntries().length, on = omEntries().filter(omVisible).length;
+  btn.hidden = !n && !canOm();
+  $('#omCount').textContent = on ? String(on) : '';
+  $('#omCount').hidden = !on;
+}
+function relTime(ms) {
+  const m = Math.round((Date.now() - ms) / 60000);
+  if (m < 1) return t('om.justNow');
+  if (m < 60) return t('om.minAgo', { n: m });
+  const h = Math.round(m / 60); if (h < 48) return t('om.hAgo', { n: h });
+  return fmtDate(dayOfTs(ms));
+}
+function omStatus(e) {
+  const live = OM.live.get(e.mid), h = OM.hist.get(e.mid);
+  if (!SITE.mymapsProxy) return `<small class="err">${esc(t('ml.needProxy'))}</small>`;
+  if (!omVisible(e) && !live) return '';
+  if (live && live.loading && !live.res) return `<small>${esc(t('om.loading'))}</small>`;
+  if (live && live.err && !live.res) return `<small class="err">${esc(live.err)}</small>`;
+  const parts = [];
+  if (live && live.res) parts.push(t('om.updated', { t: relTime(live.at) }));
+  if (h && h.enabled) parts.push(h.items.length ? tn('om.versions', h.items.length) : t('om.recStart'));
+  const item = TL.on && TL.date ? omItemAt(e.mid, TL.date) : undefined;
+  if (item === null) parts.push(t('om.notYet', { d: fmtDate(dayOfTs(h.items[0].ts)) }));
+  else if (item) parts.push(t('om.showingVer', { d: fmtDate(dayOfTs(item.ts)) }));
+  return `<small>${esc(parts.join(' · '))}</small>`;
+}
+function histHtml(e) {
+  const h = OM.hist.get(e.mid);
+  if (!h || h.loading && !h.items) return `<p class="help">${esc(t('om.histLoading'))}</p>`;
+  if (!h.enabled) return `<p class="help">${esc(t('om.noHist'))}</p>`;
+  if (!h.items.length) return `<p class="help">${esc(t('om.histEmpty'))}</p>`;
+  const df = TL.on && TL.date ? [...OM.diffs.values()].find(x => x.cur && dayOfTs(x.cur) === TL.date && h.items.some(i => i.ts === x.cur)) : null;
+  return `<p class="help">${esc(t('om.histHelp', { d: fmtDate(dayOfTs(h.items[0].ts)) }))}</p>
+    ${df ? `<p class="om-delta"><span class="g">${esc(t('om.gained'))} ${esc(fmtArea(df.ga))}</span> <span class="l">${esc(t('om.lost'))} ${esc(fmtArea(df.la))}</span></p>` : ''}
+    <ul class="om-vers">${[...h.items].reverse().slice(0, 60).map((x, i, arr) => `<li><button type="button" data-omday="${dayOfTs(x.ts)}" class="${TL.on && TL.date === dayOfTs(x.ts) ? 'on' : ''}"><b>${esc(fmtDate(dayOfTs(x.ts)))}</b><small>${esc(new Date(+x.ts).toISOString().slice(11, 16))} UTC${i === arr.length - 1 && h.items.length <= 60 ? ' · ' + esc(t('om.first')) : ''}</small></button></li>`).join('')}</ul>
+    ${TL.on ? '' : `<button type="button" class="btn sm" data-om="tl" data-oid="${esc(e.id)}">${icon('clock')}${esc(t('om.useTl'))}</button>`}`;
+}
+function styleHtml(e) {
+  const st = omSt(e), live = OM.live.get(e.mid);
+  const synced = omEntries().filter(x => x.sync);
+  const res = e.sync ? null : live && live.res;
+  // Colours to map: from this map, or from every map sharing the style.
+  const cols = e.sync ? (() => { const m = new Map(); synced.forEach(x => { const r = OM.live.get(x.mid); colorsOf(r && r.res).forEach(c => { const o = m.get(c.c) || { ...c, n: 0 }; o.n += c.n; m.set(c.c, o); }); }); return [...m.values()].sort((a, b) => b.n - a.n); })() : colorsOf(res);
+  const opts = sel => `<option value="">${esc(t('om.keep'))}</option>${allStyles().map(s => `<option value="${esc(s.id)}" ${s.id === sel ? 'selected' : ''}>${esc(stName(s))}</option>`).join('')}`;
+  const sl = (k, lo, hi, step, v, label) => `<label class="field"><span>${esc(label)} <output>${Math.round(v * 100)}%</output></span><input type="range" data-omst="${k}" data-oid="${esc(e.id)}" min="${lo}" max="${hi}" step="${step}" value="${v}"></label>`;
+  const pcols = colorsOf(live && live.res).filter(c => c.kinds.has('polygon'));
+  return `<label class="check"><input type="checkbox" data-omf="sync" data-oid="${esc(e.id)}" ${e.sync ? 'checked' : ''}> ${esc(t('om.sync'))}</label>
+    <small class="help">${esc(t(e.sync ? 'om.syncOnHelp' : 'om.syncHelp', { n: synced.length }))}</small>
+    <div class="seg light om-mode"><button type="button" data-ommode="orig" data-oid="${esc(e.id)}" aria-pressed="${st.mode !== 'mine'}">${esc(t('om.orig'))}</button><button type="button" data-ommode="mine" data-oid="${esc(e.id)}" aria-pressed="${st.mode === 'mine'}">${esc(t('om.mine'))}</button></div>
+    ${st.mode === 'mine' ? (cols.length ? `<div class="om-cols">${cols.slice(0, 16).map(c => `<label><span class="om-sw" style="background:${esc(c.c)}"></span><small>${c.n}</small><select data-omcol="${esc(c.c)}" data-oid="${esc(e.id)}">${opts((st.colors || {})[c.c] || '')}</select></label>`).join('')}</div><small class="help">${esc(t('om.mineHelp'))}</small>` : `<p class="help">${esc(t('om.loadFirst'))}</p>`) : ''}
+    ${sl('fill', 0, 1.5, 0.05, st.fill ?? 1, t('om.fill'))}
+    ${sl('weight', 0.3, 3, 0.1, st.weight ?? 1, t('om.weight'))}
+    ${sl('mscale', 0.4, 2.5, 0.05, st.mscale ?? 1, t('om.msize'))}
+    ${pcols.length > 1 ? `<label class="field"><span>${esc(t('om.track'))}</span><select data-omf="track" data-oid="${esc(e.id)}"><option value="">${esc(t('om.trackAuto'))}</option>${pcols.map(c => `<option value="${esc(c.c)}" ${e.track === c.c ? 'selected' : ''}>${esc(c.c)} (${c.n})</option>`).join('')}</select><small>${esc(t('om.trackHelp'))}</small></label>` : ''}`;
+}
+function entryHtml(e) {
+  const on = omVisible(e), open = OM.open.has(e.id), ed = canOm();
+  return `<div class="om-item ${on ? 'on' : ''}" data-oid="${esc(e.id)}">
+    <div class="om-row">
+      <label class="om-tog"><input type="checkbox" data-omvis="${esc(e.id)}" ${on ? 'checked' : ''}><span class="om-title"><b>${esc(e.title || t('om.untitled'))}</b>${omStatus(e)}</span></label>
+      ${on ? `<button type="button" class="icon-btn sm" data-om="fit" data-oid="${esc(e.id)}" aria-label="${esc(t('om.fit'))}" title="${esc(t('om.fit'))}">${icon('fit')}</button>` : ''}
+      <button type="button" class="icon-btn sm" data-om="more" data-oid="${esc(e.id)}" aria-expanded="${open}" aria-label="${esc(t('om.details'))}" title="${esc(t('om.details'))}">${icon(open ? 'chevUp' : 'chevron')}</button>
+    </div>
+    ${open ? `<div class="om-body">
+      <a class="om-link" href="https://www.google.com/maps/d/viewer?mid=${encodeURIComponent(e.mid)}" target="_blank" rel="noopener">${esc(t('om.openGoogle'))} ↗</a>
+      <details class="cd-det" open><summary>${esc(t('om.history'))}</summary>${histHtml(e)}</details>
+      ${ed ? `<details class="cd-det" ${OM.styleOpen === e.id ? 'open' : ''} data-omdet="${esc(e.id)}"><summary>${esc(t('om.look'))}</summary>${styleHtml(e)}</details>
+      <details class="cd-det"><summary>${esc(t('om.settings'))}</summary>
+        <label class="field"><span>${esc(t('om.title'))}</span><input type="text" data-omf="title" data-oid="${esc(e.id)}" value="${esc(e.title || '')}" maxlength="120"></label>
+        <label class="check"><input type="checkbox" data-omf="def" data-oid="${esc(e.id)}" ${e.def ? 'checked' : ''}> ${esc(t('om.def'))}</label>
+        <span class="row"><button type="button" class="btn sm danger" data-om="rm" data-oid="${esc(e.id)}">${icon('trash')}${esc(t('om.remove'))}</button></span>
+      </details>` : ''}
+    </div>` : ''}
+  </div>`;
+}
+function renderOm() {
+  syncOmBtn();
+  const p = $('#omPanel'); if (!p || p.hidden) return;
+  const list = omEntries(), ed = canOm(), sc = p.scrollTop;
+  p.innerHTML = `
+    <div class="bp-head"><span class="eyebrow">${esc(t('om.panel'))}</span><button class="icon-btn sm" data-om="close" aria-label="${esc(t('base.close'))}">${icon('close')}</button></div>
+    <p class="help">${esc(t('om.intro'))}</p>
+    ${!SITE.mymapsProxy ? `<p class="err">${esc(t('ml.needProxy'))}</p>` : ''}
+    <div class="om-list">${list.map(entryHtml).join('') || `<p class="help">${esc(t(ed ? 'om.emptyEd' : 'om.empty'))}</p>`}</div>
+    ${list.length && TL.on ? `<label class="check"><input type="checkbox" id="om-changes" ${prefs.omChanges !== false ? 'checked' : ''}> ${esc(t('om.showChanges'))}</label>` : ''}
+    ${ed ? `<div class="sub-form om-add">
+      <span class="eyebrow">${esc(t('om.add'))}</span>
+      <label class="field"><span>${esc(t('mm.link'))}</span><input type="url" id="om-url" placeholder="https://www.google.com/maps/d/viewer?mid=…" autocomplete="off" spellcheck="false"></label>
+      <label class="field"><span>${esc(t('om.title'))}</span><input type="text" id="om-title" maxlength="120" placeholder="${esc(t('om.titlePh'))}"></label>
+      <p class="err" id="om-err" hidden></p>
+      <button type="button" class="btn primary sm" data-om="add">${icon('plus')}${esc(t('om.addBtn'))}</button>
+      <small class="help">${esc(t('om.addHelp'))}</small>
+    </div>` : ''}`;
+  p.scrollTop = sc;
+}
+function openOm() { $('#basePanel').hidden = true; $('#omPanel').hidden = false; renderOm(); omEntries().forEach(e => { if (SITE.mymapsProxy) { omHist(e.mid); if (OM.open.has(e.id)) omLive(e.mid); } }); }
+
+/* ---------- Editing (editors only; saved with the map and synced like layers) ---------- */
+function omSave(e) { S.others.set(e.id, { ...e }); commit(); omRender(e.id); renderOm(); }
+function omSaveStyle(e, patch) {
+  if (e.sync) { const c = S.others.get('_style') || { id: '_style', st: {} }; S.others.set('_style', { ...c, st: { ...(c.st || {}), ...patch } }); commit(); omEntries().filter(x => x.sync).forEach(x => omRender(x.id)); renderOm(); }
+  else omSave({ ...e, st: { ...(e.st || {}), ...patch } });
+}
+async function omAdd() {
+  const url = $('#om-url').value.trim(), title = $('#om-title').value.trim(), mid = midOf(url), err = $('#om-err');
+  if (!mid) { err.textContent = t('mm.bad'); err.hidden = false; return; }
+  if (omEntries().some(x => x.mid === mid)) { err.textContent = t('om.dup'); err.hidden = false; return; }
+  const e = { id: 'o' + uid(), mid, title: title || '', order: omEntries().length, def: false, sync: false, st: { mode: 'orig', fill: 1, weight: 1, mscale: 1 } };
+  S.others.set(e.id, e); OM.open.add(e.id);
+  omSetVisible(e, true);
+  commit();
+  const rec = await omLive(mid);
+  const cur = S.others.get(e.id);
+  if (cur && !cur.title && rec && rec.res && rec.res.title) omSave({ ...cur, title: rec.res.title });
+  if (rec && rec.res) omFit(e.id);
+}
+function omFit(oid) {
+  const g = OM.groups.get(oid); if (!g) return;
+  const b = L.latLngBounds([]);
+  g.eachLayer(l => { if (l.getBounds) b.extend(l.getBounds()); else if (l.getLatLng) b.extend(l.getLatLng()); });
+  if (b.isValid()) map.flyToBounds(b, { padding: [60, 60], maxZoom: 14 });
+}
+const omPanel = $('#omPanel');
+$('#omBtn').addEventListener('click', () => { if (omPanel.hidden) openOm(); else omPanel.hidden = true; });
+$('#baseBtn').addEventListener('click', () => { omPanel.hidden = true; });
+omPanel.addEventListener('click', e => {
+  const b = e.target.closest('[data-om]');
+  const day = e.target.closest('[data-omday]');
+  if (day) { const d = day.dataset.omday; if (!TL.on) toggleTimeline(true); setTLDate(d); renderOm(); return; }
+  const md = e.target.closest('[data-ommode]');
+  if (md) { const x = S.others.get(md.dataset.oid); if (x && canOm()) omSaveStyle(x, { mode: md.dataset.ommode }); return; }
+  if (!b) return;
+  const a = b.dataset.om, x = b.dataset.oid && S.others.get(b.dataset.oid);
+  if (a === 'close') omPanel.hidden = true;
+  if (a === 'add') omAdd();
+  if (a === 'fit' && x) omFit(x.id);
+  if (a === 'more' && x) { if (OM.open.has(x.id)) OM.open.delete(x.id); else { OM.open.add(x.id); omLive(x.mid); omHist(x.mid); } renderOm(); }
+  if (a === 'tl') { toggleTimeline(true); renderOm(); }
+  if (a === 'rm' && x && canOm()) { S.others.delete(x.id); omClear(x.id); commit(); omFx(); renderOm(); toast(t('om.removed', { name: x.title || t('om.untitled') }), '', { label: t('toast.undo'), fn: undo }); }
+});
+omPanel.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.omvis) { const x = S.others.get(el.dataset.omvis); if (x) { omSetVisible(x, el.checked); if (el.checked) { omLive(x.mid); omHist(x.mid); } } return; }
+  if (el.id === 'om-changes') { prefs.omChanges = el.checked; savePrefs(); OM.fxKey = ''; omFx(); return; }
+  const x = el.dataset.oid && S.others.get(el.dataset.oid);
+  if (!x || !canOm()) return;
+  if (el.dataset.omf === 'title') omSave({ ...x, title: el.value.trim() });
+  if (el.dataset.omf === 'def') omSave({ ...x, def: el.checked });
+  if (el.dataset.omf === 'sync') {
+    // The first map to share its style hands its look to the shared style.
+    if (el.checked && !S.others.has('_style')) S.others.set('_style', { id: '_style', st: { ...(x.st || {}) } });
+    omSave({ ...x, sync: el.checked });
+  }
+  if (el.dataset.omf === 'track') { omSave({ ...x, track: el.value }); OM.fxKey = ''; omFx(); }
+  if (el.dataset.omcol) { const st = omSt(x); omSaveStyle(x, { colors: { ...(st.colors || {}), [el.dataset.omcol]: el.value || undefined } }); }
+  if (el.dataset.omst) omSaveStyle(x, { [el.dataset.omst]: +el.value });
+});
+omPanel.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset.omst) return;
+  const out = el.closest('.field') && el.closest('.field').querySelector('output'); if (out) out.textContent = Math.round(el.value * 100) + '%';
+});
+omPanel.addEventListener('toggle', e => { const d = e.target.closest && e.target.closest('[data-omdet]'); if (d) OM.styleOpen = d.open ? d.dataset.omdet : (OM.styleOpen === d.dataset.omdet ? null : OM.styleOpen); }, true);
+omPanel.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.id === 'om-url' || e.target.id === 'om-title')) { e.preventDefault(); omAdd(); } });
+// Keep switched-on maps fresh, like linked My Maps layers.
+if (SITE.mymapsProxy) setInterval(() => { if (document.hidden) return; omEntries().filter(omVisible).forEach(e => { omLive(e.mid, true); omHist(e.mid, true); }); }, Math.max(1, +SITE.mymapsRefreshMinutes || 10) * 60000);
 
 /* =========================================================================
    Feature model
@@ -6935,7 +7490,7 @@ function styleSwatch(st, kind) {
    features never overwrite each other, and undo only reverts your own edits.
    ========================================================================= */
 const APP_IDS = new Set(['frontline-atlas', 'plotwright']);
-const KINDS = ['icons', 'styles', 'layers', 'features'];
+const KINDS = ['icons', 'styles', 'layers', 'features', 'others'];
 const clean = o => { const r = {}; Object.keys(o).forEach(k => { const v = o[k]; if (v !== null && v !== undefined && !(typeof v === 'number' && isNaN(v))) r[k] = v; }); return r; };
 
 // Full project file (also used for local saving): includes per-viewer state such as layer visibility.
@@ -6946,12 +7501,14 @@ function serialize() {
     layers: S.layers.map(l => clean({ id: l.id, name: l.name, visible: l.visible, color: l.color, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale !== 1 ? l.mscale : undefined, parent: l.parent || undefined })),
     features: S.layers.flatMap(l => l.group.getLayers().filter(f => f._pw).map(f => ({ ...f._pw, layerId: l.id, geom: getGeom(f) }))),
     icons: [...S.icons.values()].map(i => clean({ id: i.id, name: i.name, src: i.src, glyph: i.glyph || undefined })),
-    styles: [...S.styles.values()].map(st => clean({ ...st }))
+    styles: [...S.styles.values()].map(st => clean({ ...st })),
+    others: [...S.others.values()].map(o => clean({ ...o }))
   };
 }
 // Shared content only, keyed by id. This is what gets compared, synced and undone.
 function projectToSnap(p) {
-  const snap = { meta: clean({ title: p.title || '', desc: p.desc || '', mscale: p.mscale && msNorm(p.mscale) !== 1 ? msNorm(p.mscale) : undefined, wm: p.wm ? true : undefined }), layers: {}, features: {}, icons: {}, styles: {} };
+  const snap = { meta: clean({ title: p.title || '', desc: p.desc || '', mscale: p.mscale && msNorm(p.mscale) !== 1 ? msNorm(p.mscale) : undefined, wm: p.wm ? true : undefined }), layers: {}, features: {}, icons: {}, styles: {}, others: {} };
+  (p.others || []).forEach(o => { if (o && o.id) { const { id, ...v } = o; snap.others[id] = clean(v); } });
   (p.layers || []).forEach((l, i) => { snap.layers[l.id] = clean({ name: l.name, color: l.color, order: i, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale && msNorm(l.mscale) !== 1 ? msNorm(l.mscale) : undefined, parent: l.parent || undefined }); });
   (p.styles || []).forEach(st => { if (st && st.id) { const { id, ...v } = st; snap.styles[id] = clean(v); } });
   (p.features || []).forEach(f => { snap.features[f.id] = clean({ ...f, style: clean(f.style || {}) }); });
@@ -6963,9 +7520,9 @@ function diffSnaps(a, b) {
   const out = [];
   if (stable(a.meta) !== stable(b.meta)) out.push({ kind: 'meta', id: null, before: a.meta, after: b.meta });
   KINDS.forEach(k => {
-    const ids = new Set([...Object.keys(a[k]), ...Object.keys(b[k])]);
+    const ids = new Set([...Object.keys(a[k] || {}), ...Object.keys(b[k] || {})]);
     ids.forEach(id => {
-      const x = a[k][id] ?? null, y = b[k][id] ?? null;
+      const x = (a[k] || {})[id] ?? null, y = (b[k] || {})[id] ?? null;
       if (stable(x) !== stable(y)) out.push({ kind: k, id, before: x, after: y });
     });
   });
@@ -6977,7 +7534,7 @@ let applying = false;
 function applyChanges(list) {
   if (!list.length) return;
   applying = true;
-  const rank = c => c.kind === 'meta' ? 0 : c.val ? { icons: 1, styles: 1, layers: 2, features: 3 }[c.kind] : { features: 4, layers: 5, icons: 6, styles: 6 }[c.kind];
+  const rank = c => c.kind === 'meta' ? 0 : c.val ? { icons: 1, styles: 1, others: 1, layers: 2, features: 3 }[c.kind] : { features: 4, layers: 5, icons: 6, styles: 6, others: 6 }[c.kind];
   const sel = selectedId;
   [...list].sort((a, b) => rank(a) - rank(b)).forEach(c => {
     try { applyEntity(c.kind, c.id, c.val); } catch (err) { console.warn('Could not apply change', c, err); }
@@ -7006,6 +7563,7 @@ function applyEntity(kind, id, val) {
     return;
   }
   if (kind === 'styles') { applyStyleEntity(id, val); return; }
+  if (kind === 'others') { if (val) S.others.set(id, { ...val, id }); else S.others.delete(id); omChanged(id); return; }
   if (kind === 'layers') {
     let l = getLayer(id);
     if (!val) {
@@ -7063,6 +7621,9 @@ function loadProjectInner(p) {
   S.sample = !!p.sample;
   (p.icons || []).forEach(i => { if (i && i.id && i.src) S.icons.set(i.id, { id: i.id, name: i.name || '', src: i.src, glyph: !!i.glyph }); });
   (p.styles || []).forEach(st => { if (st && st.id) S.styles.set(st.id, { ...st }); });
+  S.others = new Map();
+  (p.others || []).forEach(o => { if (o && o.id) S.others.set(o.id, { ...o }); });
+  omChanged(null);
   (p.layers || []).forEach((l, i) => { const nl = addLayer(l); nl.order = i; });
   applySharedVisibility();
   if (!S.layers.length) addLayer({ name: t('lyr.untitled') });
@@ -7080,7 +7641,7 @@ function loadProjectInner(p) {
 
 /* ---------- Commit, undo, redo ---------- */
 const H = { undo: [], redo: [], lock: false };
-let lastSnap = { meta: { title: '', desc: '' }, layers: {}, features: {}, icons: {}, styles: {} };
+let lastSnap = { meta: { title: '', desc: '' }, layers: {}, features: {}, icons: {}, styles: {}, others: {} };
 let commitTimer = null;
 function resetHistory() { lastSnap = snapshot(); H.undo = []; H.redo = []; updateUndo(); }
 function reindexLayers() { S.layers.forEach((l, i) => { l.order = i; }); }
@@ -7321,7 +7882,8 @@ function rawToProject(raw) {
     layers: dec(raw.layers).map(([id, v]) => ({ id, ...v })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
     features: dec(raw.features).map(([id, v]) => ({ ...v, id })),
     icons: dec(raw.icons).map(([id, v]) => ({ id, ...v })),
-    styles: dec(raw.styles).map(([id, v]) => ({ id, ...v }))
+    styles: dec(raw.styles).map(([id, v]) => ({ id, ...v })),
+    others: dec(raw.others).map(([id, v]) => ({ id, ...v }))
   };
 }
 const encodeVal = (be, val, kind) => val == null ? null : { j: stable(val), by: (sync.me && sync.me.uid) || '', at: be.stamp(), ...(kind === 'features' ? { k: val.kind, cb: val.cb || '' } : {}) };
@@ -9654,6 +10216,7 @@ function changeDates() {
   const set = new Set();
   feats.forEach(f => { if (f._pw.from) set.add(f._pw.from); if (f._pw.until) set.add(f._pw.until); });
   S.layers.forEach(l => { if (l.from) set.add(l.from); if (l.until) set.add(l.until); });
+  omDates().forEach(d => set.add(d));
   return [...set].sort();
 }
 function tlRange() {
@@ -9678,6 +10241,7 @@ function applyTimeFilter() {
   restoreZ();
   if (selectedId && feats.get(selectedId) && !map.hasLayer(feats.get(selectedId))) { map.closePopup(); deselect(); }
   firmsOnTime();   // fire detections can follow the timeline date
+  omOnTime();      // other maps show their recorded version for the date
 }
 function setTLDate(d, opts = {}) {
   const { min, max } = tlRange();
@@ -9768,7 +10332,8 @@ $('#tlFold').addEventListener('click', () => { prefs.tlFold = !prefs.tlFold; sav
 $('#tlPlay').addEventListener('click', togglePlay);
 $('#tlPrev').addEventListener('click', () => { stopPlay(); const s = prefs.tlStep; prefs.tlStep = 'change'; stepDate(-1); prefs.tlStep = s; });
 $('#tlNext').addEventListener('click', () => { stopPlay(); const s = prefs.tlStep; prefs.tlStep = 'change'; stepDate(1); prefs.tlStep = s; });
-$('#tlRange').addEventListener('input', e => { stopPlay(); setTLDate(addDays(tlRange().min, +e.target.value)); });
+// Read the slider before stopping playback: stopping redraws the timeline, which moves the slider back.
+$('#tlRange').addEventListener('input', e => { const v = +e.target.value, min = tlRange().min; if (TL.playing) stopPlay(); setTLDate(addDays(min, v)); });
 $('#tlStep').addEventListener('change', e => { prefs.tlStep = e.target.value; savePrefs(); });
 $('#tlDatePick').addEventListener('change', e => { if (e.target.value) { stopPlay(); setTLDate(e.target.value); } });
 $('#tlDate').addEventListener('click', () => { const p = $('#tlDatePick'); p.value = TL.date; if (p.showPicker) { try { p.showPicker(); } catch (e) { p.focus(); } } else p.focus(); });
@@ -13343,7 +13908,7 @@ function sampleProject() {
   syncTerrain();
   syncMapFeatures();
   if (prefs.firms.on) firmsSync();
-  if (prefs.compareOn) syncCompare();
+  if (prefs.compareOn || (prefs.base === 'cdse' && prefs.cdse.cmpOn)) syncCompare();
   setTool('select');
   let opened = false;
   const mapId = Q.get('map');
