@@ -3968,6 +3968,15 @@ fr: {"lyr.showAll": "Tout afficher ({n})"},
 ru: {"lyr.showAll": "Показать все ({n})"}
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"lod.title": "Lighter points on big maps", "lod.help": "For maps with hundreds of points: icons are drawn only on screen, and when more than about 300 would show at once they become small dots until you zoom in. Much smoother; off keeps every icon. Dot size follows the marker size above."},
+uk: {"lod.title": "Легші точки на великих картах", "lod.help": "Для карт із сотнями точок: значки малюються лише на екрані, а коли їх понад ~300 одночасно, вони стають маленькими крапками, доки не наблизите. Значно плавніше; вимкнено — усі значки лишаються. Розмір крапок залежить від розміру маркерів вище."},
+pl: {"lod.title": "Lżejsze punkty na dużych mapach", "lod.help": "Dla map z setkami punktów: ikony rysowane są tylko na ekranie, a gdy naraz byłoby ich ponad ~300, stają się małymi kropkami aż do przybliżenia. Dużo płynniej; wyłączone zachowuje wszystkie ikony. Rozmiar kropek zależy od rozmiaru znaczników powyżej."},
+de: {"lod.title": "Leichtere Punkte auf großen Karten", "lod.help": "Für Karten mit Hunderten Punkten: Symbole werden nur auf dem Bildschirm gezeichnet, und bei mehr als etwa 300 gleichzeitig werden sie zu kleinen Punkten, bis du hineinzoomst. Viel flüssiger; aus behält jedes Symbol. Die Punktgröße folgt der Markergröße oben."},
+fr: {"lod.title": "Points allégés sur les grandes cartes", "lod.help": "Pour les cartes à centaines de points : les icônes ne sont dessinées qu’à l’écran, et au-delà d’environ 300 à la fois elles deviennent de petits points jusqu’à ce que vous zoomiez. Bien plus fluide ; désactivé garde toutes les icônes. La taille des points suit la taille des marqueurs ci-dessus."},
+ru: {"lod.title": "Облегчённые точки на больших картах", "lod.help": "Для карт с сотнями точек: значки рисуются только на экране, а когда их больше ~300 одновременно, они становятся маленькими точками, пока не приблизите. Намного плавнее; выключено — все значки остаются. Размер точек зависит от размера маркеров выше."}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -4102,7 +4111,7 @@ const prefs = Object.assign({
   lang: detectLang(), labelLang: 'match',
   dist: 'auto', areaM: 'km2', areaI: 'mi2', decimals: 'auto', coord: 'dec',
   sidebar: null,
-  searchMode: 'map', bdCountry: false, bdRegion: false, bdDistrict: false, bdCommunity: false, bdCity: false, bdCityDist: false, bdQuarter: false, rail: false, highways: false, aboutCollapsed: false, trace: false, traceRes: 'normal', traceMode: 'follow', mscaleView: 1, tlFold: false, fcGain: 'st-advance', fcLoss: 'st-liberated', fcLossOn: true,
+  searchMode: 'map', bdCountry: false, bdRegion: false, bdDistrict: false, bdCommunity: false, bdCity: false, bdCityDist: false, bdQuarter: false, rail: false, highways: false, aboutCollapsed: false, trace: false, traceRes: 'normal', traceMode: 'follow', mscaleView: 1, lodDots: false, tlFold: false, fcGain: 'st-advance', fcLoss: 'st-liberated', fcLossOn: true,
   google: { key: '', session: '', expiry: 0, sessKey: '', method: 'auto', works: '' },
   cdse: { viz: '', priority: 'mostRecent', sat: 'auto', ...(oldPrefs.cdse || { id: '', layer: 'TRUE_COLOR', from: isoDate(new Date(Date.now() - 30 * 864e5)), to: isoDate(new Date()), cc: 30 }) }
 }, (() => { try { return JSON.parse(store.get(KEY_PREFS) || '{}'); } catch (e) { return {}; } })());
@@ -6855,7 +6864,7 @@ function omVec(x, st) {
   return v;
 }
 function omMarkerIcon(x, st, icons) {
-  const g = omMapped(x, st), color = (g && (g.fillColor || g.color)) || x.style.color || '#d93f2b', k = clamp(st.mscale ?? 1, 0.3, 3);
+  const g = omMapped(x, st), color = (g && (g.fillColor || g.color)) || x.style.color || '#d93f2b', k = clamp((st.mscale ?? 1) * (prefs.mscaleView || 1), 0.25, 4);
   const ic = x.style.iconKey && icons[x.style.iconKey];
   if (!ic) return pinIcon(color, x.style.symbol, k);
   if (ic.glyph) {
@@ -6925,7 +6934,7 @@ async function omRender(oid) {
     });
   });
   g._pts = {
-    items, on: new Map(), dots: L.layerGroup().addTo(g), k: clamp(st.mscale ?? 1, 0.3, 3),
+    items, on: new Map(), dots: L.layerGroup().addTo(g), k: clamp((st.mscale ?? 1) * (prefs.mscaleView || 1), 0.25, 4),
     make: it => {
       const x = it.x;
       if (x.kind === 'label') return L.marker(it.ll, { pane: 'pwOtherPt', interactive: false, keyboard: false, icon: labelIcon({ name: x.name, style: x.style }) });
@@ -6944,15 +6953,17 @@ const OM_MAXPTS = 250;
 function omPlacePoints(oid) {
   const g = OM.groups.get(oid), P = g && g._pts;
   if (!P) return;
-  const b = map.getBounds().pad(0.15), inView = P.items.filter(it => b.contains(it.ll));
-  const dots = inView.filter(it => it.x.kind !== 'label').length > OM_MAXPTS;
+  // Without "lighter points" (the default) every point keeps its own icon, as in My Maps.
+  const light = !!prefs.lodDots;
+  const b = map.getBounds().pad(0.15), inView = light ? P.items.filter(it => b.contains(it.ll)) : P.items;
+  const dots = light && inView.filter(it => it.x.kind !== 'label').length > OM_MAXPTS;
   const want = new Set(dots ? [] : inView);
   P.on.forEach((m, it) => { if (!want.has(it)) { g.removeLayer(m); P.on.delete(it); } });
   want.forEach(it => { if (!P.on.has(it)) { const m = P.make(it); P.on.set(it, m); g.addLayer(m); } });
   P.dots.clearLayers();
   if (dots) inView.forEach(it => {
     if (it.x.kind === 'label') return;
-    L.circleMarker(it.ll, { renderer: OM.rend, pane: 'pwOther', radius: 4.5 * P.k, color: '#fff', weight: 1.3, opacity: 0.95, fillColor: it.color, fillOpacity: 1 })
+    L.circleMarker(it.ll, { renderer: OM.rend, pane: 'pwOther', radius: Math.max(1.5, 3.2 * P.k), color: '#fff', weight: 1.3, opacity: 0.95, fillColor: it.color, fillOpacity: 1 })
       .bindPopup(() => P.pop(it), { className: 'pw-popup om-popup', maxWidth: 320 }).addTo(P.dots);
   });
 }
@@ -7285,7 +7296,7 @@ const LOD = { max: 300, prep: false, active: false, dots: [], layer: L.layerGrou
 // Before creating many points at once (opening a map, importing a file).
 function lodPrepare(incoming) {
   let n = incoming || 0; feats.forEach(f => { if (f._pw.kind === 'marker') n++; });
-  LOD.prep = n > LOD.max;
+  LOD.prep = !!prefs.lodDots && n > LOD.max;
 }
 function lodWanted(f) {
   const l = getLayer(f._pw.layerId);
@@ -7295,7 +7306,7 @@ function lodApply() {
   const ms = [];
   feats.forEach(f => { if (f._pw.kind === 'marker') ms.push(f); });
   const was = LOD.active;
-  LOD.active = ms.length > LOD.max;
+  LOD.active = !!prefs.lodDots && ms.length > LOD.max;   // off unless switched on in the settings menu
   if (!LOD.active && !was) return;
   const b = map.getBounds().pad(0.15), keep = id => id === selectedId || id === editingId || MS.ids.has(id) || id === (FC && FC.fid);
   const want = ms.filter(lodWanted), inView = want.filter(f => b.contains(f.getLatLng()));
@@ -7313,8 +7324,8 @@ function lodApply() {
   LOD.dots = dots;
   LOD.layer.clearLayers();
   dots.forEach(f => {
-    const k = clamp(markerK(f._pw), 0.6, 2);
-    L.circleMarker(f.getLatLng(), { renderer: LOD.rend, pane: 'pwDots', interactive: false, radius: 4.5 * k, color: '#fff', weight: 1.4, opacity: 0.95, fillColor: f._pw.style.color || '#d93f2b', fillOpacity: 1 }).addTo(LOD.layer);
+    const k = clamp(markerK(f._pw), 0.25, 4);   // follows every marker-size setting, including your own
+    L.circleMarker(f.getLatLng(), { renderer: LOD.rend, pane: 'pwDots', interactive: false, radius: Math.max(1.5, 3.2 * k), color: '#fff', weight: 1.4, opacity: 0.95, fillColor: f._pw.style.color || '#d93f2b', fillOpacity: 1 }).addTo(LOD.layer);
   });
   document.body.classList.toggle('lod-dots', dots.length > 0);
 }
@@ -7466,7 +7477,17 @@ function markerK(r) {
   const l = getLayer(r.layerId);
   return clamp((S.mscale || 1) * ((l && l.mscale) || 1) * (+r.style.scale || 1) * (prefs.mscaleView || 1), 0.15, 8);
 }
-function refreshMarkerSizes() { feats.forEach(f => { if (f._pw.kind === 'marker') applyStyle(f); }); }
+function refreshMarkerSizes() {
+  feats.forEach(f => { if (f._pw.kind === 'marker') applyStyle(f); });
+  if (LOD.active) lodApply();
+  if (typeof OM !== 'undefined') { OM.drawn.clear(); omEntries().forEach(e => omRender(e.id)); }
+}
+// The "lighter points" switch in the settings menu.
+function setLodDots(on) {
+  prefs.lodDots = on; savePrefs();
+  applyTimeFilter();
+  if (typeof OM !== 'undefined') OM.groups.forEach((g, oid) => omPlacePoints(oid));
+}
 function pinIcon(color, sym, k = 1) {
   const fg = contrastInk(color), W = Math.round(30 * k), H = Math.round(42 * k);
   const inner = sym
@@ -9973,6 +9994,7 @@ function renderUnitsMenu() {
       ${msRow('u-msview', prefs.mscaleView || 1, t('ms.mine'), t('ms.mineHelp'))}
       ${can('meta') ? msRow('u-msmap', S.mscale, t('ms.map'), t(S.mode === 'online' ? 'ms.mapHelpShared' : 'ms.mapHelp')) : S.mscale !== 1 ? `<p class="menu-note">${esc(t('ms.mapIs', { v: msPct(S.mscale) }))}</p>` : ''}
     </div>
+    <div class="menu-pad"><label class="check perm-row"><input type="checkbox" id="u-lod" ${prefs.lodDots ? 'checked' : ''}><span><b>${esc(t('lod.title'))}</b><small>${esc(t('lod.help'))}</small></span></label></div>
     <div class="menu-label eyebrow">${esc(t('wm.title'))}</div>
     <div class="menu-pad">
       <label class="check perm-row"><input type="checkbox" id="u-wm" ${wmOn() ? 'checked' : ''}><span><b>${esc(t('wm.mine'))}</b><small>${esc(t('wm.mineHelp'))}</small></span></label>
@@ -10012,6 +10034,7 @@ $('#unitsMenu').addEventListener('change', e => {
   if (id === 'u-coord') prefs.coord = v;
   if (/^u-ms/.test(id)) { renderUnitsMenu(); return; }
   if (id === 'u-wm') { setWmMine(e.target.checked); return; }
+  if (id === 'u-lod') { setLodDots(e.target.checked); return; }
   if (id === 'u-wmdef') { setWmDefault(e.target.checked); renderUnitsMenu(); return; }
   savePrefs(); refreshUnits();
 });
@@ -10570,7 +10593,7 @@ function tlRange() {
 function applyTimeFilter() {
   const d = TL.date;
   let pts = 0; feats.forEach(f => { if (f._pw.kind === 'marker') pts++; });
-  const manyPts = pts > LOD.max;   // points are then placed by lodApply (on screen only, or as dots)
+  const manyPts = !!prefs.lodDots && pts > LOD.max;   // points are then placed by lodApply (on screen only, or as dots)
   S.layers.forEach(l => {
     if (!layerShown(l)) return;
     const lOn = !TL.on || layerAtTree(l, d);
