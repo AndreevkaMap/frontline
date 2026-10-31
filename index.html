@@ -3803,6 +3803,15 @@ fr: {"cdv.hl": "Couleurs naturelles plus claires", "cdv.hlD": "Couleurs naturell
 ru: {"cdv.hl": "Более яркие естественные цвета", "cdv.hlD": "Естественные цвета, осветлённые для тёмных сцен: светлее тени, насыщеннее цвета. Хорошо осенью и зимой, когда солнце низко.", "cdv.tcD": "То, что увидел бы глаз с орбиты, с той же яркостью и контрастом, что в Copernicus Browser."}
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdse.src.stac": "Copernicus catalogue", "cdse.src.cat": "Copernicus search", "cdse.src.wfs": "your instance", "cdse.netShort": "blocked or unreachable", "cdse.fx.g": "Gamma", "cdse.fxHelpSrv": "Brightness and gamma are worked out by Copernicus on the raw data, so dark ground lifts without white roofs burning out. They redraw when you let go of the slider. Contrast and saturation change only your screen.", "cdse.under": "Where there is no image", "cdse.under.esri": "Show Esri satellite underneath", "cdse.under.none": "Leave it empty", "cdse.underHelp": "A single day only covers the strip the satellite flew over, and cloudy scenes are left out. Esri fills the rest so the map is not black.", "cdse.outline": "Outline the day’s images on the map"},
+uk: {"cdse.src.stac": "Каталог Copernicus", "cdse.src.cat": "Пошук Copernicus", "cdse.src.wfs": "ваш інстанс", "cdse.netShort": "заблоковано або недоступно", "cdse.fx.g": "Гамма", "cdse.fxHelpSrv": "Яскравість і гамму Copernicus обчислює на сирих даних, тож темна земля світлішає, а білі дахи не вигорають. Карта оновлюється, коли відпустите повзунок. Контраст і насиченість змінюють лише ваш екран.", "cdse.under": "Де немає знімка", "cdse.under.esri": "Показувати під ним супутник Esri", "cdse.under.none": "Залишати порожнім", "cdse.underHelp": "Один день покриває лише смугу, над якою пролетів супутник, а хмарні знімки відкидаються. Esri заповнює решту, щоб карта не була чорною.", "cdse.outline": "Обводити знімки дня на карті"},
+pl: {"cdse.src.stac": "Katalog Copernicus", "cdse.src.cat": "Wyszukiwarka Copernicus", "cdse.src.wfs": "twoja instancja", "cdse.netShort": "zablokowane lub niedostępne", "cdse.fx.g": "Gamma", "cdse.fxHelpSrv": "Jasność i gammę Copernicus liczy na surowych danych, więc ciemna ziemia się rozjaśnia, a białe dachy nie są przepalone. Mapa odświeża się po puszczeniu suwaka. Kontrast i nasycenie zmieniają tylko twój ekran.", "cdse.under": "Gdzie nie ma zdjęcia", "cdse.under.esri": "Pokaż pod spodem satelitę Esri", "cdse.under.none": "Zostaw puste", "cdse.underHelp": "Jeden dzień obejmuje tylko pas, nad którym przeleciał satelita, a zachmurzone sceny są pomijane. Esri wypełnia resztę, by mapa nie była czarna.", "cdse.outline": "Obrysuj zdjęcia z dnia na mapie"},
+de: {"cdse.src.stac": "Copernicus-Katalog", "cdse.src.cat": "Copernicus-Suche", "cdse.src.wfs": "deine Instanz", "cdse.netShort": "blockiert oder nicht erreichbar", "cdse.fx.g": "Gamma", "cdse.fxHelpSrv": "Helligkeit und Gamma berechnet Copernicus aus den Rohdaten: Dunkler Boden wird heller, ohne dass weiße Dächer ausbrennen. Neu gezeichnet wird beim Loslassen des Reglers. Kontrast und Sättigung ändern nur deinen Bildschirm.", "cdse.under": "Wo es kein Bild gibt", "cdse.under.esri": "Esri-Satellit darunter zeigen", "cdse.under.none": "Leer lassen", "cdse.underHelp": "Ein Tag deckt nur den Streifen ab, den der Satellit überflogen hat, und bewölkte Szenen fallen weg. Esri füllt den Rest, damit die Karte nicht schwarz ist.", "cdse.outline": "Bilder des Tages auf der Karte umranden"},
+fr: {"cdse.src.stac": "Catalogue Copernicus", "cdse.src.cat": "Recherche Copernicus", "cdse.src.wfs": "votre instance", "cdse.netShort": "bloqué ou injoignable", "cdse.fx.g": "Gamma", "cdse.fxHelpSrv": "Copernicus calcule la luminosité et le gamma sur les données brutes : le sol sombre s’éclaircit sans brûler les toits clairs. La carte se redessine quand vous lâchez le curseur. Contraste et saturation ne changent que votre écran.", "cdse.under": "Là où il n’y a pas d’image", "cdse.under.esri": "Afficher le satellite Esri dessous", "cdse.under.none": "Laisser vide", "cdse.underHelp": "Un seul jour ne couvre que la bande survolée par le satellite, et les scènes nuageuses sont écartées. Esri comble le reste pour que la carte ne soit pas noire.", "cdse.outline": "Contourer les images du jour sur la carte"},
+ru: {"cdse.src.stac": "Каталог Copernicus", "cdse.src.cat": "Поиск Copernicus", "cdse.src.wfs": "ваш инстанс", "cdse.netShort": "заблокировано или недоступно", "cdse.fx.g": "Гамма", "cdse.fxHelpSrv": "Яркость и гамму Copernicus рассчитывает по сырым данным: тёмная земля светлеет, а белые крыши не пересвечиваются. Карта перерисовывается, когда отпустите ползунок. Контраст и насыщенность меняют только ваш экран.", "cdse.under": "Где нет снимка", "cdse.under.esri": "Показывать под ним спутник Esri", "cdse.under.none": "Оставлять пустым", "cdse.underHelp": "Один день покрывает только полосу, над которой пролетел спутник, а облачные снимки отбрасываются. Esri заполняет остальное, чтобы карта не была чёрной.", "cdse.outline": "Обводить снимки дня на карте"}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -5815,7 +5824,7 @@ const tone = (midR = 0.13, sat = 1.2) => `const maxR=3.0,midR=${midR},sat=${sat}
   + 'function sAdj(a){return adjGamma(adj(a,midR,1,maxR))}\n'
   + 'function satEnh(r,g,b){const avgS=(r+g+b)/3*(1-sat);return[clip(avgS+r*sat),clip(avgS+g*sat),clip(avgS+b*sat)]}\n'
   + 'const sRGB=c=>c<=0.0031308?12.92*c:1.055*Math.pow(c,0.41666666666)-0.055;\n';
-const evTone = (a, b, c, m, st) => `function setup(){return{input:["${a}","${b}","${c}","dataMask"],output:{bands:4}}}\n${tone(m, st)}function evaluatePixel(s){const v=satEnh(sAdj(s.${a}),sAdj(s.${b}),sAdj(s.${c}));return[sRGB(v[0]),sRGB(v[1]),sRGB(v[2]),s.dataMask]}`;
+const evTone = (a, b, c, m, st) => `function setup(){return{input:["${a}","${b}","${c}","dataMask"],output:{bands:4}}}\n${tone(m, st)}const G=__G__,Q=1/__GM__;\nfunction evaluatePixel(s){const v=satEnh(sAdj(G*s.${a}),sAdj(G*s.${b}),sAdj(G*s.${c}));return[Math.pow(sRGB(v[0]),Q),Math.pow(sRGB(v[1]),Q),Math.pow(sRGB(v[2]),Q),s.dataMask]}`;
 const evRamp = (bands, expr, stops) => `function setup(){return{input:[${bands.map(b => `"${b}"`).join(',')},"dataMask"],output:{bands:4}}}\nfunction nd(a,b){const d=a+b;return d?(a-b)/d:0}\nconst viz=new ColorRampVisualizer([${stops.map(([v, c]) => `[${v},0x${c}]`).join(',')}]);\nfunction evaluatePixel(s){const c=viz.process(${expr});return[c[0],c[1],c[2],s.dataMask]}`;
 const SCL_COL = { 0: [0, 0, 0], 1: [1, 0, 0.016], 2: [0.36, 0.36, 0.36], 3: [0.478, 0.271, 0.071], 4: [0, 0.749, 0.012], 5: [1, 0.902, 0.004], 6: [0.004, 0, 0.961], 7: [0.467, 0.467, 0.467], 8: [0.671, 0.671, 0.671], 9: [0.82, 0.82, 0.82], 10: [0.333, 0.784, 0.988], 11: [1, 0.302, 1] };
 const STOPS = {
@@ -5825,12 +5834,12 @@ const STOPS = {
   nbr: [[-0.5, '4d0000'], [-0.1, 'b33a00'], [0.1, 'f2d16b'], [0.3, '7fbf3f'], [0.6, '1a6b1a']]
 };
 const CDSE_VIEWS = [
-  { id: 'tc', script: evTone('B04', 'B03', 'B02'), sw: 'linear-gradient(135deg,#55703f,#b5a47a 55%,#7d99b8)' },
-  { id: 'hl', script: evTone('B04', 'B03', 'B02', 0.07, 1.35), sw: 'linear-gradient(135deg,#7f9a5e,#e0d2a6 55%,#a9c2dc)' },
-  { id: 'fc', script: evTone('B08', 'B04', 'B03'), sw: 'linear-gradient(135deg,#c2213a,#e86a6a 50%,#5d6f86)' },
-  { id: 'urban', script: evTone('B12', 'B11', 'B04'), sw: 'linear-gradient(135deg,#7c4d8f,#c49a7a 50%,#4f8a4a)' },
-  { id: 'agri', script: evTone('B11', 'B08', 'B02'), sw: 'linear-gradient(135deg,#3fbf4f,#c58a5e 55%,#e2a4c4)' },
-  { id: 'swir', script: evTone('B12', 'B8A', 'B04'), sw: 'linear-gradient(135deg,#2c6e2f,#9fbf5c 50%,#8c2a1e)' },
+  { id: 'tc', tone: true, script: evTone('B04', 'B03', 'B02'), sw: 'linear-gradient(135deg,#55703f,#b5a47a 55%,#7d99b8)' },
+  { id: 'hl', tone: true, script: evTone('B04', 'B03', 'B02', 0.07, 1.35), sw: 'linear-gradient(135deg,#7f9a5e,#e0d2a6 55%,#a9c2dc)' },
+  { id: 'fc', tone: true, script: evTone('B08', 'B04', 'B03'), sw: 'linear-gradient(135deg,#c2213a,#e86a6a 50%,#5d6f86)' },
+  { id: 'urban', tone: true, script: evTone('B12', 'B11', 'B04'), sw: 'linear-gradient(135deg,#7c4d8f,#c49a7a 50%,#4f8a4a)' },
+  { id: 'agri', tone: true, script: evTone('B11', 'B08', 'B02'), sw: 'linear-gradient(135deg,#3fbf4f,#c58a5e 55%,#e2a4c4)' },
+  { id: 'swir', tone: true, script: evTone('B12', 'B8A', 'B04'), sw: 'linear-gradient(135deg,#2c6e2f,#9fbf5c 50%,#8c2a1e)' },
   { id: 'ndvi', script: evRamp(['B04', 'B08'], 'nd(s.B08,s.B04)', STOPS.ndvi), ramp: 'ndvi' },
   { id: 'moist', script: evRamp(['B8A', 'B11'], 'nd(s.B8A,s.B11)', STOPS.moist), ramp: 'moist' },
   { id: 'ndwi', script: evRamp(['B03', 'B08'], 'nd(s.B03,s.B08)', STOPS.ndwi), ramp: 'ndwi' },
@@ -5840,6 +5849,8 @@ const CDSE_VIEWS = [
 const cdseView = c => (c.viz && CDSE_VIEWS.find(v => v.id === c.viz)) || null;
 const viewBands = v => ((/input:\[([^\]]*)\]/.exec(v.script) || [])[1] || '').replace(/"/g, '').split(',').filter(b => b && b !== 'dataMask');
 const b64 = s => btoa(unescape(encodeURIComponent(s)));
+// Text of an OGC error, which Copernicus often wraps in CDATA.
+const ogcText = txt => { const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt || ''); return (m ? m[1] : (txt || '')).replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 300); };
 const rgbCss = a => `rgb(${a.map(x => Math.round(x * 255)).join(',')})`;
 function rampCss(stops) {
   const lo = stops[0][0], hi = stops[stops.length - 1][0];
@@ -5891,7 +5902,7 @@ function cdseCaps(id, force) {
     .then(({ ok, status, txt }) => {
       const doc = new DOMParser().parseFromString(txt, 'text/xml');
       const exc = doc.getElementsByTagName('ServiceException')[0];
-      if (exc) throw new Error(exc.textContent.trim().slice(0, 300));
+      if (exc) throw new Error(exc.textContent.trim().slice(0, 300) || 'GetCapabilities failed');
       if (!ok) throw new Error('HTTP ' + status);
       const kids = (el, n) => [...el.children].filter(k => k.localName === n);
       const text = (el, n) => { const k = kids(el, n)[0]; return k ? k.textContent.trim() : ''; };
@@ -5925,25 +5936,36 @@ const cdseTime = c => cdseSingle(c) ? `${cdseDay(c)}T00:00:00Z/${cdseDay(c)}T23:
 function cdseParams(c) {
   const v = cdseView(c);
   const p = { layers: v ? cdseCarrier(c) : (c.layer || 'TRUE_COLOR'), TIME: cdseTime(c), MAXCC: c.cc ?? 30, PRIORITY: c.priority || 'mostRecent' };
-  if (v) p.EVALSCRIPT = b64('//VERSION=3\n' + v.script);
+  if (v) {
+    const fx = c.fx || {}, num = x => String(Math.round(x * 1000) / 1000);
+    const sc = v.tone ? v.script.replace('__G__', num(fx.b ?? 1)).replace('__GM__', num(fx.g ?? 1)) : v.script;
+    p.EVALSCRIPT = b64('//VERSION=3\n' + sc);
+  }
   return p;
 }
-const cdseFilter = fx => { const f = fx || {}; const b = f.b ?? 1, k = f.c ?? 1, s = f.s ?? 1; return b === 1 && k === 1 && s === 1 ? '' : `brightness(${b}) contrast(${k}) saturate(${s})`; };
+// Colour views get brightness and gamma from Copernicus itself (applied to the raw data, so
+// dark ground lifts without burning out bright roofs); everything else is adjusted on screen.
+const fxServer = c => { const v = cdseView(c); return !!(v && v.tone); };
+const cdseFilter = c => { const f = c.fx || {}; const b = fxServer(c) ? 1 : (f.b ?? 1), k = f.c ?? 1, s = f.s ?? 1; return b === 1 && k === 1 && s === 1 ? '' : `brightness(${b}) contrast(${k}) saturate(${s})`; };
 function cdseFx() {
   if (prefs.base !== 'cdse' || !baseLayer || !baseLayer.getContainer) return;
-  const el = baseLayer.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse.fx);
+  const el = baseLayer.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse);
 }
 function cdseLayer() {
   const c = cdsePrefs();
   if (!c.id) return null;
   if (cdseSingle(c) && !c.date) setTimeout(() => cdseLatest(true), 0);
   const lyr = L.tileLayer.wms(`${CDSE_HOST}wms/${encodeURIComponent(c.id.trim())}`, {
-    pane: 'pwBase', format: 'image/png', transparent: true, version: '1.3.0',
+    pane: 'pwBase', format: 'image/png', transparent: true, version: '1.3.0', zIndex: 2,
     tileSize: 512, maxZoom: MAX_Z, minZoom: 6, SHOWLOGO: false, ...cdseParams(c),
     attribution: `Contains modified Copernicus Sentinel data ${String(cdseSingle(c) ? cdseDay(c) : c.to).slice(0, 4)}, <a href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Data Space Ecosystem</a>`
   });
   lyr._cdseId = c.id;
-  lyr.on('add', () => { const el = lyr.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse.fx); });
+  lyr.on('add', () => {
+    const el = lyr.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse);
+    cdseUnder(); cdseDayOutline();
+  });
+  lyr.on('remove', () => { if (CD.under) { map.removeLayer(CD.under); CD.under = null; } if (CD.dayLine) { map.removeLayer(CD.dayLine); CD.dayLine = null; } });
   lyr.on('tileerror', e => {
     if (lyr._cdWarned) return; lyr._cdWarned = true;
     cdseError = t('cdse.errFail');
@@ -5953,12 +5975,29 @@ function cdseLayer() {
     const src = e.tile && e.tile.src;
     if (src) fetch(src).then(r => r.ok ? '' : r.text()).then(txt => {
       if (!txt) return;
-      const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt);
-      const msg = (m ? m[1] : txt).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 300);
+      const msg = ogcText(txt);
       if (msg) { cdseError = t('cdse.errSrv', { msg }); renderCdse(); }
     }).catch(() => {});
   });
   return lyr;
+}
+// What shows where Copernicus has no image (outside the day's satellite strip, or cloudy scenes
+// left out): Esri satellite by default, so the map is never a black hole.
+function cdseUnder() {
+  const want = prefs.base === 'cdse' && (prefs.cdse.under || 'esri') === 'esri';
+  if (want && !CD.under) CD.under = raster(ESRI + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', { ...NB, maxNativeZoom: 19, zIndex: 1, attribution: ESRI_ATTR }).addTo(map);
+  if (!want && CD.under) { map.removeLayer(CD.under); CD.under = null; }
+}
+// Thin outline around the images of the chosen day, so it is clear where Copernicus ends.
+function cdseDayOutline() {
+  if (CD.dayLine) { map.removeLayer(CD.dayLine); CD.dayLine = null; }
+  const c = prefs.cdse;
+  if (prefs.base !== 'cdse' || !cdseSingle(c) || c.outline === false) return;
+  const rec = avGet(ymOf(cdseDay(c)));
+  const items = rec && rec.items ? rec.items.filter(x => x.date === cdseDay(c) && x.geom && (COLLS[cdseColl(c)].radar || x.cc === null || x.cc <= (c.cc ?? 30))) : [];
+  if (!items.length) return;
+  const toLL = q => Math.abs(q[0]) <= 180 && Math.abs(q[1]) <= 90 ? L.latLng(q[1], q[0]) : L.CRS.EPSG3857.unproject(L.point(q[0], q[1]));
+  CD.dayLine = L.geoJSON({ type: 'FeatureCollection', features: items.map(x => ({ type: 'Feature', geometry: x.geom, properties: {} })) }, { coordsToLatLng: toLL, interactive: false, style: { color: '#ffffff', weight: 1.5, opacity: 0.8, dashArray: '2 5', fill: false } }).addTo(map);
 }
 // Changes update the layer in place, so the map does not flash.
 function cdseApply() {
@@ -5969,6 +6008,7 @@ function cdseApply() {
     delete baseLayer.wmsParams.EVALSCRIPT;
     baseLayer._cdWarned = false;
     baseLayer.setParams(cdseParams(c));
+    cdseFx(); cdseUnder(); cdseDayOutline();
     renderCdse();
   } else if (c.id) setBase('cdse');
   if (map.getZoom() < 6) map.setZoom(8);
@@ -5976,10 +6016,11 @@ function cdseApply() {
 
 /* ---------- Which days have images (catalogue, then WFS) ---------- */
 const COLLS = {
-  s2l2a: { cat: 'Sentinel2', pt: 'S2MSI2A', wfs: 'DSS2', radar: false },
-  s2l1c: { cat: 'Sentinel2', pt: 'S2MSI1C', wfs: 'DSS1', radar: false },
-  s1: { cat: 'Sentinel1', pt: 'IW_GRDH_1S', wfs: 'DSS3', radar: true }
+  s2l2a: { stac: 'sentinel-2-l2a', cat: 'Sentinel2', pt: 'S2MSI2A', wfs: 'DSS2', radar: false },
+  s2l1c: { stac: 'sentinel-2-l1c', cat: 'Sentinel2', pt: 'S2MSI1C', wfs: 'DSS1', radar: false },
+  s1: { stac: 'sentinel-1-grd', cat: 'Sentinel1', pt: 'IW_GRDH_1S', wfs: 'DSS3', radar: true }
 };
+const CDSE_STAC = 'https://stac.dataspace.copernicus.eu/v1/search';
 function cdseColl(c) {
   if (c.sat && COLLS[c.sat]) return c.sat;
   if (cdseView(c)) return 's2l2a';
@@ -5994,8 +6035,9 @@ const ymAdd = (ym, n) => { const [y, m] = ym.split('-').map(Number), d = new Dat
 const ymDays = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m, 0)).getUTCDate(); };
 function cdseArea() {
   if (map.getZoom() < 6) return null;
-  const b = map.getBounds(), r = v => Math.round(v * 100) / 100;
-  return [r(Math.max(-180, b.getWest())), r(Math.max(-85, b.getSouth())), r(Math.min(180, b.getEast())), r(Math.min(85, b.getNorth()))];
+  // Rounded outward to quarter degrees, so small pans reuse what is already known.
+  const b = map.getBounds(), lo = v => Math.floor(v * 4) / 4, hi = v => Math.ceil(v * 4) / 4;
+  return [lo(Math.max(-180, b.getWest())), lo(Math.max(-85, b.getSouth())), hi(Math.min(180, b.getEast())), hi(Math.min(85, b.getNorth()))];
 }
 const avKey = (coll, area, ym) => `${coll}|${area.join(',')}|${ym}`;
 function avGet(ym, c = prefs.cdse) { const a = cdseArea(); return a ? CD.av.get(avKey(cdseColl(c), a, ym)) || null : null; }
@@ -6003,6 +6045,30 @@ function avGet(ym, c = prefs.cdse) { const a = cdseArea(); return a ? CD.av.get(
 function sceneOf(title) {
   const p = String(title || '').split('_');
   return { sat: (/^S\d[A-D]$/.test(p[0]) ? p[0] : '') || '', tile: (/^T\d{2}[A-Z]{3}$/.test(p[5] || '') ? p[5].slice(1) : ''), key: p[0] + '_' + (p[2] || p[4] || title) + '_' + (p[5] || '') };
+}
+// The Copernicus STAC catalogue: public, no account, and made to be read from web pages.
+async function avFromStac(coll, area, ym) {
+  const end = `${ym}-${String(ymDays(ym)).padStart(2, '0')}`;
+  let url = `${CDSE_STAC}?collections=${COLLS[coll].stac}&bbox=${area.join(',')}&datetime=${ym}-01T00:00:00Z/${end}T23:59:59Z&limit=100`;
+  const seen = new Set(), out = [];
+  for (let page = 0; page < 6 && url; page++) {
+    const r = await fetch(url, { headers: { Accept: 'application/geo+json, application/json' } });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const j = await r.json();
+    (j.features || []).forEach(f => {
+      const p = f.properties || {}, when = String(p.datetime || p.start_datetime || '');
+      if (!when) return;
+      const sc = sceneOf(f.id);
+      if (seen.has(sc.key)) return; seen.add(sc.key);
+      const grid = String(p['grid:code'] || '').replace(/^MGRS-/, '');
+      const plat = String(p.platform || '').replace(/^sentinel-(\d)([a-d])$/i, (m0, n, l) => `S${n}${l.toUpperCase()}`);
+      const cc = p['eo:cloud_cover'];
+      out.push({ date: when.slice(0, 10), time: when.slice(11, 16), cc: typeof cc === 'number' && cc >= 0 ? cc : null, sat: sc.sat || plat, tile: sc.tile || grid, id: f.id, geom: f.geometry });
+    });
+    const next = (j.links || []).find(l => l.rel === 'next' && (!l.method || l.method === 'GET'));
+    url = next && (j.features || []).length ? next.href : '';
+  }
+  return out;
 }
 async function avFromCatalogue(coll, area, ym) {
   const C = COLLS[coll], end = `${ym}-${String(ymDays(ym)).padStart(2, '0')}`;
@@ -6032,8 +6098,7 @@ async function avFromWfs(coll, area, ym) {
     const txt = await r.text();
     let j = null; try { j = JSON.parse(txt); } catch (e) { j = null; }
     if (!r.ok || !j) {
-      const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt);
-      throw new Error(((m ? m[1] : '') || 'WFS HTTP ' + r.status).replace(/<[^>]+>/g, ' ').trim().slice(0, 240));
+      throw new Error(ogcText(r.ok ? '' : txt) || 'HTTP ' + r.status);
     }
     (j.features || []).forEach(f => {
       const p = f.properties || {};
@@ -6051,14 +6116,14 @@ function avLoad(ym, force) {
   if (have && !force && (have.loading || have.items || Date.now() - (have.at || 0) < 60000)) return have.loading || Promise.resolve(have);
   const rec = { at: Date.now(), items: null, err: '', src: '' };
   rec.loading = (async () => {
-    let errs = [];
-    for (const [src, fn] of [['cat', avFromCatalogue], ['wfs', avFromWfs]]) {
-      try { rec.items = await fn(coll, area, ym); rec.src = src; break; } catch (e) { errs.push(netMsg(e.message)); }
+    const errs = [];
+    for (const [src, fn] of [['stac', avFromStac], ['cat', avFromCatalogue], ['wfs', avFromWfs]]) {
+      try { rec.items = await fn(coll, area, ym); rec.src = src; break; } catch (e) { errs.push(`${t('cdse.src.' + src)}: ${netMsg(e.message || e.name || '?')}`); }
     }
-    if (!rec.items) rec.err = errs.filter((m, i) => errs.indexOf(m) === i).join(' · ');
+    if (!rec.items) rec.err = errs.join(' · ');
     rec.loading = null;
     if (CD.av.size > 40) CD.av.delete(CD.av.keys().next().value);
-    renderCdse();
+    renderCdse(); cdseDayOutline();
     return rec;
   })();
   CD.av.set(key, rec);
@@ -6221,14 +6286,16 @@ function viewHtml(c) {
       </details>
     </div>
     <details class="sub-form cd-det" ${CD.fxOpen ? 'open' : ''} data-cddet="fx"><summary>${esc(t('cdse.fx'))}</summary>
-      ${[['b', 0.5, 3], ['c', 0.5, 2], ['s', 0, 2]].map(([k, lo, hi]) => `<label class="field"><span>${esc(t('cdse.fx.' + k))} <output id="cdfx-${k}o">${Math.round((c.fx[k] ?? 1) * 100)}%</output></span><input type="range" id="cdfx-${k}" min="${lo}" max="${hi}" step="0.05" value="${c.fx[k] ?? 1}"></label>`).join('')}
+      ${[['b', 0.5, 4], ...(fxServer(c) ? [['g', 0.5, 2.5]] : []), ['c', 0.5, 2], ['s', 0, 2]].map(([k, lo, hi]) => `<label class="field"><span>${esc(t('cdse.fx.' + k))} <output id="cdfx-${k}o">${k === 'g' ? (c.fx[k] ?? 1).toFixed(2) : Math.round((c.fx[k] ?? 1) * 100) + '%'}</output></span><input type="range" id="cdfx-${k}" min="${lo}" max="${hi}" step="0.05" value="${c.fx[k] ?? 1}"></label>`).join('')}
       <span class="row"><button type="button" class="btn sm" data-cdse="fxreset">${esc(t('cdse.fxReset'))}</button></span>
-      <small class="help">${esc(t('cdse.fxHelp'))}</small>
+      <small class="help">${esc(t(fxServer(c) ? 'cdse.fxHelpSrv' : 'cdse.fxHelp'))}</small>
     </details>
     <details class="sub-form cd-det" ${CD.moreOpen ? 'open' : ''} data-cddet="more"><summary>${esc(t('cdse.more'))}</summary>
       ${cdseSingle(c) ? `<label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select></label>` : ''}
       ${v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc(l.title === l.name ? l.name : `${l.title} (${l.name})`)}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : ''}
       <label class="field"><span>${esc(t('cdse.sat'))}</span><select id="cdse-sat">${['auto', ...Object.keys(COLLS)].map(s => `<option value="${s}" ${(c.sat || 'auto') === s ? 'selected' : ''}>${esc(s === 'auto' ? t('cdse.sat.auto', { s: t('cdse.sat.' + cdseColl({ ...c, sat: 'auto' })) }) : t('cdse.sat.' + s))}</option>`).join('')}</select><small>${esc(t('cdse.satHelp'))}</small></label>
+      <label class="field"><span>${esc(t('cdse.under'))}</span><select id="cdse-under"><option value="esri" ${(c.under || 'esri') === 'esri' ? 'selected' : ''}>${esc(t('cdse.under.esri'))}</option><option value="none" ${c.under === 'none' ? 'selected' : ''}>${esc(t('cdse.under.none'))}</option></select><small>${esc(t('cdse.underHelp'))}</small></label>
+      <label class="check"><input type="checkbox" id="cdse-outline" ${c.outline !== false ? 'checked' : ''}> ${esc(t('cdse.outline'))}</label>
       <span class="row"><button type="button" class="btn sm" data-cdse="setup">${esc(t('cdse.changeId'))}</button></span>
     </details>`;
 }
@@ -6313,7 +6380,7 @@ bp.addEventListener('click', e => {
     if (a === 'cal') { CD.calOpen = !CD.calOpen; CD.cal = ymOf(cdseDay(prefs.cdse)); renderCdse(); }
     if (a === 'latest') cdseLatest(false);
     if (a === 'acq') { const c = prefs.cdse; (cdseSingle(c) ? [ymOf(cdseDay(c))] : [ymOf(c.to), ymOf(c.from)]).forEach(ym => avLoad(ym, true)); renderCdse(); }
-    if (a === 'fxreset') { prefs.cdse.fx = { b: 1, c: 1, s: 1 }; savePrefs(); cdseFx(); renderCdse(); }
+    if (a === 'fxreset') { prefs.cdse.fx = { b: 1, g: 1, c: 1, s: 1 }; cdseApply(); }
   }
 });
 bp.addEventListener('toggle', e => {
@@ -6324,7 +6391,7 @@ bp.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === '
 bp.addEventListener('change', e => {
   const id = e.target.id, c = prefs.cdse;
   if (!/^cdse-|^cdfx-/.test(id) || id === 'cdse-id') return;
-  if (/^cdfx-/.test(id)) { savePrefs(); return; }
+  if (/^cdfx-/.test(id)) { if (id === 'cdfx-g' || (id === 'cdfx-b' && fxServer(c))) cdseApply(); else savePrefs(); return; }
   if (id === 'cdse-layer') { const v = e.target.value.trim(); if (!v) return; c.viz = ''; c.layer = v; }
   if (id === 'cdse-from' || id === 'cdse-to') {
     const from = $('#cdse-from').value, to = $('#cdse-to').value;
@@ -6335,15 +6402,18 @@ bp.addEventListener('change', e => {
   if (id === 'cdse-cc') c.cc = +e.target.value;
   if (id === 'cdse-carrier') c.carrier = e.target.value;
   if (id === 'cdse-sat') { c.sat = e.target.value; savePrefs(); renderCdse(); return; }
+  if (id === 'cdse-under') { c.under = e.target.value; savePrefs(); cdseUnder(); return; }
+  if (id === 'cdse-outline') { c.outline = e.target.checked; savePrefs(); cdseDayOutline(); return; }
   cdseApply();
 });
 bp.addEventListener('input', e => {
   const id = e.target.id;
   if (id === 'cdse-cc') $('#cdse-cco').textContent = e.target.value + '%';
-  if (/^cdfx-[bcs]$/.test(id)) {
-    prefs.cdse.fx = { ...(prefs.cdse.fx || {}), [id.slice(-1)]: +e.target.value };
-    $('#' + id + 'o').textContent = Math.round(e.target.value * 100) + '%';
-    cdseFx();
+  if (/^cdfx-[bgcs]$/.test(id)) {
+    const k = id.slice(-1);
+    prefs.cdse.fx = { ...(prefs.cdse.fx || {}), [k]: +e.target.value };
+    $('#' + id + 'o').textContent = k === 'g' ? (+e.target.value).toFixed(2) : Math.round(e.target.value * 100) + '%';
+    cdseFx();   // on-screen ones follow the slider; Copernicus redraws when it is let go
   }
 });
 bp.addEventListener('mouseover', e => {
@@ -6354,8 +6424,9 @@ bp.addEventListener('mouseover', e => {
 bp.addEventListener('mouseleave', () => { CD.fpKey = null; cdseFootprints(null); });
 let cdseMoveT = 0;
 map.on('moveend', () => {
-  if (prefs.base !== 'cdse' || bp.hidden || !$('#cdseBox')) return;
-  clearTimeout(cdseMoveT); cdseMoveT = setTimeout(() => renderCdse(), 700);
+  if (prefs.base !== 'cdse') return;
+  clearTimeout(cdseMoveT);
+  cdseMoveT = setTimeout(() => { renderCdse(); avLoad(ymOf(cdseDay(prefs.cdse))).then(() => cdseDayOutline()); }, 700);
 });
 
 /* =========================================================================
