@@ -374,6 +374,29 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .help{font-size:12px;color:var(--muted);line-height:1.45;margin:0}
 .err{color:var(--danger);font-size:12.5px;margin:0;font-weight:500}
 .bp-legal{font-size:11.5px;color:var(--muted);margin:0;line-height:1.45}
+.cdse-about{display:flex;flex-direction:column;gap:5px;padding:8px 10px;border-radius:8px;background:var(--panel);border:1px solid var(--line);font-size:12.5px}
+.cdse-about p{margin:0;line-height:1.45}
+.cdse-about small{color:var(--muted);font:500 11px var(--f-mono)}
+.cdse-ramp{display:block;height:10px;border-radius:5px;border:1px solid var(--line)}
+.cdse-ends{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted)}
+.cdse-classes{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;font-size:11.5px}
+.cdse-classes span{display:flex;align-items:center;gap:6px}
+.cdse-classes i{width:11px;height:11px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.2)}
+.cdse-quick{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.cdse-quick .btn.sm{height:24px;padding:0 7px;font-size:12px}
+.cdse-acq-head{display:flex;align-items:center;justify-content:space-between}
+.cdse-days{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;max-height:260px;overflow:auto}
+.cdse-day{width:100%;display:flex;align-items:center;gap:8px;text-align:left;border:1px solid transparent;background:var(--panel);border-radius:7px;padding:6px 8px;cursor:pointer;color:inherit;font:inherit}
+.cdse-day:hover{border-color:var(--accent)}
+.cdse-day.on{border-color:var(--accent);background:var(--accent-weak)}
+.cdse-day.over{opacity:.55}
+.cd-main{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;font-size:12.5px}
+.cd-main small{flex:1 1 100%;color:var(--muted);font-size:11.5px}
+.cd-tag{font:600 10px/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;padding:2px 5px;border-radius:4px;background:var(--accent);color:var(--accent-fg)}
+.cd-cc{display:flex;align-items:center;gap:5px;font:500 11.5px var(--f-mono);color:var(--muted);flex:none}
+.cd-cc.radar{font:500 11px var(--f-ui)}
+.cc-bar{width:36px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.cc-bar i{display:block;height:100%;background:#9aa7b4}
 .bp-section{display:flex;flex-direction:column;gap:9px;padding-top:10px;border-top:1px solid var(--line)}
 .mf-sub{font:600 11.5px var(--f-ui);color:var(--muted);margin-top:2px}
 .mf-row{align-items:flex-start}
@@ -575,6 +598,13 @@ body.embed .embed-only{display:inline-flex!important}
 body.readonly .ro-hide,body.readonly .lyr-dot,body.readonly .toolbar .tool:not([data-tool="select"]):not([data-tool="measure"]):not([data-tool="sketch"]):not(#hideGui),body.readonly .toolbar hr,body.readonly #undoBtn,body.readonly #redoBtn{display:none!important}
 body.embed .menu-wrap:has(#fileBtn),body.embed .title-input{display:none!important}
 body.embed #sampleNote{display:none!important}
+body.previewing #sampleNote{display:none!important}
+.pv-bar{position:fixed;left:50%;top:64px;transform:translateX(-50%);z-index:3000;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:8px 10px 8px 14px;border-radius:12px;background:var(--ink);color:var(--on-ink);box-shadow:var(--shadow);font-size:13px}
+.pv-bar > .ic{width:18px;height:18px;flex:none;color:var(--flag)}
+.pv-bar span{display:flex;flex-direction:column;min-width:0}
+.pv-bar small{color:var(--on-ink-muted);font-size:11.5px}
+.pv-bar .btn{flex:none}
+@media (max-width:640px){.pv-bar{flex-wrap:wrap;width:calc(100vw - 32px)}.pv-bar span{flex:1 1 100%}}
 .share .row input[type=text]{flex:1;min-width:0;border:1px solid var(--line);background:var(--panel-2);border-radius:7px;padding:7px 9px}
 .share textarea{width:100%;border:1px solid var(--line);background:var(--panel-2);border-radius:7px;padding:7px 9px;font:12px var(--f-mono);resize:vertical}
 .editors{display:flex;flex-wrap:wrap;gap:6px}
@@ -916,6 +946,7 @@ body.clean .clean-date:not([hidden]){display:block;position:absolute;top:12px;le
     <button class="tb-btn wide" id="fileBtn" data-icon="file" aria-haspopup="true" aria-expanded="false"><span data-i18n="tb.file">File</span></button>
     <div id="fileMenu" class="menu" hidden>
       <button class="mi" data-file="share" data-icon="share"><span data-i18n="file.share"></span></button>
+      <button class="mi ro-hide" data-file="preview" data-icon="eye"><span data-i18n="pv.menu"></span></button>
       <div class="sep"></div>
       <button class="mi ro-hide" data-file="new" data-icon="plus"><span data-i18n="file.new"></span></button>
       <button class="mi ro-hide" data-file="import" data-icon="upload"><span data-i18n="file.import"></span></button>
@@ -3688,6 +3719,15 @@ fr: { 'fv.hide': 'Masquer sur la carte', 'fv.show': 'Afficher sur la carte', 'fv
 ru: { 'fv.hide': 'Скрыть на карте', 'fv.show': 'Показать на карте', 'fv.upHidden': 'Скрыто, потому что скрыт объект, в котором оно лежит' }
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"wm.title": "Watermark", "wm.mine": "Show the watermark", "wm.mineHelp": "Only for you, in this browser.", "wm.def": "Show it when people open the map", "wm.defHelp": "Saved with this map. Off means visitors start without it; anyone can still turn it on or off for themselves.", "wm.defHelpShared": "Everyone who opens this shared map starts this way. Anyone can still turn it on or off for themselves.", "pv.menu": "Preview as a first-time viewer", "pv.bar": "Previewing as a first-time viewer", "pv.barHelp": "Not signed in, view only, none of your saved choices. Nothing you do here is saved.", "pv.barHelpLocal": "View only, none of your saved choices, nothing saved. Edits in the editor tab appear here as you make them.", "pv.restart": "Start over", "pv.exit": "Exit preview", "pv.blocked": "The browser blocked the preview tab. Allow pop-ups for this site and try again.", "cdse.load": "Show on map", "cdse.show": "What to show", "cdse.grpViews": "Built-in Sentinel-2 views", "cdse.grpLayers": "Layers in your configuration", "cdse.custom": "Type a layer name…", "cdse.layerName": "Layer name", "cdse.notInCfg": "{name} (not in your configuration)", "cdse.capsLoading": "Reading the layers in your configuration…", "cdse.capsNet": "Could not reach Copernicus. Check the instance ID and your connection; you can still type a layer name.", "cdse.capsNone": "This configuration has no layers yet. Add some in the Sentinel Hub dashboard.", "cdse.capsReload": "Reload list", "cdse.missing": "“{name}” is not a layer in this configuration, so Copernicus cannot draw it. Pick one from the list.", "cdse.carrier": "Uses the images of", "cdse.carrierHelp": "Built-in views redraw the images of one of your layers. Pick a Sentinel-2 L2A layer.", "cdse.bands": "Bands: {b}", "cdse.layerId": "Layer ID: {name}", "cdse.cfgAbout": "from your configuration", "cdse.prio": "Where images overlap, show", "cdse.p.mostRecent": "The newest image", "cdse.p.leastCC": "The least cloudy image", "cdse.p.leastRecent": "The oldest image", "cdse.last": "Last", "cdse.r7": "7 days", "cdse.r30": "30 days", "cdse.r90": "90 days", "cdse.r365": "Year", "cdse.back": "Back to {from} – {to}", "cdse.acq": "Images in this view", "cdse.acqRefresh": "Look again", "cdse.sat": "Satellite", "cdse.sat.auto": "Match the layer ({s})", "cdse.sat.DSS2": "Sentinel-2 L2A", "cdse.sat.DSS1": "Sentinel-2 L1C", "cdse.sat.DSS3": "Sentinel-1 radar", "cdse.sat.DSS8": "Sentinel-3 OLCI", "cdse.acqLoading": "Looking for images…", "cdse.acqZoom": "Zoom in closer to list the images here.", "cdse.acqNone": "No images here between {from} and {to}. Try a wider range.", "cdse.acqErr": "Could not list the images: {msg}", "cdse.acqSum": "{n} images on {d} days between {from} and {to}.", "cdse.acqHow.mostRecent": "At each spot the map shows the newest image with at most {cc}% cloud.", "cdse.acqHow.leastCC": "At each spot the map shows the least cloudy image from these dates.", "cdse.acqHow.leastRecent": "At each spot the map shows the oldest image with at most {cc}% cloud.", "cdse.acqMore": "Only the first {n} are listed; narrow the dates to see all.", "cdse.acqTip": "Click a day to show only that day. Point at it to see where its images are.", "cdse.img1": "1 image", "cdse.imgN": "{n} images", "cdse.cloud": "{v}% cloud", "cdse.radar": "radar, sees through cloud", "cdse.over": "above the cloud limit", "cdse.top": "On top", "cdse.dayOnly": "Showing images from {d} only.", "cdse.errSrv": "Copernicus said: {msg}", "cdv.tc": "True colour", "cdv.tcD": "What your eyes would see from orbit: the red, green and blue bands.", "cdv.hl": "Enhanced natural colour", "cdv.hlD": "True colour with gentler contrast, so bright towns and dark forests both keep their detail.", "cdv.fc": "False colour (vegetation)", "cdv.fcD": "Near-infrared shown as red: healthy plants glow red, towns look grey-blue, water is dark.", "cdv.urban": "False colour (urban)", "cdv.urbanD": "Shortwave infrared: built-up areas and bare ground stand out in purple and brown, plants are green.", "cdv.agri": "Agriculture", "cdv.agriD": "Growing crops look bright green; bare or harvested fields look brown or pink.", "cdv.swir": "Shortwave infrared (SWIR)", "cdv.swirD": "Sees through haze and smoke. Fresh burn scars look dark red; water is black.", "cdv.ndvi": "Vegetation index (NDVI)", "cdv.ndviD": "How green and dense the plants are. Dark green is dense, healthy cover; pale and brown is bare soil, roads or towns.", "cdv.ndviLo": "Bare / water", "cdv.ndviHi": "Dense vegetation", "cdv.moist": "Moisture index", "cdv.moistD": "Water held in plants and soil. Blue is wet, red is dry.", "cdv.moistLo": "Dry", "cdv.moistHi": "Wet", "cdv.ndwi": "Water index (NDWI)", "cdv.ndwiD": "Open water shows blue, land green. Good for rivers, reservoirs and floods.", "cdv.ndwiLo": "Land", "cdv.ndwiHi": "Water", "cdv.nbr": "Burn index (NBR)", "cdv.nbrD": "Burned ground shows dark red and brown, healthy plants green. Useful for fires and scorched fields and forests.", "cdv.nbrLo": "Burned", "cdv.nbrHi": "Healthy vegetation", "cdv.scl": "Scene classification", "cdv.sclD": "How Copernicus sorted each pixel: vegetation, bare soil, water, cloud, shadow and snow. Handy for checking whether a spot is really cloud-free.", "scl.veg": "Vegetation", "scl.bare": "Bare soil", "scl.water": "Water", "scl.cloud": "Cloud", "scl.cirrus": "Thin cirrus", "scl.shadow": "Cloud shadow", "scl.snow": "Snow or ice", "scl.bad": "No data or faulty"},
+uk: {"wm.title": "Водяний знак", "wm.mine": "Показувати водяний знак", "wm.mineHelp": "Лише для вас, у цьому браузері.", "wm.def": "Показувати, коли люди відкривають карту", "wm.defHelp": "Зберігається з картою. Якщо вимкнено, відвідувачі бачать карту без нього; кожен може ввімкнути чи вимкнути його для себе.", "wm.defHelpShared": "Так карту бачитиме кожен, хто її відкриє. Кожен може ввімкнути чи вимкнути знак для себе.", "pv.menu": "Переглянути як новий глядач", "pv.bar": "Перегляд як новий глядач", "pv.barHelp": "Без входу, лише перегляд, без ваших збережених налаштувань. Тут нічого не зберігається.", "pv.barHelpLocal": "Лише перегляд, без ваших налаштувань, нічого не зберігається. Зміни з вкладки редактора з’являються тут одразу.", "pv.restart": "Почати знову", "pv.exit": "Вийти з перегляду", "pv.blocked": "Браузер заблокував вкладку перегляду. Дозвольте спливні вікна для цього сайту й спробуйте ще раз.", "cdse.load": "Показати на карті", "cdse.show": "Що показувати", "cdse.grpViews": "Вбудовані види Sentinel-2", "cdse.grpLayers": "Шари вашої конфігурації", "cdse.custom": "Ввести назву шару…", "cdse.layerName": "Назва шару", "cdse.notInCfg": "{name} (немає у вашій конфігурації)", "cdse.capsLoading": "Читаю шари вашої конфігурації…", "cdse.capsNet": "Не вдалося зв’язатися з Copernicus. Перевірте ID інстансу та з’єднання; назву шару можна ввести вручну.", "cdse.capsNone": "У цій конфігурації ще немає шарів. Додайте їх на панелі Sentinel Hub.", "cdse.capsReload": "Оновити список", "cdse.missing": "«{name}» немає в цій конфігурації, тож Copernicus не може його показати. Виберіть шар зі списку.", "cdse.carrier": "Використовує знімки шару", "cdse.carrierHelp": "Вбудовані види перемальовують знімки одного з ваших шарів. Виберіть шар Sentinel-2 L2A.", "cdse.bands": "Канали: {b}", "cdse.layerId": "ID шару: {name}", "cdse.cfgAbout": "з вашої конфігурації", "cdse.prio": "Де знімки перекриваються, показувати", "cdse.p.mostRecent": "Найновіший знімок", "cdse.p.leastCC": "Найменш хмарний знімок", "cdse.p.leastRecent": "Найстаріший знімок", "cdse.last": "Останні", "cdse.r7": "7 днів", "cdse.r30": "30 днів", "cdse.r90": "90 днів", "cdse.r365": "Рік", "cdse.back": "Назад до {from} – {to}", "cdse.acq": "Знімки в цьому виді", "cdse.acqRefresh": "Шукати знову", "cdse.sat": "Супутник", "cdse.sat.auto": "Як у шарі ({s})", "cdse.sat.DSS2": "Sentinel-2 L2A", "cdse.sat.DSS1": "Sentinel-2 L1C", "cdse.sat.DSS3": "Радар Sentinel-1", "cdse.sat.DSS8": "Sentinel-3 OLCI", "cdse.acqLoading": "Шукаю знімки…", "cdse.acqZoom": "Наблизьте карту, щоб побачити список знімків.", "cdse.acqNone": "Тут немає знімків між {from} і {to}. Спробуйте ширший період.", "cdse.acqErr": "Не вдалося отримати список знімків: {msg}", "cdse.acqSum": "{n} знімків за {d} днів між {from} і {to}.", "cdse.acqHow.mostRecent": "У кожній точці карта показує найновіший знімок із хмарністю до {cc}%.", "cdse.acqHow.leastCC": "У кожній точці карта показує найменш хмарний знімок за ці дати.", "cdse.acqHow.leastRecent": "У кожній точці карта показує найстаріший знімок із хмарністю до {cc}%.", "cdse.acqMore": "Показано лише перші {n}; звузьте період, щоб побачити всі.", "cdse.acqTip": "Натисніть день, щоб показати лише його. Наведіть, щоб побачити, де його знімки.", "cdse.img1": "1 знімок", "cdse.imgN": "{n} знімків", "cdse.cloud": "хмарність {v}%", "cdse.radar": "радар, бачить крізь хмари", "cdse.over": "понад ліміт хмарності", "cdse.top": "Зверху", "cdse.dayOnly": "Показано лише знімки за {d}.", "cdse.errSrv": "Відповідь Copernicus: {msg}", "cdv.tc": "Справжні кольори", "cdv.tcD": "Те, що побачило б око з орбіти: червоний, зелений і синій канали.", "cdv.hl": "Покращені природні кольори", "cdv.hlD": "Справжні кольори з м’якшим контрастом: деталі видно і в яскравих містах, і в темних лісах.", "cdv.fc": "Хибні кольори (рослинність)", "cdv.fcD": "Ближній інфрачервоний як червоний: здорові рослини червоні, міста сіро-сині, вода темна.", "cdv.urban": "Хибні кольори (забудова)", "cdv.urbanD": "Короткохвильовий інфрачервоний: забудова й гола земля фіолетові та коричневі, рослини зелені.", "cdv.agri": "Сільське господарство", "cdv.agriD": "Посіви, що ростуть, яскраво-зелені; голі та зібрані поля коричневі або рожеві.", "cdv.swir": "Короткохвильовий інфрачервоний (SWIR)", "cdv.swirD": "Бачить крізь серпанок і дим. Свіжі згарища темно-червоні, вода чорна.", "cdv.ndvi": "Індекс рослинності (NDVI)", "cdv.ndviD": "Наскільки густа й зелена рослинність. Темно-зелене — густий здоровий покрив; бліде й коричневе — гола земля, дороги чи міста.", "cdv.ndviLo": "Гола земля / вода", "cdv.ndviHi": "Густа рослинність", "cdv.moist": "Індекс вологості", "cdv.moistD": "Вода в рослинах і ґрунті. Синє — волого, червоне — сухо.", "cdv.moistLo": "Сухо", "cdv.moistHi": "Волого", "cdv.ndwi": "Індекс води (NDWI)", "cdv.ndwiD": "Відкрита вода синя, суходіл зелений. Зручно для річок, водосховищ і повеней.", "cdv.ndwiLo": "Суходіл", "cdv.ndwiHi": "Вода", "cdv.nbr": "Індекс згарищ (NBR)", "cdv.nbrD": "Згоріла земля темно-червона й коричнева, здорові рослини зелені. Корисно для пожеж і випалених полів та лісів.", "cdv.nbrLo": "Згоріло", "cdv.nbrHi": "Здорова рослинність", "cdv.scl": "Класифікація сцени", "cdv.sclD": "Як Copernicus класифікував кожен піксель: рослинність, ґрунт, вода, хмари, тіні, сніг. Зручно, щоб перевірити, чи місце справді без хмар.", "scl.veg": "Рослинність", "scl.bare": "Гола земля", "scl.water": "Вода", "scl.cloud": "Хмари", "scl.cirrus": "Тонкі перисті хмари", "scl.shadow": "Тінь від хмар", "scl.snow": "Сніг або лід", "scl.bad": "Немає даних або збій"},
+pl: {"wm.title": "Znak wodny", "wm.mine": "Pokazuj znak wodny", "wm.mineHelp": "Tylko dla ciebie, w tej przeglądarce.", "wm.def": "Pokazuj, gdy ktoś otwiera mapę", "wm.defHelp": "Zapisywane z mapą. Wyłączone: odwiedzający zaczynają bez niego; każdy może go włączyć lub wyłączyć dla siebie.", "wm.defHelpShared": "Tak zaczyna każdy, kto otworzy tę mapę. Każdy może go włączyć lub wyłączyć dla siebie.", "pv.menu": "Podgląd jako nowy widz", "pv.bar": "Podgląd jako nowy widz", "pv.barHelp": "Bez logowania, tylko podgląd, bez twoich zapisanych ustawień. Nic tu nie jest zapisywane.", "pv.barHelpLocal": "Tylko podgląd, bez twoich ustawień, nic nie jest zapisywane. Zmiany z karty edytora pojawiają się tu od razu.", "pv.restart": "Zacznij od nowa", "pv.exit": "Zakończ podgląd", "pv.blocked": "Przeglądarka zablokowała kartę podglądu. Zezwól na wyskakujące okna dla tej strony i spróbuj ponownie.", "cdse.load": "Pokaż na mapie", "cdse.show": "Co pokazać", "cdse.grpViews": "Wbudowane widoki Sentinel-2", "cdse.grpLayers": "Warstwy w twojej konfiguracji", "cdse.custom": "Wpisz nazwę warstwy…", "cdse.layerName": "Nazwa warstwy", "cdse.notInCfg": "{name} (nie ma w konfiguracji)", "cdse.capsLoading": "Wczytuję warstwy z konfiguracji…", "cdse.capsNet": "Nie udało się połączyć z Copernicus. Sprawdź ID instancji i połączenie; nazwę warstwy możesz wpisać ręcznie.", "cdse.capsNone": "Ta konfiguracja nie ma jeszcze warstw. Dodaj je w panelu Sentinel Hub.", "cdse.capsReload": "Odśwież listę", "cdse.missing": "„{name}” nie jest warstwą tej konfiguracji, więc Copernicus jej nie narysuje. Wybierz z listy.", "cdse.carrier": "Używa zdjęć warstwy", "cdse.carrierHelp": "Wbudowane widoki przerysowują zdjęcia jednej z twoich warstw. Wybierz warstwę Sentinel-2 L2A.", "cdse.bands": "Kanały: {b}", "cdse.layerId": "ID warstwy: {name}", "cdse.cfgAbout": "z twojej konfiguracji", "cdse.prio": "Gdzie zdjęcia się nakładają, pokaż", "cdse.p.mostRecent": "Najnowsze zdjęcie", "cdse.p.leastCC": "Najmniej zachmurzone zdjęcie", "cdse.p.leastRecent": "Najstarsze zdjęcie", "cdse.last": "Ostatnie", "cdse.r7": "7 dni", "cdse.r30": "30 dni", "cdse.r90": "90 dni", "cdse.r365": "Rok", "cdse.back": "Wróć do {from} – {to}", "cdse.acq": "Zdjęcia w tym widoku", "cdse.acqRefresh": "Szukaj ponownie", "cdse.sat": "Satelita", "cdse.sat.auto": "Jak warstwa ({s})", "cdse.sat.DSS2": "Sentinel-2 L2A", "cdse.sat.DSS1": "Sentinel-2 L1C", "cdse.sat.DSS3": "Radar Sentinel-1", "cdse.sat.DSS8": "Sentinel-3 OLCI", "cdse.acqLoading": "Szukam zdjęć…", "cdse.acqZoom": "Przybliż mapę, by zobaczyć listę zdjęć.", "cdse.acqNone": "Brak zdjęć między {from} a {to}. Spróbuj szerszego zakresu.", "cdse.acqErr": "Nie udało się pobrać listy zdjęć: {msg}", "cdse.acqSum": "{n} zdjęć z {d} dni między {from} a {to}.", "cdse.acqHow.mostRecent": "W każdym miejscu mapa pokazuje najnowsze zdjęcie z zachmurzeniem do {cc}%.", "cdse.acqHow.leastCC": "W każdym miejscu mapa pokazuje najmniej zachmurzone zdjęcie z tych dat.", "cdse.acqHow.leastRecent": "W każdym miejscu mapa pokazuje najstarsze zdjęcie z zachmurzeniem do {cc}%.", "cdse.acqMore": "Pokazano tylko pierwsze {n}; zawęź daty, by zobaczyć wszystkie.", "cdse.acqTip": "Kliknij dzień, by pokazać tylko jego. Najedź, by zobaczyć, gdzie są jego zdjęcia.", "cdse.img1": "1 zdjęcie", "cdse.imgN": "{n} zdjęć", "cdse.cloud": "zachmurzenie {v}%", "cdse.radar": "radar, widzi przez chmury", "cdse.over": "powyżej limitu chmur", "cdse.top": "Na wierzchu", "cdse.dayOnly": "Pokazuję tylko zdjęcia z {d}.", "cdse.errSrv": "Copernicus odpowiedział: {msg}", "cdv.tc": "Kolory naturalne", "cdv.tcD": "To, co zobaczyłoby oko z orbity: kanały czerwony, zielony i niebieski.", "cdv.hl": "Ulepszone kolory naturalne", "cdv.hlD": "Kolory naturalne z łagodniejszym kontrastem: szczegóły widać i w jasnych miastach, i w ciemnych lasach.", "cdv.fc": "Fałszywe kolory (roślinność)", "cdv.fcD": "Bliska podczerwień jako czerwień: zdrowe rośliny świecą na czerwono, miasta są szaroniebieskie, woda ciemna.", "cdv.urban": "Fałszywe kolory (zabudowa)", "cdv.urbanD": "Krótkofalowa podczerwień: zabudowa i goła ziemia są fioletowe i brązowe, rośliny zielone.", "cdv.agri": "Rolnictwo", "cdv.agriD": "Rosnące uprawy są jaskrawozielone; gołe lub zebrane pola brązowe lub różowe.", "cdv.swir": "Krótkofalowa podczerwień (SWIR)", "cdv.swirD": "Widzi przez mgłę i dym. Świeże pogorzeliska są ciemnoczerwone, woda czarna.", "cdv.ndvi": "Wskaźnik roślinności (NDVI)", "cdv.ndviD": "Jak gęsta i zielona jest roślinność. Ciemna zieleń to gęsta, zdrowa pokrywa; blade i brązowe to goła ziemia, drogi lub miasta.", "cdv.ndviLo": "Goła ziemia / woda", "cdv.ndviHi": "Gęsta roślinność", "cdv.moist": "Wskaźnik wilgotności", "cdv.moistD": "Woda w roślinach i glebie. Niebieskie to wilgotne, czerwone suche.", "cdv.moistLo": "Sucho", "cdv.moistHi": "Wilgotno", "cdv.ndwi": "Wskaźnik wody (NDWI)", "cdv.ndwiD": "Otwarta woda jest niebieska, ląd zielony. Dobre dla rzek, zbiorników i powodzi.", "cdv.ndwiLo": "Ląd", "cdv.ndwiHi": "Woda", "cdv.nbr": "Wskaźnik pożarów (NBR)", "cdv.nbrD": "Spalona ziemia jest ciemnoczerwona i brązowa, zdrowe rośliny zielone. Przydatne przy pożarach i wypalonych polach oraz lasach.", "cdv.nbrLo": "Spalone", "cdv.nbrHi": "Zdrowa roślinność", "cdv.scl": "Klasyfikacja sceny", "cdv.sclD": "Jak Copernicus sklasyfikował każdy piksel: roślinność, gleba, woda, chmury, cienie, śnieg. Przydatne, by sprawdzić, czy miejsce jest naprawdę bez chmur.", "scl.veg": "Roślinność", "scl.bare": "Goła ziemia", "scl.water": "Woda", "scl.cloud": "Chmury", "scl.cirrus": "Cienkie cirrusy", "scl.shadow": "Cień chmur", "scl.snow": "Śnieg lub lód", "scl.bad": "Brak danych lub błąd"},
+de: {"wm.title": "Wasserzeichen", "wm.mine": "Wasserzeichen zeigen", "wm.mineHelp": "Nur für dich, in diesem Browser.", "wm.def": "Beim Öffnen der Karte zeigen", "wm.defHelp": "Wird mit der Karte gespeichert. Aus heißt: Besucher sehen es zunächst nicht; jeder kann es für sich ein- oder ausschalten.", "wm.defHelpShared": "So beginnt jeder, der diese geteilte Karte öffnet. Jeder kann es für sich ein- oder ausschalten.", "pv.menu": "Als neuer Betrachter ansehen", "pv.bar": "Vorschau als neuer Betrachter", "pv.barHelp": "Nicht angemeldet, nur ansehen, ohne deine gespeicherten Einstellungen. Hier wird nichts gespeichert.", "pv.barHelpLocal": "Nur ansehen, ohne deine Einstellungen, nichts wird gespeichert. Änderungen im Editor-Tab erscheinen hier sofort.", "pv.restart": "Neu beginnen", "pv.exit": "Vorschau beenden", "pv.blocked": "Der Browser hat den Vorschau-Tab blockiert. Erlaube Pop-ups für diese Seite und versuche es erneut.", "cdse.load": "Auf der Karte zeigen", "cdse.show": "Was zeigen", "cdse.grpViews": "Eingebaute Sentinel-2-Ansichten", "cdse.grpLayers": "Ebenen deiner Konfiguration", "cdse.custom": "Ebenennamen eingeben…", "cdse.layerName": "Ebenenname", "cdse.notInCfg": "{name} (nicht in deiner Konfiguration)", "cdse.capsLoading": "Ebenen deiner Konfiguration werden gelesen…", "cdse.capsNet": "Copernicus ist nicht erreichbar. Prüfe die Instanz-ID und die Verbindung; den Ebenennamen kannst du auch eintippen.", "cdse.capsNone": "Diese Konfiguration hat noch keine Ebenen. Füge welche im Sentinel-Hub-Dashboard hinzu.", "cdse.capsReload": "Liste neu laden", "cdse.missing": "„{name}“ ist keine Ebene dieser Konfiguration, daher kann Copernicus sie nicht zeichnen. Wähle eine aus der Liste.", "cdse.carrier": "Nutzt die Bilder von", "cdse.carrierHelp": "Eingebaute Ansichten zeichnen die Bilder einer deiner Ebenen neu. Wähle eine Sentinel-2-L2A-Ebene.", "cdse.bands": "Bänder: {b}", "cdse.layerId": "Ebenen-ID: {name}", "cdse.cfgAbout": "aus deiner Konfiguration", "cdse.prio": "Wo sich Bilder überlappen, zeige", "cdse.p.mostRecent": "Das neueste Bild", "cdse.p.leastCC": "Das Bild mit den wenigsten Wolken", "cdse.p.leastRecent": "Das älteste Bild", "cdse.last": "Letzte", "cdse.r7": "7 Tage", "cdse.r30": "30 Tage", "cdse.r90": "90 Tage", "cdse.r365": "Jahr", "cdse.back": "Zurück zu {from} – {to}", "cdse.acq": "Bilder in dieser Ansicht", "cdse.acqRefresh": "Neu suchen", "cdse.sat": "Satellit", "cdse.sat.auto": "Wie die Ebene ({s})", "cdse.sat.DSS2": "Sentinel-2 L2A", "cdse.sat.DSS1": "Sentinel-2 L1C", "cdse.sat.DSS3": "Sentinel-1-Radar", "cdse.sat.DSS8": "Sentinel-3 OLCI", "cdse.acqLoading": "Suche Bilder…", "cdse.acqZoom": "Zoome näher heran, um die Bilder hier aufzulisten.", "cdse.acqNone": "Keine Bilder zwischen {from} und {to}. Versuche einen größeren Zeitraum.", "cdse.acqErr": "Bilder konnten nicht aufgelistet werden: {msg}", "cdse.acqSum": "{n} Bilder an {d} Tagen zwischen {from} und {to}.", "cdse.acqHow.mostRecent": "An jeder Stelle zeigt die Karte das neueste Bild mit höchstens {cc} % Wolken.", "cdse.acqHow.leastCC": "An jeder Stelle zeigt die Karte das wolkenärmste Bild aus diesem Zeitraum.", "cdse.acqHow.leastRecent": "An jeder Stelle zeigt die Karte das älteste Bild mit höchstens {cc} % Wolken.", "cdse.acqMore": "Nur die ersten {n} sind aufgeführt; grenze den Zeitraum ein, um alle zu sehen.", "cdse.acqTip": "Klicke auf einen Tag, um nur diesen zu zeigen. Zeige darauf, um zu sehen, wo seine Bilder liegen.", "cdse.img1": "1 Bild", "cdse.imgN": "{n} Bilder", "cdse.cloud": "{v} % Wolken", "cdse.radar": "Radar, sieht durch Wolken", "cdse.over": "über der Wolkengrenze", "cdse.top": "Oben", "cdse.dayOnly": "Nur Bilder vom {d} werden gezeigt.", "cdse.errSrv": "Copernicus meldet: {msg}", "cdv.tc": "Echtfarben", "cdv.tcD": "Was das Auge aus dem Orbit sähe: rotes, grünes und blaues Band.", "cdv.hl": "Verbesserte Naturfarben", "cdv.hlD": "Echtfarben mit sanfterem Kontrast, damit helle Städte und dunkle Wälder Details behalten.", "cdv.fc": "Falschfarben (Vegetation)", "cdv.fcD": "Nahinfrarot als Rot: gesunde Pflanzen leuchten rot, Städte wirken graublau, Wasser ist dunkel.", "cdv.urban": "Falschfarben (Siedlungen)", "cdv.urbanD": "Kurzwelliges Infrarot: Bebauung und offener Boden treten lila und braun hervor, Pflanzen sind grün.", "cdv.agri": "Landwirtschaft", "cdv.agriD": "Wachsende Kulturen sind leuchtend grün; kahle oder abgeerntete Felder braun oder rosa.", "cdv.swir": "Kurzwelliges Infrarot (SWIR)", "cdv.swirD": "Sieht durch Dunst und Rauch. Frische Brandflächen sind dunkelrot, Wasser ist schwarz.", "cdv.ndvi": "Vegetationsindex (NDVI)", "cdv.ndviD": "Wie grün und dicht die Pflanzen sind. Dunkelgrün ist dichte, gesunde Decke; blass und braun ist offener Boden, Straßen oder Orte.", "cdv.ndviLo": "Offener Boden / Wasser", "cdv.ndviHi": "Dichte Vegetation", "cdv.moist": "Feuchteindex", "cdv.moistD": "Wasser in Pflanzen und Boden. Blau ist feucht, Rot trocken.", "cdv.moistLo": "Trocken", "cdv.moistHi": "Feucht", "cdv.ndwi": "Wasserindex (NDWI)", "cdv.ndwiD": "Offenes Wasser blau, Land grün. Gut für Flüsse, Stauseen und Hochwasser.", "cdv.ndwiLo": "Land", "cdv.ndwiHi": "Wasser", "cdv.nbr": "Brandindex (NBR)", "cdv.nbrD": "Verbrannter Boden dunkelrot und braun, gesunde Pflanzen grün. Nützlich für Brände und verbrannte Felder und Wälder.", "cdv.nbrLo": "Verbrannt", "cdv.nbrHi": "Gesunde Vegetation", "cdv.scl": "Szenenklassifikation", "cdv.sclD": "Wie Copernicus jeden Pixel eingeordnet hat: Vegetation, Boden, Wasser, Wolke, Schatten, Schnee. Praktisch, um zu prüfen, ob eine Stelle wirklich wolkenfrei ist.", "scl.veg": "Vegetation", "scl.bare": "Offener Boden", "scl.water": "Wasser", "scl.cloud": "Wolken", "scl.cirrus": "Dünne Zirren", "scl.shadow": "Wolkenschatten", "scl.snow": "Schnee oder Eis", "scl.bad": "Keine Daten oder fehlerhaft"},
+fr: {"wm.title": "Filigrane", "wm.mine": "Afficher le filigrane", "wm.mineHelp": "Pour vous seulement, dans ce navigateur.", "wm.def": "L’afficher quand on ouvre la carte", "wm.defHelp": "Enregistré avec la carte. Désactivé : les visiteurs arrivent sans ; chacun peut l’activer ou le désactiver pour lui-même.", "wm.defHelpShared": "Toute personne qui ouvre cette carte partagée commence ainsi. Chacun peut l’activer ou le désactiver pour lui-même.", "pv.menu": "Aperçu comme nouveau visiteur", "pv.bar": "Aperçu comme nouveau visiteur", "pv.barHelp": "Non connecté, lecture seule, sans vos réglages enregistrés. Rien n’est enregistré ici.", "pv.barHelpLocal": "Lecture seule, sans vos réglages, rien n’est enregistré. Les modifications de l’onglet éditeur apparaissent ici aussitôt.", "pv.restart": "Recommencer", "pv.exit": "Quitter l’aperçu", "pv.blocked": "Le navigateur a bloqué l’onglet d’aperçu. Autorisez les fenêtres pop-up pour ce site et réessayez.", "cdse.load": "Afficher sur la carte", "cdse.show": "Que montrer", "cdse.grpViews": "Vues Sentinel-2 intégrées", "cdse.grpLayers": "Couches de votre configuration", "cdse.custom": "Saisir un nom de couche…", "cdse.layerName": "Nom de la couche", "cdse.notInCfg": "{name} (absente de votre configuration)", "cdse.capsLoading": "Lecture des couches de votre configuration…", "cdse.capsNet": "Impossible de joindre Copernicus. Vérifiez l’ID d’instance et la connexion ; vous pouvez saisir un nom de couche.", "cdse.capsNone": "Cette configuration n’a encore aucune couche. Ajoutez-en dans le tableau de bord Sentinel Hub.", "cdse.capsReload": "Recharger la liste", "cdse.missing": "« {name} » n’est pas une couche de cette configuration, Copernicus ne peut donc pas l’afficher. Choisissez-en une dans la liste.", "cdse.carrier": "Utilise les images de", "cdse.carrierHelp": "Les vues intégrées redessinent les images d’une de vos couches. Choisissez une couche Sentinel-2 L2A.", "cdse.bands": "Bandes : {b}", "cdse.layerId": "ID de couche : {name}", "cdse.cfgAbout": "de votre configuration", "cdse.prio": "Là où les images se chevauchent, montrer", "cdse.p.mostRecent": "L’image la plus récente", "cdse.p.leastCC": "L’image la moins nuageuse", "cdse.p.leastRecent": "L’image la plus ancienne", "cdse.last": "Derniers", "cdse.r7": "7 jours", "cdse.r30": "30 jours", "cdse.r90": "90 jours", "cdse.r365": "Année", "cdse.back": "Revenir à {from} – {to}", "cdse.acq": "Images dans cette vue", "cdse.acqRefresh": "Chercher à nouveau", "cdse.sat": "Satellite", "cdse.sat.auto": "Comme la couche ({s})", "cdse.sat.DSS2": "Sentinel-2 L2A", "cdse.sat.DSS1": "Sentinel-2 L1C", "cdse.sat.DSS3": "Radar Sentinel-1", "cdse.sat.DSS8": "Sentinel-3 OLCI", "cdse.acqLoading": "Recherche d’images…", "cdse.acqZoom": "Zoomez davantage pour lister les images ici.", "cdse.acqNone": "Aucune image entre le {from} et le {to}. Essayez une période plus large.", "cdse.acqErr": "Impossible de lister les images : {msg}", "cdse.acqSum": "{n} images sur {d} jours entre le {from} et le {to}.", "cdse.acqHow.mostRecent": "À chaque endroit, la carte montre l’image la plus récente avec au plus {cc} % de nuages.", "cdse.acqHow.leastCC": "À chaque endroit, la carte montre l’image la moins nuageuse de ces dates.", "cdse.acqHow.leastRecent": "À chaque endroit, la carte montre l’image la plus ancienne avec au plus {cc} % de nuages.", "cdse.acqMore": "Seules les {n} premières sont listées ; réduisez la période pour tout voir.", "cdse.acqTip": "Cliquez sur un jour pour n’afficher que celui-ci. Survolez-le pour voir où sont ses images.", "cdse.img1": "1 image", "cdse.imgN": "{n} images", "cdse.cloud": "{v} % de nuages", "cdse.radar": "radar, voit à travers les nuages", "cdse.over": "au-dessus de la limite de nuages", "cdse.top": "Au-dessus", "cdse.dayOnly": "Seules les images du {d} sont affichées.", "cdse.errSrv": "Copernicus indique : {msg}", "cdv.tc": "Couleurs naturelles", "cdv.tcD": "Ce que verrait l’œil depuis l’orbite : bandes rouge, verte et bleue.", "cdv.hl": "Couleurs naturelles améliorées", "cdv.hlD": "Couleurs naturelles au contraste plus doux : villes claires et forêts sombres gardent leurs détails.", "cdv.fc": "Fausses couleurs (végétation)", "cdv.fcD": "Proche infrarouge en rouge : la végétation saine ressort en rouge, les villes en gris-bleu, l’eau en sombre.", "cdv.urban": "Fausses couleurs (urbain)", "cdv.urbanD": "Infrarouge court : zones bâties et sol nu ressortent en violet et brun, la végétation en vert.", "cdv.agri": "Agriculture", "cdv.agriD": "Les cultures en croissance sont vert vif ; les champs nus ou récoltés bruns ou roses.", "cdv.swir": "Infrarouge court (SWIR)", "cdv.swirD": "Voit à travers la brume et la fumée. Les brûlis récents sont rouge sombre, l’eau est noire.", "cdv.ndvi": "Indice de végétation (NDVI)", "cdv.ndviD": "Densité et vigueur de la végétation. Vert foncé : couvert dense et sain ; pâle et brun : sol nu, routes ou villes.", "cdv.ndviLo": "Sol nu / eau", "cdv.ndviHi": "Végétation dense", "cdv.moist": "Indice d’humidité", "cdv.moistD": "Eau contenue dans les plantes et le sol. Bleu : humide, rouge : sec.", "cdv.moistLo": "Sec", "cdv.moistHi": "Humide", "cdv.ndwi": "Indice d’eau (NDWI)", "cdv.ndwiD": "L’eau libre en bleu, la terre en vert. Utile pour rivières, réservoirs et crues.", "cdv.ndwiLo": "Terre", "cdv.ndwiHi": "Eau", "cdv.nbr": "Indice de brûlis (NBR)", "cdv.nbrD": "Sol brûlé en rouge sombre et brun, végétation saine en vert. Utile pour les incendies, champs et forêts brûlés.", "cdv.nbrLo": "Brûlé", "cdv.nbrHi": "Végétation saine", "cdv.scl": "Classification de scène", "cdv.sclD": "Comment Copernicus a classé chaque pixel : végétation, sol nu, eau, nuage, ombre, neige. Pratique pour vérifier qu’un endroit est vraiment sans nuages.", "scl.veg": "Végétation", "scl.bare": "Sol nu", "scl.water": "Eau", "scl.cloud": "Nuages", "scl.cirrus": "Cirrus fins", "scl.shadow": "Ombre de nuage", "scl.snow": "Neige ou glace", "scl.bad": "Pas de données ou défaut"},
+ru: {"wm.title": "Водяной знак", "wm.mine": "Показывать водяной знак", "wm.mineHelp": "Только для вас, в этом браузере.", "wm.def": "Показывать, когда открывают карту", "wm.defHelp": "Сохраняется с картой. Выключено: посетители видят карту без него; каждый может включить или выключить его для себя.", "wm.defHelpShared": "Так начинает каждый, кто открывает эту карту. Каждый может включить или выключить его для себя.", "pv.menu": "Посмотреть как новый зритель", "pv.bar": "Просмотр как новый зритель", "pv.barHelp": "Без входа, только просмотр, без ваших сохранённых настроек. Здесь ничего не сохраняется.", "pv.barHelpLocal": "Только просмотр, без ваших настроек, ничего не сохраняется. Правки во вкладке редактора сразу появляются здесь.", "pv.restart": "Начать заново", "pv.exit": "Выйти из просмотра", "pv.blocked": "Браузер заблокировал вкладку просмотра. Разрешите всплывающие окна для этого сайта и попробуйте снова.", "cdse.load": "Показать на карте", "cdse.show": "Что показывать", "cdse.grpViews": "Встроенные виды Sentinel-2", "cdse.grpLayers": "Слои вашей конфигурации", "cdse.custom": "Ввести имя слоя…", "cdse.layerName": "Имя слоя", "cdse.notInCfg": "{name} (нет в вашей конфигурации)", "cdse.capsLoading": "Читаю слои вашей конфигурации…", "cdse.capsNet": "Не удалось связаться с Copernicus. Проверьте ID инстанса и соединение; имя слоя можно ввести вручную.", "cdse.capsNone": "В этой конфигурации пока нет слоёв. Добавьте их в панели Sentinel Hub.", "cdse.capsReload": "Обновить список", "cdse.missing": "«{name}» нет в этой конфигурации, поэтому Copernicus не может его показать. Выберите слой из списка.", "cdse.carrier": "Использует снимки слоя", "cdse.carrierHelp": "Встроенные виды перерисовывают снимки одного из ваших слоёв. Выберите слой Sentinel-2 L2A.", "cdse.bands": "Каналы: {b}", "cdse.layerId": "ID слоя: {name}", "cdse.cfgAbout": "из вашей конфигурации", "cdse.prio": "Где снимки перекрываются, показывать", "cdse.p.mostRecent": "Самый новый снимок", "cdse.p.leastCC": "Наименее облачный снимок", "cdse.p.leastRecent": "Самый старый снимок", "cdse.last": "Последние", "cdse.r7": "7 дней", "cdse.r30": "30 дней", "cdse.r90": "90 дней", "cdse.r365": "Год", "cdse.back": "Назад к {from} – {to}", "cdse.acq": "Снимки в этом виде", "cdse.acqRefresh": "Искать снова", "cdse.sat": "Спутник", "cdse.sat.auto": "Как в слое ({s})", "cdse.sat.DSS2": "Sentinel-2 L2A", "cdse.sat.DSS1": "Sentinel-2 L1C", "cdse.sat.DSS3": "Радар Sentinel-1", "cdse.sat.DSS8": "Sentinel-3 OLCI", "cdse.acqLoading": "Ищу снимки…", "cdse.acqZoom": "Приблизьте карту, чтобы увидеть список снимков.", "cdse.acqNone": "Здесь нет снимков между {from} и {to}. Попробуйте более широкий период.", "cdse.acqErr": "Не удалось получить список снимков: {msg}", "cdse.acqSum": "{n} снимков за {d} дн. между {from} и {to}.", "cdse.acqHow.mostRecent": "В каждой точке карта показывает самый новый снимок с облачностью до {cc}%.", "cdse.acqHow.leastCC": "В каждой точке карта показывает наименее облачный снимок за эти даты.", "cdse.acqHow.leastRecent": "В каждой точке карта показывает самый старый снимок с облачностью до {cc}%.", "cdse.acqMore": "Показаны только первые {n}; сузьте период, чтобы увидеть все.", "cdse.acqTip": "Нажмите день, чтобы показать только его. Наведите, чтобы увидеть, где его снимки.", "cdse.img1": "1 снимок", "cdse.imgN": "{n} снимков", "cdse.cloud": "облачность {v}%", "cdse.radar": "радар, видит сквозь облака", "cdse.over": "выше лимита облачности", "cdse.top": "Сверху", "cdse.dayOnly": "Показаны только снимки за {d}.", "cdse.errSrv": "Ответ Copernicus: {msg}", "cdv.tc": "Естественные цвета", "cdv.tcD": "То, что увидел бы глаз с орбиты: красный, зелёный и синий каналы.", "cdv.hl": "Улучшенные естественные цвета", "cdv.hlD": "Естественные цвета с мягким контрастом: детали видны и в ярких городах, и в тёмных лесах.", "cdv.fc": "Псевдоцвета (растительность)", "cdv.fcD": "Ближний ИК как красный: здоровые растения красные, города серо-синие, вода тёмная.", "cdv.urban": "Псевдоцвета (застройка)", "cdv.urbanD": "Коротковолновый ИК: застройка и голая земля фиолетовые и коричневые, растения зелёные.", "cdv.agri": "Сельское хозяйство", "cdv.agriD": "Растущие посевы ярко-зелёные; голые или убранные поля коричневые или розовые.", "cdv.swir": "Коротковолновый ИК (SWIR)", "cdv.swirD": "Видит сквозь дымку и дым. Свежие гари тёмно-красные, вода чёрная.", "cdv.ndvi": "Индекс растительности (NDVI)", "cdv.ndviD": "Насколько густая и зелёная растительность. Тёмно-зелёное — густой здоровый покров; бледное и коричневое — голая земля, дороги или города.", "cdv.ndviLo": "Голая земля / вода", "cdv.ndviHi": "Густая растительность", "cdv.moist": "Индекс влажности", "cdv.moistD": "Вода в растениях и почве. Синее — влажно, красное — сухо.", "cdv.moistLo": "Сухо", "cdv.moistHi": "Влажно", "cdv.ndwi": "Индекс воды (NDWI)", "cdv.ndwiD": "Открытая вода синяя, суша зелёная. Удобно для рек, водохранилищ и паводков.", "cdv.ndwiLo": "Суша", "cdv.ndwiHi": "Вода", "cdv.nbr": "Индекс гарей (NBR)", "cdv.nbrD": "Сгоревшая земля тёмно-красная и коричневая, здоровые растения зелёные. Полезно для пожаров и выжженных полей и лесов.", "cdv.nbrLo": "Сгорело", "cdv.nbrHi": "Здоровая растительность", "cdv.scl": "Классификация сцены", "cdv.sclD": "Как Copernicus классифицировал каждый пиксель: растительность, почва, вода, облака, тени, снег. Удобно, чтобы проверить, что место действительно без облаков.", "scl.veg": "Растительность", "scl.bare": "Голая земля", "scl.water": "Вода", "scl.cloud": "Облака", "scl.cirrus": "Тонкие перистые", "scl.shadow": "Тень облаков", "scl.snow": "Снег или лёд", "scl.bad": "Нет данных или сбой"}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -3708,9 +3748,24 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-3);
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+// ?preview=1 opens the map the way a first-time viewer sees it: nothing saved in this browser
+// is read (except the local map itself, so it can be shown) and nothing is written.
+const PREVIEW = new URLSearchParams(location.search).get('preview') === '1';
+const PREVIEW_MEM = new Map();
+const PREVIEW_READS = new Set(['plotwright:project:v1']);
 const store = {
-  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-  set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  get(k) {
+    if (PREVIEW && !PREVIEW_READS.has(k)) return PREVIEW_MEM.has(k) ? PREVIEW_MEM.get(k) : null;
+    try { return localStorage.getItem(k); } catch (e) { return null; }
+  },
+  set(k, v) {
+    if (PREVIEW) { PREVIEW_MEM.set(k, String(v)); return true; }
+    try { localStorage.setItem(k, v); return true; } catch (e) { return false; }
+  },
+  del(k) {
+    if (PREVIEW) { PREVIEW_MEM.delete(k); return; }
+    try { localStorage.removeItem(k); } catch (e) { /* private mode */ }
+  }
 };
 const KEY_PROJECT = 'plotwright:project:v1';   // kept so maps saved in the earlier build still open
 const KEY_PREFS = 'frontline:prefs:v2';
@@ -3785,10 +3840,10 @@ const prefs = Object.assign({
   topo: false, topoRange: 'low', topoOpacity: 0.7, topoRelief: 0.45,
   lang: detectLang(), labelLang: 'match',
   dist: 'auto', areaM: 'km2', areaI: 'mi2', decimals: 'auto', coord: 'dec',
-  watermark: true, sidebar: null,
+  sidebar: null,
   searchMode: 'map', bdCountry: false, bdRegion: false, bdDistrict: false, bdCommunity: false, bdCity: false, bdCityDist: false, bdQuarter: false, rail: false, highways: false, aboutCollapsed: false, trace: false, traceRes: 'normal', traceMode: 'follow', mscaleView: 1, tlFold: false, fcGain: 'st-advance', fcLoss: 'st-liberated', fcLossOn: true,
   google: { key: '', session: '', expiry: 0, sessKey: '', method: 'auto', works: '' },
-  cdse: oldPrefs.cdse || { id: '', layer: 'TRUE_COLOR', from: isoDate(new Date(Date.now() - 30 * 864e5)), to: isoDate(new Date()), cc: 30 }
+  cdse: { viz: '', priority: 'mostRecent', sat: 'auto', ...(oldPrefs.cdse || { id: '', layer: 'TRUE_COLOR', from: isoDate(new Date(Date.now() - 30 * 864e5)), to: isoDate(new Date()), cc: 30 }) }
 }, (() => { try { return JSON.parse(store.get(KEY_PREFS) || '{}'); } catch (e) { return {}; } })());
 const savePrefs = () => store.set(KEY_PREFS, JSON.stringify(prefs));
 // Snapping range in screen pixels for drawing and editing points (was 14).
@@ -3844,6 +3899,7 @@ const KIND = k => t('kind.' + k);
    Icons
    ========================================================================= */
 const IC = {
+  refresh: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4.6h-4.6"/>',
   select: '<path d="M5.5 3.5l12.5 7-5.4 1.6-2.4 5.4z"/>',
   marker: '<path d="M12 21s-6.5-6-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 15 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.2"/>',
   label: '<path d="M5 6.5h14M12 6.5V19M9 19h6"/>',
@@ -3960,7 +4016,7 @@ const S = {
   icons: new Map(),                          // custom icon library: id -> { id, name, src, glyph }
   styles: new Map(),                         // saved styles: id -> { id, name, color, fillColor, weight, opacity, fillOpacity, dash, pattern }
   mode: 'local', mapId: null, role: 'owner', // 'online' when a shared map is open; role owner | editor | viewer
-  readOnly: false, embed: Q.has('embed')
+  readOnly: false, embed: Q.has('embed'), preview: PREVIEW
 };
 const LEN_U = { m: 1, km: 1000, ft: 0.3048, mi: 1609.344 };
 const AREA_U = { m2: 1, ha: 1e4, km2: 1e6, ft2: 0.09290304, ac: 4046.8564224, mi2: 2589988.110336 };
@@ -4169,23 +4225,7 @@ const BASES = {
     maxNativeZoom: 15,
     attribution: `<a href="https://s2maps.eu" target="_blank" rel="noopener">Sentinel-2 cloudless</a> by <a href="https://eox.at" target="_blank" rel="noopener">EOX IT Services GmbH</a> (Contains modified Copernicus Sentinel data ${prefs.year})`
   }),
-  cdse: () => {
-    const c = prefs.cdse;
-    if (!c.id) return null;
-    const lyr = L.tileLayer.wms(`https://sh.dataspace.copernicus.eu/ogc/wms/${encodeURIComponent(c.id.trim())}`, {
-      pane: 'pwBase', layers: c.layer || 'TRUE_COLOR', format: 'image/jpeg', transparent: false, version: '1.3.0',
-      tileSize: 512, maxZoom: MAX_Z, minZoom: 6, TIME: `${c.from}/${c.to}`, MAXCC: c.cc, SHOWLOGO: false,
-      attribution: `Contains modified Copernicus Sentinel data ${String(c.to).slice(0, 4)}, <a href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Data Space Ecosystem</a>`
-    });
-    let warned = false;
-    lyr.on('tileerror', () => {
-      if (warned) return; warned = true;
-      cdseError = t('cdse.errFail');
-      if (!$('#basePanel').hidden) renderBasePanel();
-      toast(cdseError, 'error');
-    });
-    return lyr;
-  },
+  cdse: () => cdseLayer(),  // 13-cdse.js
   osm: () => raster('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxNativeZoom: 19, attribution: OSM_ATTR }),
   // Esri Dark Gray Canvas: the base, with its own place names on top.
   esridark: () => L.layerGroup([
@@ -4810,21 +4850,7 @@ function renderBasePanel() {
       ${prefs.base === 's2' ? `<label class="field"><span>${esc(t('base.year'))}</span><select id="bp-year">${S2_YEARS.map(y => `<option ${y === prefs.year ? 'selected' : ''}>${y}</option>`).join('')}</select></label>` : ''}
       ${prefs.base === 'wayback' ? `<label class="field"><span>${esc(t('wb.release'))}</span><select id="bp-wayback">${wbOpts(prefs.wayback || (WB.list && WB.list[0].num))}</select><small>${esc(t('wb.help'))}</small></label>` : ''}
       ${showGoogle ? googleSection() : ''}
-      ${showCdse ? `
-      <form class="sub-form" id="cdseForm">
-        <span class="eyebrow">${esc(t('cdse.title'))}</span>
-        <label class="field"><span>${esc(t('cdse.id'))}</span><input id="cdse-id" type="text" value="${esc(c.id)}" placeholder="9d559c0e-…" spellcheck="false" autocomplete="off"></label>
-        <label class="field"><span>${esc(t('cdse.layer'))}</span><input id="cdse-layer" type="text" list="cdse-layers" value="${esc(c.layer)}" spellcheck="false"></label>
-        <datalist id="cdse-layers"><option value="TRUE_COLOR"><option value="FALSE_COLOR"><option value="NDVI"><option value="EVI"></datalist>
-        <div class="two">
-          <label class="field"><span>${esc(t('cdse.from'))}</span><input id="cdse-from" type="date" value="${esc(c.from)}"></label>
-          <label class="field"><span>${esc(t('cdse.to'))}</span><input id="cdse-to" type="date" value="${esc(c.to)}"></label>
-        </div>
-        <label class="field"><span>${esc(t('cdse.cc'))} <output id="cdse-cco">${c.cc}%</output></span><input id="cdse-cc" type="range" min="0" max="100" step="5" value="${c.cc}"></label>
-        ${cdseError ? `<p class="err">${esc(cdseError)}</p>` : ''}
-        <button class="btn primary" type="submit">${esc(t('cdse.load'))}</button>
-        <p class="help">${esc(t('cdse.help'))} ${link('https://dataspace.copernicus.eu', 'dataspace.copernicus.eu')} · ${link('https://shapps.dataspace.copernicus.eu/dashboard/', t('cdse.dash'))}</p>
-      </form>` : ''}
+      ${showCdse ? cdseSection() : ''}
     </div>
     <div class="bp-section">
       <span class="eyebrow">${esc(t('base.overlays'))}</span>
@@ -4886,7 +4912,6 @@ $('#basePanel').addEventListener('change', e => {
   if (id === 'bp-relief') { prefs.topoRelief = +e.target.value; savePrefs(); syncTerrain(); }
 });
 $('#basePanel').addEventListener('input', e => {
-  if (e.target.id === 'cdse-cc') $('#cdse-cco').textContent = e.target.value + '%';
   if (e.target.id === 'bp-topoop') { $('#bp-topoopo').textContent = Math.round(e.target.value * 100) + '%'; if (terrainLayer) terrainLayer.setOpacity(+e.target.value); }
   if (e.target.id === 'bp-relief') $('#bp-reliefo').textContent = Math.round(e.target.value * 100) + '%';
 });
@@ -4899,14 +4924,7 @@ $('#basePanel').addEventListener('submit', e => {
     googleError = ''; G.results = {}; G.jsBroken = G.jsBroken && G.jsKey === key; savePrefs(); setBase('google');
     return;
   }
-  const id = $('#cdse-id').value.trim(), layer = $('#cdse-layer').value.trim().toUpperCase() || 'TRUE_COLOR';
-  const from = $('#cdse-from').value, to = $('#cdse-to').value, cc = +$('#cdse-cc').value;
-  if (!id) { cdseError = t('cdse.errId'); renderBasePanel(); return; }
-  if (!from || !to || from > to) { cdseError = t('cdse.errDate'); renderBasePanel(); return; }
-  prefs.cdse = { id, layer, from, to, cc }; cdseError = ''; savePrefs();
-  setBase('cdse');
-  if (map.getZoom() < 6) map.setZoom(8);
-  toast(t('cdse.loading', { from, to }));
+  if (e.target.id === 'cdseForm') cdseSubmit();
 });
 
 let scaleCtl = null;
@@ -5690,6 +5708,386 @@ $('#basePanel').addEventListener('input', e => {
 });
 
 /* =========================================================================
+   Copernicus Data Space live satellite (Sentinel Hub OGC services)
+   - The layers your own configuration has, read from WMS GetCapabilities and offered
+     as a proper list (the old free-text box only ever suggested the value already in it).
+   - Built-in Sentinel-2 views, drawn with EVALSCRIPT on the data of one of your layers,
+     like the visualisations in Copernicus Browser.
+   - Which image wins where several overlap (PRIORITY), cloud limit (MAXCC), date range.
+   - "Images in this view": the real acquisitions under the map (WFS), by day, with time,
+     cloud cover and footprints; click a day to show only that day.
+   ========================================================================= */
+const CDSE_HOST = 'https://sh.dataspace.copernicus.eu/ogc/';
+const CD = { caps: null, capsId: '', capsLoading: null, capsErr: '', acq: null, acqKey: '', acqLoading: false, acqErr: '', acqMore: false, acqCount: 0, fp: null, prev: null, custom: false };
+
+/* ---------- Built-in Sentinel-2 views ---------- */
+const evRgb = (a, b, c, g = 2.5) => `function setup(){return{input:["${a}","${b}","${c}"],output:{bands:3}}}\nfunction evaluatePixel(s){return[${g}*s.${a},${g}*s.${b},${g}*s.${c}]}`;
+const evRamp = (bands, expr, stops) => `function setup(){return{input:[${bands.map(b => `"${b}"`).join(',')}],output:{bands:3}}}\nfunction nd(a,b){const d=a+b;return d?(a-b)/d:0}\nconst viz=new ColorRampVisualizer([${stops.map(([v, c]) => `[${v},0x${c}]`).join(',')}]);\nfunction evaluatePixel(s){return viz.process(${expr})}`;
+const SCL_COL = { 0: [0, 0, 0], 1: [1, 0, 0.016], 2: [0.36, 0.36, 0.36], 3: [0.478, 0.271, 0.071], 4: [0, 0.749, 0.012], 5: [1, 0.902, 0.004], 6: [0.004, 0, 0.961], 7: [0.467, 0.467, 0.467], 8: [0.671, 0.671, 0.671], 9: [0.82, 0.82, 0.82], 10: [0.333, 0.784, 0.988], 11: [1, 0.302, 1] };
+const STOPS = {
+  ndvi: [[-0.2, '0c0c0c'], [0, 'eaeaea'], [0.1, 'ccc682'], [0.2, '91bf51'], [0.3, '70a33f'], [0.4, '4f892d'], [0.5, '306d1c'], [0.6, '0f540a'], [1, '004400']],
+  moist: [[-0.8, '800000'], [-0.24, 'ff0000'], [-0.032, 'ffff00'], [0.032, '00ffff'], [0.24, '0000ff'], [0.8, '000080']],
+  ndwi: [[-0.8, '008000'], [0, 'ffffff'], [0.8, '0000cc']],
+  nbr: [[-0.5, '4d0000'], [-0.1, 'b33a00'], [0.1, 'f2d16b'], [0.3, '7fbf3f'], [0.6, '1a6b1a']]
+};
+const CDSE_VIEWS = [
+  { id: 'tc', script: evRgb('B04', 'B03', 'B02') },
+  { id: 'hl', script: 'function setup(){return{input:["B04","B03","B02"],output:{bands:3}}}\nconst f=v=>Math.cbrt(Math.max(0,0.6*v-0.035));\nfunction evaluatePixel(s){return[f(s.B04),f(s.B03),f(s.B02)]}' },
+  { id: 'fc', script: evRgb('B08', 'B04', 'B03') },
+  { id: 'urban', script: evRgb('B12', 'B11', 'B04') },
+  { id: 'agri', script: evRgb('B11', 'B08', 'B02') },
+  { id: 'swir', script: evRgb('B12', 'B8A', 'B04') },
+  { id: 'ndvi', script: evRamp(['B04', 'B08'], 'nd(s.B08,s.B04)', STOPS.ndvi), ramp: 'ndvi' },
+  { id: 'moist', script: evRamp(['B8A', 'B11'], 'nd(s.B8A,s.B11)', STOPS.moist), ramp: 'moist' },
+  { id: 'ndwi', script: evRamp(['B03', 'B08'], 'nd(s.B03,s.B08)', STOPS.ndwi), ramp: 'ndwi' },
+  { id: 'nbr', script: evRamp(['B08', 'B12'], 'nd(s.B08,s.B12)', STOPS.nbr), ramp: 'nbr' },
+  { id: 'scl', script: `function setup(){return{input:["SCL"],output:{bands:3}}}\nconst C=${JSON.stringify(SCL_COL)};\nfunction evaluatePixel(s){return C[s.SCL]||[0,0,0]}`, classes: [[4, 'veg'], [5, 'bare'], [6, 'water'], [9, 'cloud'], [10, 'cirrus'], [3, 'shadow'], [11, 'snow'], [1, 'bad']] }
+];
+const cdseView = c => (c.viz && CDSE_VIEWS.find(v => v.id === c.viz)) || null;
+const viewBands = v => ((/input:\[([^\]]*)\]/.exec(v.script) || [])[1] || '').replace(/"/g, '').split(',').filter(Boolean);
+const b64 = s => btoa(unescape(encodeURIComponent(s)));
+const rgbCss = a => `rgb(${a.map(x => Math.round(x * 255)).join(',')})`;
+function rampCss(stops) {
+  const lo = stops[0][0], hi = stops[stops.length - 1][0];
+  return `linear-gradient(90deg,${stops.map(([v, c]) => `#${c} ${Math.round((v - lo) / (hi - lo) * 100)}%`).join(',')})`;
+}
+
+/* ---------- Your configuration's layers ---------- */
+// Anything that is clearly not Sentinel-2, so built-in views do not try to read B04 from radar.
+const NOT_S2 = /(^|[^A-Z0-9])(S1|S3|S5P?|SAR|VV|VH|DEM|OLCI|SLSTR|L8|L9|LANDSAT|MODIS|HLS)([^A-Z0-9]|$)|sentinel[\s-]?[135]\b/i;
+function cdseLayers() {
+  const c = prefs.cdse;
+  if (CD.caps && CD.capsId === (c.id || '').trim()) return CD.caps;
+  return c.capsFor === c.id && Array.isArray(c.caps) ? c.caps : [];
+}
+function cdseCarrier(c) {
+  const list = cdseLayers();
+  if (c.carrier && (!list.length || list.some(l => l.name === c.carrier))) return c.carrier;
+  const pick = list.find(l => !NOT_S2.test(l.name + ' ' + l.title)) || list[0];
+  return pick ? pick.name : (c.layer || 'TRUE_COLOR');
+}
+function cdseCaps(id, force) {
+  id = (id || '').trim();
+  if (!id) return Promise.resolve(null);
+  if (!force && CD.capsId === id) return CD.capsLoading || Promise.resolve(CD.caps);
+  CD.capsId = id; CD.caps = null; CD.capsErr = '';
+  const p = fetch(`${CDSE_HOST}wms/${encodeURIComponent(id)}?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0`)
+    .then(r => r.text().then(txt => ({ ok: r.ok, status: r.status, txt })))
+    .then(({ ok, status, txt }) => {
+      const doc = new DOMParser().parseFromString(txt, 'text/xml');
+      const exc = doc.getElementsByTagName('ServiceException')[0];
+      if (exc) throw new Error(exc.textContent.trim().slice(0, 300));
+      if (!ok) throw new Error('HTTP ' + status);
+      const kids = (el, n) => [...el.children].filter(k => k.localName === n);
+      const text = (el, n) => { const k = kids(el, n)[0]; return k ? k.textContent.trim() : ''; };
+      const out = [];
+      [...doc.getElementsByTagName('Layer')].forEach(el => {
+        const name = text(el, 'Name');
+        if (!name || kids(el, 'Layer').length) return;
+        out.push({ name, title: text(el, 'Title') || name, abs: text(el, 'Abstract').slice(0, 240) });
+      });
+      if (!out.length) throw new Error(t('cdse.capsNone'));
+      return out;
+    })
+    .then(list => {
+      if (CD.capsId !== id) return null;
+      CD.caps = list;
+      if ((prefs.cdse.id || '').trim() === id) { prefs.cdse.caps = list; prefs.cdse.capsFor = prefs.cdse.id; savePrefs(); }
+      return list;
+    })
+    .catch(err => {
+      if (CD.capsId !== id) return null;
+      CD.capsErr = /fetch|network|load failed/i.test(err.message) ? t('cdse.capsNet') : err.message;
+      return null;
+    })
+    .finally(() => {
+      if (CD.capsId === id) CD.capsLoading = null;
+      if (!$('#basePanel').hidden) renderBasePanel();
+    });
+  CD.capsLoading = p;
+  return p;
+}
+
+/* ---------- The map layer ---------- */
+const cdseTime = c => `${c.from}T00:00:00Z/${c.to}T23:59:59Z`;
+function cdseParams(c) {
+  const v = cdseView(c);
+  const p = { layers: v ? cdseCarrier(c) : (c.layer || 'TRUE_COLOR'), TIME: cdseTime(c), MAXCC: c.cc ?? 30, PRIORITY: c.priority || 'mostRecent' };
+  if (v) p.EVALSCRIPT = b64('//VERSION=3\n' + v.script);
+  return p;
+}
+function cdseLayer() {
+  const c = prefs.cdse;
+  if (!c.id) return null;
+  const lyr = L.tileLayer.wms(`${CDSE_HOST}wms/${encodeURIComponent(c.id.trim())}`, {
+    pane: 'pwBase', format: 'image/jpeg', transparent: false, version: '1.3.0',
+    tileSize: 512, maxZoom: MAX_Z, minZoom: 6, SHOWLOGO: false, ...cdseParams(c),
+    attribution: `Contains modified Copernicus Sentinel data ${String(c.to).slice(0, 4)}, <a href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Data Space Ecosystem</a>`
+  });
+  lyr._cdseId = c.id;
+  lyr.on('tileerror', e => {
+    if (lyr._cdWarned) return; lyr._cdWarned = true;
+    cdseError = t('cdse.errFail');
+    if (!$('#basePanel').hidden) renderBasePanel();
+    toast(cdseError, 'error');
+    // Copernicus explains what went wrong in the body of the failed image; read it once.
+    const src = e.tile && e.tile.src;
+    if (src) fetch(src).then(r => r.ok ? '' : r.text()).then(txt => {
+      if (!txt) return;
+      const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt);
+      const msg = (m ? m[1] : txt).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 300);
+      if (msg) { cdseError = t('cdse.errSrv', { msg }); if (!$('#basePanel').hidden) renderBasePanel(); }
+    }).catch(() => {});
+  });
+  return lyr;
+}
+// Changes of view, dates, cloud or priority update the layer in place, so the map does not flash.
+function cdseApply() {
+  const c = prefs.cdse;
+  cdseError = '';
+  if (prefs.base === 'cdse' && baseLayer && baseLayer._cdseId === c.id && baseLayer.setParams) {
+    delete baseLayer.wmsParams.EVALSCRIPT;
+    baseLayer._cdWarned = false;
+    baseLayer.setParams(cdseParams(c));
+    if (!$('#basePanel').hidden) renderBasePanel();
+  } else setBase('cdse');
+  if (map.getZoom() < 6) map.setZoom(8);
+}
+
+/* ---------- Panel ---------- */
+const PRIOS = ['mostRecent', 'leastCC', 'leastRecent'];
+const SATS = ['auto', 'DSS2', 'DSS1', 'DSS3', 'DSS8'];
+function cdseSection() {
+  const c = prefs.cdse, id = (c.id || '').trim(), v = cdseView(c), list = cdseLayers();
+  if (id && CD.capsId !== id && !CD.capsLoading) setTimeout(() => cdseCaps(id), 0);
+  if (id && prefs.base === 'cdse') setTimeout(() => cdseAcq(false), 0);
+  const known = list.some(l => l.name === c.layer);
+  const custom = CD.custom || (!v && !list.length);
+  const sel = v ? 'v:' + v.id : custom ? 'custom' : 'l:' + c.layer;
+  const o = (val, label) => `<option value="${esc(val)}" ${val === sel ? 'selected' : ''}>${esc(label)}</option>`;
+  const lay = !v && list.find(l => l.name === c.layer);
+  let about = '';
+  if (v) {
+    const legend = v.ramp ? `<span class="cdse-ramp" style="background:${rampCss(STOPS[v.ramp])}"></span><span class="cdse-ends"><span>${esc(t('cdv.' + v.id + 'Lo'))}</span><span>${esc(t('cdv.' + v.id + 'Hi'))}</span></span>`
+      : v.classes ? `<span class="cdse-classes">${v.classes.map(([k, n]) => `<span><i style="background:${rgbCss(SCL_COL[k])}"></i>${esc(t('scl.' + n))}</span>`).join('')}</span>` : '';
+    about = `<div class="cdse-about"><b>${esc(t('cdv.' + v.id))}</b><p>${esc(t('cdv.' + v.id + 'D'))}</p>${legend}<small>${esc(t('cdse.bands', { b: viewBands(v).join(', ') }))} · Sentinel-2 L2A</small></div>`;
+  } else if (lay) {
+    about = `<div class="cdse-about"><b>${esc(lay.title)}</b>${lay.abs ? `<p>${esc(lay.abs)}</p>` : ''}<small>${esc(t('cdse.layerId', { name: lay.name }))} · ${esc(t('cdse.cfgAbout'))}</small></div>`;
+  }
+  const warnMissing = !v && !custom && list.length && !known ? `<p class="err">${esc(t('cdse.missing', { name: c.layer }))}</p>` : '';
+  const carrierSel = v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc(l.title === l.name ? l.name : `${l.title} (${l.name})`)}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : '';
+  const link = (href, txt) => `<a href="${href}" target="_blank" rel="noopener">${esc(txt)}</a>`;
+  return `
+      <form class="sub-form" id="cdseForm">
+        <span class="eyebrow">${esc(t('cdse.title'))}</span>
+        <label class="field"><span>${esc(t('cdse.id'))}</span><input id="cdse-id" type="text" value="${esc(c.id)}" placeholder="9d559c0e-…" spellcheck="false" autocomplete="off"></label>
+        ${CD.capsLoading ? `<p class="help">${esc(t('cdse.capsLoading'))}</p>` : ''}
+        ${CD.capsErr && CD.capsId === id ? `<p class="err">${esc(CD.capsErr)}</p>` : ''}
+        <label class="field"><span>${esc(t('cdse.show'))}${id ? `<button type="button" class="link-btn" data-cdse="caps">${esc(t('cdse.capsReload'))}</button>` : ''}</span><select id="cdse-show">
+          <optgroup label="${esc(t('cdse.grpViews'))}">${CDSE_VIEWS.map(x => o('v:' + x.id, t('cdv.' + x.id))).join('')}</optgroup>
+          <optgroup label="${esc(t('cdse.grpLayers'))}">${list.map(l => o('l:' + l.name, l.title === l.name ? l.name : `${l.title} (${l.name})`)).join('')}${!list.length || known || !c.layer ? '' : o('l:' + c.layer, t('cdse.notInCfg', { name: c.layer }))}${o('custom', t('cdse.custom'))}</optgroup>
+        </select></label>
+        ${custom && !v ? `<label class="field"><span>${esc(t('cdse.layerName'))}</span><input id="cdse-layer" type="text" value="${esc(c.layer)}" placeholder="TRUE_COLOR" spellcheck="false" autocomplete="off"></label>` : ''}
+        ${warnMissing}${about}${carrierSel}
+        <div class="two">
+          <label class="field"><span>${esc(t('cdse.from'))}</span><input id="cdse-from" type="date" value="${esc(c.from)}"></label>
+          <label class="field"><span>${esc(t('cdse.to'))}</span><input id="cdse-to" type="date" value="${esc(c.to)}"></label>
+        </div>
+        <div class="cdse-quick"><span>${esc(t('cdse.last'))}</span>${[7, 30, 90, 365].map(n => `<button type="button" class="btn sm" data-cdr="${n}">${esc(t('cdse.r' + n))}</button>`).join('')}</div>
+        ${CD.prev && c.from === c.to ? `<button type="button" class="link-btn" data-cdse="back">${esc(t('cdse.back', { from: CD.prev.from, to: CD.prev.to }))}</button>` : ''}
+        <label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select></label>
+        <label class="field"><span>${esc(t('cdse.cc'))} <output id="cdse-cco">${c.cc}%</output></span><input id="cdse-cc" type="range" min="0" max="100" step="1" value="${c.cc}"></label>
+        ${cdseError ? `<p class="err">${esc(cdseError)}</p>` : ''}
+        <button class="btn primary" type="submit">${esc(t('cdse.load'))}</button>
+        <p class="help">${esc(t('cdse.help'))} ${link('https://dataspace.copernicus.eu', 'dataspace.copernicus.eu')} · ${link('https://shapps.dataspace.copernicus.eu/dashboard/', t('cdse.dash'))}</p>
+      </form>
+      ${id ? acqHtml() : ''}`;
+}
+
+/* ---------- Images in this view (WFS) ---------- */
+function cdseSat(c) {
+  if (c.sat && c.sat !== 'auto') return c.sat;
+  const n = (cdseView(c) ? cdseCarrier(c) : c.layer) || '';
+  const lay = cdseLayers().find(l => l.name === n);
+  const s = n + ' ' + (lay ? lay.title + ' ' + lay.abs : '');
+  if (/(^|[^A-Z0-9])S1([^0-9]|$)|SAR|(^|[^A-Z])V[VH]([^A-Z]|$)|sentinel[\s-]?1\b/i.test(s)) return 'DSS3';
+  if (/(^|[^A-Z0-9])S3([^0-9]|$)|OLCI|sentinel[\s-]?3\b/i.test(s)) return 'DSS8';
+  if (/L1C/i.test(s)) return 'DSS1';
+  return 'DSS2';
+}
+const fmtDay = d => { const x = new Date(d + 'T12:00:00Z'); return isNaN(x) ? d : x.toLocaleDateString(langInfo().locale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); };
+async function cdseAcq(force) {
+  const c = prefs.cdse, id = (c.id || '').trim();
+  if (!id || !c.from || !c.to) return;
+  const sat = cdseSat(c);
+  if (map.getZoom() < 7) {
+    const key = 'zoom|' + id;
+    if (!force && CD.acqKey === key) return;
+    CD.acqKey = key; CD.acq = null; CD.acqErr = t('cdse.acqZoom'); renderAcq(); return;
+  }
+  const b = map.getBounds(), sw = L.CRS.EPSG3857.project(b.getSouthWest()), ne = L.CRS.EPSG3857.project(b.getNorthEast());
+  const bbox = [sw.x, sw.y, ne.x, ne.y].map(v => Math.round(v)).join(',');
+  const key = [id, sat, c.from, c.to, bbox].join('|');
+  if (!force && key === CD.acqKey) return;
+  CD.acqKey = key; CD.acqLoading = true; CD.acqErr = ''; renderAcq();
+  const url = off => `${CDSE_HOST}wfs/${encodeURIComponent(id)}?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=${sat}&OUTPUTFORMAT=application/json&SRSNAME=EPSG:3857&BBOX=${bbox}&TIME=${encodeURIComponent(cdseTime(c))}&MAXFEATURES=100&FEATURE_OFFSET=${off}`;
+  const all = [];
+  let more = false;
+  try {
+    for (let page = 0; page < 3; page++) {
+      const r = await fetch(url(page * 100));
+      const txt = await r.text();
+      let j = null; try { j = JSON.parse(txt); } catch (e) { j = null; }
+      if (!r.ok || !j) {
+        const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt);
+        throw new Error(((m ? m[1] : '') || 'HTTP ' + r.status).replace(/<[^>]+>/g, ' ').trim().slice(0, 240));
+      }
+      const fs = j.features || [];
+      all.push(...fs);
+      if (fs.length < 100) break;
+      if (page === 2) more = true;
+    }
+  } catch (err) {
+    if (CD.acqKey !== key) return;
+    CD.acqLoading = false; CD.acq = null;
+    CD.acqErr = t('cdse.acqErr', { msg: /fetch|network|load failed/i.test(err.message) ? t('cdse.capsNet') : err.message });
+    renderAcq(); return;
+  }
+  if (CD.acqKey !== key) return;
+  const by = new Map();
+  all.forEach(f => { const p = f.properties || {}, d = String(p.date || (p.time || '').slice(0, 10) || ''); if (!d) return; if (!by.has(d)) by.set(d, []); by.get(d).push(f); });
+  CD.acq = [...by.entries()].sort((a, b) => a[0] < b[0] ? 1 : -1).map(([date, fs]) => {
+    const ccs = fs.map(f => f.properties.cloudCoverPercentage).filter(v => typeof v === 'number');
+    const times = fs.map(f => String(f.properties.time || '').slice(0, 5)).filter(Boolean).sort();
+    return { date, n: fs.length, feats: fs, time: times[0] || '', time2: times[times.length - 1] || '', cc: ccs.length ? Math.round(ccs.reduce((a, v) => a + v, 0) / ccs.length) : null, ccMin: ccs.length ? Math.round(Math.min(...ccs)) : null };
+  });
+  CD.acqCount = all.length; CD.acqMore = more; CD.acqLoading = false; CD.acqSat = sat;
+  renderAcq();
+}
+function acqHtml() {
+  const c = prefs.cdse, sat = cdseSat(c), cc = c.cc ?? 30, prio = c.priority || 'mostRecent';
+  let body = '';
+  if (CD.acqLoading) body = `<p class="help">${esc(t('cdse.acqLoading'))}</p>`;
+  else if (CD.acqErr) body = `<p class="${CD.acq === null && map.getZoom() < 7 ? 'help' : 'err'}">${esc(CD.acqErr)}</p>`;
+  else if (CD.acq && !CD.acq.length) body = `<p class="help">${esc(t('cdse.acqNone', { from: c.from, to: c.to }))}</p>`;
+  else if (CD.acq) {
+    const radar = sat === 'DSS3';
+    const ok = d => radar || d.cc === null || d.cc <= cc;
+    const allowed = CD.acq.filter(ok);
+    const top = !allowed.length ? null : prio === 'mostRecent' ? allowed[0] : prio === 'leastRecent' ? allowed[allowed.length - 1] : allowed.reduce((a, d) => (d.cc ?? 0) < (a.cc ?? 0) ? d : a);
+    body = `<p class="help">${esc(t('cdse.acqSum', { n: CD.acqCount, d: CD.acq.length, from: c.from, to: c.to }))} ${esc(t('cdse.acqHow.' + prio, { cc }))}${CD.acqMore ? ' ' + esc(t('cdse.acqMore', { n: CD.acqCount })) : ''}</p>
+      <ul class="cdse-days">${CD.acq.map(d => `<li><button type="button" class="cdse-day ${ok(d) ? '' : 'over'} ${c.from === d.date && c.to === d.date ? 'on' : ''}" data-cdday="${esc(d.date)}">
+        <span class="cd-main"><b>${esc(fmtDay(d.date))}</b>${d === top ? `<span class="cd-tag">${esc(t('cdse.top'))}</span>` : ''}<small>${esc(d.time ? (d.time2 && d.time2 !== d.time ? `${d.time}–${d.time2}` : d.time) + ' UTC · ' : '')}${esc(d.n === 1 ? t('cdse.img1') : t('cdse.imgN', { n: d.n }))}${ok(d) ? '' : ' · ' + esc(t('cdse.over'))}</small></span>
+        ${radar || d.cc === null ? `<span class="cd-cc radar">${esc(t('cdse.radar'))}</span>` : `<span class="cd-cc" title="${esc(t('cdse.cloud', { v: d.cc }))}"><span class="cc-bar"><i style="width:${clamp(d.cc, 0, 100)}%"></i></span>${d.cc}%</span>`}
+      </button></li>`).join('')}</ul>
+      <p class="help">${esc(t('cdse.acqTip'))}</p>`;
+  }
+  return `<div class="sub-form cdse-acq" id="cdseAcq">
+    <div class="cdse-acq-head"><span class="eyebrow">${esc(t('cdse.acq'))}</span><button type="button" class="icon-btn sm" data-cdse="acq" aria-label="${esc(t('cdse.acqRefresh'))}" title="${esc(t('cdse.acqRefresh'))}">${icon('refresh')}</button></div>
+    <label class="field"><span>${esc(t('cdse.sat'))}</span><select id="cdse-sat">${SATS.map(s => `<option value="${s}" ${(c.sat || 'auto') === s ? 'selected' : ''}>${esc(s === 'auto' ? t('cdse.sat.auto', { s: t('cdse.sat.' + cdseSat({ ...c, sat: 'auto' })) }) : t('cdse.sat.' + s))}</option>`).join('')}</select></label>
+    ${body}
+  </div>`;
+}
+function renderAcq() {
+  const el = $('#cdseAcq');
+  if (el && !$('#basePanel').hidden) el.outerHTML = acqHtml();
+}
+function cdseFootprints(date) {
+  if (CD.fp) { map.removeLayer(CD.fp); CD.fp = null; }
+  const d = date && CD.acq && CD.acq.find(x => x.date === date);
+  if (!d) return;
+  const toLL = c => Math.abs(c[0]) <= 180 && Math.abs(c[1]) <= 90 ? L.latLng(c[1], c[0]) : L.CRS.EPSG3857.unproject(L.point(c[0], c[1]));
+  CD.fp = L.geoJSON({ type: 'FeatureCollection', features: d.feats.filter(f => f.geometry) }, { coordsToLatLng: toLL, interactive: false, style: { color: '#ffd23f', weight: 2, dashArray: '6 4', fillColor: '#ffd23f', fillOpacity: 0.08 } }).addTo(map);
+}
+
+/* ---------- Panel events ---------- */
+function cdseRead() {
+  const c = { ...prefs.cdse }, g = id => $('#' + id);
+  if (g('cdse-id')) c.id = g('cdse-id').value.trim();
+  const show = g('cdse-show') ? g('cdse-show').value : '';
+  CD.custom = show === 'custom';
+  if (show.startsWith('v:')) c.viz = show.slice(2);
+  else if (show.startsWith('l:')) { c.viz = ''; c.layer = show.slice(2); }
+  else if (show === 'custom') c.viz = '';
+  if (g('cdse-layer') && g('cdse-layer').value.trim()) c.layer = g('cdse-layer').value.trim();
+  if (g('cdse-carrier')) c.carrier = g('cdse-carrier').value;
+  if (g('cdse-from')) c.from = g('cdse-from').value;
+  if (g('cdse-to')) c.to = g('cdse-to').value;
+  if (g('cdse-prio')) c.priority = g('cdse-prio').value;
+  if (g('cdse-cc')) c.cc = +g('cdse-cc').value;
+  if (g('cdse-sat')) c.sat = g('cdse-sat').value;
+  return c;
+}
+function cdseCheck(c) {
+  if (!c.id) return t('cdse.errId');
+  if (!c.from || !c.to || c.from > c.to) return t('cdse.errDate');
+  return '';
+}
+// Commit the form; switch the map to Copernicus when asked to (the button), or update it live when it is already showing.
+function cdseCommit(show) {
+  const c = cdseRead(), err = cdseCheck(c);
+  if (err) { cdseError = err; renderBasePanel(); return false; }
+  const idChanged = c.id !== prefs.cdse.id;
+  prefs.cdse = c; cdseError = ''; savePrefs();
+  if (idChanged) { CD.acqKey = ''; cdseCaps(c.id, true); }
+  if (show || prefs.base === 'cdse') { if (idChanged && prefs.base === 'cdse') setBase('cdse'); else cdseApply(); }
+  else renderBasePanel();
+  if (prefs.base === 'cdse' || show) setTimeout(() => cdseAcq(false), 50);
+  return true;
+}
+function cdseSubmit() {
+  if (cdseCommit(true)) toast(t('cdse.loading', { from: prefs.cdse.from, to: prefs.cdse.to }));
+}
+$('#basePanel').addEventListener('change', e => {
+  const id = e.target.id;
+  if (!/^cdse-/.test(id)) return;
+  if (id === 'cdse-id') { const v = e.target.value.trim(); if (v) cdseCaps(v); return; }
+  if (id === 'cdse-sat') { prefs.cdse.sat = e.target.value; savePrefs(); cdseAcq(true); return; }
+  if (id === 'cdse-show' && e.target.value === 'custom') { CD.custom = true; renderBasePanel(); const f = $('#cdse-layer'); if (f) f.focus(); return; }
+  if (id === 'cdse-layer' && !e.target.value.trim()) return;
+  if (!prefs.cdse.id && id !== 'cdse-layer') return;
+  cdseCommit(false);
+});
+$('#basePanel').addEventListener('input', e => {
+  if (e.target.id === 'cdse-cc') $('#cdse-cco').textContent = e.target.value + '%';
+});
+$('#basePanel').addEventListener('click', e => {
+  const r = e.target.closest('[data-cdr]');
+  if (r) {
+    const n = +r.dataset.cdr, to = new Date();
+    $('#cdse-to').value = isoDate(to); $('#cdse-from').value = isoDate(new Date(to - n * 864e5));
+    CD.prev = null;
+    if (prefs.cdse.id) cdseCommit(false); else renderBasePanel();
+    return;
+  }
+  const day = e.target.closest('[data-cdday]');
+  if (day) {
+    const d = day.dataset.cdday, c = prefs.cdse;
+    if (c.from !== c.to) CD.prev = { from: c.from, to: c.to };
+    $('#cdse-from').value = d; $('#cdse-to').value = d;
+    cdseFootprints(null);
+    if (cdseCommit(false)) toast(t('cdse.dayOnly', { d: fmtDay(d) }));
+    return;
+  }
+  const a = e.target.closest('[data-cdse]');
+  if (!a) return;
+  if (a.dataset.cdse === 'acq') cdseAcq(true);
+  if (a.dataset.cdse === 'caps') cdseCaps($('#cdse-id').value, true);
+  if (a.dataset.cdse === 'back' && CD.prev) { $('#cdse-from').value = CD.prev.from; $('#cdse-to').value = CD.prev.to; CD.prev = null; cdseCommit(false); }
+});
+$('#basePanel').addEventListener('mouseover', e => {
+  const d = e.target.closest('[data-cdday]');
+  const date = d ? d.dataset.cdday : null;
+  if (date !== CD.fpDate) { CD.fpDate = date; cdseFootprints(date); }
+});
+$('#basePanel').addEventListener('mouseleave', () => { CD.fpDate = null; cdseFootprints(null); });
+let cdseMoveT = 0;
+map.on('moveend', () => {
+  if (prefs.base !== 'cdse' || $('#basePanel').hidden || !$('#cdseAcq')) return;
+  clearTimeout(cdseMoveT); cdseMoveT = setTimeout(() => cdseAcq(false), 700);
+});
+
+/* =========================================================================
    Feature model
    ========================================================================= */
 const feats = new Map();
@@ -6094,7 +6492,7 @@ const clean = o => { const r = {}; Object.keys(o).forEach(k => { const v = o[k];
 // Full project file (also used for local saving): includes per-viewer state such as layer visibility.
 function serialize() {
   return {
-    app: 'frontline-atlas', v: 3, title: S.title, desc: S.desc, mscale: S.mscale !== 1 ? S.mscale : undefined, units: S.units, sample: S.sample || undefined,
+    app: 'frontline-atlas', v: 3, title: S.title, desc: S.desc, mscale: S.mscale !== 1 ? S.mscale : undefined, wm: S.wm || undefined, units: S.units, sample: S.sample || undefined,
     activeLayerId: S.activeLayerId,
     layers: S.layers.map(l => clean({ id: l.id, name: l.name, visible: l.visible, color: l.color, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale !== 1 ? l.mscale : undefined, parent: l.parent || undefined })),
     features: S.layers.flatMap(l => l.group.getLayers().filter(f => f._pw).map(f => ({ ...f._pw, layerId: l.id, geom: getGeom(f) }))),
@@ -6104,7 +6502,7 @@ function serialize() {
 }
 // Shared content only, keyed by id. This is what gets compared, synced and undone.
 function projectToSnap(p) {
-  const snap = { meta: clean({ title: p.title || '', desc: p.desc || '', mscale: p.mscale && msNorm(p.mscale) !== 1 ? msNorm(p.mscale) : undefined }), layers: {}, features: {}, icons: {}, styles: {} };
+  const snap = { meta: clean({ title: p.title || '', desc: p.desc || '', mscale: p.mscale && msNorm(p.mscale) !== 1 ? msNorm(p.mscale) : undefined, wm: p.wm ? true : undefined }), layers: {}, features: {}, icons: {}, styles: {} };
   (p.layers || []).forEach((l, i) => { snap.layers[l.id] = clean({ name: l.name, color: l.color, order: i, from: l.from, until: l.until, source: l.source, role: l.role, defHidden: l.defHidden || undefined, mscale: l.mscale && msNorm(l.mscale) !== 1 ? msNorm(l.mscale) : undefined, parent: l.parent || undefined }); });
   (p.styles || []).forEach(st => { if (st && st.id) { const { id, ...v } = st; snap.styles[id] = clean(v); } });
   (p.features || []).forEach(f => { snap.features[f.id] = clean({ ...f, style: clean(f.style || {}) }); });
@@ -6149,6 +6547,7 @@ function applyEntity(kind, id, val) {
     document.title = `${S.title || t('map.untitled')} · ${t('app.name')}`;
     const ms = msNorm(val.mscale);
     if (ms !== S.mscale) { S.mscale = ms; refreshMarkerSizes(); if (!$('#unitsMenu').hidden) renderUnitsMenu(); }
+    if (!!val.wm !== !!S.wm) { S.wm = !!val.wm; syncWatermark(); if (!$('#unitsMenu').hidden) renderUnitsMenu(); }
     return;
   }
   if (kind === 'icons') {
@@ -6210,6 +6609,7 @@ function loadProjectInner(p) {
   S.title = p.title || t('map.untitled');
   S.desc = p.desc || '';
   S.mscale = msNorm(p.mscale);
+  S.wm = !!p.wm;
   if (!prefs.units && p.units) S.units = p.units === 'imperial' ? 'imperial' : 'metric';
   S.sample = !!p.sample;
   (p.icons || []).forEach(i => { if (i && i.id && i.src) S.icons.set(i.id, { id: i.id, name: i.name || '', src: i.src, glyph: !!i.glyph }); });
@@ -6226,7 +6626,7 @@ function loadProjectInner(p) {
   $('#mapTitle').value = S.title;
   $('#mapDesc').value = S.desc; renderDesc();
   document.title = `${S.title} · ${t('app.name')}`;
-  updateUnitsUI(); renderLayers(); renderInspector(); renderTimeline();
+  updateUnitsUI(); renderLayers(); renderInspector(); renderTimeline(); syncWatermark();
 }
 
 /* ---------- Commit, undo, redo ---------- */
@@ -6468,7 +6868,7 @@ function rawToProject(raw) {
   const dec = obj => Object.entries(obj || {}).map(([id, v]) => [id, decode(v)]).filter(([, v]) => v);
   const meta = raw.meta || {};
   return {
-    app: 'frontline-atlas', title: meta.title || '', desc: meta.desc || '', mscale: meta.mscale,
+    app: 'frontline-atlas', title: meta.title || '', desc: meta.desc || '', mscale: meta.mscale, wm: meta.wm === true,
     layers: dec(raw.layers).map(([id, v]) => ({ id, ...v })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
     features: dec(raw.features).map(([id, v]) => ({ ...v, id })),
     icons: dec(raw.icons).map(([id, v]) => ({ id, ...v })),
@@ -6491,6 +6891,7 @@ function pushRemote(changes) {
     if (c.kind === 'meta') {
       up['meta/title'] = c.after.title || ''; up['meta/desc'] = c.after.desc || '';
       if (((c.before && c.before.mscale) || 1) !== (c.after.mscale || 1)) up['meta/mscale'] = c.after.mscale && c.after.mscale !== 1 ? c.after.mscale : null;
+      if (!!(c.before && c.before.wm) !== !!c.after.wm) up['meta/wm'] = c.after.wm ? true : null;
     }
     else up[`${c.kind}/${c.id}`] = encodeVal(be, c.after, c.kind);
   });
@@ -6542,10 +6943,12 @@ async function openShared(id) {
   try {
     const be = await getBackend();
     S.mode = 'online'; S.mapId = id;
-    const user = be.user();
+    // A preview acts as someone who has never signed in; a private map still opens for its own people.
+    const signed = be.user(), user = S.preview ? null : signed;
     sync.me = user;
     let raw;
     if (user && !S.embed) { try { raw = await be.fetch(id); } catch (e) { raw = await be.fetchPublic(id); } }
+    else if (S.preview && signed) { try { raw = await be.fetchPublic(id); } catch (e) { raw = await be.fetch(id); } }
     else raw = await be.fetchPublic(id);
     sync.meta = raw.meta || {};
     sync.access = user && !S.embed && sync.meta.owner !== user.uid ? await be.getAccess(id, user.email) : null;
@@ -6574,7 +6977,7 @@ function startLive() {
   if (sync.unsub) sync.unsub();
   sync.unsub = be.subscribe(S.mapId, (k, id, val) => applyRemoteEntity(k, id, val), meta => {
     sync.meta = meta;
-    applyRemoteEntity('meta', null, { title: meta.title || '', desc: meta.desc || '', ...(meta.mscale && msNorm(meta.mscale) !== 1 ? { mscale: msNorm(meta.mscale) } : {}) });
+    applyRemoteEntity('meta', null, { title: meta.title || '', desc: meta.desc || '', ...(meta.mscale && msNorm(meta.mscale) !== 1 ? { mscale: msNorm(meta.mscale) } : {}), ...(meta.wm === true ? { wm: true } : {}) });
     if (!$('#pop').hidden && $('#pop').dataset.kind === 'share') renderShare();
   });
   if (S.role === 'editor' && sync.me && be.watchEditor) {
@@ -6629,7 +7032,7 @@ function showViews(n, live) {
   if (live && n > prev && prev) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 }
 async function countView(be, id) {
-  if (S.role !== 'viewer' || !be.countView) return;
+  if (S.role !== 'viewer' || !be.countView || S.preview) return;
   const key = 'frontline:viewed:' + id, day = today();
   if (store.get(key) === day) return;
   try { const v = await be.countView(id); if (v != null) { store.set(key, day); showViews(v); } } catch (e) { /* counting is best effort */ }
@@ -6648,7 +7051,7 @@ async function publishMap() {
   if (!user) return;
   flushCommit();
   const id = be.newId(), p = serialize(), snap = projectToSnap(p), base = `maps/${id}`, up = {};
-  up[`${base}/meta`] = { owner: user.uid, ownerName: user.name, title: S.title || '', desc: S.desc || '', ...(S.mscale !== 1 ? { mscale: S.mscale } : {}), public: true, created: be.stamp() };
+  up[`${base}/meta`] = { owner: user.uid, ownerName: user.name, title: S.title || '', desc: S.desc || '', ...(S.mscale !== 1 ? { mscale: S.mscale } : {}), ...(S.wm ? { wm: true } : {}), public: true, created: be.stamp() };
   KINDS.forEach(k => Object.entries(snap[k]).forEach(([eid, v]) => { up[`${base}/${k}/${eid}`] = encodeVal(be, v, k); }));
   showLoading(t('sync.publishing'));
   try {
@@ -6708,6 +7111,7 @@ async function renderShare() {
     const people = sync.editors || [];
     body = `
       <label class="field"><span>${esc(t('sync.viewLink'))}</span><div class="row"><input type="text" readonly value="${esc(viewLink())}" id="sh-view"><button class="btn sm" data-copy-el="sh-view">${icon('copy')}${esc(t('sync.copy'))}</button></div><small>${esc(t('sync.viewHelp'))}</small></label>
+      <div class="row"><button class="btn sm" data-sh="preview">${icon('eye')}${esc(t('pv.menu'))}</button></div>
       <label class="field"><span>${esc(t('sync.embed'))}</span><textarea readonly rows="3" id="sh-embed">${esc(embedCode())}</textarea><div class="row"><button class="btn sm" data-copy-el="sh-embed">${icon('copy')}${esc(t('sync.copy'))}</button></div></label>
       ${owner ? `<label class="check"><input type="checkbox" id="sh-public" ${sync.meta.public !== false ? 'checked' : ''}> ${esc(t('sync.public'))}</label><small class="help">${esc(t(sync.meta.public !== false ? 'perm.publicHelp' : 'perm.privateHelp'))}</small>` : ''}
       ${manage ? `
@@ -6740,6 +7144,7 @@ async function onShareClick(e) {
   if (a === 'signin-reload') { if (await signIn()) location.reload(); }
   if (a === 'signout') { await be.signOut(); sync.me = null; if (S.mode === 'online') location.reload(); else renderShare(); }
   if (a === 'publish') publishMap();
+  if (a === 'preview') openPreview();
   if (a === 'add-editor') {
     const em = $('#sh-email').value.trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { toast(t('sync.badEmail'), 'error'); return; }
@@ -6845,7 +7250,7 @@ function setVisOverride(lid, val) {
   store.set(visKey(), JSON.stringify(o));
 }
 function applySharedVisibility() {
-  if (S.mode !== 'online') return;
+  if (S.mode !== 'online' && !S.preview) return;
   const o = visOverrides();
   S.layers.forEach(l => { l.visible = l.id in o ? !!o[l.id] : !l.defHidden; });
 }
@@ -8214,6 +8619,11 @@ function renderUnitsMenu() {
     <div class="menu-pad">
       ${msRow('u-msview', prefs.mscaleView || 1, t('ms.mine'), t('ms.mineHelp'))}
       ${can('meta') ? msRow('u-msmap', S.mscale, t('ms.map'), t(S.mode === 'online' ? 'ms.mapHelpShared' : 'ms.mapHelp')) : S.mscale !== 1 ? `<p class="menu-note">${esc(t('ms.mapIs', { v: msPct(S.mscale) }))}</p>` : ''}
+    </div>
+    <div class="menu-label eyebrow">${esc(t('wm.title'))}</div>
+    <div class="menu-pad">
+      <label class="check perm-row"><input type="checkbox" id="u-wm" ${wmOn() ? 'checked' : ''}><span><b>${esc(t('wm.mine'))}</b><small>${esc(t('wm.mineHelp'))}</small></span></label>
+      ${can('meta') ? `<label class="check perm-row"><input type="checkbox" id="u-wmdef" ${S.wm ? 'checked' : ''}><span><b>${esc(t('wm.def'))}</b><small>${esc(t(S.mode === 'online' ? 'wm.defHelpShared' : 'wm.defHelp'))}</small></span></label>` : ''}
     </div>`;
 }
 function msRow(id, v, label, help) {
@@ -8248,6 +8658,8 @@ $('#unitsMenu').addEventListener('change', e => {
   if (id === 'u-dec') prefs.decimals = v;
   if (id === 'u-coord') prefs.coord = v;
   if (/^u-ms/.test(id)) { renderUnitsMenu(); return; }
+  if (id === 'u-wm') { setWmMine(e.target.checked); return; }
+  if (id === 'u-wmdef') { setWmDefault(e.target.checked); renderUnitsMenu(); return; }
   savePrefs(); refreshUnits();
 });
 
@@ -11086,8 +11498,8 @@ if (document.fonts) document.fonts.addEventListener('loadingdone', () => skDraw(
 /* ---------- State, storage, undo ---------- */
 const SK_STORE = 'frontline:sketch:v1', SK_PRESETS = 'frontline:sketchPresets:v1', SK_TOOLSTYLE = 'frontline:sketchTools:v1';
 const sstore = {
-  get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
-  set(k, v) { try { sessionStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  get(k) { if (PREVIEW) return PREVIEW_MEM.has('s:' + k) ? PREVIEW_MEM.get('s:' + k) : null; try { return sessionStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { if (PREVIEW) { PREVIEW_MEM.set('s:' + k, String(v)); return true; } try { sessionStorage.setItem(k, v); return true; } catch (e) { return false; } }
 };
 const jparse = (s, d) => { try { const v = JSON.parse(s); return v ?? d; } catch (e) { return d; } };
 const SK = {
@@ -12058,8 +12470,9 @@ function toggleMenu(id, render) {
 $('#fileBtn').addEventListener('click', e => { e.stopPropagation(); toggleMenu('fileMenu'); });
 $('#fileMenu').addEventListener('click', e => {
   const k = e.target.closest('[data-file]')?.dataset.file; if (!k) return;
-  if (k === 'watermark') { prefs.watermark = !prefs.watermark; savePrefs(); syncWatermark(); return; }
+  if (k === 'watermark') { setWmMine(!wmOn()); return; }
   if (k === 'clean') { $('#fileMenu').hidden = true; toggleClean(true); return; }
+  if (k === 'preview') { $('#fileMenu').hidden = true; openPreview(); return; }
   $('#fileMenu').hidden = true;
   if (k === 'new') newMap();
   else if (k === 'import') fileInput.click();
@@ -12068,11 +12481,61 @@ $('#fileMenu').addEventListener('click', e => {
   else if (k === 'icons') $('#iconInput').click();
   else doExport(k);
 });
+/* ---------- Watermark ----------
+   The map decides whether the watermark shows when someone opens it (S.wm, set by editors,
+   off unless switched on). Anyone can then turn it on or off for themselves; that choice
+   is remembered in their own browser, per map. */
+S.wm = false;
+const wmKey = () => 'frontline:wm:' + (S.mapId || 'local');
+function wmMine() { const v = store.get(wmKey()); return v === '1' ? true : v === '0' ? false : null; }
+const wmOn = () => { const m = wmMine(); return m === null ? !!S.wm : m; };
+function setWmMine(on) {
+  // Matching the map's own setting needs no personal choice, so later changes by editors still reach this browser.
+  if (on === !!S.wm) store.del(wmKey());
+  else store.set(wmKey(), on ? '1' : '0');
+  syncWatermark();
+}
+function setWmDefault(on) {
+  if (!can('meta') || !!S.wm === on) return;
+  S.wm = on; setWmMine(on); commit();
+}
 function syncWatermark() {
-  $('#watermark').hidden = !prefs.watermark;
-  document.body.classList.toggle('wm', prefs.watermark);
-  const b = $('[data-file="watermark"]'); b.setAttribute('aria-checked', String(prefs.watermark));
-  $('#wmTick').innerHTML = prefs.watermark ? icon('check') : '';
+  const on = wmOn();
+  $('#watermark').hidden = !on;
+  document.body.classList.toggle('wm', on);
+  const b = $('[data-file="watermark"]'); b.setAttribute('aria-checked', String(on));
+  $('#wmTick').innerHTML = on ? icon('check') : '';
+  const u = $('#u-wm'); if (u) u.checked = on;
+}
+/* ---------- Preview as a first-time viewer ----------
+   Opens this map in a new tab as someone who has never been here: not signed in, view only,
+   none of this browser's saved choices (layer eyes, basemap, watermark, marker size, sketch),
+   and nothing they do there is saved. A local map shows its latest autosave and follows edits. */
+function previewUrl() {
+  const here = location.href.split(/[?#]/)[0], keep = new URLSearchParams();
+  if (S.mode === 'online' && S.mapId) keep.set('map', S.mapId);
+  if (Q.get('backend')) keep.set('backend', Q.get('backend'));
+  keep.set('preview', '1');
+  return here + '?' + keep.toString();
+}
+function openPreview() {
+  flushCommit();
+  if (S.mode === 'local') persistLocal();
+  const w = window.open(previewUrl(), '_blank');
+  if (!w) toast(t('pv.blocked'), 'error');
+}
+function startPreviewBar() {
+  document.body.classList.add('previewing');
+  const bar = document.createElement('div');
+  bar.className = 'pv-bar'; bar.setAttribute('role', 'status');
+  bar.innerHTML = `${icon('eye')}<span><b>${esc(t('pv.bar'))}</b><small>${esc(t(S.mode === 'online' ? 'pv.barHelp' : 'pv.barHelpLocal'))}</small></span><button type="button" class="btn sm" id="pvRestart">${esc(t('pv.restart'))}</button><button type="button" class="btn sm primary" id="pvExit">${esc(t('pv.exit'))}</button>`;
+  document.body.appendChild(bar);
+  $('#pvRestart').addEventListener('click', () => location.reload());
+  $('#pvExit').addEventListener('click', () => {
+    window.close();
+    // A tab that was not opened from the editor cannot close itself: go to the editor instead.
+    setTimeout(() => { const u = new URL(location.href); u.searchParams.delete('preview'); location.href = u.toString(); }, 150);
+  });
 }
 function newMap(force) {
   if (S.mode === 'online') { location.href = location.pathname; return; }
@@ -12445,6 +12908,10 @@ function sampleProject() {
     resetHistory();
     renderSaveState();
     if (SITE.mymapsProxy) setTimeout(() => linkedMids().forEach(m => refreshLinked(m, false)), 4000);
+  }
+  if (S.preview) {
+    if (!S.readOnly) { S.role = 'viewer'; S.perms = {}; setReadOnly(true); applyPerms(); }
+    startPreviewBar();
   }
   // A shared map opened by someone who may edit it pulls its My Maps links straight away.
   if (opened && SITE.mymapsProxy && !S.readOnly) setTimeout(() => linkedMids().forEach(m => refreshLinked(m, false)), 3000);
