@@ -430,6 +430,29 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .cd-det[open] > summary::before{transform:rotate(90deg)}
 .cd-det > summary::-webkit-details-marker{display:none}
 details.sub-form:not([open]){gap:0}
+.cd-now{border:1px solid var(--accent)}
+.cd-nowrow{display:flex;align-items:center;gap:6px}
+.cd-nowmain{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:4px 0}
+.cd-nowmain b{font-size:15px}
+.cd-nowmain small{font-size:12px;color:var(--muted)}
+.cd-vdesc{display:flex;flex-direction:column;gap:5px;font-size:12px;line-height:1.45}
+.cd-vdesc:empty{display:none}
+.cd-vdesc p{margin:0;color:var(--muted)}
+.cd-links{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px}
+.cd-links a{color:var(--accent);font-weight:600}
+.cd-spot{display:flex;align-items:center;gap:6px;font-size:12.5px}
+.cd-spot > .ic{width:16px;height:16px;color:var(--accent);flex:none}
+.cd-spot > span{flex:1;min-width:0}
+.cd-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;max-height:340px;overflow:auto}
+.cd-row{width:100%;display:flex;align-items:center;gap:8px;text-align:left;padding:6px 8px;border:1px solid transparent;border-radius:7px;background:var(--panel);color:inherit;font:inherit;cursor:pointer}
+.cd-row:hover{border-color:var(--line)}
+.cd-row.on{border-color:var(--accent);background:var(--accent-weak)}
+.cd-row.over{opacity:.6}
+.cd-rdate{flex:1;min-width:0;display:flex;flex-direction:column}
+.cd-rdate b{font-size:13px}
+.cd-rdate small{font-size:11.5px;color:var(--muted)}
+.leaflet-container.cd-picking,.leaflet-container.cd-picking *{cursor:crosshair!important}
+.cd-pin span{display:block;width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px var(--accent),0 1px 4px rgba(0,0,0,.5);background:radial-gradient(circle,#fff 0 2px,transparent 3px)}
 .cd-dgroup{display:flex;flex-direction:column;gap:3px}
 .cd-dhead{display:flex;align-items:baseline;justify-content:space-between;border:0;background:none;color:inherit;font:inherit;padding:4px 2px;cursor:pointer;font-size:12.5px}
 .cd-dhead small{color:var(--accent);font-weight:600;font-size:11.5px}
@@ -3812,6 +3835,24 @@ fr: {"cdse.src.stac": "Catalogue Copernicus", "cdse.src.cat": "Recherche Coperni
 ru: {"cdse.src.stac": "Каталог Copernicus", "cdse.src.cat": "Поиск Copernicus", "cdse.src.wfs": "ваш инстанс", "cdse.netShort": "заблокировано или недоступно", "cdse.fx.g": "Гамма", "cdse.fxHelpSrv": "Яркость и гамму Copernicus рассчитывает по сырым данным: тёмная земля светлеет, а белые крыши не пересвечиваются. Карта перерисовывается, когда отпустите ползунок. Контраст и насыщенность меняют только ваш экран.", "cdse.under": "Где нет снимка", "cdse.under.esri": "Показывать под ним спутник Esri", "cdse.under.none": "Оставлять пустым", "cdse.underHelp": "Один день покрывает только полосу, над которой пролетел спутник, а облачные снимки отбрасываются. Esri заполняет остальное, чтобы карта не была чёрной.", "cdse.outline": "Обводить снимки дня на карте"}
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdse.tabScene": "Satellite images", "cdse.tabMosaic": "Mosaic of several days", "cdse.pickHint": "Click the map to choose the spot. Esc cancels.", "cdse.noOlder": "No older image found here in the last few months.", "cdse.noNewer": "This is the newest image here.", "cdse.showing": "On the map", "cdse.older": "Older image", "cdse.newer": "Newer image", "cdse.openBrowser": "Open in Copernicus Browser", "cdse.copyId": "Copy product ID", "cdse.pickImage": "Pick an image from the list below.", "cdse.allCloudy": "All {n} images this month have more than {cc}% cloud. Raise the limit or show them anyway.", "cdse.noneMonth": "No images of this spot in {m}.", "cdse.showCloudy": "Show {n} cloudier images", "cdse.hideCloudy": "Hide cloudier images", "cdse.imagesAt": "Images of this spot", "cdse.atSpot": "At {p}", "cdse.atCentre": "At the centre of the map", "cdse.picking": "Click the map…", "cdse.move": "Move", "cdse.pick": "Choose a spot", "cdse.unpin": "Back to the map centre", "cdse.ccList": "List images with up to", "cdse.listTip": "Each row is one satellite pass. Click it to see exactly that image; nothing from other days is mixed in.", "cdse.mosaicHelp": "Stitches the images of several days into one picture, to fill gaps. To look at one specific image, use Satellite images.", "cdse.outline2": "Outline the image being shown", "cdse.under2": "Show Esri satellite where the image has no data"},
+uk: {"cdse.tabScene": "Супутникові знімки", "cdse.tabMosaic": "Мозаїка кількох днів", "cdse.pickHint": "Натисніть на карту, щоб вибрати точку. Esc — скасувати.", "cdse.noOlder": "За останні місяці старішого знімка тут немає.", "cdse.noNewer": "Це найновіший знімок тут.", "cdse.showing": "На карті", "cdse.older": "Старіший знімок", "cdse.newer": "Новіший знімок", "cdse.openBrowser": "Відкрити в Copernicus Browser", "cdse.copyId": "Копіювати ID продукту", "cdse.pickImage": "Виберіть знімок зі списку нижче.", "cdse.allCloudy": "Усі {n} знімків цього місяця мають хмарність понад {cc}%. Підніміть ліміт або покажіть їх.", "cdse.noneMonth": "Немає знімків цієї точки за {m}.", "cdse.showCloudy": "Показати ще {n} хмарніших знімків", "cdse.hideCloudy": "Сховати хмарніші знімки", "cdse.imagesAt": "Знімки цієї точки", "cdse.atSpot": "У точці {p}", "cdse.atCentre": "У центрі карти", "cdse.picking": "Натисніть на карту…", "cdse.move": "Перемістити", "cdse.pick": "Вибрати точку", "cdse.unpin": "Повернутися до центру карти", "cdse.ccList": "Показувати знімки з хмарністю до", "cdse.listTip": "Кожен рядок — один проліт супутника. Натисніть, щоб побачити саме цей знімок; нічого з інших днів не домішується.", "cdse.mosaicHelp": "Зшиває знімки кількох днів в одне зображення, щоб заповнити прогалини. Щоб подивитися конкретний знімок, використовуйте «Супутникові знімки».", "cdse.outline2": "Обводити показаний знімок", "cdse.under2": "Показувати супутник Esri там, де знімок не має даних"},
+pl: {"cdse.tabScene": "Zdjęcia satelitarne", "cdse.tabMosaic": "Mozaika z kilku dni", "cdse.pickHint": "Kliknij mapę, aby wybrać miejsce. Esc anuluje.", "cdse.noOlder": "Brak starszego zdjęcia z ostatnich miesięcy.", "cdse.noNewer": "To najnowsze zdjęcie tutaj.", "cdse.showing": "Na mapie", "cdse.older": "Starsze zdjęcie", "cdse.newer": "Nowsze zdjęcie", "cdse.openBrowser": "Otwórz w Copernicus Browser", "cdse.copyId": "Kopiuj ID produktu", "cdse.pickImage": "Wybierz zdjęcie z listy poniżej.", "cdse.allCloudy": "Wszystkie {n} zdjęć w tym miesiącu ma ponad {cc}% chmur. Podnieś limit lub pokaż je mimo to.", "cdse.noneMonth": "Brak zdjęć tego miejsca w: {m}.", "cdse.showCloudy": "Pokaż {n} bardziej zachmurzonych", "cdse.hideCloudy": "Ukryj bardziej zachmurzone", "cdse.imagesAt": "Zdjęcia tego miejsca", "cdse.atSpot": "W punkcie {p}", "cdse.atCentre": "W środku mapy", "cdse.picking": "Kliknij mapę…", "cdse.move": "Przenieś", "cdse.pick": "Wybierz miejsce", "cdse.unpin": "Wróć do środka mapy", "cdse.ccList": "Pokaż zdjęcia z zachmurzeniem do", "cdse.listTip": "Każdy wiersz to jeden przelot satelity. Kliknij, by zobaczyć dokładnie to zdjęcie; nic z innych dni nie jest domieszane.", "cdse.mosaicHelp": "Łączy zdjęcia z kilku dni w jeden obraz, by wypełnić luki. Aby obejrzeć konkretne zdjęcie, użyj „Zdjęcia satelitarne”.", "cdse.outline2": "Obrysuj wyświetlane zdjęcie", "cdse.under2": "Pokaż satelitę Esri tam, gdzie zdjęcie nie ma danych"},
+de: {"cdse.tabScene": "Satellitenbilder", "cdse.tabMosaic": "Mosaik aus mehreren Tagen", "cdse.pickHint": "Klicke in die Karte, um die Stelle zu wählen. Esc bricht ab.", "cdse.noOlder": "Hier gibt es in den letzten Monaten kein älteres Bild.", "cdse.noNewer": "Das ist das neueste Bild hier.", "cdse.showing": "Auf der Karte", "cdse.older": "Älteres Bild", "cdse.newer": "Neueres Bild", "cdse.openBrowser": "In Copernicus Browser öffnen", "cdse.copyId": "Produkt-ID kopieren", "cdse.pickImage": "Wähle unten ein Bild aus der Liste.", "cdse.allCloudy": "Alle {n} Bilder dieses Monats haben über {cc} % Wolken. Erhöhe die Grenze oder zeige sie trotzdem.", "cdse.noneMonth": "Keine Bilder dieser Stelle im {m}.", "cdse.showCloudy": "{n} wolkigere Bilder zeigen", "cdse.hideCloudy": "Wolkigere Bilder ausblenden", "cdse.imagesAt": "Bilder dieser Stelle", "cdse.atSpot": "Bei {p}", "cdse.atCentre": "In der Kartenmitte", "cdse.picking": "Klicke in die Karte…", "cdse.move": "Verschieben", "cdse.pick": "Stelle wählen", "cdse.unpin": "Zurück zur Kartenmitte", "cdse.ccList": "Bilder auflisten mit Wolken bis", "cdse.listTip": "Jede Zeile ist ein Überflug. Klicke darauf, um genau dieses Bild zu sehen; nichts aus anderen Tagen wird beigemischt.", "cdse.mosaicHelp": "Setzt die Bilder mehrerer Tage zu einem Bild zusammen, um Lücken zu füllen. Für ein bestimmtes Bild nutze „Satellitenbilder“.", "cdse.outline2": "Gezeigtes Bild umranden", "cdse.under2": "Esri-Satellit zeigen, wo das Bild keine Daten hat"},
+fr: {"cdse.tabScene": "Images satellite", "cdse.tabMosaic": "Mosaïque de plusieurs jours", "cdse.pickHint": "Cliquez sur la carte pour choisir l’endroit. Échap annule.", "cdse.noOlder": "Aucune image plus ancienne ici ces derniers mois.", "cdse.noNewer": "C’est l’image la plus récente ici.", "cdse.showing": "Sur la carte", "cdse.older": "Image plus ancienne", "cdse.newer": "Image plus récente", "cdse.openBrowser": "Ouvrir dans Copernicus Browser", "cdse.copyId": "Copier l’ID du produit", "cdse.pickImage": "Choisissez une image dans la liste ci-dessous.", "cdse.allCloudy": "Les {n} images de ce mois ont plus de {cc} % de nuages. Relevez la limite ou affichez-les quand même.", "cdse.noneMonth": "Aucune image de cet endroit en {m}.", "cdse.showCloudy": "Afficher {n} images plus nuageuses", "cdse.hideCloudy": "Masquer les images nuageuses", "cdse.imagesAt": "Images de cet endroit", "cdse.atSpot": "À {p}", "cdse.atCentre": "Au centre de la carte", "cdse.picking": "Cliquez sur la carte…", "cdse.move": "Déplacer", "cdse.pick": "Choisir un endroit", "cdse.unpin": "Revenir au centre de la carte", "cdse.ccList": "Lister les images jusqu’à", "cdse.listTip": "Chaque ligne est un passage du satellite. Cliquez pour voir exactement cette image ; rien d’autres jours n’y est mêlé.", "cdse.mosaicHelp": "Assemble les images de plusieurs jours pour combler les trous. Pour voir une image précise, utilisez « Images satellite ».", "cdse.outline2": "Contourer l’image affichée", "cdse.under2": "Afficher le satellite Esri là où l’image n’a pas de données"},
+ru: {"cdse.tabScene": "Спутниковые снимки", "cdse.tabMosaic": "Мозаика нескольких дней", "cdse.pickHint": "Нажмите на карту, чтобы выбрать точку. Esc — отмена.", "cdse.noOlder": "За последние месяцы более старого снимка здесь нет.", "cdse.noNewer": "Это самый новый снимок здесь.", "cdse.showing": "На карте", "cdse.older": "Более старый снимок", "cdse.newer": "Более новый снимок", "cdse.openBrowser": "Открыть в Copernicus Browser", "cdse.copyId": "Копировать ID продукта", "cdse.pickImage": "Выберите снимок из списка ниже.", "cdse.allCloudy": "Все {n} снимков этого месяца с облачностью выше {cc}%. Поднимите лимит или покажите их.", "cdse.noneMonth": "Нет снимков этой точки за {m}.", "cdse.showCloudy": "Показать ещё {n} более облачных", "cdse.hideCloudy": "Скрыть более облачные", "cdse.imagesAt": "Снимки этой точки", "cdse.atSpot": "В точке {p}", "cdse.atCentre": "В центре карты", "cdse.picking": "Нажмите на карту…", "cdse.move": "Переместить", "cdse.pick": "Выбрать точку", "cdse.unpin": "Вернуться к центру карты", "cdse.ccList": "Показывать снимки с облачностью до", "cdse.listTip": "Каждая строка — один пролёт спутника. Нажмите, чтобы увидеть именно этот снимок; ничего из других дней не примешивается.", "cdse.mosaicHelp": "Сшивает снимки нескольких дней в одно изображение, чтобы заполнить пробелы. Чтобы посмотреть конкретный снимок, используйте «Спутниковые снимки».", "cdse.outline2": "Обводить показанный снимок", "cdse.under2": "Показывать спутник Esri там, где у снимка нет данных"}
+});
+
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdse.tabMosaic": "Mosaic"},
+uk: {"cdse.tabMosaic": "Мозаїка"},
+pl: {"cdse.tabMosaic": "Mozaika"},
+de: {"cdse.tabMosaic": "Mosaik"},
+fr: {"cdse.tabMosaic": "Mosaïque"},
+ru: {"cdse.tabMosaic": "Мозаика"}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -5794,23 +5835,22 @@ $('#basePanel').addEventListener('input', e => {
 
 /* =========================================================================
    Copernicus Data Space live satellite (Sentinel Hub OGC services)
-   Laid out like Copernicus Browser:
-   - View tab: one day (arrows jump between days that have images, a calendar marks
-     them, "Show latest date") or a date range; cloud limit; what to show as cards
-     (built-in Sentinel-2 views first, your configuration's own layers below);
-     brightness/contrast/saturation; more options.
-   - Images tab: the actual satellite passes under the map for the chosen day or
-     range: satellite, time, tile, cloud cover, outline on hover.
-   Which days have images comes from the public Copernicus catalogue (no account
-   needed); if that cannot be reached, from your instance's WFS service.
+   Built for looking at specific satellite images:
+   - Images tab (main): every satellite pass over a spot (a point you choose, or the
+     map centre), month by month, with date, time, satellite and cloud cover. Pick one
+     and the map shows exactly that image, nothing stitched in from other days.
+     Older/newer arrows, visualisation, brightness, a link to Copernicus Browser.
+   - Mosaic tab (secondary): several days stitched together.
+   The image list comes from the public Copernicus STAC catalogue (no account needed),
+   then the older Copernicus search, then your instance's WFS service.
    ========================================================================= */
 const CDSE_HOST = 'https://sh.dataspace.copernicus.eu/ogc/';
 const CDSE_CAT = 'https://catalogue.dataspace.copernicus.eu/resto/api/collections/';
 const CD = {
   caps: null, capsId: '', capsLoading: null, capsErr: '', fp: null, fpKey: null,
-  tab: 'view', setup: false, cal: null, calOpen: true, custom: false,
-  av: new Map(),        // availability per (collection, area, month): { loading, items, err, src }
-  areaKey: ''
+  setup: false, custom: false, month: null, picking: false, showCloudy: false,
+  pin: null, line: null, under: null,
+  av: new Map()         // images per (collection, spot, month): { loading, items, err, src }
 };
 
 /* ---------- Built-in Sentinel-2 views ---------- */
@@ -5858,25 +5898,154 @@ function rampCss(stops) {
 }
 const viewSwatch = v => v.sw || rampCss(STOPS[v.ramp]);
 
-/* ---------- Settings, with a one-time move to the Copernicus Browser defaults ---------- */
+/* ---------- Settings ---------- */
 function cdsePrefs() {
   const c = prefs.cdse;
   if (!c.v2) {
-    // Earlier versions showed a date range of the configuration's TRUE_COLOR layer. Start on the
-    // bright built-in true colour and the latest single day, like Copernicus Browser.
-    Object.assign(c, { v2: true, viz: 'tc', mode: 'single', date: '' });
+    Object.assign(c, { v2: true, viz: 'tc' });
     if (c.cc == null) c.cc = 30;
     c.sat = { DSS2: 's2l2a', DSS1: 's2l1c', DSS3: 's1' }[c.sat] || 'auto';
+  }
+  if (!c.v3) {
+    // This version is about looking at one specific satellite image: start on the newest
+    // clear image at the map centre, with nothing filled in underneath it.
+    Object.assign(c, { v3: true, mode: 'scene', scene: null, under: 'none', outline: false });
     savePrefs();
   }
-  if (!c.fx) c.fx = { b: 1, c: 1, s: 1 };
+  if (c.mode !== 'range') c.mode = 'scene';
+  if (!c.fx) c.fx = { b: 1, g: 1, c: 1, s: 1 };
   if (!c.from) c.from = isoDate(new Date(Date.now() - 30 * 864e5));
   if (!c.to) c.to = isoDate(new Date());
   return c;
 }
-const cdseSingle = c => (c.mode || 'single') === 'single';
+const cdseScene = c => c.mode !== 'range';
 const todayIso = () => isoDate(new Date());
-const cdseDay = c => c.date || c.to || todayIso();
+
+/* ---------- The spot whose images are listed: a chosen point, or the map centre ---------- */
+function cdseSpot() {
+  const p = prefs.cdse.pt;
+  if (Array.isArray(p) && p.length === 2) return { lat: p[0], lng: p[1], pinned: true };
+  const m = map.getCenter();
+  return { lat: m.lat, lng: m.lng, pinned: false };
+}
+// A small box around the spot. The map centre is rounded so panning a little reuses what is known.
+function spotArea() {
+  const s = cdseSpot(), step = s.pinned ? 1000 : 50, r = v => Math.round(v * step) / step, d = 0.004;
+  const lat = r(s.lat), lng = r(s.lng);
+  return [lng - d, lat - d, lng + d, lat + d].map(v => +v.toFixed(4));
+}
+function cdsePin() {
+  const s = cdseSpot(), want = prefs.base === 'cdse' && s.pinned;
+  if (!want) { if (CD.pin) { map.removeLayer(CD.pin); CD.pin = null; } return; }
+  if (!CD.pin) CD.pin = L.marker([s.lat, s.lng], { interactive: false, keyboard: false, zIndexOffset: 1000, icon: L.divIcon({ className: 'cd-pin', html: '<span></span>', iconSize: [22, 22], iconAnchor: [11, 11] }) }).addTo(map);
+  else CD.pin.setLatLng([s.lat, s.lng]);
+}
+function cdsePick(on) {
+  CD.picking = on;
+  map.getContainer().classList.toggle('cd-picking', on);
+  if (on) toast(t('cdse.pickHint'));
+  renderCdse();
+}
+map.getContainer().addEventListener('click', e => {
+  if (!CD.picking) return;
+  e.stopPropagation(); e.preventDefault();
+  const ll = map.mouseEventToLatLng(e);
+  prefs.cdse.pt = [+ll.lat.toFixed(5), +ll.lng.toFixed(5)]; savePrefs();
+  cdsePick(false); cdsePin();
+  avLoad(CD.month || ymOf(todayIso())).then(() => { if (!sceneHere()) cdseLatest(true); });
+}, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && CD.picking) cdsePick(false); });
+
+/* ---------- The map layer ---------- */
+const isoZ = ms => new Date(ms).toISOString().replace(/\.\d+Z$/, 'Z');
+// One satellite pass: everything it recorded within ten minutes of its sensing time.
+// The next pass over the same ground comes at least a day later, so nothing else slips in.
+function sceneTime(sc) {
+  const t0 = Date.parse(sc.when || `${sc.date}T${sc.time || '00:00'}:00Z`);
+  if (isNaN(t0)) return `${sc.date}T00:00:00Z/${sc.date}T23:59:59Z`;
+  return `${isoZ(t0 - 10 * 60e3)}/${isoZ(t0 + 10 * 60e3)}`;
+}
+const cdseTime = c => !cdseScene(c) ? `${c.from}T00:00:00Z/${c.to}T23:59:59Z` : c.scene ? sceneTime(c.scene) : `${todayIso()}T00:00:00Z/${todayIso()}T23:59:59Z`;
+function cdseParams(c) {
+  const v = cdseView(c);
+  const p = { layers: v ? cdseCarrier(c) : (c.layer || 'TRUE_COLOR'), TIME: cdseTime(c), MAXCC: cdseScene(c) ? 100 : (c.cc ?? 30), PRIORITY: c.priority || 'mostRecent' };
+  if (v) {
+    const fx = c.fx || {}, num = x => String(Math.round(x * 1000) / 1000);
+    const sc = v.tone ? v.script.replace('__G__', num(fx.b ?? 1)).replace('__GM__', num(fx.g ?? 1)) : v.script;
+    p.EVALSCRIPT = b64('//VERSION=3\n' + sc);
+  }
+  return p;
+}
+// Colour views get brightness and gamma from Copernicus itself (applied to the raw data, so
+// dark ground lifts without burning out bright roofs); everything else is adjusted on screen.
+const fxServer = c => { const v = cdseView(c); return !!(v && v.tone); };
+const cdseFilter = c => { const f = c.fx || {}; const b = fxServer(c) ? 1 : (f.b ?? 1), k = f.c ?? 1, s = f.s ?? 1; return b === 1 && k === 1 && s === 1 ? '' : `brightness(${b}) contrast(${k}) saturate(${s})`; };
+function cdseFx() {
+  if (prefs.base !== 'cdse' || !baseLayer || !baseLayer.getContainer) return;
+  const el = baseLayer.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse);
+}
+function cdseLayer() {
+  const c = cdsePrefs();
+  if (!c.id) return null;
+  if (cdseScene(c) && !c.scene) setTimeout(() => cdseLatest(true), 0);
+  const lyr = L.tileLayer.wms(`${CDSE_HOST}wms/${encodeURIComponent(c.id.trim())}`, {
+    pane: 'pwBase', format: 'image/png', transparent: true, version: '1.3.0', zIndex: 2,
+    tileSize: 512, maxZoom: MAX_Z, minZoom: 6, SHOWLOGO: false, ...cdseParams(c),
+    attribution: `Contains modified Copernicus Sentinel data ${String(c.scene && cdseScene(c) ? c.scene.date : c.to).slice(0, 4)}, <a href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Data Space Ecosystem</a>`
+  });
+  lyr._cdseId = c.id;
+  lyr.on('add', () => {
+    const el = lyr.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse);
+    cdseUnder(); cdseOutline(); cdsePin();
+  });
+  lyr.on('remove', () => {
+    ['under', 'line', 'pin'].forEach(k => { if (CD[k]) { map.removeLayer(CD[k]); CD[k] = null; } });
+    if (CD.picking) cdsePick(false);
+  });
+  lyr.on('tileerror', e => {
+    if (lyr._cdWarned) return; lyr._cdWarned = true;
+    cdseError = t('cdse.errFail');
+    renderCdse();
+    toast(cdseError, 'error');
+    // Copernicus explains what went wrong in the body of the failed image; read it once.
+    const src = e.tile && e.tile.src;
+    if (src) fetch(src).then(r => r.ok ? '' : r.text()).then(txt => {
+      const msg = txt && ogcText(txt);
+      if (msg) { cdseError = t('cdse.errSrv', { msg }); renderCdse(); }
+    }).catch(() => {});
+  });
+  return lyr;
+}
+// Optional: Esri satellite under the Copernicus image (off unless switched on).
+function cdseUnder() {
+  const want = prefs.base === 'cdse' && prefs.cdse.under === 'esri';
+  if (want && !CD.under) CD.under = raster(ESRI + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', { ...NB, maxNativeZoom: 19, zIndex: 1, attribution: ESRI_ATTR }).addTo(map);
+  if (!want && CD.under) { map.removeLayer(CD.under); CD.under = null; }
+}
+// Optional: outline of the image being shown.
+function cdseOutline() {
+  if (CD.line) { map.removeLayer(CD.line); CD.line = null; }
+  const c = prefs.cdse, sc = c.scene;
+  if (prefs.base !== 'cdse' || !cdseScene(c) || !c.outline || !sc) return;
+  const all = [...CD.av.values()].flatMap(r => r.items || []).filter(x => x.date === sc.date && x.sat === sc.sat && x.time === sc.time && x.geom);
+  if (!all.length) return;
+  CD.line = L.geoJSON({ type: 'FeatureCollection', features: all.map(x => ({ type: 'Feature', geometry: x.geom, properties: {} })) }, { coordsToLatLng: cdLL, interactive: false, style: { color: '#ffffff', weight: 1.5, opacity: 0.85, dashArray: '2 5', fill: false } }).addTo(map);
+}
+const cdLL = q => Math.abs(q[0]) <= 180 && Math.abs(q[1]) <= 90 ? L.latLng(q[1], q[0]) : L.CRS.EPSG3857.unproject(L.point(q[0], q[1]));
+// Changes update the layer in place, so the map does not flash.
+function cdseApply() {
+  const c = prefs.cdse;
+  cdseError = '';
+  savePrefs();
+  if (prefs.base === 'cdse' && baseLayer && baseLayer._cdseId === c.id && baseLayer.setParams) {
+    delete baseLayer.wmsParams.EVALSCRIPT;
+    baseLayer._cdWarned = false;
+    baseLayer.setParams(cdseParams(c));
+    cdseFx(); cdseUnder(); cdseOutline(); cdsePin();
+    renderCdse();
+  } else if (c.id) setBase('cdse');
+  if (map.getZoom() < 6) map.setZoom(8);
+}
 
 /* ---------- Your configuration's layers ---------- */
 // Anything that is clearly not Sentinel-2, so built-in views do not try to read B04 from radar.
@@ -5931,90 +6100,7 @@ function cdseCaps(id, force) {
   return p;
 }
 
-/* ---------- The map layer ---------- */
-const cdseTime = c => cdseSingle(c) ? `${cdseDay(c)}T00:00:00Z/${cdseDay(c)}T23:59:59Z` : `${c.from}T00:00:00Z/${c.to}T23:59:59Z`;
-function cdseParams(c) {
-  const v = cdseView(c);
-  const p = { layers: v ? cdseCarrier(c) : (c.layer || 'TRUE_COLOR'), TIME: cdseTime(c), MAXCC: c.cc ?? 30, PRIORITY: c.priority || 'mostRecent' };
-  if (v) {
-    const fx = c.fx || {}, num = x => String(Math.round(x * 1000) / 1000);
-    const sc = v.tone ? v.script.replace('__G__', num(fx.b ?? 1)).replace('__GM__', num(fx.g ?? 1)) : v.script;
-    p.EVALSCRIPT = b64('//VERSION=3\n' + sc);
-  }
-  return p;
-}
-// Colour views get brightness and gamma from Copernicus itself (applied to the raw data, so
-// dark ground lifts without burning out bright roofs); everything else is adjusted on screen.
-const fxServer = c => { const v = cdseView(c); return !!(v && v.tone); };
-const cdseFilter = c => { const f = c.fx || {}; const b = fxServer(c) ? 1 : (f.b ?? 1), k = f.c ?? 1, s = f.s ?? 1; return b === 1 && k === 1 && s === 1 ? '' : `brightness(${b}) contrast(${k}) saturate(${s})`; };
-function cdseFx() {
-  if (prefs.base !== 'cdse' || !baseLayer || !baseLayer.getContainer) return;
-  const el = baseLayer.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse);
-}
-function cdseLayer() {
-  const c = cdsePrefs();
-  if (!c.id) return null;
-  if (cdseSingle(c) && !c.date) setTimeout(() => cdseLatest(true), 0);
-  const lyr = L.tileLayer.wms(`${CDSE_HOST}wms/${encodeURIComponent(c.id.trim())}`, {
-    pane: 'pwBase', format: 'image/png', transparent: true, version: '1.3.0', zIndex: 2,
-    tileSize: 512, maxZoom: MAX_Z, minZoom: 6, SHOWLOGO: false, ...cdseParams(c),
-    attribution: `Contains modified Copernicus Sentinel data ${String(cdseSingle(c) ? cdseDay(c) : c.to).slice(0, 4)}, <a href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Data Space Ecosystem</a>`
-  });
-  lyr._cdseId = c.id;
-  lyr.on('add', () => {
-    const el = lyr.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse);
-    cdseUnder(); cdseDayOutline();
-  });
-  lyr.on('remove', () => { if (CD.under) { map.removeLayer(CD.under); CD.under = null; } if (CD.dayLine) { map.removeLayer(CD.dayLine); CD.dayLine = null; } });
-  lyr.on('tileerror', e => {
-    if (lyr._cdWarned) return; lyr._cdWarned = true;
-    cdseError = t('cdse.errFail');
-    renderCdse();
-    toast(cdseError, 'error');
-    // Copernicus explains what went wrong in the body of the failed image; read it once.
-    const src = e.tile && e.tile.src;
-    if (src) fetch(src).then(r => r.ok ? '' : r.text()).then(txt => {
-      if (!txt) return;
-      const msg = ogcText(txt);
-      if (msg) { cdseError = t('cdse.errSrv', { msg }); renderCdse(); }
-    }).catch(() => {});
-  });
-  return lyr;
-}
-// What shows where Copernicus has no image (outside the day's satellite strip, or cloudy scenes
-// left out): Esri satellite by default, so the map is never a black hole.
-function cdseUnder() {
-  const want = prefs.base === 'cdse' && (prefs.cdse.under || 'esri') === 'esri';
-  if (want && !CD.under) CD.under = raster(ESRI + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', { ...NB, maxNativeZoom: 19, zIndex: 1, attribution: ESRI_ATTR }).addTo(map);
-  if (!want && CD.under) { map.removeLayer(CD.under); CD.under = null; }
-}
-// Thin outline around the images of the chosen day, so it is clear where Copernicus ends.
-function cdseDayOutline() {
-  if (CD.dayLine) { map.removeLayer(CD.dayLine); CD.dayLine = null; }
-  const c = prefs.cdse;
-  if (prefs.base !== 'cdse' || !cdseSingle(c) || c.outline === false) return;
-  const rec = avGet(ymOf(cdseDay(c)));
-  const items = rec && rec.items ? rec.items.filter(x => x.date === cdseDay(c) && x.geom && (COLLS[cdseColl(c)].radar || x.cc === null || x.cc <= (c.cc ?? 30))) : [];
-  if (!items.length) return;
-  const toLL = q => Math.abs(q[0]) <= 180 && Math.abs(q[1]) <= 90 ? L.latLng(q[1], q[0]) : L.CRS.EPSG3857.unproject(L.point(q[0], q[1]));
-  CD.dayLine = L.geoJSON({ type: 'FeatureCollection', features: items.map(x => ({ type: 'Feature', geometry: x.geom, properties: {} })) }, { coordsToLatLng: toLL, interactive: false, style: { color: '#ffffff', weight: 1.5, opacity: 0.8, dashArray: '2 5', fill: false } }).addTo(map);
-}
-// Changes update the layer in place, so the map does not flash.
-function cdseApply() {
-  const c = prefs.cdse;
-  cdseError = '';
-  savePrefs();
-  if (prefs.base === 'cdse' && baseLayer && baseLayer._cdseId === c.id && baseLayer.setParams) {
-    delete baseLayer.wmsParams.EVALSCRIPT;
-    baseLayer._cdWarned = false;
-    baseLayer.setParams(cdseParams(c));
-    cdseFx(); cdseUnder(); cdseDayOutline();
-    renderCdse();
-  } else if (c.id) setBase('cdse');
-  if (map.getZoom() < 6) map.setZoom(8);
-}
-
-/* ---------- Which days have images (catalogue, then WFS) ---------- */
+/* ---------- Which satellite images exist at the spot (STAC catalogue, older search, then your instance) ---------- */
 const COLLS = {
   s2l2a: { stac: 'sentinel-2-l2a', cat: 'Sentinel2', pt: 'S2MSI2A', wfs: 'DSS2', radar: false },
   s2l1c: { stac: 'sentinel-2-l1c', cat: 'Sentinel2', pt: 'S2MSI1C', wfs: 'DSS1', radar: false },
@@ -6033,14 +6119,8 @@ function cdseColl(c) {
 const ymOf = d => String(d).slice(0, 7);
 const ymAdd = (ym, n) => { const [y, m] = ym.split('-').map(Number), d = new Date(Date.UTC(y, m - 1 + n, 1)); return d.toISOString().slice(0, 7); };
 const ymDays = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m, 0)).getUTCDate(); };
-function cdseArea() {
-  if (map.getZoom() < 6) return null;
-  // Rounded outward to quarter degrees, so small pans reuse what is already known.
-  const b = map.getBounds(), lo = v => Math.floor(v * 4) / 4, hi = v => Math.ceil(v * 4) / 4;
-  return [lo(Math.max(-180, b.getWest())), lo(Math.max(-85, b.getSouth())), hi(Math.min(180, b.getEast())), hi(Math.min(85, b.getNorth()))];
-}
 const avKey = (coll, area, ym) => `${coll}|${area.join(',')}|${ym}`;
-function avGet(ym, c = prefs.cdse) { const a = cdseArea(); return a ? CD.av.get(avKey(cdseColl(c), a, ym)) || null : null; }
+function avGet(ym, c = prefs.cdse) { return CD.av.get(avKey(cdseColl(c), spotArea(), ym)) || null; }
 // Identify one scene from its file name: satellite, take time and tile, so reprocessed copies count once.
 function sceneOf(title) {
   const p = String(title || '').split('_');
@@ -6063,7 +6143,7 @@ async function avFromStac(coll, area, ym) {
       const grid = String(p['grid:code'] || '').replace(/^MGRS-/, '');
       const plat = String(p.platform || '').replace(/^sentinel-(\d)([a-d])$/i, (m0, n, l) => `S${n}${l.toUpperCase()}`);
       const cc = p['eo:cloud_cover'];
-      out.push({ date: when.slice(0, 10), time: when.slice(11, 16), cc: typeof cc === 'number' && cc >= 0 ? cc : null, sat: sc.sat || plat, tile: sc.tile || grid, id: f.id, geom: f.geometry });
+      out.push({ when: when.replace(/\.\d+/, ''), date: when.slice(0, 10), time: when.slice(11, 16), cc: typeof cc === 'number' && cc >= 0 ? cc : null, sat: sc.sat || plat, tile: sc.tile || grid, id: f.id, geom: f.geometry });
     });
     const next = (j.links || []).find(l => l.rel === 'next' && (!l.method || l.method === 'GET'));
     url = next && (j.features || []).length ? next.href : '';
@@ -6082,7 +6162,7 @@ async function avFromCatalogue(coll, area, ym) {
     if (!when) return;
     const sc = sceneOf(p.title);
     if (seen.has(sc.key)) return; seen.add(sc.key);
-    out.push({ date: when.slice(0, 10), time: when.slice(11, 16), cc: typeof p.cloudCover === 'number' && p.cloudCover >= 0 ? p.cloudCover : null, sat: sc.sat || p.platform || '', tile: sc.tile, id: p.title || f.id, geom: f.geometry });
+    out.push({ when: when.replace(/\.\d+/, ''), date: when.slice(0, 10), time: when.slice(11, 16), cc: typeof p.cloudCover === 'number' && p.cloudCover >= 0 ? p.cloudCover : null, sat: sc.sat || p.platform || '', tile: sc.tile, id: p.title || f.id, geom: f.geometry });
   });
   return out;
 }
@@ -6102,7 +6182,7 @@ async function avFromWfs(coll, area, ym) {
     }
     (j.features || []).forEach(f => {
       const p = f.properties || {};
-      out.push({ date: String(p.date || '').slice(0, 10), time: String(p.time || '').slice(0, 5), cc: typeof p.cloudCoverPercentage === 'number' ? p.cloudCoverPercentage : null, sat: sceneOf(p.id).sat, tile: sceneOf(p.id).tile, id: p.id || '', geom: f.geometry });
+      out.push({ when: p.date && p.time ? `${String(p.date).slice(0, 10)}T${String(p.time).slice(0, 8)}Z` : '', date: String(p.date || '').slice(0, 10), time: String(p.time || '').slice(0, 5), cc: typeof p.cloudCoverPercentage === 'number' ? p.cloudCoverPercentage : null, sat: sceneOf(p.id).sat, tile: sceneOf(p.id).tile, id: p.id || '', geom: f.geometry });
     });
     if ((j.features || []).length < 100) break;
   }
@@ -6110,8 +6190,7 @@ async function avFromWfs(coll, area, ym) {
 }
 const netMsg = m => /fetch|network|load failed|cors/i.test(m) ? t('cdse.netShort') : m;
 function avLoad(ym, force) {
-  const c = prefs.cdse, area = cdseArea();
-  if (!area) return Promise.resolve(null);
+  const c = prefs.cdse, area = spotArea();
   const coll = cdseColl(c), key = avKey(coll, area, ym), have = CD.av.get(key);
   if (have && !force && (have.loading || have.items || Date.now() - (have.at || 0) < 60000)) return have.loading || Promise.resolve(have);
   const rec = { at: Date.now(), items: null, err: '', src: '' };
@@ -6120,69 +6199,85 @@ function avLoad(ym, force) {
     for (const [src, fn] of [['stac', avFromStac], ['cat', avFromCatalogue], ['wfs', avFromWfs]]) {
       try { rec.items = await fn(coll, area, ym); rec.src = src; break; } catch (e) { errs.push(`${t('cdse.src.' + src)}: ${netMsg(e.message || e.name || '?')}`); }
     }
-    if (!rec.items) rec.err = errs.join(' · ');
+    if (rec.items) rec.items.sort((a, b) => (b.when || b.date + b.time).localeCompare(a.when || a.date + a.time));
+    else rec.err = errs.join(' · ');
     rec.loading = null;
-    if (CD.av.size > 40) CD.av.delete(CD.av.keys().next().value);
-    renderCdse(); cdseDayOutline();
+    if (CD.av.size > 60) CD.av.delete(CD.av.keys().next().value);
+    renderCdse(); cdseOutline();
     return rec;
   })();
   CD.av.set(key, rec);
   return rec.loading;
 }
-// Days with images: date -> { items, ccMin }
-function daysOf(items) {
+const sceneKey = x => x ? `${x.sat}|${x.date}|${x.time}` : '';
+const ccOk = (x, c) => COLLS[cdseColl(c)].radar || x.cc === null || x.cc <= (c.cc ?? 30);
+// One entry per satellite pass (a pass can cover the spot with two tiles; keep the clearer one).
+function passes(items) {
   const m = new Map();
-  (items || []).forEach(x => { if (!m.has(x.date)) m.set(x.date, { items: [], ccMin: null }); const d = m.get(x.date); d.items.push(x); if (x.cc !== null && (d.ccMin === null || x.cc < d.ccMin)) d.ccMin = x.cc; });
-  return m;
+  (items || []).forEach(x => { const k = sceneKey(x), o = m.get(k); if (!o || (x.cc ?? 101) < (o.cc ?? 101)) m.set(k, x); });
+  return [...m.values()];
 }
-const dayOk = (d, c) => !d ? false : COLLS[cdseColl(c)].radar || d.ccMin === null || d.ccMin <= (c.cc ?? 30);
-// Previous/next day with images under the cloud limit; looks up to three months away.
-async function cdseStep(dir) {
-  const c = prefs.cdse, cur = cdseDay(c);
-  let ym = ymOf(cur);
-  for (let i = 0; i < 4; i++) {
-    const rec = await avLoad(ym);
-    if (!rec || !rec.items) break;
-    const days = [...daysOf(rec.items).entries()].filter(([, d]) => dayOk(d, c)).map(([k]) => k).sort();
-    const hit = dir < 0 ? days.filter(d => d < cur).pop() : days.find(d => d > cur && d <= todayIso());
-    if (hit) { cdseSetDay(hit); return; }
-    ym = ymAdd(ym, dir);
-    if (dir > 0 && ym > ymOf(todayIso())) break;
-  }
-  // Nothing known (catalogue unreachable or zoomed out): one calendar day at a time.
-  const d = new Date(cur + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + dir);
-  const nd = isoDate(d);
-  if (nd <= todayIso()) cdseSetDay(nd);
+function sceneHere() {
+  const c = prefs.cdse, sc = c.scene;
+  if (!sc) return false;
+  const rec = avGet(ymOf(sc.date));
+  return !!(rec && rec.items && rec.items.some(x => sceneKey(x) === sceneKey(sc)));
 }
+function showScene(x) {
+  const c = prefs.cdse;
+  c.mode = 'scene';
+  c.scene = { sat: x.sat, date: x.date, time: x.time, when: x.when || '', cc: x.cc, tile: x.tile, id: x.id, coll: cdseColl(c) };
+  CD.month = ymOf(x.date);
+  cdseApply();
+}
+// The newest clear image at the spot, looking back up to four months.
 async function cdseLatest(quiet) {
   const c = prefs.cdse;
-  // Just switched on and still zooming in: try again once the map has settled.
-  if (!cdseArea() && quiet) { map.once('moveend', () => { if (cdseArea() && !prefs.cdse.date) cdseLatest(true); }); return; }
   let ym = ymOf(todayIso());
   for (let i = 0; i < 4; i++) {
     const rec = await avLoad(ym);
     if (!rec || !rec.items) break;
-    const days = [...daysOf(rec.items).entries()].filter(([, d]) => dayOk(d, c)).map(([k]) => k).sort();
-    if (days.length) { cdseSetDay(days[days.length - 1]); return; }
+    const hit = passes(rec.items).find(x => ccOk(x, c));
+    if (hit) { showScene(hit); return; }
     ym = ymAdd(ym, -1);
   }
-  if (!c.date) { cdseSetDay(todayIso()); }
   if (!quiet) toast(t('cdse.noLatest'));
+  renderCdse();
 }
-function cdseSetDay(d) {
-  const c = prefs.cdse;
-  c.mode = 'single'; c.date = d; CD.cal = ymOf(d);
-  cdseApply();
+// Older / newer image at the spot, across months.
+async function cdseStep(dir) {
+  const c = prefs.cdse, cur = c.scene;
+  const curKey = cur ? (cur.when || cur.date + 'T' + cur.time) : todayIso() + 'T23:59';
+  let ym = cur ? ymOf(cur.date) : ymOf(todayIso());
+  for (let i = 0; i < 6; i++) {
+    const rec = await avLoad(ym);
+    if (!rec || !rec.items) return;
+    const list = passes(rec.items).filter(x => ccOk(x, c) || CD.showCloudy).map(x => [x.when || x.date + 'T' + x.time, x]).sort((a, b) => a[0].localeCompare(b[0]));
+    const hit = dir < 0 ? list.filter(([k]) => k < curKey).pop() : list.find(([k]) => k > curKey);
+    if (hit) { showScene(hit[1]); return; }
+    ym = ymAdd(ym, dir);
+    if (ym > ymOf(todayIso())) break;
+  }
+  toast(t(dir < 0 ? 'cdse.noOlder' : 'cdse.noNewer'));
 }
 
 /* ---------- Panel ---------- */
 const PRIOS = ['mostRecent', 'leastCC', 'leastRecent'];
 const fmtDay = d => { const x = new Date(d + 'T12:00:00Z'); return isNaN(x) ? d : x.toLocaleDateString(langInfo().locale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); };
+const fmtWday = d => { const x = new Date(d + 'T12:00:00Z'); return isNaN(x) ? '' : x.toLocaleDateString(langInfo().locale, { weekday: 'short', timeZone: 'UTC' }); };
 const fmtMonth = ym => new Date(ym + '-15T12:00:00Z').toLocaleDateString(langInfo().locale, { month: 'long', year: 'numeric', timeZone: 'UTC' });
 function renderCdse() {
   if ($('#basePanel').hidden) return;
   const el = $('#cdseBox');
   if (el) { const sc = $('#basePanel').scrollTop; el.outerHTML = cdseSection(); $('#basePanel').scrollTop = sc; }
+}
+const BROWSER_DS = { s2l2a: ['S2_L2A_CDAS', '1_TRUE_COLOR'], s2l1c: ['S2_L1C_CDAS', '1_TRUE_COLOR'], s1: ['S1_CDAS_IW_VVVH', ''] };
+function browserLink(c) {
+  const sc = c.scene; if (!sc) return '';
+  const s = cdseSpot(), [ds, lid] = BROWSER_DS[sc.coll || cdseColl(c)] || BROWSER_DS.s2l2a;
+  const q = new URLSearchParams({ zoom: String(Math.max(8, Math.min(16, map.getZoom()))), lat: s.lat.toFixed(5), lng: s.lng.toFixed(5), themeId: 'DEFAULT-THEME', datasetId: ds, fromTime: `${sc.date}T00:00:00.000Z`, toTime: `${sc.date}T23:59:59.999Z` });
+  if (lid) q.set('layerId', lid);
+  return 'https://browser.dataspace.copernicus.eu/?' + q.toString();
 }
 function cdseSection() {
   const c = cdsePrefs(), id = (c.id || '').trim();
@@ -6198,149 +6293,104 @@ function cdseSection() {
       ${id ? `<button type="button" class="link-btn" data-cdse="setup">${esc(t('cdse.done'))}</button>` : ''}
     </div>`;
   if (!id) return `<div id="cdseBox" class="cd-box">${setup}</div>`;
-  if (prefs.base === 'cdse') setTimeout(() => avLoad(cdseSingle(c) ? (CD.cal || ymOf(cdseDay(c))) : ymOf(c.to)), 0);
+  const scene = cdseScene(c);
   return `<div id="cdseBox" class="cd-box">
     <div class="cd-head"><span class="eyebrow">${esc(t('b.cdse'))}</span><span class="cd-meta">${esc(t('cdse.sat.' + cdseColl(c)))}</span></div>
     ${CD.setup ? setup : ''}
-    <div class="seg light cd-tabs" role="tablist"><button type="button" role="tab" data-cdtab="view" aria-pressed="${CD.tab === 'view'}">${esc(t('cdse.tabView'))}</button><button type="button" role="tab" data-cdtab="imgs" aria-pressed="${CD.tab === 'imgs'}">${esc(t('cdse.tabImgs'))}</button></div>
+    <div class="seg light cd-tabs" role="tablist"><button type="button" role="tab" data-cdtab="scene" aria-pressed="${scene}">${esc(t('cdse.tabScene'))}</button><button type="button" role="tab" data-cdtab="range" aria-pressed="${!scene}">${esc(t('cdse.tabMosaic'))}</button></div>
     ${prefs.base !== 'cdse' ? `<button type="button" class="btn primary" data-cdse="show">${esc(t('cdse.load'))}</button>` : ''}
     ${cdseError ? `<p class="err">${esc(cdseError)}</p>` : ''}
-    ${CD.tab === 'imgs' ? imgsHtml(c) : viewHtml(c)}
+    ${scene ? sceneHtml(c) : mosaicHtml(c)}
+    ${moreHtml(c)}
   </div>`;
 }
-function dateHtml(c) {
-  const single = cdseSingle(c), day = cdseDay(c), cc = c.cc ?? 30;
-  const area = cdseArea();
-  let top = '';
-  if (single) {
-    const rec = avGet(ymOf(day)), d = rec && rec.items ? daysOf(rec.items).get(day) : null;
-    const radar = COLLS[cdseColl(c)].radar;
-    const state = !area ? t('cdse.zoomIn') : !rec || rec.loading ? t('cdse.checking') : rec.err ? '' : !d ? t('cdse.noneThisDay') : radar ? t('cdse.radarShort') : d.ccMin === null ? '' : dayOk(d, c) ? t('cdse.cloud', { v: Math.round(d.ccMin) }) : t('cdse.tooCloudy', { v: Math.round(d.ccMin) });
-    top = `<div class="cd-stepper">
-        <button type="button" class="icon-btn sm" data-cdstep="-1" aria-label="${esc(t('cdse.prevImg'))}" title="${esc(t('cdse.prevImg'))}">${icon('chevL')}</button>
-        <button type="button" class="cd-datebtn" data-cdse="cal" aria-expanded="${CD.calOpen}">${icon('clock')}<b>${esc(fmtDay(day))}</b></button>
-        <button type="button" class="icon-btn sm" data-cdstep="1" aria-label="${esc(t('cdse.nextImg'))}" title="${esc(t('cdse.nextImg'))}" ${day >= todayIso() ? 'disabled' : ''}>${icon('chevR')}</button>
+function vizHtml(c) {
+  const v = cdseView(c), list = cdseLayers(), known = list.some(l => l.name === c.layer);
+  const sel = v ? 'v:' + v.id : CD.custom ? 'custom' : 'l:' + c.layer;
+  const o = (val, label) => `<option value="${esc(val)}" ${val === sel ? 'selected' : ''}>${esc(label)}</option>`;
+  const legend = v && v.ramp ? `<span class="cdse-ramp" style="background:${rampCss(STOPS[v.ramp])}"></span><span class="cdse-ends"><span>${esc(t('cdv.' + v.id + 'Lo'))}</span><span>${esc(t('cdv.' + v.id + 'Hi'))}</span></span>`
+    : v && v.classes ? `<span class="cdse-classes">${v.classes.map(([k, n]) => `<span><i style="background:${rgbCss(SCL_COL[k])}"></i>${esc(t('scl.' + n))}</span>`).join('')}</span>` : '';
+  const lay = !v && list.find(l => l.name === c.layer);
+  return `<label class="field"><span>${esc(t('cdse.show'))}</span><select id="cdse-viz">
+      <optgroup label="${esc(t('cdse.grpViews'))}">${CDSE_VIEWS.map(x => o('v:' + x.id, t('cdv.' + x.id))).join('')}</optgroup>
+      <optgroup label="${esc(t('cdse.grpLayers'))}">${list.map(l => o('l:' + l.name, l.title === l.name ? l.name : `${l.title} (${l.name})`)).join('')}${!v && c.layer && !known && !CD.custom ? o('l:' + c.layer, list.length ? t('cdse.notInCfg', { name: c.layer }) : c.layer) : ''}${o('custom', t('cdse.custom'))}</optgroup>
+    </select></label>
+    ${CD.custom && !v ? `<label class="field"><span>${esc(t('cdse.layerName'))}</span><input id="cdse-layer" type="text" value="${esc(c.layer)}" placeholder="TRUE_COLOR" spellcheck="false" autocomplete="off"></label>` : ''}
+    ${!v && !CD.custom && list.length && !known ? `<p class="err">${esc(t('cdse.missing', { name: c.layer }))}</p>` : ''}
+    <div class="cd-vdesc">${v ? `<p>${esc(t('cdv.' + v.id + 'D'))}</p>${legend}<small class="cd-meta">${esc(t('cdse.bands', { b: viewBands(v).join(', ') }))}</small>` : lay ? `<p>${esc(lay.abs || lay.title)}</p><small class="cd-meta">${esc(t('cdse.layerId', { name: lay.name }))}</small>` : ''}</div>`;
+}
+function fxHtml(c) {
+  return `<details class="cd-det" ${CD.fxOpen ? 'open' : ''} data-cddet="fx"><summary>${esc(t('cdse.fx'))}</summary>
+      ${[['b', 0.5, 4], ...(fxServer(c) ? [['g', 0.5, 2.5]] : []), ['c', 0.5, 2], ['s', 0, 2]].map(([k, lo, hi]) => `<label class="field"><span>${esc(t('cdse.fx.' + k))} <output id="cdfx-${k}o">${k === 'g' ? (c.fx[k] ?? 1).toFixed(2) : Math.round((c.fx[k] ?? 1) * 100) + '%'}</output></span><input type="range" id="cdfx-${k}" min="${lo}" max="${hi}" step="0.05" value="${c.fx[k] ?? 1}"></label>`).join('')}
+      <span class="row"><button type="button" class="btn sm" data-cdse="fxreset">${esc(t('cdse.fxReset'))}</button></span>
+      <small class="help">${esc(t(fxServer(c) ? 'cdse.fxHelpSrv' : 'cdse.fxHelp'))}</small>
+    </details>`;
+}
+function sceneHtml(c) {
+  const spot = cdseSpot(), sc = c.scene, coll = cdseColl(c), radar = COLLS[coll].radar;
+  const ym = CD.month || (sc ? ymOf(sc.date) : ymOf(todayIso()));
+  if (!avGet(ym) && prefs.base === 'cdse') setTimeout(() => avLoad(ym), 0);
+  const rec = avGet(ym), all = rec && rec.items ? passes(rec.items) : [];
+  const shown = all.filter(x => ccOk(x, c) || CD.showCloudy), hidden = all.length - shown.length;
+  const cur = sceneKey(sc);
+  const ccTxt = x => radar || x.cc === null ? t('cdse.radarShort') : t('cdse.cloud', { v: Math.round(x.cc) });
+  const now = sc ? `<div class="sub-form cd-now">
+      <div class="cd-head"><span class="eyebrow">${esc(t('cdse.showing'))}</span>${sc.sat ? `<span class="cd-sat">${esc(sc.sat)}</span>` : ''}</div>
+      <div class="cd-nowrow">
+        <button type="button" class="icon-btn sm" data-cdstep="-1" aria-label="${esc(t('cdse.older'))}" title="${esc(t('cdse.older'))}">${icon('chevL')}</button>
+        <div class="cd-nowmain"><b>${esc(fmtWday(sc.date))} ${esc(fmtDay(sc.date))}</b><small>${esc([sc.time ? sc.time + ' UTC' : '', sc.cc != null || radar ? ccTxt(sc) : '', sc.tile ? t('cdse.tile', { t: sc.tile }) : ''].filter(Boolean).join(' · '))}</small></div>
+        <button type="button" class="icon-btn sm" data-cdstep="1" aria-label="${esc(t('cdse.newer'))}" title="${esc(t('cdse.newer'))}">${icon('chevR')}</button>
       </div>
-      ${state ? `<p class="cd-state ${d && !dayOk(d, c) ? 'warn' : ''}">${esc(state)}</p>` : ''}
-      <button type="button" class="btn sm cd-latest" data-cdse="latest">${esc(t('cdse.latest'))}</button>
-      ${CD.calOpen ? calHtml(c) : ''}`;
-  } else {
-    top = `<div class="two">
+      ${vizHtml(c)}
+      ${fxHtml(c)}
+      <div class="cd-links">${link2(browserLink(c), t('cdse.openBrowser'))}${sc.id ? `<button type="button" class="link-btn" data-cdcopy="${esc(sc.id)}" title="${esc(sc.id)}">${esc(t('cdse.copyId'))}</button>` : ''}</div>
+    </div>` : `<div class="sub-form cd-now"><p class="help">${esc(rec && rec.loading ? t('cdse.acqLoading') : t('cdse.pickImage'))}</p>${vizHtml(c)}</div>`;
+  let body;
+  if (!rec || rec.loading) body = `<p class="help">${esc(t('cdse.acqLoading'))}</p>`;
+  else if (rec.err) body = `<p class="err">${esc(t('cdse.acqErr', { msg: rec.err }))}</p><p class="help">${esc(t('cdse.acqErrHelp'))}</p><button type="button" class="btn sm" data-cdse="acq">${esc(t('cdse.retry'))}</button>`;
+  else if (!shown.length) body = `<p class="help">${esc(all.length ? t('cdse.allCloudy', { n: all.length, cc: c.cc ?? 30 }) : t('cdse.noneMonth', { m: fmtMonth(ym) }))}</p>`;
+  else body = `<ul class="cd-list">${shown.map(x => `<li><button type="button" class="cd-row ${sceneKey(x) === cur ? 'on' : ''} ${ccOk(x, c) ? '' : 'over'}" data-cdscene="${esc(sceneKey(x))}">
+        <span class="cd-rdate"><b>${esc(fmtDay(x.date))}</b><small>${esc(fmtWday(x.date))} · ${esc(x.time || '')} UTC</small></span>
+        <span class="cd-sat">${esc(x.sat || '—')}</span>
+        ${radar || x.cc === null ? `<span class="cd-cc radar">${esc(t('cdse.radarShort'))}</span>` : `<span class="cd-cc"><span class="cc-bar"><i style="width:${clamp(x.cc, 0, 100)}%"></i></span>${Math.round(x.cc)}%</span>`}
+      </button></li>`).join('')}</ul>`;
+  const more = hidden || CD.showCloudy ? `<button type="button" class="link-btn" data-cdse="cloudy">${esc(CD.showCloudy ? t('cdse.hideCloudy') : t('cdse.showCloudy', { n: hidden }))}</button>` : '';
+  return `${now}
+    <div class="sub-form cd-spotlist">
+      <div class="cd-head"><span class="eyebrow">${esc(t('cdse.imagesAt'))}</span><button type="button" class="icon-btn sm" data-cdse="acq" aria-label="${esc(t('cdse.acqRefresh'))}" title="${esc(t('cdse.acqRefresh'))}">${icon('refresh')}</button></div>
+      <div class="cd-spot">${icon('pinAdd')}<span>${esc(spot.pinned ? t('cdse.atSpot', { p: `${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)}` }) : t('cdse.atCentre'))}</span>
+        <button type="button" class="btn sm ${CD.picking ? 'primary' : ''}" data-cdse="pick">${esc(CD.picking ? t('cdse.picking') : spot.pinned ? t('cdse.move') : t('cdse.pick'))}</button>
+        ${spot.pinned ? `<button type="button" class="icon-btn sm" data-cdse="unpin" aria-label="${esc(t('cdse.unpin'))}" title="${esc(t('cdse.unpin'))}">${icon('close')}</button>` : ''}</div>
+      <div class="cd-calhead"><button type="button" class="icon-btn sm" data-cdm="-1" aria-label="${esc(t('cdse.prevMonth'))}">${icon('chevL')}</button><b>${esc(fmtMonth(ym))}</b><button type="button" class="icon-btn sm" data-cdm="1" aria-label="${esc(t('cdse.nextMonth'))}" ${ym >= ymOf(todayIso()) ? 'disabled' : ''}>${icon('chevR')}</button></div>
+      <label class="field"><span>${esc(t('cdse.ccList'))} <output id="cdse-cco">${c.cc ?? 30}%</output></span><input id="cdse-cc" type="range" min="0" max="100" step="1" value="${c.cc ?? 30}"></label>
+      ${body}${more}
+      ${shown.length ? `<p class="help">${esc(t('cdse.listTip'))}</p>` : ''}
+    </div>`;
+}
+const link2 = (href, txt) => href ? `<a href="${href}" target="_blank" rel="noopener">${esc(txt)} ↗</a>` : '';
+function mosaicHtml(c) {
+  return `<div class="sub-form">
+      <p class="help">${esc(t('cdse.mosaicHelp'))}</p>
+      <div class="two">
         <label class="field"><span>${esc(t('cdse.from'))}</span><input id="cdse-from" type="date" value="${esc(c.from)}" max="${todayIso()}"></label>
         <label class="field"><span>${esc(t('cdse.to'))}</span><input id="cdse-to" type="date" value="${esc(c.to)}" max="${todayIso()}"></label>
       </div>
       <div class="cdse-quick"><span>${esc(t('cdse.last'))}</span>${[7, 30, 90, 365].map(n => `<button type="button" class="btn sm" data-cdr="${n}">${esc(t('cdse.r' + n))}</button>`).join('')}</div>
-      <label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select><small>${esc(t('cdse.rangeHelp'))}</small></label>`;
-  }
-  return `<div class="sub-form">
-      <div class="cd-head"><span class="eyebrow">${esc(t('cdse.date'))}</span><span class="seg light cd-mode"><button type="button" data-cdmode="single" aria-pressed="${single}">${esc(t('cdse.single'))}</button><button type="button" data-cdmode="range" aria-pressed="${!single}">${esc(t('cdse.range'))}</button></span></div>
-      ${top}
-      <label class="field"><span>${esc(t('cdse.cc'))} <output id="cdse-cco">${cc}%</output></span><input id="cdse-cc" type="range" min="0" max="100" step="1" value="${cc}"></label>
+      <label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select></label>
+      <label class="field"><span>${esc(t('cdse.cc'))} <output id="cdse-cco">${c.cc ?? 30}%</output></span><input id="cdse-cc" type="range" min="0" max="100" step="1" value="${c.cc ?? 30}"></label>
+      ${vizHtml(c)}
+      ${fxHtml(c)}
     </div>`;
 }
-function calHtml(c) {
-  const day = cdseDay(c), ym = CD.cal || ymOf(day), rec = avGet(ym), days = rec && rec.items ? daysOf(rec.items) : new Map();
-  const [y, m] = ym.split('-').map(Number), first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay(), n = ymDays(ym);
-  const wk = langInfo().locale.startsWith('en-US') ? 0 : 1;   // US calendars start on Sunday
-  const names = [...Array(7)].map((_, i) => new Date(Date.UTC(2024, 0, 7 + ((i + wk) % 7))).toLocaleDateString(langInfo().locale, { weekday: 'short', timeZone: 'UTC' }).slice(0, 2));
-  const cells = [];
-  for (let i = 0; i < (first - wk + 7) % 7; i++) cells.push('<span></span>');
-  const today = todayIso();
-  for (let d = 1; d <= n; d++) {
-    const iso = `${ym}-${String(d).padStart(2, '0')}`, info = days.get(iso);
-    const cls = [iso === day ? 'sel' : '', info ? (dayOk(info, c) ? 'has' : 'cloudy') : '', iso > today ? 'future' : ''].filter(Boolean).join(' ');
-    const tip = info ? `${info.items.length === 1 ? t('cdse.img1') : t('cdse.imgN', { n: info.items.length })}${info.ccMin !== null ? ' · ' + t('cdse.cloud', { v: Math.round(info.ccMin) }) : ''}` : '';
-    cells.push(`<button type="button" class="${cls}" data-cdday="${iso}" ${iso > today ? 'disabled' : ''} ${tip ? `title="${esc(tip)}"` : ''}>${d}</button>`);
-  }
-  const status = !cdseArea() ? t('cdse.zoomIn') : !rec || rec.loading ? t('cdse.checking') : rec.err ? t('cdse.calErr', { msg: rec.err }) : '';
-  return `<div class="cd-cal">
-      <div class="cd-calhead"><button type="button" class="icon-btn sm" data-calm="-1" aria-label="${esc(t('cdse.prevMonth'))}">${icon('chevL')}</button><b>${esc(fmtMonth(ym))}</b><button type="button" class="icon-btn sm" data-calm="1" aria-label="${esc(t('cdse.nextMonth'))}" ${ym >= ymOf(today) ? 'disabled' : ''}>${icon('chevR')}</button></div>
-      <div class="cd-grid">${names.map(x => `<span class="cd-wd">${esc(x)}</span>`).join('')}${cells.join('')}</div>
-      <div class="cd-key"><span><i class="k-has"></i>${esc(t('cdse.kHas'))}</span><span><i class="k-cloudy"></i>${esc(t('cdse.kCloudy', { cc: c.cc ?? 30 }))}</span></div>
-      ${status ? `<p class="help">${esc(status)}</p>` : ''}
-    </div>`;
-}
-function viewCard(sel, key, name, desc, sw, extra) {
-  return `<li><button type="button" class="cd-view ${sel ? 'on' : ''}" data-cdview="${esc(key)}" aria-pressed="${sel}"><span class="cd-sw" style="background:${sw}"></span><span class="cd-vt"><b>${esc(name)}</b><small>${esc(desc)}</small></span></button>${sel && extra ? `<div class="cd-vx">${extra}</div>` : ''}</li>`;
-}
-function viewHtml(c) {
-  const v = cdseView(c), list = cdseLayers(), known = list.some(l => l.name === c.layer);
-  const custom = CD.custom || (!v && !list.length);
-  const legend = x => x.ramp ? `<span class="cdse-ramp" style="background:${rampCss(STOPS[x.ramp])}"></span><span class="cdse-ends"><span>${esc(t('cdv.' + x.id + 'Lo'))}</span><span>${esc(t('cdv.' + x.id + 'Hi'))}</span></span>`
-    : x.classes ? `<span class="cdse-classes">${x.classes.map(([k, n]) => `<span><i style="background:${rgbCss(SCL_COL[k])}"></i>${esc(t('scl.' + n))}</span>`).join('')}</span>` : '';
-  const builtins = CDSE_VIEWS.map(x => viewCard(v && v.id === x.id, 'v:' + x.id, t('cdv.' + x.id), t('cdv.' + x.id + 'D'), viewSwatch(x),
-    `${legend(x)}<small class="cd-meta">${esc(t('cdse.bands', { b: viewBands(x).join(', ') }))} · Sentinel-2 L2A</small>`)).join('');
-  const cfg = list.map(l => viewCard(!v && !CD.custom && c.layer === l.name, 'l:' + l.name, l.title, l.abs || l.name, 'linear-gradient(135deg,#5a6b7c,#9fb0c2)',
-    `<small class="cd-meta">${esc(t('cdse.layerId', { name: l.name }))}</small>`)).join('');
-  const cfgOpen = !v || CD.cfgOpen;
-  return `${dateHtml(c)}
-    <div class="sub-form">
-      <span class="eyebrow">${esc(t('cdse.show'))}</span>
-      <ul class="cd-views">${builtins}</ul>
-      <details class="cd-det" ${cfgOpen ? 'open' : ''} data-cddet="cfg"><summary>${esc(t('cdse.grpLayers'))}${list.length ? ` (${list.length})` : ''}</summary>
-        ${CD.capsLoading ? `<p class="help">${esc(t('cdse.capsLoading'))}</p>` : ''}
-        ${CD.capsErr ? `<p class="err">${esc(CD.capsErr)}</p>` : ''}
-        ${!v && !custom && list.length && !known ? `<p class="err">${esc(t('cdse.missing', { name: c.layer }))}</p>` : ''}
-        <ul class="cd-views">${cfg}</ul>
-        ${custom && !v ? `<label class="field"><span>${esc(t('cdse.layerName'))}</span><input id="cdse-layer" type="text" value="${esc(c.layer)}" placeholder="TRUE_COLOR" spellcheck="false" autocomplete="off"></label>` : `<button type="button" class="link-btn" data-cdview="custom">${esc(t('cdse.custom'))}</button>`}
-      </details>
-    </div>
-    <details class="sub-form cd-det" ${CD.fxOpen ? 'open' : ''} data-cddet="fx"><summary>${esc(t('cdse.fx'))}</summary>
-      ${[['b', 0.5, 4], ...(fxServer(c) ? [['g', 0.5, 2.5]] : []), ['c', 0.5, 2], ['s', 0, 2]].map(([k, lo, hi]) => `<label class="field"><span>${esc(t('cdse.fx.' + k))} <output id="cdfx-${k}o">${k === 'g' ? (c.fx[k] ?? 1).toFixed(2) : Math.round((c.fx[k] ?? 1) * 100) + '%'}</output></span><input type="range" id="cdfx-${k}" min="${lo}" max="${hi}" step="0.05" value="${c.fx[k] ?? 1}"></label>`).join('')}
-      <span class="row"><button type="button" class="btn sm" data-cdse="fxreset">${esc(t('cdse.fxReset'))}</button></span>
-      <small class="help">${esc(t(fxServer(c) ? 'cdse.fxHelpSrv' : 'cdse.fxHelp'))}</small>
-    </details>
-    <details class="sub-form cd-det" ${CD.moreOpen ? 'open' : ''} data-cddet="more"><summary>${esc(t('cdse.more'))}</summary>
-      ${cdseSingle(c) ? `<label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select></label>` : ''}
-      ${v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc(l.title === l.name ? l.name : `${l.title} (${l.name})`)}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : ''}
+function moreHtml(c) {
+  const v = cdseView(c), list = cdseLayers();
+  return `<details class="sub-form cd-det" ${CD.moreOpen ? 'open' : ''} data-cddet="more"><summary>${esc(t('cdse.more'))}</summary>
       <label class="field"><span>${esc(t('cdse.sat'))}</span><select id="cdse-sat">${['auto', ...Object.keys(COLLS)].map(s => `<option value="${s}" ${(c.sat || 'auto') === s ? 'selected' : ''}>${esc(s === 'auto' ? t('cdse.sat.auto', { s: t('cdse.sat.' + cdseColl({ ...c, sat: 'auto' })) }) : t('cdse.sat.' + s))}</option>`).join('')}</select><small>${esc(t('cdse.satHelp'))}</small></label>
-      <label class="field"><span>${esc(t('cdse.under'))}</span><select id="cdse-under"><option value="esri" ${(c.under || 'esri') === 'esri' ? 'selected' : ''}>${esc(t('cdse.under.esri'))}</option><option value="none" ${c.under === 'none' ? 'selected' : ''}>${esc(t('cdse.under.none'))}</option></select><small>${esc(t('cdse.underHelp'))}</small></label>
-      <label class="check"><input type="checkbox" id="cdse-outline" ${c.outline !== false ? 'checked' : ''}> ${esc(t('cdse.outline'))}</label>
+      ${v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc(l.title === l.name ? l.name : `${l.title} (${l.name})`)}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : ''}
+      <label class="check"><input type="checkbox" id="cdse-outline" ${c.outline ? 'checked' : ''}> ${esc(t('cdse.outline2'))}</label>
+      <label class="check"><input type="checkbox" id="cdse-under" ${c.under === 'esri' ? 'checked' : ''}> ${esc(t('cdse.under2'))}</label>
       <span class="row"><button type="button" class="btn sm" data-cdse="setup">${esc(t('cdse.changeId'))}</button></span>
     </details>`;
-}
-function imgsHtml(c) {
-  const single = cdseSingle(c), area = cdseArea(), coll = cdseColl(c), radar = COLLS[coll].radar;
-  if (!area) return `<div class="sub-form"><p class="help">${esc(t('cdse.zoomIn'))}</p></div>`;
-  const months = [];
-  if (single) months.push(ymOf(cdseDay(c)));
-  else { let ym = ymOf(c.to); while (ym >= ymOf(c.from) && months.length < 4) { months.push(ym); ym = ymAdd(ym, -1); } }
-  months.forEach(ym => { if (!avGet(ym)) setTimeout(() => avLoad(ym), 0); });
-  const recs = months.map(ym => avGet(ym));
-  const loading = recs.some(r => !r || r.loading), err = recs.map(r => r && r.err).filter(Boolean)[0];
-  const lo = single ? cdseDay(c) : c.from, hi = single ? cdseDay(c) : c.to;
-  const items = recs.flatMap(r => (r && r.items) || []).filter(x => x.date >= lo && x.date <= hi).sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
-  const days = daysOf(items), cc = c.cc ?? 30;
-  const ok = x => radar || x.cc === null || x.cc <= cc;
-  let body;
-  if (loading && !items.length) body = `<p class="help">${esc(t('cdse.acqLoading'))}</p>`;
-  else if (err && !items.length) body = `<p class="err">${esc(t('cdse.acqErr', { msg: err }))}</p><p class="help">${esc(t('cdse.acqErrHelp'))}</p><button type="button" class="btn sm" data-cdse="acq">${esc(t('cdse.retry'))}</button>`;
-  else if (!items.length) body = `<p class="help">${esc(single ? t('cdse.noneDay', { d: fmtDay(lo) }) : t('cdse.acqNone', { from: lo, to: hi }))}</p>${single ? `<button type="button" class="btn sm" data-cdse="latest">${esc(t('cdse.latest'))}</button>` : ''}`;
-  else {
-    body = `<p class="help">${esc(single ? t(items.length === 1 ? 'cdse.imgsDay1' : 'cdse.imgsDay', { n: items.length, d: fmtDay(lo) }) : t('cdse.acqSum', { n: items.length, d: days.size, from: lo, to: hi }))} ${esc(radar ? t('cdse.radar') : t('cdse.acqHow.' + (c.priority || 'mostRecent'), { cc }))}</p>
-      ${[...days.entries()].map(([date, d]) => `<div class="cd-dgroup">
-        ${single ? '' : `<button type="button" class="cd-dhead ${dayOk(d, c) ? '' : 'over'}" data-cdpick="${date}" data-cdfp="d:${date}"><b>${esc(fmtDay(date))}</b><small>${esc(t('cdse.showDay'))}</small></button>`}
-        <ul class="cd-imgs">${d.items.map(x => `<li class="${ok(x) ? '' : 'over'}" data-cdfp="i:${esc(x.id)}">
-          <span class="cd-sat">${esc(x.sat || '—')}</span>
-          <span class="cd-it"><b>${esc(x.time ? x.time + ' UTC' : fmtDay(x.date))}</b><small>${esc([x.tile ? t('cdse.tile', { t: x.tile }) : '', ok(x) ? '' : t('cdse.over')].filter(Boolean).join(' · '))}</small></span>
-          ${radar || x.cc === null ? `<span class="cd-cc radar">${esc(t('cdse.radarShort'))}</span>` : `<span class="cd-cc" title="${esc(t('cdse.cloud', { v: Math.round(x.cc) }))}"><span class="cc-bar"><i style="width:${clamp(x.cc, 0, 100)}%"></i></span>${Math.round(x.cc)}%</span>`}
-        </li>`).join('')}</ul></div>`).join('')}
-      <p class="help">${esc(t('cdse.imgsTip'))}</p>`;
-  }
-  return `<div class="sub-form">
-      <div class="cd-head"><span class="eyebrow">${esc(single ? t('cdse.imgsOn', { d: fmtDay(lo) }) : t('cdse.acq'))}</span><button type="button" class="icon-btn sm" data-cdse="acq" aria-label="${esc(t('cdse.acqRefresh'))}" title="${esc(t('cdse.acqRefresh'))}">${icon('refresh')}</button></div>
-      ${body}
-    </div>`;
-}
-function cdseFootprints(key) {
-  if (CD.fp) { map.removeLayer(CD.fp); CD.fp = null; }
-  if (!key) return;
-  const all = [...CD.av.values()].flatMap(r => r.items || []);
-  const feats = key.startsWith('d:') ? all.filter(x => x.date === key.slice(2)) : all.filter(x => x.id === key.slice(2));
-  const seen = new Set(), geoms = feats.filter(x => x.geom && !seen.has(x.id) && seen.add(x.id)).map(x => ({ type: 'Feature', geometry: x.geom, properties: {} }));
-  if (!geoms.length) return;
-  const toLL = c => Math.abs(c[0]) <= 180 && Math.abs(c[1]) <= 90 ? L.latLng(c[1], c[0]) : L.CRS.EPSG3857.unproject(L.point(c[0], c[1]));
-  CD.fp = L.geoJSON({ type: 'FeatureCollection', features: geoms }, { coordsToLatLng: toLL, interactive: false, style: { color: '#ffd23f', weight: 2, dashArray: '6 4', fillColor: '#ffd23f', fillOpacity: 0.08 } }).addTo(map);
 }
 
 /* ---------- Panel events ---------- */
@@ -6358,40 +6408,43 @@ bp.addEventListener('click', e => {
   if (!e.target.closest('#cdseBox')) return;
   const q = s => e.target.closest(s);
   let b;
-  if ((b = q('[data-cdtab]'))) { CD.tab = b.dataset.cdtab; cdseFootprints(null); renderCdse(); return; }
-  if ((b = q('[data-cdmode]'))) { const c = prefs.cdse; c.mode = b.dataset.cdmode; if (c.mode === 'single' && !c.date) c.date = c.to; cdseApply(); return; }
+  if ((b = q('[data-cdtab]'))) { const c = prefs.cdse; c.mode = b.dataset.cdtab; if (c.mode === 'scene' && !c.scene) cdseLatest(true); cdseApply(); return; }
   if ((b = q('[data-cdstep]'))) { cdseStep(+b.dataset.cdstep); return; }
-  if ((b = q('[data-calm]'))) { CD.cal = ymAdd(CD.cal || ymOf(cdseDay(prefs.cdse)), +b.dataset.calm); renderCdse(); return; }
-  if ((b = q('[data-cdday]'))) { cdseSetDay(b.dataset.cdday); return; }
-  if ((b = q('[data-cdpick]'))) { cdseFootprints(null); CD.tab = 'view'; cdseSetDay(b.dataset.cdpick); toast(t('cdse.dayOnly', { d: fmtDay(b.dataset.cdpick) })); return; }
-  if ((b = q('[data-cdr]'))) { const n = +b.dataset.cdr, c = prefs.cdse; c.to = todayIso(); c.from = isoDate(new Date(Date.now() - n * 864e5)); cdseApply(); return; }
-  if ((b = q('[data-cdview]'))) {
-    const k = b.dataset.cdview, c = prefs.cdse;
-    if (k === 'custom') { CD.custom = true; renderCdse(); const f = $('#cdse-layer'); if (f) f.focus(); return; }
-    CD.custom = false;
-    if (k.startsWith('v:')) c.viz = k.slice(2); else { c.viz = ''; c.layer = k.slice(2); }
-    cdseApply(); return;
+  if ((b = q('[data-cdm]'))) { CD.month = ymAdd(CD.month || ymOf((prefs.cdse.scene && prefs.cdse.scene.date) || todayIso()), +b.dataset.cdm); renderCdse(); return; }
+  if ((b = q('[data-cdscene]'))) {
+    const k = b.dataset.cdscene, x = [...CD.av.values()].flatMap(r => r.items || []).find(i => sceneKey(i) === k);
+    if (x) showScene(x);
+    return;
   }
+  if ((b = q('[data-cdcopy]'))) { copyText(b.dataset.cdcopy, t('sync.copied')); return; }
+  if ((b = q('[data-cdr]'))) { const n = +b.dataset.cdr, c = prefs.cdse; c.to = todayIso(); c.from = isoDate(new Date(Date.now() - n * 864e5)); cdseApply(); return; }
   if ((b = q('[data-cdse]'))) {
-    const a = b.dataset.cdse;
+    const a = b.dataset.cdse, c = prefs.cdse;
     if (a === 'connect') cdseConnect();
     if (a === 'show') setBase('cdse');
     if (a === 'setup') { CD.setup = !CD.setup; renderCdse(); }
-    if (a === 'cal') { CD.calOpen = !CD.calOpen; CD.cal = ymOf(cdseDay(prefs.cdse)); renderCdse(); }
-    if (a === 'latest') cdseLatest(false);
-    if (a === 'acq') { const c = prefs.cdse; (cdseSingle(c) ? [ymOf(cdseDay(c))] : [ymOf(c.to), ymOf(c.from)]).forEach(ym => avLoad(ym, true)); renderCdse(); }
-    if (a === 'fxreset') { prefs.cdse.fx = { b: 1, g: 1, c: 1, s: 1 }; cdseApply(); }
+    if (a === 'pick') cdsePick(!CD.picking);
+    if (a === 'unpin') { c.pt = null; savePrefs(); cdsePin(); renderCdse(); }
+    if (a === 'cloudy') { CD.showCloudy = !CD.showCloudy; renderCdse(); }
+    if (a === 'acq') { avLoad(CD.month || ymOf((c.scene && c.scene.date) || todayIso()), true); renderCdse(); }
+    if (a === 'fxreset') { c.fx = { b: 1, g: 1, c: 1, s: 1 }; cdseApply(); }
   }
 });
 bp.addEventListener('toggle', e => {
   const d = e.target.closest && e.target.closest('[data-cddet]'); if (!d) return;
-  const k = { cfg: 'cfgOpen', fx: 'fxOpen', more: 'moreOpen' }[d.dataset.cddet]; if (k) CD[k] = d.open;
+  const k = { fx: 'fxOpen', more: 'moreOpen' }[d.dataset.cddet]; if (k) CD[k] = d.open;
 }, true);
 bp.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'cdse-id') { e.preventDefault(); cdseConnect(); } });
 bp.addEventListener('change', e => {
   const id = e.target.id, c = prefs.cdse;
   if (!/^cdse-|^cdfx-/.test(id) || id === 'cdse-id') return;
   if (/^cdfx-/.test(id)) { if (id === 'cdfx-g' || (id === 'cdfx-b' && fxServer(c))) cdseApply(); else savePrefs(); return; }
+  if (id === 'cdse-viz') {
+    const v = e.target.value;
+    if (v === 'custom') { CD.custom = true; renderCdse(); const f = $('#cdse-layer'); if (f) f.focus(); return; }
+    CD.custom = false;
+    if (v.startsWith('v:')) c.viz = v.slice(2); else { c.viz = ''; c.layer = v.slice(2); }
+  }
   if (id === 'cdse-layer') { const v = e.target.value.trim(); if (!v) return; c.viz = ''; c.layer = v; }
   if (id === 'cdse-from' || id === 'cdse-to') {
     const from = $('#cdse-from').value, to = $('#cdse-to').value;
@@ -6399,11 +6452,11 @@ bp.addEventListener('change', e => {
     c.from = from; c.to = to;
   }
   if (id === 'cdse-prio') c.priority = e.target.value;
-  if (id === 'cdse-cc') c.cc = +e.target.value;
+  if (id === 'cdse-cc') { c.cc = +e.target.value; if (cdseScene(c)) { savePrefs(); renderCdse(); return; } }
   if (id === 'cdse-carrier') c.carrier = e.target.value;
   if (id === 'cdse-sat') { c.sat = e.target.value; savePrefs(); renderCdse(); return; }
-  if (id === 'cdse-under') { c.under = e.target.value; savePrefs(); cdseUnder(); return; }
-  if (id === 'cdse-outline') { c.outline = e.target.checked; savePrefs(); cdseDayOutline(); return; }
+  if (id === 'cdse-under') { c.under = e.target.checked ? 'esri' : 'none'; savePrefs(); cdseUnder(); return; }
+  if (id === 'cdse-outline') { c.outline = e.target.checked; savePrefs(); cdseOutline(); return; }
   cdseApply();
 });
 bp.addEventListener('input', e => {
@@ -6416,17 +6469,12 @@ bp.addEventListener('input', e => {
     cdseFx();   // on-screen ones follow the slider; Copernicus redraws when it is let go
   }
 });
-bp.addEventListener('mouseover', e => {
-  const d = e.target.closest('[data-cdfp]');
-  const k = d ? d.dataset.cdfp : null;
-  if (k !== CD.fpKey) { CD.fpKey = k; cdseFootprints(k); }
-});
-bp.addEventListener('mouseleave', () => { CD.fpKey = null; cdseFootprints(null); });
 let cdseMoveT = 0;
+// Following the map centre: list the images there once the map settles.
 map.on('moveend', () => {
-  if (prefs.base !== 'cdse') return;
+  if (prefs.base !== 'cdse' || prefs.cdse.pt) return;
   clearTimeout(cdseMoveT);
-  cdseMoveT = setTimeout(() => { renderCdse(); avLoad(ymOf(cdseDay(prefs.cdse))).then(() => cdseDayOutline()); }, 700);
+  cdseMoveT = setTimeout(() => renderCdse(), 700);
 });
 
 /* =========================================================================
