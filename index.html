@@ -384,15 +384,63 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .cdse-classes i{width:11px;height:11px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.2)}
 .cdse-quick{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
 .cdse-quick .btn.sm{height:24px;padding:0 7px;font-size:12px}
-.cdse-acq-head{display:flex;align-items:center;justify-content:space-between}
-.cdse-days{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;max-height:260px;overflow:auto}
-.cdse-day{width:100%;display:flex;align-items:center;gap:8px;text-align:left;border:1px solid transparent;background:var(--panel);border-radius:7px;padding:6px 8px;cursor:pointer;color:inherit;font:inherit}
-.cdse-day:hover{border-color:var(--accent)}
-.cdse-day.on{border-color:var(--accent);background:var(--accent-weak)}
-.cdse-day.over{opacity:.55}
-.cd-main{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;font-size:12.5px}
-.cd-main small{flex:1 1 100%;color:var(--muted);font-size:11.5px}
-.cd-tag{font:600 10px/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;padding:2px 5px;border-radius:4px;background:var(--accent);color:var(--accent-fg)}
+.cd-box{display:flex;flex-direction:column;gap:10px}
+.sub-form .seg.light,.cd-tabs.seg.light{background:var(--panel)}
+.cd-tabs{display:flex;width:100%}
+.cd-tabs button{flex:1}
+.cd-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cd-mode button{height:26px;padding:0 8px;font-size:12px}
+.cd-idrow{display:flex!important;gap:6px;font-weight:400!important}
+.cd-idrow input{flex:1}
+.cd-stepper{display:flex;align-items:center;gap:6px}
+.cd-datebtn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:34px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:inherit;font:inherit;cursor:pointer}
+.cd-datebtn:hover{border-color:var(--accent)}
+.cd-datebtn .ic{width:16px;height:16px;color:var(--muted)}
+.cd-state{margin:0;font-size:12px;color:var(--muted);text-align:center}
+.cd-state.warn{color:var(--danger)}
+.cd-latest{align-self:stretch;justify-content:center}
+.cd-cal{display:flex;flex-direction:column;gap:6px}
+.cd-calhead{display:flex;align-items:center;justify-content:space-between;font-size:13px;text-transform:capitalize}
+.cd-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cd-wd{text-align:center;font-size:11px;color:var(--muted);padding:2px 0;text-transform:capitalize}
+.cd-grid button{height:30px;border:1px solid transparent;border-radius:6px;background:var(--panel);color:inherit;font:500 12.5px var(--f-ui);cursor:pointer;padding:0}
+.cd-grid button:hover:not(:disabled){border-color:var(--accent)}
+.cd-grid button.has{border:2px solid var(--accent);font-weight:700}
+.cd-grid button.cloudy{border:1px dashed var(--muted)}
+.cd-grid button.sel{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.cd-grid button.future{opacity:.35;cursor:default}
+.cd-key{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.cd-key span{display:flex;align-items:center;gap:5px}
+.cd-key i{width:12px;height:12px;border-radius:3px;background:var(--panel)}
+.cd-key .k-has{border:2px solid var(--accent)}
+.cd-key .k-cloudy{border:1px dashed var(--muted)}
+.cd-views{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.cd-view{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:6px 8px;border:1px solid transparent;border-radius:8px;background:var(--panel);color:inherit;font:inherit;cursor:pointer}
+.cd-view:hover{border-color:var(--line)}
+.cd-view.on{border-color:var(--accent);background:var(--accent-weak)}
+.cd-sw{width:34px;height:34px;border-radius:6px;flex:none;border:1px solid rgba(0,0,0,.15)}
+.cd-vt{display:flex;flex-direction:column;min-width:0;gap:1px}
+.cd-vt b{font-size:13px;font-weight:600}
+.cd-vt small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cd-view.on .cd-vt small{white-space:normal}
+.cd-vx{display:flex;flex-direction:column;gap:5px;padding:6px 8px 4px 52px}
+.cd-meta{color:var(--muted);font:500 11px var(--f-mono);margin:0}
+.cd-det > summary{cursor:pointer;font-weight:600;font-size:12.5px;list-style:none;display:flex;align-items:center;gap:6px}
+.cd-det > summary::before{content:'▸';font-size:10px;color:var(--muted);transition:transform .15s}
+.cd-det[open] > summary::before{transform:rotate(90deg)}
+.cd-det > summary::-webkit-details-marker{display:none}
+details.sub-form:not([open]){gap:0}
+.cd-dgroup{display:flex;flex-direction:column;gap:3px}
+.cd-dhead{display:flex;align-items:baseline;justify-content:space-between;border:0;background:none;color:inherit;font:inherit;padding:4px 2px;cursor:pointer;font-size:12.5px}
+.cd-dhead small{color:var(--accent);font-weight:600;font-size:11.5px}
+.cd-dhead.over{opacity:.6}
+.cd-imgs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.cd-imgs li{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;background:var(--panel);border:1px solid transparent;font-size:12.5px}
+.cd-imgs li:hover{border-color:#ffd23f}
+.cd-imgs li.over{opacity:.55}
+.cd-sat{font:600 11px var(--f-mono);padding:2px 5px;border-radius:4px;background:var(--panel-2);flex:none}
+.cd-it{flex:1;min-width:0;display:flex;flex-direction:column}
+.cd-it small{color:var(--muted);font-size:11.5px}
 .cd-cc{display:flex;align-items:center;gap:5px;font:500 11.5px var(--f-mono);color:var(--muted);flex:none}
 .cd-cc.radar{font:500 11px var(--f-ui)}
 .cc-bar{width:36px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
@@ -3728,6 +3776,33 @@ fr: {"wm.title": "Filigrane", "wm.mine": "Afficher le filigrane", "wm.mineHelp":
 ru: {"wm.title": "Водяной знак", "wm.mine": "Показывать водяной знак", "wm.mineHelp": "Только для вас, в этом браузере.", "wm.def": "Показывать, когда открывают карту", "wm.defHelp": "Сохраняется с картой. Выключено: посетители видят карту без него; каждый может включить или выключить его для себя.", "wm.defHelpShared": "Так начинает каждый, кто открывает эту карту. Каждый может включить или выключить его для себя.", "pv.menu": "Посмотреть как новый зритель", "pv.bar": "Просмотр как новый зритель", "pv.barHelp": "Без входа, только просмотр, без ваших сохранённых настроек. Здесь ничего не сохраняется.", "pv.barHelpLocal": "Только просмотр, без ваших настроек, ничего не сохраняется. Правки во вкладке редактора сразу появляются здесь.", "pv.restart": "Начать заново", "pv.exit": "Выйти из просмотра", "pv.blocked": "Браузер заблокировал вкладку просмотра. Разрешите всплывающие окна для этого сайта и попробуйте снова.", "cdse.load": "Показать на карте", "cdse.show": "Что показывать", "cdse.grpViews": "Встроенные виды Sentinel-2", "cdse.grpLayers": "Слои вашей конфигурации", "cdse.custom": "Ввести имя слоя…", "cdse.layerName": "Имя слоя", "cdse.notInCfg": "{name} (нет в вашей конфигурации)", "cdse.capsLoading": "Читаю слои вашей конфигурации…", "cdse.capsNet": "Не удалось связаться с Copernicus. Проверьте ID инстанса и соединение; имя слоя можно ввести вручную.", "cdse.capsNone": "В этой конфигурации пока нет слоёв. Добавьте их в панели Sentinel Hub.", "cdse.capsReload": "Обновить список", "cdse.missing": "«{name}» нет в этой конфигурации, поэтому Copernicus не может его показать. Выберите слой из списка.", "cdse.carrier": "Использует снимки слоя", "cdse.carrierHelp": "Встроенные виды перерисовывают снимки одного из ваших слоёв. Выберите слой Sentinel-2 L2A.", "cdse.bands": "Каналы: {b}", "cdse.layerId": "ID слоя: {name}", "cdse.cfgAbout": "из вашей конфигурации", "cdse.prio": "Где снимки перекрываются, показывать", "cdse.p.mostRecent": "Самый новый снимок", "cdse.p.leastCC": "Наименее облачный снимок", "cdse.p.leastRecent": "Самый старый снимок", "cdse.last": "Последние", "cdse.r7": "7 дней", "cdse.r30": "30 дней", "cdse.r90": "90 дней", "cdse.r365": "Год", "cdse.back": "Назад к {from} – {to}", "cdse.acq": "Снимки в этом виде", "cdse.acqRefresh": "Искать снова", "cdse.sat": "Спутник", "cdse.sat.auto": "Как в слое ({s})", "cdse.sat.DSS2": "Sentinel-2 L2A", "cdse.sat.DSS1": "Sentinel-2 L1C", "cdse.sat.DSS3": "Радар Sentinel-1", "cdse.sat.DSS8": "Sentinel-3 OLCI", "cdse.acqLoading": "Ищу снимки…", "cdse.acqZoom": "Приблизьте карту, чтобы увидеть список снимков.", "cdse.acqNone": "Здесь нет снимков между {from} и {to}. Попробуйте более широкий период.", "cdse.acqErr": "Не удалось получить список снимков: {msg}", "cdse.acqSum": "{n} снимков за {d} дн. между {from} и {to}.", "cdse.acqHow.mostRecent": "В каждой точке карта показывает самый новый снимок с облачностью до {cc}%.", "cdse.acqHow.leastCC": "В каждой точке карта показывает наименее облачный снимок за эти даты.", "cdse.acqHow.leastRecent": "В каждой точке карта показывает самый старый снимок с облачностью до {cc}%.", "cdse.acqMore": "Показаны только первые {n}; сузьте период, чтобы увидеть все.", "cdse.acqTip": "Нажмите день, чтобы показать только его. Наведите, чтобы увидеть, где его снимки.", "cdse.img1": "1 снимок", "cdse.imgN": "{n} снимков", "cdse.cloud": "облачность {v}%", "cdse.radar": "радар, видит сквозь облака", "cdse.over": "выше лимита облачности", "cdse.top": "Сверху", "cdse.dayOnly": "Показаны только снимки за {d}.", "cdse.errSrv": "Ответ Copernicus: {msg}", "cdv.tc": "Естественные цвета", "cdv.tcD": "То, что увидел бы глаз с орбиты: красный, зелёный и синий каналы.", "cdv.hl": "Улучшенные естественные цвета", "cdv.hlD": "Естественные цвета с мягким контрастом: детали видны и в ярких городах, и в тёмных лесах.", "cdv.fc": "Псевдоцвета (растительность)", "cdv.fcD": "Ближний ИК как красный: здоровые растения красные, города серо-синие, вода тёмная.", "cdv.urban": "Псевдоцвета (застройка)", "cdv.urbanD": "Коротковолновый ИК: застройка и голая земля фиолетовые и коричневые, растения зелёные.", "cdv.agri": "Сельское хозяйство", "cdv.agriD": "Растущие посевы ярко-зелёные; голые или убранные поля коричневые или розовые.", "cdv.swir": "Коротковолновый ИК (SWIR)", "cdv.swirD": "Видит сквозь дымку и дым. Свежие гари тёмно-красные, вода чёрная.", "cdv.ndvi": "Индекс растительности (NDVI)", "cdv.ndviD": "Насколько густая и зелёная растительность. Тёмно-зелёное — густой здоровый покров; бледное и коричневое — голая земля, дороги или города.", "cdv.ndviLo": "Голая земля / вода", "cdv.ndviHi": "Густая растительность", "cdv.moist": "Индекс влажности", "cdv.moistD": "Вода в растениях и почве. Синее — влажно, красное — сухо.", "cdv.moistLo": "Сухо", "cdv.moistHi": "Влажно", "cdv.ndwi": "Индекс воды (NDWI)", "cdv.ndwiD": "Открытая вода синяя, суша зелёная. Удобно для рек, водохранилищ и паводков.", "cdv.ndwiLo": "Суша", "cdv.ndwiHi": "Вода", "cdv.nbr": "Индекс гарей (NBR)", "cdv.nbrD": "Сгоревшая земля тёмно-красная и коричневая, здоровые растения зелёные. Полезно для пожаров и выжженных полей и лесов.", "cdv.nbrLo": "Сгорело", "cdv.nbrHi": "Здоровая растительность", "cdv.scl": "Классификация сцены", "cdv.sclD": "Как Copernicus классифицировал каждый пиксель: растительность, почва, вода, облака, тени, снег. Удобно, чтобы проверить, что место действительно без облаков.", "scl.veg": "Растительность", "scl.bare": "Голая земля", "scl.water": "Вода", "scl.cloud": "Облака", "scl.cirrus": "Тонкие перистые", "scl.shadow": "Тень облаков", "scl.snow": "Снег или лёд", "scl.bad": "Нет данных или сбой"}
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdse.connect": "Connect", "cdse.done": "Done", "cdse.tabView": "View", "cdse.tabImgs": "Images here", "cdse.netShort": "Copernicus could not be reached from this page", "cdse.noLatest": "No clear images found here in the last few months. Try a higher cloud limit.", "cdse.zoomIn": "Zoom in to see which days have images here.", "cdse.checking": "Checking which days have images…", "cdse.noneThisDay": "No image here on this day. Use the arrows to jump to one.", "cdse.radarShort": "Radar", "cdse.tooCloudy": "{v}% cloud, over your limit, so nothing is drawn", "cdse.prevImg": "Previous day with an image", "cdse.nextImg": "Next day with an image", "cdse.latest": "Show latest date", "cdse.rangeHelp": "Stitches the images of several days into one picture.", "cdse.date": "Date", "cdse.single": "One day", "cdse.range": "Range", "cdse.prevMonth": "Previous month", "cdse.nextMonth": "Next month", "cdse.kHas": "Image", "cdse.kCloudy": "Only over {cc}% cloud", "cdse.calErr": "Could not check the days: {msg}. You can still pick any day.", "cdse.fx": "Brightness and colour", "cdse.fx.b": "Brightness", "cdse.fx.c": "Contrast", "cdse.fx.s": "Saturation", "cdse.fxReset": "Reset", "cdse.fxHelp": "Only changes how the images look on your screen; works with every view and layer.", "cdse.more": "More options", "cdse.satHelp": "Which satellite the calendar and image list look at.", "cdse.changeId": "Change instance ID", "cdse.sat.s2l2a": "Sentinel-2 L2A", "cdse.sat.s2l1c": "Sentinel-2 L1C", "cdse.sat.s1": "Sentinel-1 radar", "cdse.acqErrHelp": "The map itself still works. This list uses the free Copernicus catalogue, and your instance as a backup.", "cdse.retry": "Try again", "cdse.noneDay": "No images of this area on {d}.", "cdse.imgsDay": "{n} images of this area on {d}.", "cdse.showDay": "Show this day", "cdse.tile": "tile {t}", "cdse.imgsTip": "Point at an image to see its outline on the map.", "cdse.imgsOn": "Images on {d}"},
+uk: {"cdse.connect": "Під’єднати", "cdse.done": "Готово", "cdse.tabView": "Перегляд", "cdse.tabImgs": "Знімки тут", "cdse.netShort": "Сторінка не змогла зв’язатися з Copernicus", "cdse.noLatest": "За останні місяці тут немає чистих знімків. Спробуйте вищий ліміт хмарності.", "cdse.zoomIn": "Наблизьте карту, щоб побачити, за які дні тут є знімки.", "cdse.checking": "Перевіряю, за які дні є знімки…", "cdse.noneThisDay": "Цього дня тут немає знімка. Стрілки перейдуть до найближчого.", "cdse.radarShort": "Радар", "cdse.tooCloudy": "Хмарність {v}%, понад ліміт, тож нічого не показано", "cdse.prevImg": "Попередній день зі знімком", "cdse.nextImg": "Наступний день зі знімком", "cdse.latest": "Показати останню дату", "cdse.rangeHelp": "Зшиває знімки кількох днів в одне зображення.", "cdse.date": "Дата", "cdse.single": "Один день", "cdse.range": "Період", "cdse.prevMonth": "Попередній місяць", "cdse.nextMonth": "Наступний місяць", "cdse.kHas": "Знімок", "cdse.kCloudy": "Лише з хмарністю понад {cc}%", "cdse.calErr": "Не вдалося перевірити дні: {msg}. Можна вибрати будь-який день.", "cdse.fx": "Яскравість і колір", "cdse.fx.b": "Яскравість", "cdse.fx.c": "Контраст", "cdse.fx.s": "Насиченість", "cdse.fxReset": "Скинути", "cdse.fxHelp": "Змінює лише вигляд знімків на вашому екрані; працює з усіма видами й шарами.", "cdse.more": "Більше параметрів", "cdse.satHelp": "Який супутник перевіряють календар і список знімків.", "cdse.changeId": "Змінити ID інстансу", "cdse.sat.s2l2a": "Sentinel-2 L2A", "cdse.sat.s2l1c": "Sentinel-2 L1C", "cdse.sat.s1": "Радар Sentinel-1", "cdse.acqErrHelp": "Сама карта працює. Список бере дані з безкоштовного каталогу Copernicus, а резервно — з вашого інстансу.", "cdse.retry": "Спробувати ще", "cdse.noneDay": "Немає знімків цієї області за {d}.", "cdse.imgsDay": "{n} знімків цієї області за {d}.", "cdse.showDay": "Показати цей день", "cdse.tile": "тайл {t}", "cdse.imgsTip": "Наведіть на знімок, щоб побачити його контур на карті.", "cdse.imgsOn": "Знімки за {d}"},
+pl: {"cdse.connect": "Połącz", "cdse.done": "Gotowe", "cdse.tabView": "Widok", "cdse.tabImgs": "Zdjęcia tutaj", "cdse.netShort": "Ta strona nie mogła połączyć się z Copernicus", "cdse.noLatest": "W ostatnich miesiącach brak tu czystych zdjęć. Spróbuj wyższego limitu chmur.", "cdse.zoomIn": "Przybliż mapę, by zobaczyć, z których dni są tu zdjęcia.", "cdse.checking": "Sprawdzam, z których dni są zdjęcia…", "cdse.noneThisDay": "Tego dnia nie ma tu zdjęcia. Strzałki przeniosą do najbliższego.", "cdse.radarShort": "Radar", "cdse.tooCloudy": "Zachmurzenie {v}%, powyżej limitu, więc nic nie widać", "cdse.prevImg": "Poprzedni dzień ze zdjęciem", "cdse.nextImg": "Następny dzień ze zdjęciem", "cdse.latest": "Pokaż najnowszą datę", "cdse.rangeHelp": "Łączy zdjęcia z kilku dni w jeden obraz.", "cdse.date": "Data", "cdse.single": "Jeden dzień", "cdse.range": "Zakres", "cdse.prevMonth": "Poprzedni miesiąc", "cdse.nextMonth": "Następny miesiąc", "cdse.kHas": "Zdjęcie", "cdse.kCloudy": "Tylko powyżej {cc}% chmur", "cdse.calErr": "Nie udało się sprawdzić dni: {msg}. Możesz wybrać dowolny dzień.", "cdse.fx": "Jasność i kolor", "cdse.fx.b": "Jasność", "cdse.fx.c": "Kontrast", "cdse.fx.s": "Nasycenie", "cdse.fxReset": "Resetuj", "cdse.fxHelp": "Zmienia tylko wygląd zdjęć na twoim ekranie; działa z każdym widokiem i warstwą.", "cdse.more": "Więcej opcji", "cdse.satHelp": "Który satelita jest sprawdzany w kalendarzu i na liście zdjęć.", "cdse.changeId": "Zmień ID instancji", "cdse.sat.s2l2a": "Sentinel-2 L2A", "cdse.sat.s2l1c": "Sentinel-2 L1C", "cdse.sat.s1": "Radar Sentinel-1", "cdse.acqErrHelp": "Sama mapa działa. Lista korzysta z darmowego katalogu Copernicus, a awaryjnie z twojej instancji.", "cdse.retry": "Spróbuj ponownie", "cdse.noneDay": "Brak zdjęć tego obszaru z {d}.", "cdse.imgsDay": "{n} zdjęć tego obszaru z {d}.", "cdse.showDay": "Pokaż ten dzień", "cdse.tile": "kafel {t}", "cdse.imgsTip": "Najedź na zdjęcie, by zobaczyć jego obrys na mapie.", "cdse.imgsOn": "Zdjęcia z {d}"},
+de: {"cdse.connect": "Verbinden", "cdse.done": "Fertig", "cdse.tabView": "Ansicht", "cdse.tabImgs": "Bilder hier", "cdse.netShort": "Copernicus war von dieser Seite aus nicht erreichbar", "cdse.noLatest": "Hier gibt es in den letzten Monaten keine klaren Bilder. Versuche eine höhere Wolkengrenze.", "cdse.zoomIn": "Zoome hinein, um zu sehen, an welchen Tagen es hier Bilder gibt.", "cdse.checking": "Prüfe, an welchen Tagen es Bilder gibt…", "cdse.noneThisDay": "An diesem Tag gibt es hier kein Bild. Die Pfeile springen zum nächsten.", "cdse.radarShort": "Radar", "cdse.tooCloudy": "{v} % Wolken, über deiner Grenze, daher wird nichts gezeigt", "cdse.prevImg": "Vorheriger Tag mit Bild", "cdse.nextImg": "Nächster Tag mit Bild", "cdse.latest": "Neuestes Datum zeigen", "cdse.rangeHelp": "Setzt die Bilder mehrerer Tage zu einem Bild zusammen.", "cdse.date": "Datum", "cdse.single": "Ein Tag", "cdse.range": "Zeitraum", "cdse.prevMonth": "Voriger Monat", "cdse.nextMonth": "Nächster Monat", "cdse.kHas": "Bild", "cdse.kCloudy": "Nur über {cc} % Wolken", "cdse.calErr": "Tage konnten nicht geprüft werden: {msg}. Du kannst trotzdem jeden Tag wählen.", "cdse.fx": "Helligkeit und Farbe", "cdse.fx.b": "Helligkeit", "cdse.fx.c": "Kontrast", "cdse.fx.s": "Sättigung", "cdse.fxReset": "Zurücksetzen", "cdse.fxHelp": "Ändert nur, wie die Bilder auf deinem Bildschirm aussehen; gilt für jede Ansicht und Ebene.", "cdse.more": "Weitere Optionen", "cdse.satHelp": "Welchen Satelliten Kalender und Bilderliste prüfen.", "cdse.changeId": "Instanz-ID ändern", "cdse.sat.s2l2a": "Sentinel-2 L2A", "cdse.sat.s2l1c": "Sentinel-2 L1C", "cdse.sat.s1": "Sentinel-1-Radar", "cdse.acqErrHelp": "Die Karte selbst funktioniert. Die Liste nutzt den freien Copernicus-Katalog und ersatzweise deine Instanz.", "cdse.retry": "Erneut versuchen", "cdse.noneDay": "Keine Bilder dieses Gebiets vom {d}.", "cdse.imgsDay": "{n} Bilder dieses Gebiets vom {d}.", "cdse.showDay": "Diesen Tag zeigen", "cdse.tile": "Kachel {t}", "cdse.imgsTip": "Zeige auf ein Bild, um seinen Umriss auf der Karte zu sehen.", "cdse.imgsOn": "Bilder vom {d}"},
+fr: {"cdse.connect": "Connecter", "cdse.done": "Terminé", "cdse.tabView": "Affichage", "cdse.tabImgs": "Images ici", "cdse.netShort": "Copernicus est injoignable depuis cette page", "cdse.noLatest": "Aucune image dégagée ici ces derniers mois. Essayez une limite de nuages plus haute.", "cdse.zoomIn": "Zoomez pour voir quels jours ont des images ici.", "cdse.checking": "Recherche des jours avec images…", "cdse.noneThisDay": "Pas d’image ici ce jour-là. Les flèches mènent à la plus proche.", "cdse.radarShort": "Radar", "cdse.tooCloudy": "{v} % de nuages, au-dessus de votre limite : rien n’est affiché", "cdse.prevImg": "Jour précédent avec image", "cdse.nextImg": "Jour suivant avec image", "cdse.latest": "Afficher la date la plus récente", "cdse.rangeHelp": "Assemble les images de plusieurs jours en une seule.", "cdse.date": "Date", "cdse.single": "Un jour", "cdse.range": "Période", "cdse.prevMonth": "Mois précédent", "cdse.nextMonth": "Mois suivant", "cdse.kHas": "Image", "cdse.kCloudy": "Seulement au-dessus de {cc} % de nuages", "cdse.calErr": "Impossible de vérifier les jours : {msg}. Vous pouvez quand même choisir un jour.", "cdse.fx": "Luminosité et couleur", "cdse.fx.b": "Luminosité", "cdse.fx.c": "Contraste", "cdse.fx.s": "Saturation", "cdse.fxReset": "Réinitialiser", "cdse.fxHelp": "Modifie seulement l’apparence des images à l’écran ; fonctionne avec toutes les vues et couches.", "cdse.more": "Plus d’options", "cdse.satHelp": "Satellite consulté par le calendrier et la liste d’images.", "cdse.changeId": "Changer l’ID d’instance", "cdse.sat.s2l2a": "Sentinel-2 L2A", "cdse.sat.s2l1c": "Sentinel-2 L1C", "cdse.sat.s1": "Radar Sentinel-1", "cdse.acqErrHelp": "La carte fonctionne toujours. Cette liste utilise le catalogue gratuit Copernicus, et votre instance en secours.", "cdse.retry": "Réessayer", "cdse.noneDay": "Aucune image de cette zone le {d}.", "cdse.imgsDay": "{n} images de cette zone le {d}.", "cdse.showDay": "Afficher ce jour", "cdse.tile": "tuile {t}", "cdse.imgsTip": "Survolez une image pour voir son contour sur la carte.", "cdse.imgsOn": "Images du {d}"},
+ru: {"cdse.connect": "Подключить", "cdse.done": "Готово", "cdse.tabView": "Просмотр", "cdse.tabImgs": "Снимки здесь", "cdse.netShort": "Страница не смогла связаться с Copernicus", "cdse.noLatest": "За последние месяцы здесь нет чистых снимков. Попробуйте более высокий лимит облачности.", "cdse.zoomIn": "Приблизьте карту, чтобы увидеть, за какие дни здесь есть снимки.", "cdse.checking": "Проверяю, за какие дни есть снимки…", "cdse.noneThisDay": "В этот день здесь нет снимка. Стрелки перейдут к ближайшему.", "cdse.radarShort": "Радар", "cdse.tooCloudy": "Облачность {v}%, выше лимита, поэтому ничего не показано", "cdse.prevImg": "Предыдущий день со снимком", "cdse.nextImg": "Следующий день со снимком", "cdse.latest": "Показать последнюю дату", "cdse.rangeHelp": "Сшивает снимки нескольких дней в одно изображение.", "cdse.date": "Дата", "cdse.single": "Один день", "cdse.range": "Период", "cdse.prevMonth": "Предыдущий месяц", "cdse.nextMonth": "Следующий месяц", "cdse.kHas": "Снимок", "cdse.kCloudy": "Только с облачностью выше {cc}%", "cdse.calErr": "Не удалось проверить дни: {msg}. Можно выбрать любой день.", "cdse.fx": "Яркость и цвет", "cdse.fx.b": "Яркость", "cdse.fx.c": "Контраст", "cdse.fx.s": "Насыщенность", "cdse.fxReset": "Сбросить", "cdse.fxHelp": "Меняет только вид снимков на вашем экране; работает со всеми видами и слоями.", "cdse.more": "Другие параметры", "cdse.satHelp": "Какой спутник проверяют календарь и список снимков.", "cdse.changeId": "Сменить ID инстанса", "cdse.sat.s2l2a": "Sentinel-2 L2A", "cdse.sat.s2l1c": "Sentinel-2 L1C", "cdse.sat.s1": "Радар Sentinel-1", "cdse.acqErrHelp": "Сама карта работает. Список берёт данные из бесплатного каталога Copernicus, а резервно — из вашего инстанса.", "cdse.retry": "Повторить", "cdse.noneDay": "Нет снимков этой области за {d}.", "cdse.imgsDay": "{n} снимков этой области за {d}.", "cdse.showDay": "Показать этот день", "cdse.tile": "тайл {t}", "cdse.imgsTip": "Наведите на снимок, чтобы увидеть его контур на карте.", "cdse.imgsOn": "Снимки за {d}"}
+});
+
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdse.imgsDay1": "1 image of this area on {d}."},
+uk: {"cdse.imgsDay1": "1 знімок цієї області за {d}."},
+pl: {"cdse.imgsDay1": "1 zdjęcie tego obszaru z {d}."},
+de: {"cdse.imgsDay1": "1 Bild dieses Gebiets vom {d}."},
+fr: {"cdse.imgsDay1": "1 image de cette zone le {d}."},
+ru: {"cdse.imgsDay1": "1 снимок этой области за {d}."}
+});
+
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdv.hl": "Brighter natural colour", "cdv.hlD": "True colour lifted for dark scenes: brighter shadows and stronger colour. Good in autumn and winter, when the sun is low.", "cdv.tcD": "What your eyes would see from orbit, with the same brightness and contrast as Copernicus Browser."},
+uk: {"cdv.hl": "Яскравіші природні кольори", "cdv.hlD": "Справжні кольори, підсвітлені для темних сцен: світліші тіні й насиченіші кольори. Добре восени та взимку, коли сонце низько.", "cdv.tcD": "Те, що побачило б око з орбіти, з тією ж яскравістю й контрастом, що в Copernicus Browser."},
+pl: {"cdv.hl": "Jaśniejsze kolory naturalne", "cdv.hlD": "Kolory naturalne rozjaśnione dla ciemnych scen: jaśniejsze cienie i mocniejsze kolory. Dobre jesienią i zimą, gdy słońce jest nisko.", "cdv.tcD": "To, co zobaczyłoby oko z orbity, z tą samą jasnością i kontrastem co w Copernicus Browser."},
+de: {"cdv.hl": "Hellere Naturfarben", "cdv.hlD": "Echtfarben für dunkle Szenen aufgehellt: hellere Schatten, kräftigere Farben. Gut im Herbst und Winter bei tiefer Sonne.", "cdv.tcD": "Was das Auge aus dem Orbit sähe, mit derselben Helligkeit und demselben Kontrast wie im Copernicus Browser."},
+fr: {"cdv.hl": "Couleurs naturelles plus claires", "cdv.hlD": "Couleurs naturelles éclaircies pour les scènes sombres : ombres plus claires, couleurs plus vives. Idéal en automne et en hiver, quand le soleil est bas.", "cdv.tcD": "Ce que verrait l’œil depuis l’orbite, avec la même luminosité et le même contraste que Copernicus Browser."},
+ru: {"cdv.hl": "Более яркие естественные цвета", "cdv.hlD": "Естественные цвета, осветлённые для тёмных сцен: светлее тени, насыщеннее цвета. Хорошо осенью и зимой, когда солнце низко.", "cdv.tcD": "То, что увидел бы глаз с орбиты, с той же яркостью и контрастом, что в Copernicus Browser."}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -3899,6 +3974,8 @@ const KIND = k => t('kind.' + k);
    Icons
    ========================================================================= */
 const IC = {
+  chevL: '<path d="M14.5 5.5L8 12l6.5 6.5"/>',
+  chevR: '<path d="M9.5 5.5L16 12l-6.5 6.5"/>',
   refresh: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4.6h-4.6"/>',
   select: '<path d="M5.5 3.5l12.5 7-5.4 1.6-2.4 5.4z"/>',
   marker: '<path d="M12 21s-6.5-6-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 15 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.2"/>',
@@ -4845,12 +4922,12 @@ function renderBasePanel() {
   const wbOpts = cur => WB.list ? WB.list.map(x => `<option value="${x.num}" ${+cur === x.num ? 'selected' : ''}>${x.date}</option>`).join('') : `<option>${esc(t('wb.loading'))}</option>`;
   p.innerHTML = `
     <div class="bp-head"><span class="eyebrow">${esc(t('base.title'))}</span><button class="icon-btn sm" data-bp="close" aria-label="${esc(t('base.close'))}">${icon('close')}</button></div>
+    ${showCdse ? cdseSection() : ''}
     <div class="bp-list">${BASE_ORDER.map(id => `<button class="bp-card ${prefs.base === id ? 'on' : ''}" data-base="${id}"><span class="bp-thumb t-${id}"></span><span><strong>${esc(t('b.' + id))}</strong><small>${esc(t('bn.' + id))}</small></span></button>`).join('')}</div>
     <div class="bp-opts">
       ${prefs.base === 's2' ? `<label class="field"><span>${esc(t('base.year'))}</span><select id="bp-year">${S2_YEARS.map(y => `<option ${y === prefs.year ? 'selected' : ''}>${y}</option>`).join('')}</select></label>` : ''}
       ${prefs.base === 'wayback' ? `<label class="field"><span>${esc(t('wb.release'))}</span><select id="bp-wayback">${wbOpts(prefs.wayback || (WB.list && WB.list[0].num))}</select><small>${esc(t('wb.help'))}</small></label>` : ''}
       ${showGoogle ? googleSection() : ''}
-      ${showCdse ? cdseSection() : ''}
     </div>
     <div class="bp-section">
       <span class="eyebrow">${esc(t('base.overlays'))}</span>
@@ -4889,7 +4966,7 @@ $('#basePanel').addEventListener('click', e => {
   if (b) {
     const id = b.dataset.base;
     cdseOpen = id === 'cdse'; googleOpen = id === 'google';
-    if (id === 'cdse') { cdseError = ''; if (prefs.cdse.id) setBase('cdse'); }
+    if (id === 'cdse') { cdseError = ''; if (prefs.cdse.id) setBase('cdse'); setTimeout(() => { $('#basePanel').scrollTop = 0; }, 0); }
     else if (id === 'google') { googleError = ''; if (googleKey()) setBase(id); }
     else setBase(id);
     renderBasePanel(); return;
@@ -4924,7 +5001,6 @@ $('#basePanel').addEventListener('submit', e => {
     googleError = ''; G.results = {}; G.jsBroken = G.jsBroken && G.jsKey === key; savePrefs(); setBase('google');
     return;
   }
-  if (e.target.id === 'cdseForm') cdseSubmit();
 });
 
 let scaleCtl = null;
@@ -5709,20 +5785,38 @@ $('#basePanel').addEventListener('input', e => {
 
 /* =========================================================================
    Copernicus Data Space live satellite (Sentinel Hub OGC services)
-   - The layers your own configuration has, read from WMS GetCapabilities and offered
-     as a proper list (the old free-text box only ever suggested the value already in it).
-   - Built-in Sentinel-2 views, drawn with EVALSCRIPT on the data of one of your layers,
-     like the visualisations in Copernicus Browser.
-   - Which image wins where several overlap (PRIORITY), cloud limit (MAXCC), date range.
-   - "Images in this view": the real acquisitions under the map (WFS), by day, with time,
-     cloud cover and footprints; click a day to show only that day.
+   Laid out like Copernicus Browser:
+   - View tab: one day (arrows jump between days that have images, a calendar marks
+     them, "Show latest date") or a date range; cloud limit; what to show as cards
+     (built-in Sentinel-2 views first, your configuration's own layers below);
+     brightness/contrast/saturation; more options.
+   - Images tab: the actual satellite passes under the map for the chosen day or
+     range: satellite, time, tile, cloud cover, outline on hover.
+   Which days have images comes from the public Copernicus catalogue (no account
+   needed); if that cannot be reached, from your instance's WFS service.
    ========================================================================= */
 const CDSE_HOST = 'https://sh.dataspace.copernicus.eu/ogc/';
-const CD = { caps: null, capsId: '', capsLoading: null, capsErr: '', acq: null, acqKey: '', acqLoading: false, acqErr: '', acqMore: false, acqCount: 0, fp: null, prev: null, custom: false };
+const CDSE_CAT = 'https://catalogue.dataspace.copernicus.eu/resto/api/collections/';
+const CD = {
+  caps: null, capsId: '', capsLoading: null, capsErr: '', fp: null, fpKey: null,
+  tab: 'view', setup: false, cal: null, calOpen: true, custom: false,
+  av: new Map(),        // availability per (collection, area, month): { loading, items, err, src }
+  areaKey: ''
+};
 
 /* ---------- Built-in Sentinel-2 views ---------- */
-const evRgb = (a, b, c, g = 2.5) => `function setup(){return{input:["${a}","${b}","${c}"],output:{bands:3}}}\nfunction evaluatePixel(s){return[${g}*s.${a},${g}*s.${b},${g}*s.${c}]}`;
-const evRamp = (bands, expr, stops) => `function setup(){return{input:[${bands.map(b => `"${b}"`).join(',')}],output:{bands:3}}}\nfunction nd(a,b){const d=a+b;return d?(a-b)/d:0}\nconst viz=new ColorRampVisualizer([${stops.map(([v, c]) => `[${v},0x${c}]`).join(',')}]);\nfunction evaluatePixel(s){return viz.process(${expr})}`;
+// Copernicus Browser's own tone mapping for colour composites (contrast with highlight
+// compression, gamma, a little saturation, sRGB). Much brighter than a plain gain of 2.5,
+// especially in autumn and winter when the sun is low.
+const tone = (midR = 0.13, sat = 1.2) => `const maxR=3.0,midR=${midR},sat=${sat},gamma=1.8,` + 'gOff=0.01,gOffPow=Math.pow(gOff,gamma),gOffRange=Math.pow(1+gOff,gamma)-gOffPow;\n'
+  + 'function clip(s){return s<0?0:s>1?1:s}\n'
+  + 'function adj(a,tx,ty,maxC){const ar=clip(a/maxC);return ar*(ar*(tx/maxC+ty-1)-ty)/(ar*(2*tx/maxC-1)-tx/maxC)}\n'
+  + 'function adjGamma(b){return(Math.pow(b+gOff,gamma)-gOffPow)/gOffRange}\n'
+  + 'function sAdj(a){return adjGamma(adj(a,midR,1,maxR))}\n'
+  + 'function satEnh(r,g,b){const avgS=(r+g+b)/3*(1-sat);return[clip(avgS+r*sat),clip(avgS+g*sat),clip(avgS+b*sat)]}\n'
+  + 'const sRGB=c=>c<=0.0031308?12.92*c:1.055*Math.pow(c,0.41666666666)-0.055;\n';
+const evTone = (a, b, c, m, st) => `function setup(){return{input:["${a}","${b}","${c}","dataMask"],output:{bands:4}}}\n${tone(m, st)}function evaluatePixel(s){const v=satEnh(sAdj(s.${a}),sAdj(s.${b}),sAdj(s.${c}));return[sRGB(v[0]),sRGB(v[1]),sRGB(v[2]),s.dataMask]}`;
+const evRamp = (bands, expr, stops) => `function setup(){return{input:[${bands.map(b => `"${b}"`).join(',')},"dataMask"],output:{bands:4}}}\nfunction nd(a,b){const d=a+b;return d?(a-b)/d:0}\nconst viz=new ColorRampVisualizer([${stops.map(([v, c]) => `[${v},0x${c}]`).join(',')}]);\nfunction evaluatePixel(s){const c=viz.process(${expr});return[c[0],c[1],c[2],s.dataMask]}`;
 const SCL_COL = { 0: [0, 0, 0], 1: [1, 0, 0.016], 2: [0.36, 0.36, 0.36], 3: [0.478, 0.271, 0.071], 4: [0, 0.749, 0.012], 5: [1, 0.902, 0.004], 6: [0.004, 0, 0.961], 7: [0.467, 0.467, 0.467], 8: [0.671, 0.671, 0.671], 9: [0.82, 0.82, 0.82], 10: [0.333, 0.784, 0.988], 11: [1, 0.302, 1] };
 const STOPS = {
   ndvi: [[-0.2, '0c0c0c'], [0, 'eaeaea'], [0.1, 'ccc682'], [0.2, '91bf51'], [0.3, '70a33f'], [0.4, '4f892d'], [0.5, '306d1c'], [0.6, '0f540a'], [1, '004400']],
@@ -5731,26 +5825,47 @@ const STOPS = {
   nbr: [[-0.5, '4d0000'], [-0.1, 'b33a00'], [0.1, 'f2d16b'], [0.3, '7fbf3f'], [0.6, '1a6b1a']]
 };
 const CDSE_VIEWS = [
-  { id: 'tc', script: evRgb('B04', 'B03', 'B02') },
-  { id: 'hl', script: 'function setup(){return{input:["B04","B03","B02"],output:{bands:3}}}\nconst f=v=>Math.cbrt(Math.max(0,0.6*v-0.035));\nfunction evaluatePixel(s){return[f(s.B04),f(s.B03),f(s.B02)]}' },
-  { id: 'fc', script: evRgb('B08', 'B04', 'B03') },
-  { id: 'urban', script: evRgb('B12', 'B11', 'B04') },
-  { id: 'agri', script: evRgb('B11', 'B08', 'B02') },
-  { id: 'swir', script: evRgb('B12', 'B8A', 'B04') },
+  { id: 'tc', script: evTone('B04', 'B03', 'B02'), sw: 'linear-gradient(135deg,#55703f,#b5a47a 55%,#7d99b8)' },
+  { id: 'hl', script: evTone('B04', 'B03', 'B02', 0.07, 1.35), sw: 'linear-gradient(135deg,#7f9a5e,#e0d2a6 55%,#a9c2dc)' },
+  { id: 'fc', script: evTone('B08', 'B04', 'B03'), sw: 'linear-gradient(135deg,#c2213a,#e86a6a 50%,#5d6f86)' },
+  { id: 'urban', script: evTone('B12', 'B11', 'B04'), sw: 'linear-gradient(135deg,#7c4d8f,#c49a7a 50%,#4f8a4a)' },
+  { id: 'agri', script: evTone('B11', 'B08', 'B02'), sw: 'linear-gradient(135deg,#3fbf4f,#c58a5e 55%,#e2a4c4)' },
+  { id: 'swir', script: evTone('B12', 'B8A', 'B04'), sw: 'linear-gradient(135deg,#2c6e2f,#9fbf5c 50%,#8c2a1e)' },
   { id: 'ndvi', script: evRamp(['B04', 'B08'], 'nd(s.B08,s.B04)', STOPS.ndvi), ramp: 'ndvi' },
   { id: 'moist', script: evRamp(['B8A', 'B11'], 'nd(s.B8A,s.B11)', STOPS.moist), ramp: 'moist' },
   { id: 'ndwi', script: evRamp(['B03', 'B08'], 'nd(s.B03,s.B08)', STOPS.ndwi), ramp: 'ndwi' },
   { id: 'nbr', script: evRamp(['B08', 'B12'], 'nd(s.B08,s.B12)', STOPS.nbr), ramp: 'nbr' },
-  { id: 'scl', script: `function setup(){return{input:["SCL"],output:{bands:3}}}\nconst C=${JSON.stringify(SCL_COL)};\nfunction evaluatePixel(s){return C[s.SCL]||[0,0,0]}`, classes: [[4, 'veg'], [5, 'bare'], [6, 'water'], [9, 'cloud'], [10, 'cirrus'], [3, 'shadow'], [11, 'snow'], [1, 'bad']] }
+  { id: 'scl', script: `function setup(){return{input:["SCL","dataMask"],output:{bands:4}}}\nconst C=${JSON.stringify(SCL_COL)};\nfunction evaluatePixel(s){const c=C[s.SCL]||[0,0,0];return[c[0],c[1],c[2],s.dataMask]}`, classes: [[4, 'veg'], [5, 'bare'], [6, 'water'], [9, 'cloud'], [10, 'cirrus'], [3, 'shadow'], [11, 'snow'], [1, 'bad']], sw: 'linear-gradient(90deg,#00bf03 0 25%,#ffe601 25% 50%,#0100f5 50% 75%,#d1d1d1 75%)' }
 ];
 const cdseView = c => (c.viz && CDSE_VIEWS.find(v => v.id === c.viz)) || null;
-const viewBands = v => ((/input:\[([^\]]*)\]/.exec(v.script) || [])[1] || '').replace(/"/g, '').split(',').filter(Boolean);
+const viewBands = v => ((/input:\[([^\]]*)\]/.exec(v.script) || [])[1] || '').replace(/"/g, '').split(',').filter(b => b && b !== 'dataMask');
 const b64 = s => btoa(unescape(encodeURIComponent(s)));
 const rgbCss = a => `rgb(${a.map(x => Math.round(x * 255)).join(',')})`;
 function rampCss(stops) {
   const lo = stops[0][0], hi = stops[stops.length - 1][0];
   return `linear-gradient(90deg,${stops.map(([v, c]) => `#${c} ${Math.round((v - lo) / (hi - lo) * 100)}%`).join(',')})`;
 }
+const viewSwatch = v => v.sw || rampCss(STOPS[v.ramp]);
+
+/* ---------- Settings, with a one-time move to the Copernicus Browser defaults ---------- */
+function cdsePrefs() {
+  const c = prefs.cdse;
+  if (!c.v2) {
+    // Earlier versions showed a date range of the configuration's TRUE_COLOR layer. Start on the
+    // bright built-in true colour and the latest single day, like Copernicus Browser.
+    Object.assign(c, { v2: true, viz: 'tc', mode: 'single', date: '' });
+    if (c.cc == null) c.cc = 30;
+    c.sat = { DSS2: 's2l2a', DSS1: 's2l1c', DSS3: 's1' }[c.sat] || 'auto';
+    savePrefs();
+  }
+  if (!c.fx) c.fx = { b: 1, c: 1, s: 1 };
+  if (!c.from) c.from = isoDate(new Date(Date.now() - 30 * 864e5));
+  if (!c.to) c.to = isoDate(new Date());
+  return c;
+}
+const cdseSingle = c => (c.mode || 'single') === 'single';
+const todayIso = () => isoDate(new Date());
+const cdseDay = c => c.date || c.to || todayIso();
 
 /* ---------- Your configuration's layers ---------- */
 // Anything that is clearly not Sentinel-2, so built-in views do not try to read B04 from radar.
@@ -5800,35 +5915,39 @@ function cdseCaps(id, force) {
       CD.capsErr = /fetch|network|load failed/i.test(err.message) ? t('cdse.capsNet') : err.message;
       return null;
     })
-    .finally(() => {
-      if (CD.capsId === id) CD.capsLoading = null;
-      if (!$('#basePanel').hidden) renderBasePanel();
-    });
+    .finally(() => { if (CD.capsId === id) CD.capsLoading = null; renderCdse(); });
   CD.capsLoading = p;
   return p;
 }
 
 /* ---------- The map layer ---------- */
-const cdseTime = c => `${c.from}T00:00:00Z/${c.to}T23:59:59Z`;
+const cdseTime = c => cdseSingle(c) ? `${cdseDay(c)}T00:00:00Z/${cdseDay(c)}T23:59:59Z` : `${c.from}T00:00:00Z/${c.to}T23:59:59Z`;
 function cdseParams(c) {
   const v = cdseView(c);
   const p = { layers: v ? cdseCarrier(c) : (c.layer || 'TRUE_COLOR'), TIME: cdseTime(c), MAXCC: c.cc ?? 30, PRIORITY: c.priority || 'mostRecent' };
   if (v) p.EVALSCRIPT = b64('//VERSION=3\n' + v.script);
   return p;
 }
+const cdseFilter = fx => { const f = fx || {}; const b = f.b ?? 1, k = f.c ?? 1, s = f.s ?? 1; return b === 1 && k === 1 && s === 1 ? '' : `brightness(${b}) contrast(${k}) saturate(${s})`; };
+function cdseFx() {
+  if (prefs.base !== 'cdse' || !baseLayer || !baseLayer.getContainer) return;
+  const el = baseLayer.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse.fx);
+}
 function cdseLayer() {
-  const c = prefs.cdse;
+  const c = cdsePrefs();
   if (!c.id) return null;
+  if (cdseSingle(c) && !c.date) setTimeout(() => cdseLatest(true), 0);
   const lyr = L.tileLayer.wms(`${CDSE_HOST}wms/${encodeURIComponent(c.id.trim())}`, {
-    pane: 'pwBase', format: 'image/jpeg', transparent: false, version: '1.3.0',
+    pane: 'pwBase', format: 'image/png', transparent: true, version: '1.3.0',
     tileSize: 512, maxZoom: MAX_Z, minZoom: 6, SHOWLOGO: false, ...cdseParams(c),
-    attribution: `Contains modified Copernicus Sentinel data ${String(c.to).slice(0, 4)}, <a href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Data Space Ecosystem</a>`
+    attribution: `Contains modified Copernicus Sentinel data ${String(cdseSingle(c) ? cdseDay(c) : c.to).slice(0, 4)}, <a href="https://dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Data Space Ecosystem</a>`
   });
   lyr._cdseId = c.id;
+  lyr.on('add', () => { const el = lyr.getContainer(); if (el) el.style.filter = cdseFilter(prefs.cdse.fx); });
   lyr.on('tileerror', e => {
     if (lyr._cdWarned) return; lyr._cdWarned = true;
     cdseError = t('cdse.errFail');
-    if (!$('#basePanel').hidden) renderBasePanel();
+    renderCdse();
     toast(cdseError, 'error');
     // Copernicus explains what went wrong in the body of the failed image; read it once.
     const src = e.tile && e.tile.src;
@@ -5836,255 +5955,407 @@ function cdseLayer() {
       if (!txt) return;
       const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt);
       const msg = (m ? m[1] : txt).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 300);
-      if (msg) { cdseError = t('cdse.errSrv', { msg }); if (!$('#basePanel').hidden) renderBasePanel(); }
+      if (msg) { cdseError = t('cdse.errSrv', { msg }); renderCdse(); }
     }).catch(() => {});
   });
   return lyr;
 }
-// Changes of view, dates, cloud or priority update the layer in place, so the map does not flash.
+// Changes update the layer in place, so the map does not flash.
 function cdseApply() {
   const c = prefs.cdse;
   cdseError = '';
+  savePrefs();
   if (prefs.base === 'cdse' && baseLayer && baseLayer._cdseId === c.id && baseLayer.setParams) {
     delete baseLayer.wmsParams.EVALSCRIPT;
     baseLayer._cdWarned = false;
     baseLayer.setParams(cdseParams(c));
-    if (!$('#basePanel').hidden) renderBasePanel();
-  } else setBase('cdse');
+    renderCdse();
+  } else if (c.id) setBase('cdse');
   if (map.getZoom() < 6) map.setZoom(8);
+}
+
+/* ---------- Which days have images (catalogue, then WFS) ---------- */
+const COLLS = {
+  s2l2a: { cat: 'Sentinel2', pt: 'S2MSI2A', wfs: 'DSS2', radar: false },
+  s2l1c: { cat: 'Sentinel2', pt: 'S2MSI1C', wfs: 'DSS1', radar: false },
+  s1: { cat: 'Sentinel1', pt: 'IW_GRDH_1S', wfs: 'DSS3', radar: true }
+};
+function cdseColl(c) {
+  if (c.sat && COLLS[c.sat]) return c.sat;
+  if (cdseView(c)) return 's2l2a';
+  const n = c.layer || '', lay = cdseLayers().find(l => l.name === n);
+  const s = n + ' ' + (lay ? lay.title + ' ' + lay.abs : '');
+  if (/(^|[^A-Z0-9])S1([^0-9]|$)|SAR|(^|[^A-Z])V[VH]([^A-Z]|$)|sentinel[\s-]?1\b/i.test(s)) return 's1';
+  if (/L1C/i.test(s)) return 's2l1c';
+  return 's2l2a';
+}
+const ymOf = d => String(d).slice(0, 7);
+const ymAdd = (ym, n) => { const [y, m] = ym.split('-').map(Number), d = new Date(Date.UTC(y, m - 1 + n, 1)); return d.toISOString().slice(0, 7); };
+const ymDays = ym => { const [y, m] = ym.split('-').map(Number); return new Date(Date.UTC(y, m, 0)).getUTCDate(); };
+function cdseArea() {
+  if (map.getZoom() < 6) return null;
+  const b = map.getBounds(), r = v => Math.round(v * 100) / 100;
+  return [r(Math.max(-180, b.getWest())), r(Math.max(-85, b.getSouth())), r(Math.min(180, b.getEast())), r(Math.min(85, b.getNorth()))];
+}
+const avKey = (coll, area, ym) => `${coll}|${area.join(',')}|${ym}`;
+function avGet(ym, c = prefs.cdse) { const a = cdseArea(); return a ? CD.av.get(avKey(cdseColl(c), a, ym)) || null : null; }
+// Identify one scene from its file name: satellite, take time and tile, so reprocessed copies count once.
+function sceneOf(title) {
+  const p = String(title || '').split('_');
+  return { sat: (/^S\d[A-D]$/.test(p[0]) ? p[0] : '') || '', tile: (/^T\d{2}[A-Z]{3}$/.test(p[5] || '') ? p[5].slice(1) : ''), key: p[0] + '_' + (p[2] || p[4] || title) + '_' + (p[5] || '') };
+}
+async function avFromCatalogue(coll, area, ym) {
+  const C = COLLS[coll], end = `${ym}-${String(ymDays(ym)).padStart(2, '0')}`;
+  const url = `${CDSE_CAT}${C.cat}/search.json?productType=${C.pt}&startDate=${ym}-01T00:00:00Z&completionDate=${end}T23:59:59Z&box=${area.join(',')}&maxRecords=500&sortParam=startDate&sortOrder=descending`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('catalogue HTTP ' + r.status);
+  const j = await r.json();
+  const seen = new Set(), out = [];
+  (j.features || []).forEach(f => {
+    const p = f.properties || {}, when = String(p.startDate || '');
+    if (!when) return;
+    const sc = sceneOf(p.title);
+    if (seen.has(sc.key)) return; seen.add(sc.key);
+    out.push({ date: when.slice(0, 10), time: when.slice(11, 16), cc: typeof p.cloudCover === 'number' && p.cloudCover >= 0 ? p.cloudCover : null, sat: sc.sat || p.platform || '', tile: sc.tile, id: p.title || f.id, geom: f.geometry });
+  });
+  return out;
+}
+async function avFromWfs(coll, area, ym) {
+  const id = (prefs.cdse.id || '').trim();
+  if (!id) throw new Error('no instance');
+  const end = `${ym}-${String(ymDays(ym)).padStart(2, '0')}`;
+  const sw = L.CRS.EPSG3857.project(L.latLng(area[1], area[0])), ne = L.CRS.EPSG3857.project(L.latLng(area[3], area[2]));
+  const bbox = [sw.x, sw.y, ne.x, ne.y].map(v => Math.round(v)).join(',');
+  const out = [];
+  for (let page = 0; page < 3; page++) {
+    const r = await fetch(`${CDSE_HOST}wfs/${encodeURIComponent(id)}?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=${COLLS[coll].wfs}&OUTPUTFORMAT=application/json&SRSNAME=EPSG:3857&BBOX=${bbox}&TIME=${encodeURIComponent(`${ym}-01T00:00:00Z/${end}T23:59:59Z`)}&MAXFEATURES=100&FEATURE_OFFSET=${page * 100}`);
+    const txt = await r.text();
+    let j = null; try { j = JSON.parse(txt); } catch (e) { j = null; }
+    if (!r.ok || !j) {
+      const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt);
+      throw new Error(((m ? m[1] : '') || 'WFS HTTP ' + r.status).replace(/<[^>]+>/g, ' ').trim().slice(0, 240));
+    }
+    (j.features || []).forEach(f => {
+      const p = f.properties || {};
+      out.push({ date: String(p.date || '').slice(0, 10), time: String(p.time || '').slice(0, 5), cc: typeof p.cloudCoverPercentage === 'number' ? p.cloudCoverPercentage : null, sat: sceneOf(p.id).sat, tile: sceneOf(p.id).tile, id: p.id || '', geom: f.geometry });
+    });
+    if ((j.features || []).length < 100) break;
+  }
+  return out.filter(x => x.date);
+}
+const netMsg = m => /fetch|network|load failed|cors/i.test(m) ? t('cdse.netShort') : m;
+function avLoad(ym, force) {
+  const c = prefs.cdse, area = cdseArea();
+  if (!area) return Promise.resolve(null);
+  const coll = cdseColl(c), key = avKey(coll, area, ym), have = CD.av.get(key);
+  if (have && !force && (have.loading || have.items || Date.now() - (have.at || 0) < 60000)) return have.loading || Promise.resolve(have);
+  const rec = { at: Date.now(), items: null, err: '', src: '' };
+  rec.loading = (async () => {
+    let errs = [];
+    for (const [src, fn] of [['cat', avFromCatalogue], ['wfs', avFromWfs]]) {
+      try { rec.items = await fn(coll, area, ym); rec.src = src; break; } catch (e) { errs.push(netMsg(e.message)); }
+    }
+    if (!rec.items) rec.err = errs.filter((m, i) => errs.indexOf(m) === i).join(' · ');
+    rec.loading = null;
+    if (CD.av.size > 40) CD.av.delete(CD.av.keys().next().value);
+    renderCdse();
+    return rec;
+  })();
+  CD.av.set(key, rec);
+  return rec.loading;
+}
+// Days with images: date -> { items, ccMin }
+function daysOf(items) {
+  const m = new Map();
+  (items || []).forEach(x => { if (!m.has(x.date)) m.set(x.date, { items: [], ccMin: null }); const d = m.get(x.date); d.items.push(x); if (x.cc !== null && (d.ccMin === null || x.cc < d.ccMin)) d.ccMin = x.cc; });
+  return m;
+}
+const dayOk = (d, c) => !d ? false : COLLS[cdseColl(c)].radar || d.ccMin === null || d.ccMin <= (c.cc ?? 30);
+// Previous/next day with images under the cloud limit; looks up to three months away.
+async function cdseStep(dir) {
+  const c = prefs.cdse, cur = cdseDay(c);
+  let ym = ymOf(cur);
+  for (let i = 0; i < 4; i++) {
+    const rec = await avLoad(ym);
+    if (!rec || !rec.items) break;
+    const days = [...daysOf(rec.items).entries()].filter(([, d]) => dayOk(d, c)).map(([k]) => k).sort();
+    const hit = dir < 0 ? days.filter(d => d < cur).pop() : days.find(d => d > cur && d <= todayIso());
+    if (hit) { cdseSetDay(hit); return; }
+    ym = ymAdd(ym, dir);
+    if (dir > 0 && ym > ymOf(todayIso())) break;
+  }
+  // Nothing known (catalogue unreachable or zoomed out): one calendar day at a time.
+  const d = new Date(cur + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + dir);
+  const nd = isoDate(d);
+  if (nd <= todayIso()) cdseSetDay(nd);
+}
+async function cdseLatest(quiet) {
+  const c = prefs.cdse;
+  // Just switched on and still zooming in: try again once the map has settled.
+  if (!cdseArea() && quiet) { map.once('moveend', () => { if (cdseArea() && !prefs.cdse.date) cdseLatest(true); }); return; }
+  let ym = ymOf(todayIso());
+  for (let i = 0; i < 4; i++) {
+    const rec = await avLoad(ym);
+    if (!rec || !rec.items) break;
+    const days = [...daysOf(rec.items).entries()].filter(([, d]) => dayOk(d, c)).map(([k]) => k).sort();
+    if (days.length) { cdseSetDay(days[days.length - 1]); return; }
+    ym = ymAdd(ym, -1);
+  }
+  if (!c.date) { cdseSetDay(todayIso()); }
+  if (!quiet) toast(t('cdse.noLatest'));
+}
+function cdseSetDay(d) {
+  const c = prefs.cdse;
+  c.mode = 'single'; c.date = d; CD.cal = ymOf(d);
+  cdseApply();
 }
 
 /* ---------- Panel ---------- */
 const PRIOS = ['mostRecent', 'leastCC', 'leastRecent'];
-const SATS = ['auto', 'DSS2', 'DSS1', 'DSS3', 'DSS8'];
-function cdseSection() {
-  const c = prefs.cdse, id = (c.id || '').trim(), v = cdseView(c), list = cdseLayers();
-  if (id && CD.capsId !== id && !CD.capsLoading) setTimeout(() => cdseCaps(id), 0);
-  if (id && prefs.base === 'cdse') setTimeout(() => cdseAcq(false), 0);
-  const known = list.some(l => l.name === c.layer);
-  const custom = CD.custom || (!v && !list.length);
-  const sel = v ? 'v:' + v.id : custom ? 'custom' : 'l:' + c.layer;
-  const o = (val, label) => `<option value="${esc(val)}" ${val === sel ? 'selected' : ''}>${esc(label)}</option>`;
-  const lay = !v && list.find(l => l.name === c.layer);
-  let about = '';
-  if (v) {
-    const legend = v.ramp ? `<span class="cdse-ramp" style="background:${rampCss(STOPS[v.ramp])}"></span><span class="cdse-ends"><span>${esc(t('cdv.' + v.id + 'Lo'))}</span><span>${esc(t('cdv.' + v.id + 'Hi'))}</span></span>`
-      : v.classes ? `<span class="cdse-classes">${v.classes.map(([k, n]) => `<span><i style="background:${rgbCss(SCL_COL[k])}"></i>${esc(t('scl.' + n))}</span>`).join('')}</span>` : '';
-    about = `<div class="cdse-about"><b>${esc(t('cdv.' + v.id))}</b><p>${esc(t('cdv.' + v.id + 'D'))}</p>${legend}<small>${esc(t('cdse.bands', { b: viewBands(v).join(', ') }))} · Sentinel-2 L2A</small></div>`;
-  } else if (lay) {
-    about = `<div class="cdse-about"><b>${esc(lay.title)}</b>${lay.abs ? `<p>${esc(lay.abs)}</p>` : ''}<small>${esc(t('cdse.layerId', { name: lay.name }))} · ${esc(t('cdse.cfgAbout'))}</small></div>`;
-  }
-  const warnMissing = !v && !custom && list.length && !known ? `<p class="err">${esc(t('cdse.missing', { name: c.layer }))}</p>` : '';
-  const carrierSel = v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc(l.title === l.name ? l.name : `${l.title} (${l.name})`)}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : '';
-  const link = (href, txt) => `<a href="${href}" target="_blank" rel="noopener">${esc(txt)}</a>`;
-  return `
-      <form class="sub-form" id="cdseForm">
-        <span class="eyebrow">${esc(t('cdse.title'))}</span>
-        <label class="field"><span>${esc(t('cdse.id'))}</span><input id="cdse-id" type="text" value="${esc(c.id)}" placeholder="9d559c0e-…" spellcheck="false" autocomplete="off"></label>
-        ${CD.capsLoading ? `<p class="help">${esc(t('cdse.capsLoading'))}</p>` : ''}
-        ${CD.capsErr && CD.capsId === id ? `<p class="err">${esc(CD.capsErr)}</p>` : ''}
-        <label class="field"><span>${esc(t('cdse.show'))}${id ? `<button type="button" class="link-btn" data-cdse="caps">${esc(t('cdse.capsReload'))}</button>` : ''}</span><select id="cdse-show">
-          <optgroup label="${esc(t('cdse.grpViews'))}">${CDSE_VIEWS.map(x => o('v:' + x.id, t('cdv.' + x.id))).join('')}</optgroup>
-          <optgroup label="${esc(t('cdse.grpLayers'))}">${list.map(l => o('l:' + l.name, l.title === l.name ? l.name : `${l.title} (${l.name})`)).join('')}${!list.length || known || !c.layer ? '' : o('l:' + c.layer, t('cdse.notInCfg', { name: c.layer }))}${o('custom', t('cdse.custom'))}</optgroup>
-        </select></label>
-        ${custom && !v ? `<label class="field"><span>${esc(t('cdse.layerName'))}</span><input id="cdse-layer" type="text" value="${esc(c.layer)}" placeholder="TRUE_COLOR" spellcheck="false" autocomplete="off"></label>` : ''}
-        ${warnMissing}${about}${carrierSel}
-        <div class="two">
-          <label class="field"><span>${esc(t('cdse.from'))}</span><input id="cdse-from" type="date" value="${esc(c.from)}"></label>
-          <label class="field"><span>${esc(t('cdse.to'))}</span><input id="cdse-to" type="date" value="${esc(c.to)}"></label>
-        </div>
-        <div class="cdse-quick"><span>${esc(t('cdse.last'))}</span>${[7, 30, 90, 365].map(n => `<button type="button" class="btn sm" data-cdr="${n}">${esc(t('cdse.r' + n))}</button>`).join('')}</div>
-        ${CD.prev && c.from === c.to ? `<button type="button" class="link-btn" data-cdse="back">${esc(t('cdse.back', { from: CD.prev.from, to: CD.prev.to }))}</button>` : ''}
-        <label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select></label>
-        <label class="field"><span>${esc(t('cdse.cc'))} <output id="cdse-cco">${c.cc}%</output></span><input id="cdse-cc" type="range" min="0" max="100" step="1" value="${c.cc}"></label>
-        ${cdseError ? `<p class="err">${esc(cdseError)}</p>` : ''}
-        <button class="btn primary" type="submit">${esc(t('cdse.load'))}</button>
-        <p class="help">${esc(t('cdse.help'))} ${link('https://dataspace.copernicus.eu', 'dataspace.copernicus.eu')} · ${link('https://shapps.dataspace.copernicus.eu/dashboard/', t('cdse.dash'))}</p>
-      </form>
-      ${id ? acqHtml() : ''}`;
-}
-
-/* ---------- Images in this view (WFS) ---------- */
-function cdseSat(c) {
-  if (c.sat && c.sat !== 'auto') return c.sat;
-  const n = (cdseView(c) ? cdseCarrier(c) : c.layer) || '';
-  const lay = cdseLayers().find(l => l.name === n);
-  const s = n + ' ' + (lay ? lay.title + ' ' + lay.abs : '');
-  if (/(^|[^A-Z0-9])S1([^0-9]|$)|SAR|(^|[^A-Z])V[VH]([^A-Z]|$)|sentinel[\s-]?1\b/i.test(s)) return 'DSS3';
-  if (/(^|[^A-Z0-9])S3([^0-9]|$)|OLCI|sentinel[\s-]?3\b/i.test(s)) return 'DSS8';
-  if (/L1C/i.test(s)) return 'DSS1';
-  return 'DSS2';
-}
 const fmtDay = d => { const x = new Date(d + 'T12:00:00Z'); return isNaN(x) ? d : x.toLocaleDateString(langInfo().locale, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); };
-async function cdseAcq(force) {
-  const c = prefs.cdse, id = (c.id || '').trim();
-  if (!id || !c.from || !c.to) return;
-  const sat = cdseSat(c);
-  if (map.getZoom() < 7) {
-    const key = 'zoom|' + id;
-    if (!force && CD.acqKey === key) return;
-    CD.acqKey = key; CD.acq = null; CD.acqErr = t('cdse.acqZoom'); renderAcq(); return;
-  }
-  const b = map.getBounds(), sw = L.CRS.EPSG3857.project(b.getSouthWest()), ne = L.CRS.EPSG3857.project(b.getNorthEast());
-  const bbox = [sw.x, sw.y, ne.x, ne.y].map(v => Math.round(v)).join(',');
-  const key = [id, sat, c.from, c.to, bbox].join('|');
-  if (!force && key === CD.acqKey) return;
-  CD.acqKey = key; CD.acqLoading = true; CD.acqErr = ''; renderAcq();
-  const url = off => `${CDSE_HOST}wfs/${encodeURIComponent(id)}?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=${sat}&OUTPUTFORMAT=application/json&SRSNAME=EPSG:3857&BBOX=${bbox}&TIME=${encodeURIComponent(cdseTime(c))}&MAXFEATURES=100&FEATURE_OFFSET=${off}`;
-  const all = [];
-  let more = false;
-  try {
-    for (let page = 0; page < 3; page++) {
-      const r = await fetch(url(page * 100));
-      const txt = await r.text();
-      let j = null; try { j = JSON.parse(txt); } catch (e) { j = null; }
-      if (!r.ok || !j) {
-        const m = /<ServiceException[^>]*>([\s\S]*?)<\/ServiceException>/i.exec(txt);
-        throw new Error(((m ? m[1] : '') || 'HTTP ' + r.status).replace(/<[^>]+>/g, ' ').trim().slice(0, 240));
-      }
-      const fs = j.features || [];
-      all.push(...fs);
-      if (fs.length < 100) break;
-      if (page === 2) more = true;
-    }
-  } catch (err) {
-    if (CD.acqKey !== key) return;
-    CD.acqLoading = false; CD.acq = null;
-    CD.acqErr = t('cdse.acqErr', { msg: /fetch|network|load failed/i.test(err.message) ? t('cdse.capsNet') : err.message });
-    renderAcq(); return;
-  }
-  if (CD.acqKey !== key) return;
-  const by = new Map();
-  all.forEach(f => { const p = f.properties || {}, d = String(p.date || (p.time || '').slice(0, 10) || ''); if (!d) return; if (!by.has(d)) by.set(d, []); by.get(d).push(f); });
-  CD.acq = [...by.entries()].sort((a, b) => a[0] < b[0] ? 1 : -1).map(([date, fs]) => {
-    const ccs = fs.map(f => f.properties.cloudCoverPercentage).filter(v => typeof v === 'number');
-    const times = fs.map(f => String(f.properties.time || '').slice(0, 5)).filter(Boolean).sort();
-    return { date, n: fs.length, feats: fs, time: times[0] || '', time2: times[times.length - 1] || '', cc: ccs.length ? Math.round(ccs.reduce((a, v) => a + v, 0) / ccs.length) : null, ccMin: ccs.length ? Math.round(Math.min(...ccs)) : null };
-  });
-  CD.acqCount = all.length; CD.acqMore = more; CD.acqLoading = false; CD.acqSat = sat;
-  renderAcq();
+const fmtMonth = ym => new Date(ym + '-15T12:00:00Z').toLocaleDateString(langInfo().locale, { month: 'long', year: 'numeric', timeZone: 'UTC' });
+function renderCdse() {
+  if ($('#basePanel').hidden) return;
+  const el = $('#cdseBox');
+  if (el) { const sc = $('#basePanel').scrollTop; el.outerHTML = cdseSection(); $('#basePanel').scrollTop = sc; }
 }
-function acqHtml() {
-  const c = prefs.cdse, sat = cdseSat(c), cc = c.cc ?? 30, prio = c.priority || 'mostRecent';
-  let body = '';
-  if (CD.acqLoading) body = `<p class="help">${esc(t('cdse.acqLoading'))}</p>`;
-  else if (CD.acqErr) body = `<p class="${CD.acq === null && map.getZoom() < 7 ? 'help' : 'err'}">${esc(CD.acqErr)}</p>`;
-  else if (CD.acq && !CD.acq.length) body = `<p class="help">${esc(t('cdse.acqNone', { from: c.from, to: c.to }))}</p>`;
-  else if (CD.acq) {
-    const radar = sat === 'DSS3';
-    const ok = d => radar || d.cc === null || d.cc <= cc;
-    const allowed = CD.acq.filter(ok);
-    const top = !allowed.length ? null : prio === 'mostRecent' ? allowed[0] : prio === 'leastRecent' ? allowed[allowed.length - 1] : allowed.reduce((a, d) => (d.cc ?? 0) < (a.cc ?? 0) ? d : a);
-    body = `<p class="help">${esc(t('cdse.acqSum', { n: CD.acqCount, d: CD.acq.length, from: c.from, to: c.to }))} ${esc(t('cdse.acqHow.' + prio, { cc }))}${CD.acqMore ? ' ' + esc(t('cdse.acqMore', { n: CD.acqCount })) : ''}</p>
-      <ul class="cdse-days">${CD.acq.map(d => `<li><button type="button" class="cdse-day ${ok(d) ? '' : 'over'} ${c.from === d.date && c.to === d.date ? 'on' : ''}" data-cdday="${esc(d.date)}">
-        <span class="cd-main"><b>${esc(fmtDay(d.date))}</b>${d === top ? `<span class="cd-tag">${esc(t('cdse.top'))}</span>` : ''}<small>${esc(d.time ? (d.time2 && d.time2 !== d.time ? `${d.time}–${d.time2}` : d.time) + ' UTC · ' : '')}${esc(d.n === 1 ? t('cdse.img1') : t('cdse.imgN', { n: d.n }))}${ok(d) ? '' : ' · ' + esc(t('cdse.over'))}</small></span>
-        ${radar || d.cc === null ? `<span class="cd-cc radar">${esc(t('cdse.radar'))}</span>` : `<span class="cd-cc" title="${esc(t('cdse.cloud', { v: d.cc }))}"><span class="cc-bar"><i style="width:${clamp(d.cc, 0, 100)}%"></i></span>${d.cc}%</span>`}
-      </button></li>`).join('')}</ul>
-      <p class="help">${esc(t('cdse.acqTip'))}</p>`;
-  }
-  return `<div class="sub-form cdse-acq" id="cdseAcq">
-    <div class="cdse-acq-head"><span class="eyebrow">${esc(t('cdse.acq'))}</span><button type="button" class="icon-btn sm" data-cdse="acq" aria-label="${esc(t('cdse.acqRefresh'))}" title="${esc(t('cdse.acqRefresh'))}">${icon('refresh')}</button></div>
-    <label class="field"><span>${esc(t('cdse.sat'))}</span><select id="cdse-sat">${SATS.map(s => `<option value="${s}" ${(c.sat || 'auto') === s ? 'selected' : ''}>${esc(s === 'auto' ? t('cdse.sat.auto', { s: t('cdse.sat.' + cdseSat({ ...c, sat: 'auto' })) }) : t('cdse.sat.' + s))}</option>`).join('')}</select></label>
-    ${body}
+function cdseSection() {
+  const c = cdsePrefs(), id = (c.id || '').trim();
+  if (id && CD.capsId !== id && !CD.capsLoading) setTimeout(() => cdseCaps(id), 0);
+  const link = (href, txt) => `<a href="${href}" target="_blank" rel="noopener">${esc(txt)}</a>`;
+  const setup = `<div class="sub-form cd-setup">
+      <span class="eyebrow">${esc(t('cdse.title'))}</span>
+      <label class="field"><span>${esc(t('cdse.id'))}</span><span class="cd-idrow"><input id="cdse-id" type="text" value="${esc(c.id)}" placeholder="9d559c0e-…" spellcheck="false" autocomplete="off"><button type="button" class="btn sm primary" data-cdse="connect">${esc(t('cdse.connect'))}</button></span></label>
+      ${CD.capsLoading ? `<p class="help">${esc(t('cdse.capsLoading'))}</p>` : ''}
+      ${CD.capsErr && CD.capsId === id ? `<p class="err">${esc(CD.capsErr)}</p>` : ''}
+      ${!id && cdseError ? `<p class="err">${esc(cdseError)}</p>` : ''}
+      <p class="help">${esc(t('cdse.help'))} ${link('https://dataspace.copernicus.eu', 'dataspace.copernicus.eu')} · ${link('https://shapps.dataspace.copernicus.eu/dashboard/', t('cdse.dash'))}</p>
+      ${id ? `<button type="button" class="link-btn" data-cdse="setup">${esc(t('cdse.done'))}</button>` : ''}
+    </div>`;
+  if (!id) return `<div id="cdseBox" class="cd-box">${setup}</div>`;
+  if (prefs.base === 'cdse') setTimeout(() => avLoad(cdseSingle(c) ? (CD.cal || ymOf(cdseDay(c))) : ymOf(c.to)), 0);
+  return `<div id="cdseBox" class="cd-box">
+    <div class="cd-head"><span class="eyebrow">${esc(t('b.cdse'))}</span><span class="cd-meta">${esc(t('cdse.sat.' + cdseColl(c)))}</span></div>
+    ${CD.setup ? setup : ''}
+    <div class="seg light cd-tabs" role="tablist"><button type="button" role="tab" data-cdtab="view" aria-pressed="${CD.tab === 'view'}">${esc(t('cdse.tabView'))}</button><button type="button" role="tab" data-cdtab="imgs" aria-pressed="${CD.tab === 'imgs'}">${esc(t('cdse.tabImgs'))}</button></div>
+    ${prefs.base !== 'cdse' ? `<button type="button" class="btn primary" data-cdse="show">${esc(t('cdse.load'))}</button>` : ''}
+    ${cdseError ? `<p class="err">${esc(cdseError)}</p>` : ''}
+    ${CD.tab === 'imgs' ? imgsHtml(c) : viewHtml(c)}
   </div>`;
 }
-function renderAcq() {
-  const el = $('#cdseAcq');
-  if (el && !$('#basePanel').hidden) el.outerHTML = acqHtml();
+function dateHtml(c) {
+  const single = cdseSingle(c), day = cdseDay(c), cc = c.cc ?? 30;
+  const area = cdseArea();
+  let top = '';
+  if (single) {
+    const rec = avGet(ymOf(day)), d = rec && rec.items ? daysOf(rec.items).get(day) : null;
+    const radar = COLLS[cdseColl(c)].radar;
+    const state = !area ? t('cdse.zoomIn') : !rec || rec.loading ? t('cdse.checking') : rec.err ? '' : !d ? t('cdse.noneThisDay') : radar ? t('cdse.radarShort') : d.ccMin === null ? '' : dayOk(d, c) ? t('cdse.cloud', { v: Math.round(d.ccMin) }) : t('cdse.tooCloudy', { v: Math.round(d.ccMin) });
+    top = `<div class="cd-stepper">
+        <button type="button" class="icon-btn sm" data-cdstep="-1" aria-label="${esc(t('cdse.prevImg'))}" title="${esc(t('cdse.prevImg'))}">${icon('chevL')}</button>
+        <button type="button" class="cd-datebtn" data-cdse="cal" aria-expanded="${CD.calOpen}">${icon('clock')}<b>${esc(fmtDay(day))}</b></button>
+        <button type="button" class="icon-btn sm" data-cdstep="1" aria-label="${esc(t('cdse.nextImg'))}" title="${esc(t('cdse.nextImg'))}" ${day >= todayIso() ? 'disabled' : ''}>${icon('chevR')}</button>
+      </div>
+      ${state ? `<p class="cd-state ${d && !dayOk(d, c) ? 'warn' : ''}">${esc(state)}</p>` : ''}
+      <button type="button" class="btn sm cd-latest" data-cdse="latest">${esc(t('cdse.latest'))}</button>
+      ${CD.calOpen ? calHtml(c) : ''}`;
+  } else {
+    top = `<div class="two">
+        <label class="field"><span>${esc(t('cdse.from'))}</span><input id="cdse-from" type="date" value="${esc(c.from)}" max="${todayIso()}"></label>
+        <label class="field"><span>${esc(t('cdse.to'))}</span><input id="cdse-to" type="date" value="${esc(c.to)}" max="${todayIso()}"></label>
+      </div>
+      <div class="cdse-quick"><span>${esc(t('cdse.last'))}</span>${[7, 30, 90, 365].map(n => `<button type="button" class="btn sm" data-cdr="${n}">${esc(t('cdse.r' + n))}</button>`).join('')}</div>
+      <label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select><small>${esc(t('cdse.rangeHelp'))}</small></label>`;
+  }
+  return `<div class="sub-form">
+      <div class="cd-head"><span class="eyebrow">${esc(t('cdse.date'))}</span><span class="seg light cd-mode"><button type="button" data-cdmode="single" aria-pressed="${single}">${esc(t('cdse.single'))}</button><button type="button" data-cdmode="range" aria-pressed="${!single}">${esc(t('cdse.range'))}</button></span></div>
+      ${top}
+      <label class="field"><span>${esc(t('cdse.cc'))} <output id="cdse-cco">${cc}%</output></span><input id="cdse-cc" type="range" min="0" max="100" step="1" value="${cc}"></label>
+    </div>`;
 }
-function cdseFootprints(date) {
+function calHtml(c) {
+  const day = cdseDay(c), ym = CD.cal || ymOf(day), rec = avGet(ym), days = rec && rec.items ? daysOf(rec.items) : new Map();
+  const [y, m] = ym.split('-').map(Number), first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay(), n = ymDays(ym);
+  const wk = langInfo().locale.startsWith('en-US') ? 0 : 1;   // US calendars start on Sunday
+  const names = [...Array(7)].map((_, i) => new Date(Date.UTC(2024, 0, 7 + ((i + wk) % 7))).toLocaleDateString(langInfo().locale, { weekday: 'short', timeZone: 'UTC' }).slice(0, 2));
+  const cells = [];
+  for (let i = 0; i < (first - wk + 7) % 7; i++) cells.push('<span></span>');
+  const today = todayIso();
+  for (let d = 1; d <= n; d++) {
+    const iso = `${ym}-${String(d).padStart(2, '0')}`, info = days.get(iso);
+    const cls = [iso === day ? 'sel' : '', info ? (dayOk(info, c) ? 'has' : 'cloudy') : '', iso > today ? 'future' : ''].filter(Boolean).join(' ');
+    const tip = info ? `${info.items.length === 1 ? t('cdse.img1') : t('cdse.imgN', { n: info.items.length })}${info.ccMin !== null ? ' · ' + t('cdse.cloud', { v: Math.round(info.ccMin) }) : ''}` : '';
+    cells.push(`<button type="button" class="${cls}" data-cdday="${iso}" ${iso > today ? 'disabled' : ''} ${tip ? `title="${esc(tip)}"` : ''}>${d}</button>`);
+  }
+  const status = !cdseArea() ? t('cdse.zoomIn') : !rec || rec.loading ? t('cdse.checking') : rec.err ? t('cdse.calErr', { msg: rec.err }) : '';
+  return `<div class="cd-cal">
+      <div class="cd-calhead"><button type="button" class="icon-btn sm" data-calm="-1" aria-label="${esc(t('cdse.prevMonth'))}">${icon('chevL')}</button><b>${esc(fmtMonth(ym))}</b><button type="button" class="icon-btn sm" data-calm="1" aria-label="${esc(t('cdse.nextMonth'))}" ${ym >= ymOf(today) ? 'disabled' : ''}>${icon('chevR')}</button></div>
+      <div class="cd-grid">${names.map(x => `<span class="cd-wd">${esc(x)}</span>`).join('')}${cells.join('')}</div>
+      <div class="cd-key"><span><i class="k-has"></i>${esc(t('cdse.kHas'))}</span><span><i class="k-cloudy"></i>${esc(t('cdse.kCloudy', { cc: c.cc ?? 30 }))}</span></div>
+      ${status ? `<p class="help">${esc(status)}</p>` : ''}
+    </div>`;
+}
+function viewCard(sel, key, name, desc, sw, extra) {
+  return `<li><button type="button" class="cd-view ${sel ? 'on' : ''}" data-cdview="${esc(key)}" aria-pressed="${sel}"><span class="cd-sw" style="background:${sw}"></span><span class="cd-vt"><b>${esc(name)}</b><small>${esc(desc)}</small></span></button>${sel && extra ? `<div class="cd-vx">${extra}</div>` : ''}</li>`;
+}
+function viewHtml(c) {
+  const v = cdseView(c), list = cdseLayers(), known = list.some(l => l.name === c.layer);
+  const custom = CD.custom || (!v && !list.length);
+  const legend = x => x.ramp ? `<span class="cdse-ramp" style="background:${rampCss(STOPS[x.ramp])}"></span><span class="cdse-ends"><span>${esc(t('cdv.' + x.id + 'Lo'))}</span><span>${esc(t('cdv.' + x.id + 'Hi'))}</span></span>`
+    : x.classes ? `<span class="cdse-classes">${x.classes.map(([k, n]) => `<span><i style="background:${rgbCss(SCL_COL[k])}"></i>${esc(t('scl.' + n))}</span>`).join('')}</span>` : '';
+  const builtins = CDSE_VIEWS.map(x => viewCard(v && v.id === x.id, 'v:' + x.id, t('cdv.' + x.id), t('cdv.' + x.id + 'D'), viewSwatch(x),
+    `${legend(x)}<small class="cd-meta">${esc(t('cdse.bands', { b: viewBands(x).join(', ') }))} · Sentinel-2 L2A</small>`)).join('');
+  const cfg = list.map(l => viewCard(!v && !CD.custom && c.layer === l.name, 'l:' + l.name, l.title, l.abs || l.name, 'linear-gradient(135deg,#5a6b7c,#9fb0c2)',
+    `<small class="cd-meta">${esc(t('cdse.layerId', { name: l.name }))}</small>`)).join('');
+  const cfgOpen = !v || CD.cfgOpen;
+  return `${dateHtml(c)}
+    <div class="sub-form">
+      <span class="eyebrow">${esc(t('cdse.show'))}</span>
+      <ul class="cd-views">${builtins}</ul>
+      <details class="cd-det" ${cfgOpen ? 'open' : ''} data-cddet="cfg"><summary>${esc(t('cdse.grpLayers'))}${list.length ? ` (${list.length})` : ''}</summary>
+        ${CD.capsLoading ? `<p class="help">${esc(t('cdse.capsLoading'))}</p>` : ''}
+        ${CD.capsErr ? `<p class="err">${esc(CD.capsErr)}</p>` : ''}
+        ${!v && !custom && list.length && !known ? `<p class="err">${esc(t('cdse.missing', { name: c.layer }))}</p>` : ''}
+        <ul class="cd-views">${cfg}</ul>
+        ${custom && !v ? `<label class="field"><span>${esc(t('cdse.layerName'))}</span><input id="cdse-layer" type="text" value="${esc(c.layer)}" placeholder="TRUE_COLOR" spellcheck="false" autocomplete="off"></label>` : `<button type="button" class="link-btn" data-cdview="custom">${esc(t('cdse.custom'))}</button>`}
+      </details>
+    </div>
+    <details class="sub-form cd-det" ${CD.fxOpen ? 'open' : ''} data-cddet="fx"><summary>${esc(t('cdse.fx'))}</summary>
+      ${[['b', 0.5, 3], ['c', 0.5, 2], ['s', 0, 2]].map(([k, lo, hi]) => `<label class="field"><span>${esc(t('cdse.fx.' + k))} <output id="cdfx-${k}o">${Math.round((c.fx[k] ?? 1) * 100)}%</output></span><input type="range" id="cdfx-${k}" min="${lo}" max="${hi}" step="0.05" value="${c.fx[k] ?? 1}"></label>`).join('')}
+      <span class="row"><button type="button" class="btn sm" data-cdse="fxreset">${esc(t('cdse.fxReset'))}</button></span>
+      <small class="help">${esc(t('cdse.fxHelp'))}</small>
+    </details>
+    <details class="sub-form cd-det" ${CD.moreOpen ? 'open' : ''} data-cddet="more"><summary>${esc(t('cdse.more'))}</summary>
+      ${cdseSingle(c) ? `<label class="field"><span>${esc(t('cdse.prio'))}</span><select id="cdse-prio">${PRIOS.map(p => `<option value="${p}" ${(c.priority || 'mostRecent') === p ? 'selected' : ''}>${esc(t('cdse.p.' + p))}</option>`).join('')}</select></label>` : ''}
+      ${v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc(l.title === l.name ? l.name : `${l.title} (${l.name})`)}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : ''}
+      <label class="field"><span>${esc(t('cdse.sat'))}</span><select id="cdse-sat">${['auto', ...Object.keys(COLLS)].map(s => `<option value="${s}" ${(c.sat || 'auto') === s ? 'selected' : ''}>${esc(s === 'auto' ? t('cdse.sat.auto', { s: t('cdse.sat.' + cdseColl({ ...c, sat: 'auto' })) }) : t('cdse.sat.' + s))}</option>`).join('')}</select><small>${esc(t('cdse.satHelp'))}</small></label>
+      <span class="row"><button type="button" class="btn sm" data-cdse="setup">${esc(t('cdse.changeId'))}</button></span>
+    </details>`;
+}
+function imgsHtml(c) {
+  const single = cdseSingle(c), area = cdseArea(), coll = cdseColl(c), radar = COLLS[coll].radar;
+  if (!area) return `<div class="sub-form"><p class="help">${esc(t('cdse.zoomIn'))}</p></div>`;
+  const months = [];
+  if (single) months.push(ymOf(cdseDay(c)));
+  else { let ym = ymOf(c.to); while (ym >= ymOf(c.from) && months.length < 4) { months.push(ym); ym = ymAdd(ym, -1); } }
+  months.forEach(ym => { if (!avGet(ym)) setTimeout(() => avLoad(ym), 0); });
+  const recs = months.map(ym => avGet(ym));
+  const loading = recs.some(r => !r || r.loading), err = recs.map(r => r && r.err).filter(Boolean)[0];
+  const lo = single ? cdseDay(c) : c.from, hi = single ? cdseDay(c) : c.to;
+  const items = recs.flatMap(r => (r && r.items) || []).filter(x => x.date >= lo && x.date <= hi).sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+  const days = daysOf(items), cc = c.cc ?? 30;
+  const ok = x => radar || x.cc === null || x.cc <= cc;
+  let body;
+  if (loading && !items.length) body = `<p class="help">${esc(t('cdse.acqLoading'))}</p>`;
+  else if (err && !items.length) body = `<p class="err">${esc(t('cdse.acqErr', { msg: err }))}</p><p class="help">${esc(t('cdse.acqErrHelp'))}</p><button type="button" class="btn sm" data-cdse="acq">${esc(t('cdse.retry'))}</button>`;
+  else if (!items.length) body = `<p class="help">${esc(single ? t('cdse.noneDay', { d: fmtDay(lo) }) : t('cdse.acqNone', { from: lo, to: hi }))}</p>${single ? `<button type="button" class="btn sm" data-cdse="latest">${esc(t('cdse.latest'))}</button>` : ''}`;
+  else {
+    body = `<p class="help">${esc(single ? t(items.length === 1 ? 'cdse.imgsDay1' : 'cdse.imgsDay', { n: items.length, d: fmtDay(lo) }) : t('cdse.acqSum', { n: items.length, d: days.size, from: lo, to: hi }))} ${esc(radar ? t('cdse.radar') : t('cdse.acqHow.' + (c.priority || 'mostRecent'), { cc }))}</p>
+      ${[...days.entries()].map(([date, d]) => `<div class="cd-dgroup">
+        ${single ? '' : `<button type="button" class="cd-dhead ${dayOk(d, c) ? '' : 'over'}" data-cdpick="${date}" data-cdfp="d:${date}"><b>${esc(fmtDay(date))}</b><small>${esc(t('cdse.showDay'))}</small></button>`}
+        <ul class="cd-imgs">${d.items.map(x => `<li class="${ok(x) ? '' : 'over'}" data-cdfp="i:${esc(x.id)}">
+          <span class="cd-sat">${esc(x.sat || '—')}</span>
+          <span class="cd-it"><b>${esc(x.time ? x.time + ' UTC' : fmtDay(x.date))}</b><small>${esc([x.tile ? t('cdse.tile', { t: x.tile }) : '', ok(x) ? '' : t('cdse.over')].filter(Boolean).join(' · '))}</small></span>
+          ${radar || x.cc === null ? `<span class="cd-cc radar">${esc(t('cdse.radarShort'))}</span>` : `<span class="cd-cc" title="${esc(t('cdse.cloud', { v: Math.round(x.cc) }))}"><span class="cc-bar"><i style="width:${clamp(x.cc, 0, 100)}%"></i></span>${Math.round(x.cc)}%</span>`}
+        </li>`).join('')}</ul></div>`).join('')}
+      <p class="help">${esc(t('cdse.imgsTip'))}</p>`;
+  }
+  return `<div class="sub-form">
+      <div class="cd-head"><span class="eyebrow">${esc(single ? t('cdse.imgsOn', { d: fmtDay(lo) }) : t('cdse.acq'))}</span><button type="button" class="icon-btn sm" data-cdse="acq" aria-label="${esc(t('cdse.acqRefresh'))}" title="${esc(t('cdse.acqRefresh'))}">${icon('refresh')}</button></div>
+      ${body}
+    </div>`;
+}
+function cdseFootprints(key) {
   if (CD.fp) { map.removeLayer(CD.fp); CD.fp = null; }
-  const d = date && CD.acq && CD.acq.find(x => x.date === date);
-  if (!d) return;
+  if (!key) return;
+  const all = [...CD.av.values()].flatMap(r => r.items || []);
+  const feats = key.startsWith('d:') ? all.filter(x => x.date === key.slice(2)) : all.filter(x => x.id === key.slice(2));
+  const seen = new Set(), geoms = feats.filter(x => x.geom && !seen.has(x.id) && seen.add(x.id)).map(x => ({ type: 'Feature', geometry: x.geom, properties: {} }));
+  if (!geoms.length) return;
   const toLL = c => Math.abs(c[0]) <= 180 && Math.abs(c[1]) <= 90 ? L.latLng(c[1], c[0]) : L.CRS.EPSG3857.unproject(L.point(c[0], c[1]));
-  CD.fp = L.geoJSON({ type: 'FeatureCollection', features: d.feats.filter(f => f.geometry) }, { coordsToLatLng: toLL, interactive: false, style: { color: '#ffd23f', weight: 2, dashArray: '6 4', fillColor: '#ffd23f', fillOpacity: 0.08 } }).addTo(map);
+  CD.fp = L.geoJSON({ type: 'FeatureCollection', features: geoms }, { coordsToLatLng: toLL, interactive: false, style: { color: '#ffd23f', weight: 2, dashArray: '6 4', fillColor: '#ffd23f', fillOpacity: 0.08 } }).addTo(map);
 }
 
 /* ---------- Panel events ---------- */
-function cdseRead() {
-  const c = { ...prefs.cdse }, g = id => $('#' + id);
-  if (g('cdse-id')) c.id = g('cdse-id').value.trim();
-  const show = g('cdse-show') ? g('cdse-show').value : '';
-  CD.custom = show === 'custom';
-  if (show.startsWith('v:')) c.viz = show.slice(2);
-  else if (show.startsWith('l:')) { c.viz = ''; c.layer = show.slice(2); }
-  else if (show === 'custom') c.viz = '';
-  if (g('cdse-layer') && g('cdse-layer').value.trim()) c.layer = g('cdse-layer').value.trim();
-  if (g('cdse-carrier')) c.carrier = g('cdse-carrier').value;
-  if (g('cdse-from')) c.from = g('cdse-from').value;
-  if (g('cdse-to')) c.to = g('cdse-to').value;
-  if (g('cdse-prio')) c.priority = g('cdse-prio').value;
-  if (g('cdse-cc')) c.cc = +g('cdse-cc').value;
-  if (g('cdse-sat')) c.sat = g('cdse-sat').value;
-  return c;
+function cdseConnect() {
+  const v = ($('#cdse-id') && $('#cdse-id').value.trim()) || '';
+  if (!v) { cdseError = t('cdse.errId'); renderCdse(); return; }
+  const changed = v !== prefs.cdse.id;
+  prefs.cdse.id = v; cdseError = ''; CD.setup = false; savePrefs();
+  if (changed) cdseCaps(v, true);
+  setBase('cdse');
+  if (map.getZoom() < 6) map.setZoom(8);
 }
-function cdseCheck(c) {
-  if (!c.id) return t('cdse.errId');
-  if (!c.from || !c.to || c.from > c.to) return t('cdse.errDate');
-  return '';
-}
-// Commit the form; switch the map to Copernicus when asked to (the button), or update it live when it is already showing.
-function cdseCommit(show) {
-  const c = cdseRead(), err = cdseCheck(c);
-  if (err) { cdseError = err; renderBasePanel(); return false; }
-  const idChanged = c.id !== prefs.cdse.id;
-  prefs.cdse = c; cdseError = ''; savePrefs();
-  if (idChanged) { CD.acqKey = ''; cdseCaps(c.id, true); }
-  if (show || prefs.base === 'cdse') { if (idChanged && prefs.base === 'cdse') setBase('cdse'); else cdseApply(); }
-  else renderBasePanel();
-  if (prefs.base === 'cdse' || show) setTimeout(() => cdseAcq(false), 50);
-  return true;
-}
-function cdseSubmit() {
-  if (cdseCommit(true)) toast(t('cdse.loading', { from: prefs.cdse.from, to: prefs.cdse.to }));
-}
-$('#basePanel').addEventListener('change', e => {
+const bp = $('#basePanel');
+bp.addEventListener('click', e => {
+  if (!e.target.closest('#cdseBox')) return;
+  const q = s => e.target.closest(s);
+  let b;
+  if ((b = q('[data-cdtab]'))) { CD.tab = b.dataset.cdtab; cdseFootprints(null); renderCdse(); return; }
+  if ((b = q('[data-cdmode]'))) { const c = prefs.cdse; c.mode = b.dataset.cdmode; if (c.mode === 'single' && !c.date) c.date = c.to; cdseApply(); return; }
+  if ((b = q('[data-cdstep]'))) { cdseStep(+b.dataset.cdstep); return; }
+  if ((b = q('[data-calm]'))) { CD.cal = ymAdd(CD.cal || ymOf(cdseDay(prefs.cdse)), +b.dataset.calm); renderCdse(); return; }
+  if ((b = q('[data-cdday]'))) { cdseSetDay(b.dataset.cdday); return; }
+  if ((b = q('[data-cdpick]'))) { cdseFootprints(null); CD.tab = 'view'; cdseSetDay(b.dataset.cdpick); toast(t('cdse.dayOnly', { d: fmtDay(b.dataset.cdpick) })); return; }
+  if ((b = q('[data-cdr]'))) { const n = +b.dataset.cdr, c = prefs.cdse; c.to = todayIso(); c.from = isoDate(new Date(Date.now() - n * 864e5)); cdseApply(); return; }
+  if ((b = q('[data-cdview]'))) {
+    const k = b.dataset.cdview, c = prefs.cdse;
+    if (k === 'custom') { CD.custom = true; renderCdse(); const f = $('#cdse-layer'); if (f) f.focus(); return; }
+    CD.custom = false;
+    if (k.startsWith('v:')) c.viz = k.slice(2); else { c.viz = ''; c.layer = k.slice(2); }
+    cdseApply(); return;
+  }
+  if ((b = q('[data-cdse]'))) {
+    const a = b.dataset.cdse;
+    if (a === 'connect') cdseConnect();
+    if (a === 'show') setBase('cdse');
+    if (a === 'setup') { CD.setup = !CD.setup; renderCdse(); }
+    if (a === 'cal') { CD.calOpen = !CD.calOpen; CD.cal = ymOf(cdseDay(prefs.cdse)); renderCdse(); }
+    if (a === 'latest') cdseLatest(false);
+    if (a === 'acq') { const c = prefs.cdse; (cdseSingle(c) ? [ymOf(cdseDay(c))] : [ymOf(c.to), ymOf(c.from)]).forEach(ym => avLoad(ym, true)); renderCdse(); }
+    if (a === 'fxreset') { prefs.cdse.fx = { b: 1, c: 1, s: 1 }; savePrefs(); cdseFx(); renderCdse(); }
+  }
+});
+bp.addEventListener('toggle', e => {
+  const d = e.target.closest && e.target.closest('[data-cddet]'); if (!d) return;
+  const k = { cfg: 'cfgOpen', fx: 'fxOpen', more: 'moreOpen' }[d.dataset.cddet]; if (k) CD[k] = d.open;
+}, true);
+bp.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'cdse-id') { e.preventDefault(); cdseConnect(); } });
+bp.addEventListener('change', e => {
+  const id = e.target.id, c = prefs.cdse;
+  if (!/^cdse-|^cdfx-/.test(id) || id === 'cdse-id') return;
+  if (/^cdfx-/.test(id)) { savePrefs(); return; }
+  if (id === 'cdse-layer') { const v = e.target.value.trim(); if (!v) return; c.viz = ''; c.layer = v; }
+  if (id === 'cdse-from' || id === 'cdse-to') {
+    const from = $('#cdse-from').value, to = $('#cdse-to').value;
+    if (!from || !to || from > to) { cdseError = t('cdse.errDate'); renderCdse(); return; }
+    c.from = from; c.to = to;
+  }
+  if (id === 'cdse-prio') c.priority = e.target.value;
+  if (id === 'cdse-cc') c.cc = +e.target.value;
+  if (id === 'cdse-carrier') c.carrier = e.target.value;
+  if (id === 'cdse-sat') { c.sat = e.target.value; savePrefs(); renderCdse(); return; }
+  cdseApply();
+});
+bp.addEventListener('input', e => {
   const id = e.target.id;
-  if (!/^cdse-/.test(id)) return;
-  if (id === 'cdse-id') { const v = e.target.value.trim(); if (v) cdseCaps(v); return; }
-  if (id === 'cdse-sat') { prefs.cdse.sat = e.target.value; savePrefs(); cdseAcq(true); return; }
-  if (id === 'cdse-show' && e.target.value === 'custom') { CD.custom = true; renderBasePanel(); const f = $('#cdse-layer'); if (f) f.focus(); return; }
-  if (id === 'cdse-layer' && !e.target.value.trim()) return;
-  if (!prefs.cdse.id && id !== 'cdse-layer') return;
-  cdseCommit(false);
-});
-$('#basePanel').addEventListener('input', e => {
-  if (e.target.id === 'cdse-cc') $('#cdse-cco').textContent = e.target.value + '%';
-});
-$('#basePanel').addEventListener('click', e => {
-  const r = e.target.closest('[data-cdr]');
-  if (r) {
-    const n = +r.dataset.cdr, to = new Date();
-    $('#cdse-to').value = isoDate(to); $('#cdse-from').value = isoDate(new Date(to - n * 864e5));
-    CD.prev = null;
-    if (prefs.cdse.id) cdseCommit(false); else renderBasePanel();
-    return;
+  if (id === 'cdse-cc') $('#cdse-cco').textContent = e.target.value + '%';
+  if (/^cdfx-[bcs]$/.test(id)) {
+    prefs.cdse.fx = { ...(prefs.cdse.fx || {}), [id.slice(-1)]: +e.target.value };
+    $('#' + id + 'o').textContent = Math.round(e.target.value * 100) + '%';
+    cdseFx();
   }
-  const day = e.target.closest('[data-cdday]');
-  if (day) {
-    const d = day.dataset.cdday, c = prefs.cdse;
-    if (c.from !== c.to) CD.prev = { from: c.from, to: c.to };
-    $('#cdse-from').value = d; $('#cdse-to').value = d;
-    cdseFootprints(null);
-    if (cdseCommit(false)) toast(t('cdse.dayOnly', { d: fmtDay(d) }));
-    return;
-  }
-  const a = e.target.closest('[data-cdse]');
-  if (!a) return;
-  if (a.dataset.cdse === 'acq') cdseAcq(true);
-  if (a.dataset.cdse === 'caps') cdseCaps($('#cdse-id').value, true);
-  if (a.dataset.cdse === 'back' && CD.prev) { $('#cdse-from').value = CD.prev.from; $('#cdse-to').value = CD.prev.to; CD.prev = null; cdseCommit(false); }
 });
-$('#basePanel').addEventListener('mouseover', e => {
-  const d = e.target.closest('[data-cdday]');
-  const date = d ? d.dataset.cdday : null;
-  if (date !== CD.fpDate) { CD.fpDate = date; cdseFootprints(date); }
+bp.addEventListener('mouseover', e => {
+  const d = e.target.closest('[data-cdfp]');
+  const k = d ? d.dataset.cdfp : null;
+  if (k !== CD.fpKey) { CD.fpKey = k; cdseFootprints(k); }
 });
-$('#basePanel').addEventListener('mouseleave', () => { CD.fpDate = null; cdseFootprints(null); });
+bp.addEventListener('mouseleave', () => { CD.fpKey = null; cdseFootprints(null); });
 let cdseMoveT = 0;
 map.on('moveend', () => {
-  if (prefs.base !== 'cdse' || $('#basePanel').hidden || !$('#cdseAcq')) return;
-  clearTimeout(cdseMoveT); cdseMoveT = setTimeout(() => cdseAcq(false), 700);
+  if (prefs.base !== 'cdse' || bp.hidden || !$('#cdseBox')) return;
+  clearTimeout(cdseMoveT); cdseMoveT = setTimeout(() => renderCdse(), 700);
 });
 
 /* =========================================================================
