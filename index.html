@@ -210,7 +210,8 @@ body.mine-off #layerList{opacity:.45}
 .lyr-active-note{font-size:11.5px;color:var(--accent);padding:0 10px 4px 32px;font-weight:600;margin-top:-4px}
 .lyr .chev{display:inline-grid;transition:transform .15s}
 .lyr.is-collapsed>.lyr-head .chev{transform:rotate(-90deg)}
-.lyr.is-collapsed>.feat-list{display:none}
+.lyr.is-collapsed>.feat-more{padding:4px 8px 6px 30px;font-size:12.5px}
+.feat-list{display:none}
 .feat-list{list-style:none;margin:0;padding:0 4px 6px;display:flex;flex-direction:column;max-height:420px;overflow-y:auto}
 .feat{width:100%;display:flex;align-items:center;gap:8px;border:0;background:transparent;border-radius:7px;padding:5px 8px;text-align:left}
 .feat:hover{background:var(--panel-2)}
@@ -578,8 +579,8 @@ body[data-tool="select"] .status .hint{display:none}
 .pw-pop-desc a{color:var(--accent)}
 .pw-pop-m{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font:500 12px var(--f-mono);color:var(--muted)}
 .pw-pin{background:none;border:0}
-.pw-pin svg{display:block;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.4));transform-origin:50% 100%;transition:transform .12s}
-.pw-pin.pw-sel svg{transform:scale(1.2);filter:drop-shadow(0 0 4px var(--accent)) drop-shadow(0 1px 1.5px rgba(0,0,0,.4))}
+.pw-pin svg{display:block;overflow:visible;transform-origin:50% 100%;transition:transform .12s}
+.pw-pin.pw-sel svg{transform:scale(1.2);filter:drop-shadow(0 0 4px var(--accent))}
 .pw-label-icon{background:none;border:0}
 .pw-label{position:absolute;left:0;top:0;transform:translate(-50%,-50%);white-space:nowrap;font:600 var(--size,14px)/1.1 var(--f-cond);letter-spacing:.03em;color:var(--c);text-shadow:0 0 2px #fff,0 0 3px #fff,0 0 5px #fff,0 0 8px rgba(255,255,255,.8);padding:2px 5px;border-radius:5px;cursor:pointer}
 .pw-label-icon.pw-sel .pw-label{outline:2px solid var(--accent);background:rgba(255,255,255,.55)}
@@ -809,7 +810,7 @@ body.np-meta .desc-view:hover{background:transparent}
 .icn.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);background:var(--accent-weak)}
 .icn-up{color:var(--accent);border-style:dashed}
 .pw-img{background:none;border:0}
-.pw-img img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.45))}
+.pw-img img{display:block;width:100%;height:100%;object-fit:contain}
 body.pw-editing .leaflet-overlay-pane path.leaflet-interactive:not(.pw-edit-target),
 body.pw-editing .leaflet-marker-pane .leaflet-marker-icon.leaflet-interactive:not(.marker-icon):not(.pw-edit-target){pointer-events:none!important}
 .pw-img.pw-sel img{filter:drop-shadow(0 0 4px var(--accent)) drop-shadow(0 0 2px var(--accent))}
@@ -3958,6 +3959,15 @@ fr: {"mine.hide": "Masquer toute ma carte", "mine.show": "Afficher ma carte", "m
 ru: {"mine.hide": "Скрыть всю мою карту", "mine.show": "Показать мою карту", "mine.off": "Эта карта скрыта. Глаз выше возвращает её; каждый слой сохраняет свою настройку.", "mine.offAuto": "Эта карта скрыта, пока включены другие карты. Она вернётся, когда вы их выключите, или нажмите глаз выше.", "mine.hiddenFor": "Ваша карта скрыта, пока включены другие карты.", "mine.showBtn": "Показать", "mine.backForDraw": "Ваша карта снова показана, чтобы вы видели, что рисуете.", "om.hideMine": "Скрывать мою карту, когда включаю другую", "om.mineOffNow": "Моя карта скрыта"}
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"lyr.showAll": "Show all {n}"},
+uk: {"lyr.showAll": "Показати всі ({n})"},
+pl: {"lyr.showAll": "Pokaż wszystkie ({n})"},
+de: {"lyr.showAll": "Alle {n} zeigen"},
+fr: {"lyr.showAll": "Tout afficher ({n})"},
+ru: {"lyr.showAll": "Показать все ({n})"}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -3998,6 +4008,27 @@ const store = {
   }
 };
 const KEY_PROJECT = 'plotwright:project:v1';   // kept so maps saved in the earlier build still open
+/* Big maps don't fit in localStorage (about 5 MB). They are kept in IndexedDB instead, which can
+   hold hundreds of MB, and localStorage only keeps a small note saying where the map is. */
+const IDB = {
+  db: null,
+  open() {
+    if (!this.db) this.db = new Promise((res, rej) => {
+      try { const r = indexedDB.open('frontline-atlas', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }
+      catch (e) { rej(e); }
+    });
+    return this.db;
+  },
+  async get(k) { const db = await this.open(); return new Promise((res, rej) => { const q = db.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result ?? null); q.onerror = () => rej(q.error); }); },
+  async set(k, v) { const db = await this.open(); return new Promise((res, rej) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').put(v, k); tx.oncomplete = () => res(true); tx.onerror = () => rej(tx.error); }); }
+};
+// The saved local map, wherever it is kept.
+async function loadLocalProject() {
+  let p = null;
+  try { p = JSON.parse(store.get(KEY_PROJECT) || 'null'); } catch (e) { p = null; }
+  if (p && p.idb) { try { p = JSON.parse(await IDB.get(KEY_PROJECT) || 'null'); } catch (e) { p = null; } }
+  return p;
+}
 const KEY_PREFS = 'frontline:prefs:v2';
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 const normHex = c => {
@@ -6710,7 +6741,7 @@ map.createPane('pwOther').style.zIndex = 395;      // under this map's shapes (o
 map.createPane('pwOtherFx').style.zIndex = 398;    // gained/lost ground
 map.createPane('pwOtherPt').style.zIndex = 590;    // under this map's markers (marker pane, 600)
 const OM = {
-  rend: L.svg({ pane: 'pwOther' }), rendFx: L.svg({ pane: 'pwOtherFx' }),
+  rend: L.canvas({ pane: 'pwOther', padding: 0.1, tolerance: 3 }), rendFx: L.svg({ pane: 'pwOtherFx' }),   // shapes on one canvas: big maps stay smooth
   live: new Map(),     // mid -> { res, at, err, loading }
   hist: new Map(),     // mid -> { enabled, items, err, loading, at }
   snaps: new Map(),    // `${mid}|${ts}` -> Promise<res>
@@ -6829,7 +6860,7 @@ function omMarkerIcon(x, st, icons) {
   if (!ic) return pinIcon(color, x.style.symbol, k);
   if (ic.glyph) {
     const W = Math.round(30 * k), H = Math.round(42 * k);
-    return L.divIcon({ className: 'pw-pin', iconSize: [W, H], iconAnchor: [W / 2, 40 * k], html: `<svg viewBox="0 0 30 42" width="${W}" height="${H}" aria-hidden="true"><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="${esc(color)}" stroke="rgba(0,0,0,.38)" stroke-width="1.2"/><image href="${esc(ic.src)}" x="6" y="6" width="18" height="18"/></svg>` });
+    return L.divIcon({ className: 'pw-pin', iconSize: [W, H], iconAnchor: [W / 2, 40 * k], html: `<svg viewBox="0 0 30 42" width="${W}" height="${H}" aria-hidden="true"><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="rgba(0,0,0,.28)" transform="translate(.6 1.3)"/><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="${esc(color)}" stroke="rgba(0,0,0,.38)" stroke-width="1.2"/><image href="${esc(ic.src)}" x="6" y="6" width="18" height="18"/></svg>` });
   }
   const z = Math.max(4, Math.round(clamp(+x.style.iconSize || 32, 12, 96) * k));
   return L.divIcon({ className: 'pw-img', iconSize: [z, z], iconAnchor: [z / 2, z / 2], html: `<img src="${esc(ic.src)}" alt="" width="${z}" height="${z}" draggable="false">` });
@@ -6869,7 +6900,8 @@ async function omRender(oid) {
   omClear(oid);
   const icons = Object.fromEntries((res.icons || []).map(i => [i.key, i]));
   const when = item ? fmtDate(dayOfTs(item.ts)) : '';
-  const g = L.layerGroup();
+  const g = L.layerGroup(), items = [];
+  const popOpts = x => ({ className: 'pw-popup om-popup', maxWidth: 320, offset: x.kind === 'marker' ? [0, -30] : [0, 0] });
   res.layers.forEach((lv, li) => {
     if (!lvOn[li]) return;
     if (TL.on && TL.date && !featureAt(lv, TL.date)) return;
@@ -6881,17 +6913,50 @@ async function omRender(oid) {
         if (x.kind === 'polygon') lyr = L.polygon(x.geom, opts);
         else if (x.kind === 'line') lyr = L.polyline(x.geom, opts);
         else if (x.kind === 'circle') lyr = L.circle(x.geom.c, { ...opts, radius: x.geom.r });
-        else if (x.kind === 'label') lyr = L.marker(x.geom, { pane: 'pwOtherPt', interactive: false, icon: labelIcon({ name: x.name, style: x.style }) });
-        else lyr = L.marker(x.geom, { pane: 'pwOtherPt', icon: omMarkerIcon(x, st, icons), keyboard: false });
-        if (x.kind !== 'label') lyr.bindPopup(() => omPopup(x, S.others.get(oid) || now, when), { className: 'pw-popup om-popup', maxWidth: 320, offset: x.kind === 'marker' ? [0, -30] : [0, 0] });
+        else {
+          // Points and labels are placed by omPlacePoints: pins on screen only, dots when there are many.
+          const g0 = omMapped(x, st);
+          items.push({ x, ll: L.latLng(x.geom), color: (g0 && (g0.fillColor || g0.color)) || x.style.color || '#d93f2b' });
+          return;
+        }
+        lyr.bindPopup(() => omPopup(x, S.others.get(oid) || now, when), popOpts(x));
         g.addLayer(lyr);
       } catch (err) { /* one broken shape never stops the rest */ }
     });
   });
+  g._pts = {
+    items, on: new Map(), dots: L.layerGroup().addTo(g), k: clamp(st.mscale ?? 1, 0.3, 3),
+    make: it => {
+      const x = it.x;
+      if (x.kind === 'label') return L.marker(it.ll, { pane: 'pwOtherPt', interactive: false, keyboard: false, icon: labelIcon({ name: x.name, style: x.style }) });
+      return L.marker(it.ll, { pane: 'pwOtherPt', icon: omMarkerIcon(x, st, icons), keyboard: false }).bindPopup(() => omPopup(x, S.others.get(oid) || now, when), popOpts(x));
+    },
+    pop: it => omPopup(it.x, S.others.get(oid) || now, when)
+  };
   g.addTo(map);
   OM.groups.set(oid, g); OM.drawn.set(oid, drawKey);
+  omPlacePoints(oid);
   omFx();
 }
+// Thousands of pins are what makes a big map crawl. Only points on screen get pins, and when more
+// than OM_MAXPTS would be on screen they are drawn as dots on the canvas instead (click for details).
+const OM_MAXPTS = 250;
+function omPlacePoints(oid) {
+  const g = OM.groups.get(oid), P = g && g._pts;
+  if (!P) return;
+  const b = map.getBounds().pad(0.15), inView = P.items.filter(it => b.contains(it.ll));
+  const dots = inView.filter(it => it.x.kind !== 'label').length > OM_MAXPTS;
+  const want = new Set(dots ? [] : inView);
+  P.on.forEach((m, it) => { if (!want.has(it)) { g.removeLayer(m); P.on.delete(it); } });
+  want.forEach(it => { if (!P.on.has(it)) { const m = P.make(it); P.on.set(it, m); g.addLayer(m); } });
+  P.dots.clearLayers();
+  if (dots) inView.forEach(it => {
+    if (it.x.kind === 'label') return;
+    L.circleMarker(it.ll, { renderer: OM.rend, pane: 'pwOther', radius: 4.5 * P.k, color: '#fff', weight: 1.3, opacity: 0.95, fillColor: it.color, fillOpacity: 1 })
+      .bindPopup(() => P.pop(it), { className: 'pw-popup om-popup', maxWidth: 320 }).addTo(P.dots);
+  });
+}
+map.on('moveend', () => OM.groups.forEach((g, oid) => omPlacePoints(oid)));
 function omRenderAll() { [...OM.groups.keys()].forEach(oid => { if (!S.others.has(oid)) omClear(oid); }); omEntries().forEach(e => omRender(e.id)); }
 // Called when the list of other maps changes (an edit here, a collaborator, or a new map loaded).
 function omChanged(id) {
@@ -7111,7 +7176,8 @@ async function omAdd() {
 function omFit(oid) {
   const g = OM.groups.get(oid); if (!g) return;
   const b = L.latLngBounds([]);
-  g.eachLayer(l => { if (l.getBounds) b.extend(l.getBounds()); else if (l.getLatLng) b.extend(l.getLatLng()); });
+  g.eachLayer(l => { if (l.getBounds) { try { b.extend(l.getBounds()); } catch (e) { /* empty group */ } } else if (l.getLatLng) b.extend(l.getLatLng()); });
+  if (g._pts) g._pts.items.forEach(it => b.extend(it.ll));
   if (b.isValid()) map.flyToBounds(b, { padding: [60, 60], maxZoom: 14 });
 }
 const omPanel = $('#omPanel');
@@ -7184,7 +7250,7 @@ function addLayer(props = {}) {
   const l = {
     id: props.id || uid(), name: props.name || t('lyr.default', { n: S.layers.length + 1 }), visible: props.visible !== false,
     color: normHex(props.color) || nextColor(), from: normDate(props.from), until: normDate(props.until), source: props.source || null,
-    role: props.role === 'changes' ? 'changes' : null, defHidden: !!props.defHidden, mscale: msNorm(props.mscale), parent: props.parent || null, collapsed: false, group: L.featureGroup()
+    role: props.role === 'changes' ? 'changes' : null, defHidden: !!props.defHidden, mscale: msNorm(props.mscale), parent: props.parent || null, collapsed: false, group: new LodGroup()
   };
   S.layers.push(l);
   if (l.visible) l.group.addTo(map);
@@ -7198,6 +7264,149 @@ const layerParent = l => { const p = l && l.parent && getLayer(l.parent); return
 function ancestors(l) { const out = []; let p = layerParent(l); while (p && out.length < 50 && !out.includes(p)) { out.push(p); p = layerParent(p); } return out; }
 const subLayersOf = id => S.layers.filter(l => l.parent === id);
 const isInside = (l, anc) => ancestors(l).includes(anc);
+/* ---------- Many points: only what is on screen is drawn as pins ----------
+   Thousands of DOM pins make the map crawl. When a map has more than LOD.max points:
+   pins off screen are left out, and when more than LOD.max would be on screen at once,
+   they are drawn as small dots on one canvas (click a dot to select it). The selected
+   point and points being edited always stay real pins. Layer groups skip culled pins
+   when they are added to the map, so nothing is built just to be removed again. */
+const LodGroup = L.FeatureGroup.extend({
+  onAdd(m) { this.eachLayer(l => { if (!l._lodOff) m.addLayer(l); }); },
+  addLayer(l) {
+    if (!l._lodOff) return L.FeatureGroup.prototype.addLayer.call(this, l);
+    if (this.hasLayer(l)) return this;
+    l.addEventParent(this); this._layers[this.getLayerId(l)] = l;   // joins the layer without a pin on the map
+    return this.fire('layeradd', { layer: l });
+  }
+});
+map.createPane('pwDots').style.zIndex = 590;
+map.getPane('pwDots').style.pointerEvents = 'none';
+const LOD = { max: 300, prep: false, active: false, dots: [], layer: L.layerGroup().addTo(map), rend: L.canvas({ pane: 'pwDots', padding: 0.1 }) };
+// Before creating many points at once (opening a map, importing a file).
+function lodPrepare(incoming) {
+  let n = incoming || 0; feats.forEach(f => { if (f._pw.kind === 'marker') n++; });
+  LOD.prep = n > LOD.max;
+}
+function lodWanted(f) {
+  const l = getLayer(f._pw.layerId);
+  return !!l && layerShown(l) && (!TL.on || (layerAtTree(l, TL.date) && featureAt(f._pw, TL.date))) && featShown(f._pw);
+}
+function lodApply() {
+  const ms = [];
+  feats.forEach(f => { if (f._pw.kind === 'marker') ms.push(f); });
+  const was = LOD.active;
+  LOD.active = ms.length > LOD.max;
+  if (!LOD.active && !was) return;
+  const b = map.getBounds().pad(0.15), keep = id => id === selectedId || id === editingId || MS.ids.has(id) || id === (FC && FC.fid);
+  const want = ms.filter(lodWanted), inView = want.filter(f => b.contains(f.getLatLng()));
+  const dotMode = LOD.active && inView.filter(f => !keep(f._pw.id)).length > LOD.max;
+  const on = new Set(), dots = [];
+  if (!LOD.active) want.forEach(f => on.add(f));
+  else inView.forEach(f => { if (keep(f._pw.id) || !dotMode) on.add(f); else dots.push(f); });
+  want.forEach(f => { if (keep(f._pw.id)) on.add(f); });
+  ms.forEach(f => {
+    const show = on.has(f);
+    f._lodOff = LOD.active && !show;
+    if (show && !map.hasLayer(f)) map.addLayer(f);
+    else if (!show && map.hasLayer(f) && (LOD.active || !want.includes(f))) map.removeLayer(f);
+  });
+  LOD.dots = dots;
+  LOD.layer.clearLayers();
+  dots.forEach(f => {
+    const k = clamp(markerK(f._pw), 0.6, 2);
+    L.circleMarker(f.getLatLng(), { renderer: LOD.rend, pane: 'pwDots', interactive: false, radius: 4.5 * k, color: '#fff', weight: 1.4, opacity: 0.95, fillColor: f._pw.style.color || '#d93f2b', fillOpacity: 1 }).addTo(LOD.layer);
+  });
+  document.body.classList.toggle('lod-dots', dots.length > 0);
+}
+const lodSoon = debounce(() => lodApply(), 60);
+map.on('moveend zoomend', () => { if (LOD.active) lodApply(); });
+// Dots are drawn without their own events (so they never block shapes underneath); a click
+// close to one is caught first and treated as a click on its point.
+map.getContainer().addEventListener('click', e => {
+  if (!LOD.dots.length || CD.picking || (map.dragging && map.dragging.moved())) return;   // the end of a drag is not a click
+  const p = map.mouseEventToContainerPoint(e);
+  let best = null, bd = 9;
+  LOD.dots.forEach(f => { const q = map.latLngToContainerPoint(f.getLatLng()), d = Math.hypot(q.x - p.x, q.y - p.y); if (d < bd) { bd = d; best = f; } });
+  if (!best) return;
+  e.stopPropagation(); e.preventDefault();
+  const ll = best.getLatLng();
+  onFeatureClick({ target: best, latlng: ll, originalEvent: e });
+  lodApply();
+}, true);
+/* ---------- Many or very detailed shapes: draw them on canvas ----------
+   SVG keeps one element per shape; with thousands of shapes or hundreds of thousands of points
+   the browser struggles to pan. Past VEC limits, shapes are drawn on one canvas instead.
+   The shape being edited, and every shape while a whole-map edit tool (edit, drag, rotate,
+   delete) is on, stay SVG so editing works exactly as before. Pattern fills are redrawn
+   as canvas patterns. */
+const VEC = { canvas: false, forceSvg: false, rend: L.canvas({ padding: 0.1, tolerance: 3 }), maxShapes: 1200, maxPoints: 150000 };
+const isVec = f => f._pw && (f._pw.kind === 'polygon' || f._pw.kind === 'line' || f._pw.kind === 'circle');
+function vecPoints(f) {
+  if (f._pw.kind === 'circle') return 1;
+  let n = 0;
+  (function w(x) { if (!Array.isArray(x)) { n++; return; } x.forEach(w); })(f.getLatLngs());
+  return n;
+}
+function vecHeavy() {
+  let shapes = 0, pts = 0;
+  feats.forEach(f => { if (isVec(f)) { shapes++; pts += vecPoints(f); } });
+  return shapes > VEC.maxShapes || pts > VEC.maxPoints;
+}
+function vecRendFor(f) { return VEC.canvas && !VEC.forceSvg && f._pw.id !== editingId ? VEC.rend : undefined; }
+function vecPlace(f) {
+  const want = vecRendFor(f);
+  if (f.options.renderer === want) return;
+  f.options.renderer = want;
+  if (f._map) { const m = f._map; m.removeLayer(f); m.addLayer(f); }
+}
+function vecRender(recount) {
+  if (recount !== false) VEC.canvas = vecHeavy();
+  feats.forEach(f => { if (isVec(f)) vecPlace(f); });
+}
+const vecSoon = debounce(() => vecRender(), 400);
+// The same test on data not drawn yet (opening a project, importing a file), so a heavy map is
+// drawn on canvas from the start instead of building thousands of SVG shapes first.
+function vecHeavyData(list) {
+  let shapes = 0, pts = 0;
+  const cnt = g => { let n = 0; (function w(x) { if (!Array.isArray(x)) return; if (x.length === 2 && typeof x[0] === 'number') { n++; return; } x.forEach(w); })(g); return n; };
+  feats.forEach(f => { if (isVec(f)) { shapes++; pts += vecPoints(f); } });
+  list.forEach(x => { if (x && (x.kind === 'polygon' || x.kind === 'line')) { shapes++; pts += cnt(x.geom); } else if (x && x.kind === 'circle') shapes++; });
+  return shapes > VEC.maxShapes || pts > VEC.maxPoints;
+}
+// Before a single shape is edited it goes back to SVG.
+function vecSvg(lyr) { if (lyr && isVec(lyr) && lyr.options.renderer) { lyr.options.renderer = undefined; if (lyr._map) { const m = lyr._map; m.removeLayer(lyr); m.addLayer(lyr); } } }
+// Canvas versions of the hatch, cross and dot fills (SVG uses <pattern> elements).
+const CPAT = new Map();
+function canvasPattern(ctx, url) {
+  const m = /pwp-(hatch|cross|dots)-([0-9a-f]{6})/i.exec(url);
+  if (!m) return null;
+  const k = m[1] + m[2];
+  if (!CPAT.has(k)) {
+    const c = '#' + m[2], cv = document.createElement('canvas'); cv.width = cv.height = 9;
+    const g = cv.getContext('2d');
+    g.globalAlpha = 0.2; g.fillStyle = c; g.fillRect(0, 0, 9, 9); g.globalAlpha = 1;
+    g.strokeStyle = c; g.fillStyle = c;
+    const diag = (w, flip) => { g.lineWidth = w; g.beginPath(); [[-9, 0], [0, 0], [9, 0]].forEach(([o]) => { if (flip) { g.moveTo(o, 0); g.lineTo(o + 9, 9); } else { g.moveTo(o, 9); g.lineTo(o + 9, 0); } }); g.stroke(); };
+    if (m[1] === 'hatch') diag(2.2);
+    else if (m[1] === 'cross') { diag(1.6); diag(1.6, true); }
+    else { g.beginPath(); g.arc(4.5, 4.5, 2, 0, Math.PI * 2); g.fill(); }
+    CPAT.set(k, cv);
+  }
+  return ctx.createPattern(CPAT.get(k), 'repeat');
+}
+(() => {
+  const orig = L.Canvas.prototype._fillStroke;
+  L.Canvas.prototype._fillStroke = function (ctx, layer) {
+    const o = layer.options;
+    if (o.fill && typeof o.fillColor === 'string' && o.fillColor.startsWith('url(')) {
+      const keep = o.fillColor;
+      o.fillColor = canvasPattern(ctx, keep) || o.color;
+      try { orig.call(this, ctx, layer); } finally { o.fillColor = keep; }
+      return;
+    }
+    orig.call(this, ctx, layer);
+  };
+})();
 const layerShown = l => !!l && !S.mineOff && l.visible && ancestors(l).every(a => a.visible);
 /* The eye above the layer list hides this whole map from view, without touching any layer's
    own eye. Other maps can switch it on while they are shown (S.mineAuto) and off again after. */
@@ -7265,7 +7474,7 @@ function pinIcon(color, sym, k = 1) {
     : `<circle cx="15" cy="14.8" r="4.4" fill="${fg}"/>`;
   return L.divIcon({
     className: 'pw-pin', iconSize: [W, H], iconAnchor: [W / 2, 40 * k], tooltipAnchor: [0, -30 * k],
-    html: `<svg viewBox="0 0 30 42" width="${W}" height="${H}" aria-hidden="true"><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="${color}" stroke="rgba(0,0,0,.38)" stroke-width="1.2"/>${inner}</svg>`
+    html: `<svg viewBox="0 0 30 42" width="${W}" height="${H}" aria-hidden="true"><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="rgba(0,0,0,.28)" transform="translate(.6 1.3)"/><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="${color}" stroke="rgba(0,0,0,.38)" stroke-width="1.2"/>${inner}</svg>`
   });
 }
 // Custom image icons. "glyph" icons (Google's white stock symbols) sit inside a colored pin, like in My Maps.
@@ -7276,7 +7485,7 @@ function markerIcon(r) {
     const W = Math.round(30 * k), H = Math.round(42 * k);
     return L.divIcon({
       className: 'pw-pin', iconSize: [W, H], iconAnchor: [W / 2, 40 * k], tooltipAnchor: [0, -30 * k],
-      html: `<svg viewBox="0 0 30 42" width="${W}" height="${H}" aria-hidden="true"><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="${s.color}" stroke="rgba(0,0,0,.38)" stroke-width="1.2"/><image href="${esc(ic.src)}" x="6" y="6" width="18" height="18"/></svg>`
+      html: `<svg viewBox="0 0 30 42" width="${W}" height="${H}" aria-hidden="true"><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="rgba(0,0,0,.28)" transform="translate(.6 1.3)"/><path d="M15 40.5S2.5 26 2.5 15a12.5 12.5 0 0 1 25 0C27.5 26 15 40.5 15 40.5z" fill="${s.color}" stroke="rgba(0,0,0,.38)" stroke-width="1.2"/><image href="${esc(ic.src)}" x="6" y="6" width="18" height="18"/></svg>`
     });
   }
   const z = Math.max(4, Math.round(clamp(+s.iconSize || 32, 12, 96) * k));
@@ -7335,7 +7544,7 @@ function updateFeatureInPlace(lyr, val) {
    move to another layer together. If the outer one is deleted, its sub-items stay where they are and
    simply show at the top level (undo puts them back inside). */
 // UI state: which sub-item drop-downs are open in the list; a parent waiting for a new sub-item.
-const FT = { open: new Set(), pending: null };
+const FT = { open: new Set(), pending: null, all: new Set() };
 const featParent = r => { const p = r && r.parentF && feats.get(r.parentF); return p && p._pw.layerId === r.layerId && p._pw.id !== r.id ? p : null; };
 function featAncestors(r) { const out = []; let p = featParent(r); while (p && out.length < 50 && !out.includes(p)) { out.push(p); p = featParent(p._pw); } return out; }
 const featKids = r => { const l = getLayer(r.layerId); return l ? l.group.getLayers().filter(f => f._pw && f._pw.parentF === r.id && featParent(f._pw) && featParent(f._pw)._pw.id === r.id) : []; };
@@ -7369,9 +7578,9 @@ function createFeature(rec, geom) {
   switch (rec.kind) {
     case 'marker': lyr = L.marker(geom, { icon: markerIcon(rec) }); break;
     case 'label': lyr = L.marker(geom, { icon: labelIcon(rec) }); break;
-    case 'line': lyr = L.polyline(geom, vecStyle(rec)); break;
-    case 'polygon': lyr = L.polygon(geom, vecStyle(rec)); break;
-    case 'circle': lyr = L.circle(geom.c, Object.assign({ radius: geom.r }, vecStyle(rec))); break;
+    case 'line': lyr = L.polyline(geom, { ...vecStyle(rec), renderer: VEC.canvas && !VEC.forceSvg ? VEC.rend : undefined }); break;
+    case 'polygon': lyr = L.polygon(geom, { ...vecStyle(rec), renderer: VEC.canvas && !VEC.forceSvg ? VEC.rend : undefined }); break;
+    case 'circle': lyr = L.circle(geom.c, Object.assign({ radius: geom.r, renderer: VEC.canvas && !VEC.forceSvg ? VEC.rend : undefined }, vecStyle(rec))); break;
     default: throw new Error('Unknown feature type ' + rec.kind);
   }
   // A shape someone adds now (not one loaded or synced) records who added it.
@@ -7379,6 +7588,7 @@ function createFeature(rec, geom) {
   lyr._pw = rec;
   feats.set(rec.id, lyr);
   if (S.mode === 'online') applyFeaturePerm(lyr);
+  if (LOD.prep && rec.kind === 'marker') lyr._lodOff = true;   // loading many points: lodApply decides which to show
   lr.group.addLayer(lyr);
   lyr.on('click', onFeatureClick);
   // Double-clicking a shape (on the way to a triple-click) must not zoom the map.
@@ -7726,6 +7936,8 @@ function loadProjectInner(p) {
   applySharedVisibility();
   if (!S.layers.length) addLayer({ name: t('lyr.untitled') });
   S.activeLayerId = S.layers.some(l => l.id === p.activeLayerId) ? p.activeLayerId : S.layers[0].id;
+  VEC.canvas = vecHeavyData((p.features || []).map(f => f));
+  lodPrepare((p.features || []).filter(f => f && f.kind === 'marker').length);
   (p.features || []).forEach(f => {
     const { geom, ...rec } = f;
     try { createFeature(rec, geom); } catch (err) { console.warn('Skipped a feature', err); }
@@ -7734,6 +7946,7 @@ function loadProjectInner(p) {
   $('#mapTitle').value = S.title;
   $('#mapDesc').value = S.desc; renderDesc();
   document.title = `${S.title} · ${t('app.name')}`;
+  LOD.prep = false;
   updateUnitsUI(); renderLayers(); renderInspector(); renderTimeline(); syncWatermark();
 }
 
@@ -7756,6 +7969,7 @@ function commit() {
   lastSnap = snap;
   persistLocal();
   renderLayers(); updateUndo(); renderTimeline();
+  vecSoon();
 }
 function scheduleCommit(ms = 400) { clearTimeout(commitTimer); commitTimer = setTimeout(commit, ms); }
 function flushCommit() { if (commitTimer) commit(); }
@@ -7791,16 +8005,27 @@ $('#redoBtn').addEventListener('click', redo);
 /* ---------- Saving locally (and keeping other tabs in step) ---------- */
 let saveOk = true;
 const localChannel = 'BroadcastChannel' in window ? new BroadcastChannel('frontline-atlas-local') : null;
+const LS_MAX = 3.5e6;   // bigger maps go to IndexedDB
+let persistBusy = null, persistAgain = false;
 function persistLocal() {
   if (S.mode !== 'local') { renderSaveState(); return; }
-  saveOk = store.set(KEY_PROJECT, JSON.stringify(serialize()));
-  if (saveOk && localChannel) localChannel.postMessage({ type: 'saved', tab: TAB });
-  renderSaveState();
+  if (persistBusy) { persistAgain = true; return; }
+  const text = JSON.stringify(serialize());
+  const done = ok => {
+    saveOk = ok;
+    if (ok && localChannel) localChannel.postMessage({ type: 'saved', tab: TAB });
+    renderSaveState();
+  };
+  if (text.length < LS_MAX && store.set(KEY_PROJECT, text)) { done(true); return; }
+  if (PREVIEW) { done(true); return; }
+  persistBusy = IDB.set(KEY_PROJECT, text)
+    .then(() => store.set(KEY_PROJECT, JSON.stringify({ app: 'frontline-atlas', idb: true, at: Date.now() })))
+    .catch(err => { console.warn('Could not save the map in this browser', err); return false; })
+    .then(ok => { persistBusy = null; done(ok !== false); if (persistAgain) { persistAgain = false; persistLocal(); } });
 }
 if (localChannel) localChannel.onmessage = e => {
   if (S.mode !== 'local' || !e.data || e.data.tab === TAB) return;
-  let p; try { p = JSON.parse(store.get(KEY_PROJECT) || 'null'); } catch (err) { return; }
-  if (p) applyRemoteSnap(projectToSnap(p));
+  loadLocalProject().then(p => { if (p && S.mode === 'local') applyRemoteSnap(projectToSnap(p)); });
 };
 // Bring the map in line with a full remote snapshot without touching undo history.
 function applyRemoteSnap(snap) {
@@ -8417,7 +8642,7 @@ function startShapeEdit(id) {
   setTool('select'); map.closePopup();
   if (selectedId !== id) select(id);
   if (lyr instanceof L.Marker) lyr.pm.enable({ draggable: true });
-  else lyr.pm.enable(EDIT_OPTS);
+  else { vecSvg(lyr); lyr.pm.enable(EDIT_OPTS); }
   editingId = id;
   toast(t(lyr instanceof L.Marker ? 'ins.editHelpPoint' : 'ins.editHelpShape') + ' ' + t('ins.editTriple'));
   ptSync(); renderInspector();
@@ -8519,6 +8744,7 @@ function select(id, opts = {}) {
   renderInspector();
   presenceEditing(id);
   $$('.feat').forEach(b => b.classList.toggle('is-sel', b.dataset.fid === id));
+  if (LOD.active) lodApply();   // a point shown as a dot becomes a real pin while selected
 }
 function deselect(opts = {}) {
   if (!opts.keepMulti && MS.ids.size) { MS.ids.clear(); MS.anchor = null; msRender(); }
@@ -8527,6 +8753,7 @@ function deselect(opts = {}) {
   stopSingleEdit(); selectedId = null; sync.override = null; renderInspector();
   if (had) presenceEditing(null);
   $$('.feat.is-sel').forEach(b => b.classList.remove('is-sel'));
+  if (LOD.active) lodSoon();
 }
 function zoomTo(lyr) {
   if (lyr instanceof L.Marker) map.flyTo(lyr.getLatLng(), Math.max(map.getZoom(), 16), { duration: 0.6 });
@@ -8538,6 +8765,7 @@ function stopSingleEdit() {
   const lyr = feats.get(editingId);
   if (lyr && lyr.pm) lyr.pm.disable();
   editingId = null;
+  if (VEC.canvas) vecSoon();
   ptSync();
 }
 function metricsHtml(lyr) {
@@ -8848,8 +9076,17 @@ function featRows(fs) {
     seen.add(r.id);
     return self + kids.map(k => row(k, d + 1, seen)).join('');
   };
-  return fs.filter(f => !isKid(f)).map(f => row(f, 0, new Set())).join('');
+  // Very long lists are cut to the first LIST_MAX rows (plus the selected one), with a button for the rest:
+  // thousands of rows make the whole page slow.
+  const tops = fs.filter(f => !isKid(f)), lid = fs[0] && fs[0]._pw.layerId;
+  if (tops.length > LIST_MAX && !FT.all.has(lid)) {
+    const shown = tops.slice(0, LIST_MAX), sel = selectedId && tops.find(f => f._pw.id === selectedId);
+    if (sel && !shown.includes(sel)) shown.push(sel);
+    return shown.map(f => row(f, 0, new Set())).join('') + `<li class="feat-more"><button type="button" class="link-btn" data-fall="${esc(lid)}">${esc(t('lyr.showAll', { n: nf(tops.length, 0) }))}</button></li>`;
+  }
+  return tops.map(f => row(f, 0, new Set())).join('');
 }
+const LIST_MAX = 200;
 function renderLayers() {
   const el = $('#layerList');
   // Layers nest: each section holds its shapes, then its sub-layers.
@@ -8886,6 +9123,8 @@ $('#layerList').addEventListener('click', e => {
     if (file) commit();
     return;
   }
+  const fall = e.target.closest('[data-fall]');
+  if (fall) { FT.all.add(fall.dataset.fall); renderLayers(); return; }
   const tw = e.target.closest('[data-ftw]');
   if (tw) { const id = tw.dataset.ftw; if (FT.open.has(id)) FT.open.delete(id); else FT.open.add(id); renderLayers(); return; }
   const fb = e.target.closest('.feat');
@@ -9521,6 +9760,9 @@ function setTool(tl) {
     pathOptions: { color: c, fillColor: c, weight: 3, fillOpacity: 0.25 }
   };
   if (!['select', 'measure', 'sketch'].includes(tl)) map.closePopup();
+  // Whole-map edit tools work on SVG shapes: switch a canvas-drawn heavy map back while they are on.
+  const svgTool = ['edit', 'drag', 'rotate', 'delete'].includes(tl);
+  if (svgTool !== VEC.forceSvg) { VEC.forceSvg = svgTool; if (VEC.canvas) vecRender(false); }
   switch (tl) {
     case 'marker': map.pm.enableDraw('Marker', { ...common, markerStyle: { icon: pinIcon(c, '') } }); break;
     case 'label': pendingKind = 'label'; map.pm.enableDraw('Marker', { ...common, markerStyle: { icon: labelIcon({ name: t('kind.label'), style: { color: '#13222a', size: 15 } }) } }); break;
@@ -10327,17 +10569,20 @@ function tlRange() {
 }
 function applyTimeFilter() {
   const d = TL.date;
+  let pts = 0; feats.forEach(f => { if (f._pw.kind === 'marker') pts++; });
+  const manyPts = pts > LOD.max;   // points are then placed by lodApply (on screen only, or as dots)
   S.layers.forEach(l => {
     if (!layerShown(l)) return;
     const lOn = !TL.on || layerAtTree(l, d);
     l.group.getLayers().forEach(f => {
-      if (!f._pw) return;
+      if (!f._pw || (manyPts && f._pw.kind === 'marker')) return;
       const show = lOn && (!TL.on || featureAt(f._pw, d)) && featShown(f._pw);
       if (show && !map.hasLayer(f)) map.addLayer(f);
       else if (!show && map.hasLayer(f)) map.removeLayer(f);
       if (show && f._path) f._path.classList.toggle('pw-new', TL.on && f._pw.from === d);
     });
   });
+  lodApply();
   restoreZ();
   if (selectedId && feats.get(selectedId) && !map.hasLayer(feats.get(selectedId))) { map.closePopup(); deselect(); }
   firmsOnTime();   // fire detections can follow the timeline date
@@ -10423,7 +10668,7 @@ function newVersion(fid, date) {
   if (!TL.on) toggleTimeline(true);
   setTLDate(date);
   select(nl._pw.id);
-  if (!(nl instanceof L.Marker)) { nl.pm.enable(EDIT_OPTS); editingId = nl._pw.id; renderInspector(); ptSync(); }
+  if (!(nl instanceof L.Marker)) { vecSvg(nl); nl.pm.enable(EDIT_OPTS); editingId = nl._pw.id; renderInspector(); ptSync(); }
   toast(t('time.versionDone', { d: fmtDate(date) }));
 }
 $('#tlBtn').addEventListener('click', () => toggleTimeline());
@@ -11428,7 +11673,7 @@ function fcStart(fid) {
   map.closePopup();
   select(fid);
   FC.active = true; FC.fid = fid; FC.before = getGeom(lyr); FC.dirty = false;
-  lyr.pm.enable(EDIT_OPTS);
+  vecSvg(lyr); lyr.pm.enable(EDIT_OPTS);
   editingId = fid;
   renderInspector(); ptSync(); fcBarSync();
 }
@@ -12239,6 +12484,10 @@ async function importFiles(files) {
         if (res.desc && !S.desc) { S.desc = formatPlain(res.desc); $('#mapDesc').value = S.desc; renderDesc(); }
       }
       const keyMap = importIcons(res);
+      // A big file: decide up front to draw shapes on canvas and to place points on screen only.
+      const incoming = res.layers.flatMap(lv => lv.features || []);
+      if (vecHeavyData(incoming)) VEC.canvas = true;
+      lodPrepare(incoming.filter(x => x.kind === 'marker').length);
       // Folders inside folders become sub-layers (a folder holding only folders becomes an empty parent layer).
       const made = new Map();
       const layerFor = lv => {
@@ -12266,7 +12515,9 @@ async function importFiles(files) {
       links.forEach(([lyr, pid]) => { const np = idMap.get(pid), pf = np && feats.get(np); if (pf && pf._pw.layerId === lyr._pw.layerId && np !== lyr._pw.id) lyr._pw.parentF = np; });
       if (blank && S.layers.length) S.activeLayerId = S.layers[0].id;
       S.sample = false;
+      LOD.prep = false;
     } catch (err) {
+      LOD.prep = false;
       toast(`${f.name}: ${err instanceof ImportError ? err.message : t('err.kmlBad')}`, 'error');
       if (!(err instanceof ImportError)) console.error(err);
     }
@@ -14015,8 +14266,7 @@ function sampleProject() {
   if (mapId && syncConfigured()) opened = await openShared(mapId);
   else if (mapId) openNotice(t('sync.notSetup'), false);
   if (!opened) {
-    let proj = null;
-    try { proj = JSON.parse(store.get(KEY_PROJECT) || 'null'); } catch (e) { proj = null; }
+    let proj = await loadLocalProject();
     if (!proj || !APP_IDS.has(proj.app)) proj = sampleProject();
     loadProject(proj);
     resetHistory();
