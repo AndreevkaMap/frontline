@@ -159,6 +159,11 @@ body.readonly .desc-view:hover{background:transparent}
 .field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:-1px;background:var(--panel)}
 .field input[type=range]{width:100%;accent-color:var(--accent)}
 .sb-head{display:flex;align-items:center;justify-content:space-between}
+.sb-title{display:flex;align-items:center;gap:4px}
+.mine-eye{margin-left:-6px}
+.mine-eye[aria-pressed="true"]{color:var(--accent)}
+.mine-note{margin:0 0 6px;font-size:12px;color:var(--muted);padding:6px 8px;border-radius:7px;background:var(--panel-2)}
+body.mine-off #layerList{opacity:.45}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 11px;border-radius:8px;border:1px solid var(--line);background:var(--panel);font-weight:500;white-space:nowrap;color:var(--fg);text-decoration:none}
 .btn:hover{background:var(--panel-2)}
 .btn.sm{height:28px;padding:0 9px;font-size:13px}
@@ -352,6 +357,12 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .om-vers small{color:var(--muted);font-size:11.5px}
 .om-delta{margin:0;display:flex;gap:10px;font-size:12.5px;font-weight:600}
 .om-delta .g{color:#d50000}.om-delta .l{color:#1e88e5}
+.om-lvbar{display:flex;gap:14px;font-size:12.5px}
+.om-lvs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;max-height:240px;overflow:auto}
+.om-lvs .check{align-items:flex-start}
+.om-lvs .check input{margin-top:2px}
+.om-lvs span{display:flex;flex-direction:column;min-width:0}
+.om-lvs small{color:var(--muted);font-size:11.5px}
 .om-mode{display:flex}.om-mode button{flex:1}
 .om-cols{display:flex;flex-direction:column;gap:4px}
 .om-cols label{display:flex;align-items:center;gap:6px}
@@ -1091,7 +1102,8 @@ body.clean .clean-date:not([hidden]){display:block;position:absolute;top:12px;le
           <textarea id="mapDesc" rows="1" data-i18n-ph="sb.descPh" hidden></textarea>
         </div>
       </section>
-      <div class="sb-head"><span class="eyebrow" data-i18n="sb.layers"></span><button class="btn sm ro-hide" id="addLayer" data-icon="plus"><span data-i18n="sb.addLayer"></span></button></div>
+      <div class="sb-head"><span class="sb-title"><button type="button" class="icon-btn sm mine-eye" id="mineEye" aria-pressed="false"></button><span class="eyebrow" data-i18n="sb.layers"></span></span><button class="btn sm ro-hide" id="addLayer" data-icon="plus"><span data-i18n="sb.addLayer"></span></button></div>
+      <p class="mine-note" id="mineNote" hidden></p>
       <div id="layerList"></div>
 
       <section class="brandcard" aria-label="Andreevka Mapping">
@@ -3928,6 +3940,24 @@ ru: {"om.btn": "Другие карты", "om.btnSub": "Посмотреть д�
 });
 
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"om.layers": "Layers", "om.lvAll": "Show all", "om.lvNone": "Hide all", "om.lvOffDef": "off for viewers", "om.lvDef": "Use these layers for everyone", "om.lvDefHelp": "Ticks above only change your own view. This button makes them what people see when they switch this map on; they can still change it for themselves.", "om.lvSaved": "Saved: people now start with these layers."},
+uk: {"om.layers": "Шари", "om.lvAll": "Показати всі", "om.lvNone": "Сховати всі", "om.lvOffDef": "вимкнено для глядачів", "om.lvDef": "Ці шари для всіх", "om.lvDefHelp": "Позначки вище змінюють лише ваш вигляд. Ця кнопка робить їх тим, що бачать люди, коли вмикають цю карту; вони все одно можуть змінити це для себе.", "om.lvSaved": "Збережено: тепер люди бачать саме ці шари."},
+pl: {"om.layers": "Warstwy", "om.lvAll": "Pokaż wszystkie", "om.lvNone": "Ukryj wszystkie", "om.lvOffDef": "wyłączona dla widzów", "om.lvDef": "Te warstwy dla wszystkich", "om.lvDefHelp": "Zaznaczenia powyżej zmieniają tylko twój widok. Ten przycisk ustawia je jako to, co widzą inni po włączeniu tej mapy; każdy może to zmienić dla siebie.", "om.lvSaved": "Zapisano: wszyscy zaczynają teraz od tych warstw."},
+de: {"om.layers": "Ebenen", "om.lvAll": "Alle zeigen", "om.lvNone": "Alle ausblenden", "om.lvOffDef": "für Betrachter aus", "om.lvDef": "Diese Ebenen für alle", "om.lvDefHelp": "Die Haken oben ändern nur deine Ansicht. Dieser Knopf macht sie zu dem, was andere beim Einschalten dieser Karte sehen; sie können es für sich ändern.", "om.lvSaved": "Gespeichert: Alle starten jetzt mit diesen Ebenen."},
+fr: {"om.layers": "Couches", "om.lvAll": "Tout afficher", "om.lvNone": "Tout masquer", "om.lvOffDef": "désactivée pour les visiteurs", "om.lvDef": "Ces couches pour tous", "om.lvDefHelp": "Les cases ci-dessus ne changent que votre vue. Ce bouton en fait ce que les autres voient en activant cette carte ; ils peuvent toujours le changer pour eux.", "om.lvSaved": "Enregistré : tout le monde démarre avec ces couches."},
+ru: {"om.layers": "Слои", "om.lvAll": "Показать все", "om.lvNone": "Скрыть все", "om.lvOffDef": "выключен для зрителей", "om.lvDef": "Эти слои для всех", "om.lvDefHelp": "Отметки выше меняют только ваш вид. Эта кнопка делает их тем, что видят люди при включении этой карты; они всё равно могут изменить это для себя.", "om.lvSaved": "Сохранено: теперь все видят эти слои."}
+});
+
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"mine.hide": "Hide my whole map", "mine.show": "Show my map", "mine.off": "This map is hidden. The eye above brings it back; each layer keeps its own setting.", "mine.offAuto": "This map is hidden while other maps are on. It comes back when you switch them off, or press the eye above.", "mine.hiddenFor": "Your map is hidden while other maps are on.", "mine.showBtn": "Show it", "mine.backForDraw": "Your map is shown again so you can see what you draw.", "om.hideMine": "Hide my map when I switch on another map", "om.mineOffNow": "My map is hidden"},
+uk: {"mine.hide": "Сховати всю мою карту", "mine.show": "Показати мою карту", "mine.off": "Цю карту сховано. Око вище повертає її; кожен шар зберігає своє налаштування.", "mine.offAuto": "Цю карту сховано, поки ввімкнені інші карти. Вона повернеться, коли ви їх вимкнете, або натисніть око вище.", "mine.hiddenFor": "Вашу карту сховано, поки ввімкнені інші карти.", "mine.showBtn": "Показати", "mine.backForDraw": "Вашу карту знову показано, щоб ви бачили, що малюєте.", "om.hideMine": "Ховати мою карту, коли вмикаю іншу", "om.mineOffNow": "Мою карту сховано"},
+pl: {"mine.hide": "Ukryj całą moją mapę", "mine.show": "Pokaż moją mapę", "mine.off": "Ta mapa jest ukryta. Oko powyżej ją przywraca; każda warstwa zachowuje swoje ustawienie.", "mine.offAuto": "Ta mapa jest ukryta, gdy włączone są inne mapy. Wróci po ich wyłączeniu albo po kliknięciu oka powyżej.", "mine.hiddenFor": "Twoja mapa jest ukryta, gdy włączone są inne mapy.", "mine.showBtn": "Pokaż", "mine.backForDraw": "Twoja mapa jest znów widoczna, byś widział, co rysujesz.", "om.hideMine": "Ukrywaj moją mapę po włączeniu innej", "om.mineOffNow": "Moja mapa jest ukryta"},
+de: {"mine.hide": "Meine ganze Karte ausblenden", "mine.show": "Meine Karte zeigen", "mine.off": "Diese Karte ist ausgeblendet. Das Auge oben holt sie zurück; jede Ebene behält ihre Einstellung.", "mine.offAuto": "Diese Karte ist ausgeblendet, solange andere Karten an sind. Sie kommt zurück, wenn du sie ausschaltest, oder über das Auge oben.", "mine.hiddenFor": "Deine Karte ist ausgeblendet, solange andere Karten an sind.", "mine.showBtn": "Zeigen", "mine.backForDraw": "Deine Karte wird wieder gezeigt, damit du siehst, was du zeichnest.", "om.hideMine": "Meine Karte ausblenden, wenn ich eine andere einschalte", "om.mineOffNow": "Meine Karte ist ausgeblendet"},
+fr: {"mine.hide": "Masquer toute ma carte", "mine.show": "Afficher ma carte", "mine.off": "Cette carte est masquée. L’œil ci-dessus la réaffiche ; chaque couche garde son réglage.", "mine.offAuto": "Cette carte est masquée tant que d’autres cartes sont affichées. Elle revient quand vous les désactivez, ou avec l’œil ci-dessus.", "mine.hiddenFor": "Votre carte est masquée tant que d’autres cartes sont affichées.", "mine.showBtn": "Afficher", "mine.backForDraw": "Votre carte est réaffichée pour que vous voyiez ce que vous dessinez.", "om.hideMine": "Masquer ma carte quand j’active une autre carte", "om.mineOffNow": "Ma carte est masquée"},
+ru: {"mine.hide": "Скрыть всю мою карту", "mine.show": "Показать мою карту", "mine.off": "Эта карта скрыта. Глаз выше возвращает её; каждый слой сохраняет свою настройку.", "mine.offAuto": "Эта карта скрыта, пока включены другие карты. Она вернётся, когда вы их выключите, или нажмите глаз выше.", "mine.hiddenFor": "Ваша карта скрыта, пока включены другие карты.", "mine.showBtn": "Показать", "mine.backForDraw": "Ваша карта снова показана, чтобы вы видели, что рисуете.", "om.hideMine": "Скрывать мою карту, когда включаю другую", "om.mineOffNow": "Моя карта скрыта"}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -4085,6 +4115,7 @@ const nf = (v, d) => Number(v).toLocaleString(langInfo().locale, { minimumFracti
 function applyI18n() {
   document.documentElement.lang = prefs.lang;
   $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  if (typeof syncMineEye === 'function') syncMineEye();
   $$('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
   $$('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
   $$('[data-i18n-tip]').forEach(el => { el.dataset.tip = t(el.dataset.i18nTip); });
@@ -4219,7 +4250,8 @@ const S = {
   styles: new Map(),                         // saved styles: id -> { id, name, color, fillColor, weight, opacity, fillOpacity, dash, pattern }
   mode: 'local', mapId: null, role: 'owner', // 'online' when a shared map is open; role owner | editor | viewer
   readOnly: false, embed: Q.has('embed'), preview: PREVIEW,
-  others: new Map()                          // other people's My Maps shown beside this map (never mixed into it)
+  others: new Map(),                         // other people's My Maps shown beside this map (never mixed into it)
+  mineOff: false, mineAuto: false            // the whole map hidden from view (eye above the layers); auto = hidden by Other maps
 };
 const LEN_U = { m: 1, km: 1000, ft: 0.3048, mi: 1609.344 };
 const AREA_U = { m2: 1, ha: 1e4, km2: 1e6, ft2: 0.09290304, ac: 4046.8564224, mi2: 2589988.110336 };
@@ -6683,6 +6715,7 @@ const OM = {
   hist: new Map(),     // mid -> { enabled, items, err, loading, at }
   snaps: new Map(),    // `${mid}|${ts}` -> Promise<res>
   groups: new Map(),   // oid -> L.LayerGroup on the map
+  res: new Map(),      // oid -> the version drawn (for its list of layers)
   drawn: new Map(),    // oid -> key of what is drawn
   fx: null, fxKey: '', diffs: new Map(),
   open: new Set(), adding: false
@@ -6699,12 +6732,31 @@ const omKey = () => 'frontline:om:' + (S.mapId || 'local');
 function omMine() { try { return JSON.parse(store.get(omKey()) || '{}'); } catch (e) { return {}; } }
 const omVisible = e => { const m = omMine(); return e.id in m ? !!m[e.id] : !!e.def; };
 function omSetVisible(e, on) {
-  const m = omMine();
+  const m = omMine(), before = omEntries().filter(omVisible).length;
   if (on === !!e.def) delete m[e.id]; else m[e.id] = on;
   store.set(omKey(), JSON.stringify(m));
+  const after = omEntries().filter(omVisible).length;
+  // Switching another map on hides this map (if wanted); switching the last one off brings it back.
+  if (on && !before && after && prefs.omHideMine !== false && !S.mineOff) {
+    setMineOff(true, true);
+    toast(t('mine.hiddenFor'), '', { label: t('mine.showBtn'), fn: () => setMineOff(false) });
+  }
+  if (!after && S.mineOff && S.mineAuto) setMineOff(false);
   omRender(e.id);
   renderOm();
 }
+
+// Each of a map's own layers (My Maps folders) can be switched off too. Editors can save which
+// layers start switched off for everyone (e.hl); anyone can change that for themselves.
+const lvKey = lv => String(lv.name || lv.folder || '');
+function omLayerOn(e, name) { const m = omMine(), k = e.id + '|' + name; return k in m ? !!m[k] : !(e.hl || []).includes(name); }
+function omSetLayers(e, names, on) {
+  const m = omMine();
+  names.forEach(name => { const k = e.id + '|' + name, def = !(e.hl || []).includes(name); if (on === def) delete m[k]; else m[k] = on; });
+  store.set(omKey(), JSON.stringify(m));
+  OM.fxKey = ''; omRender(e.id); renderOm();
+}
+function omForgetLayers(e) { const m = omMine(); Object.keys(m).forEach(k => { if (k.startsWith(e.id + '|')) delete m[k]; }); store.set(omKey(), JSON.stringify(m)); }
 
 /* ---------- Loading ---------- */
 function omLive(mid, force) {
@@ -6810,13 +6862,16 @@ async function omRender(oid) {
   const now = S.others.get(oid);
   if (!now || !omVisible(now)) { omClear(oid); return; }
   if (!res) { omClear(oid); renderOm(); return; }
-  const st = omSt(now), drawKey = [key, stable(st), stable(now.sync ? 1 : 0), TL.on ? TL.date : ''].join('|');
+  const lvOn = res.layers.map(lv => omLayerOn(now, lvKey(lv)));
+  const st = omSt(now), drawKey = [key, stable(st), stable(now.sync ? 1 : 0), TL.on ? TL.date : '', lvOn.map(Number).join('')].join('|');
+  OM.res.set(oid, res);
   if (OM.drawn.get(oid) === drawKey && OM.groups.has(oid)) { omFx(); return; }
   omClear(oid);
   const icons = Object.fromEntries((res.icons || []).map(i => [i.key, i]));
   const when = item ? fmtDate(dayOfTs(item.ts)) : '';
   const g = L.layerGroup();
-  res.layers.forEach(lv => {
+  res.layers.forEach((lv, li) => {
+    if (!lvOn[li]) return;
     if (TL.on && TL.date && !featureAt(lv, TL.date)) return;
     lv.features.forEach(x => {
       if (TL.on && TL.date && !featureAt(x, TL.date)) return;
@@ -6855,9 +6910,9 @@ function omDates() {
 }
 
 /* ---------- Changes between versions: ground gained and lost ---------- */
-function polysOf(res, color) {
+function polysOf(res, color, e) {
   const out = [];
-  res.layers.forEach(lv => lv.features.forEach(x => { if ((x.kind === 'polygon') && colorOf(x) === color) out.push(...toPC(x.geom)); }));
+  res.layers.forEach(lv => (e && !omLayerOn(e, lvKey(lv)) ? [] : lv.features).forEach(x => { if ((x.kind === 'polygon') && colorOf(x) === color) out.push(...toPC(x.geom)); }));
   return out;
 }
 // The colour covering the most ground (usually the occupied area) is the one followed by default.
@@ -6881,10 +6936,10 @@ async function omDiff(e, d) {
   if (!prev) return null;
   const [a, b] = await Promise.all([omSnap(e.mid, prev.ts), omSnap(e.mid, cur.ts)]);
   const color = e.track || mainColor(b);
-  const k = [e.mid, prev.ts, cur.ts, color].join('|');
+  const k = [e.mid, prev.ts, cur.ts, color, b.layers.map(lv => omLayerOn(e, lvKey(lv)) ? 1 : 0).join('')].join('|');
   if (OM.diffs.has(k)) return OM.diffs.get(k);
   const pc = window.polygonClipping;
-  const A = polysOf(b, color), B = polysOf(a, color);
+  const A = polysOf(b, color, e), B = polysOf(a, color, e);
   const U = arr => arr.length ? pc.union(...arr.map(p => [p])) : [];
   let out = { gain: [], loss: [], color, prev: prev.ts, cur: cur.ts, ga: 0, la: 0 };
   try {
@@ -6898,7 +6953,7 @@ async function omDiff(e, d) {
 async function omFx() {
   const d = TL.on && TL.date && prefs.omChanges !== false ? TL.date : '';
   const list = d ? omEntries().filter(e => omVisible(e)) : [];
-  const key = d + '|' + list.map(e => e.id + (e.track || '')).join(',');
+  const key = d + '|' + list.map(e => e.id + (e.track || '') + ':' + Object.entries(omMine()).filter(([k]) => k.startsWith(e.id + '|')).map(([k, v]) => k + v).join(';') + (e.hl || []).join(';')).join(',');
   if (key === OM.fxKey) return;
   OM.fxKey = key;
   if (OM.fx) { map.removeLayer(OM.fx); OM.fx = null; }
@@ -6981,6 +7036,14 @@ function styleHtml(e) {
     ${sl('mscale', 0.4, 2.5, 0.05, st.mscale ?? 1, t('om.msize'))}
     ${pcols.length > 1 ? `<label class="field"><span>${esc(t('om.track'))}</span><select data-omf="track" data-oid="${esc(e.id)}"><option value="">${esc(t('om.trackAuto'))}</option>${pcols.map(c => `<option value="${esc(c.c)}" ${e.track === c.c ? 'selected' : ''}>${esc(c.c)} (${c.n})</option>`).join('')}</select><small>${esc(t('om.trackHelp'))}</small></label>` : ''}`;
 }
+function layersHtml(e) {
+  const res = OM.res.get(e.id) || (OM.live.get(e.mid) || {}).res;
+  if (!res) return `<p class="help">${esc(t('om.loadFirst'))}</p>`;
+  const ed = canOm(), names = res.layers.map(lvKey);
+  return `<div class="om-lvbar"><button type="button" class="link-btn" data-om="lvall" data-oid="${esc(e.id)}">${esc(t('om.lvAll'))}</button><button type="button" class="link-btn" data-om="lvnone" data-oid="${esc(e.id)}">${esc(t('om.lvNone'))}</button></div>
+    <ul class="om-lvs">${res.layers.map((lv, i) => `<li><label class="check"><input type="checkbox" data-omlv="${esc(names[i])}" data-oid="${esc(e.id)}" ${omLayerOn(e, names[i]) ? 'checked' : ''}><span>${esc(names[i] || t('om.untitled'))}<small>${esc(tn('n.features', lv.features.length))}${ed && (e.hl || []).includes(names[i]) ? ' · ' + esc(t('om.lvOffDef')) : ''}</small></span></label></li>`).join('')}</ul>
+    ${ed ? `<button type="button" class="btn sm" data-om="lvdef" data-oid="${esc(e.id)}">${esc(t('om.lvDef'))}</button><small class="help">${esc(t('om.lvDefHelp'))}</small>` : ''}`;
+}
 function entryHtml(e) {
   const on = omVisible(e), open = OM.open.has(e.id), ed = canOm();
   return `<div class="om-item ${on ? 'on' : ''}" data-oid="${esc(e.id)}">
@@ -6991,6 +7054,7 @@ function entryHtml(e) {
     </div>
     ${open ? `<div class="om-body">
       <a class="om-link" href="https://www.google.com/maps/d/viewer?mid=${encodeURIComponent(e.mid)}" target="_blank" rel="noopener">${esc(t('om.openGoogle'))} ↗</a>
+      <details class="cd-det" ${OM.lvOpen === e.id ? 'open' : ''} data-omlvdet="${esc(e.id)}"><summary>${esc(t('om.layers'))}${(OM.res.get(e.id) || (OM.live.get(e.mid) || {}).res) ? ` (${(OM.res.get(e.id) || OM.live.get(e.mid).res).layers.filter(lv => omLayerOn(e, lvKey(lv))).length}/${(OM.res.get(e.id) || OM.live.get(e.mid).res).layers.length})` : ''}</summary>${layersHtml(e)}</details>
       <details class="cd-det" open><summary>${esc(t('om.history'))}</summary>${histHtml(e)}</details>
       ${ed ? `<details class="cd-det" ${OM.styleOpen === e.id ? 'open' : ''} data-omdet="${esc(e.id)}"><summary>${esc(t('om.look'))}</summary>${styleHtml(e)}</details>
       <details class="cd-det"><summary>${esc(t('om.settings'))}</summary>
@@ -7010,6 +7074,8 @@ function renderOm() {
     <p class="help">${esc(t('om.intro'))}</p>
     ${!SITE.mymapsProxy ? `<p class="err">${esc(t('ml.needProxy'))}</p>` : ''}
     <div class="om-list">${list.map(entryHtml).join('') || `<p class="help">${esc(t(ed ? 'om.emptyEd' : 'om.empty'))}</p>`}</div>
+    ${list.length ? `<label class="check"><input type="checkbox" id="om-hidemine" ${prefs.omHideMine !== false ? 'checked' : ''}> ${esc(t('om.hideMine'))}</label>
+    <label class="check"><input type="checkbox" id="om-mineoff" ${S.mineOff ? 'checked' : ''}> ${esc(t('om.mineOffNow'))}</label>` : ''}
     ${list.length && TL.on ? `<label class="check"><input type="checkbox" id="om-changes" ${prefs.omChanges !== false ? 'checked' : ''}> ${esc(t('om.showChanges'))}</label>` : ''}
     ${ed ? `<div class="sub-form om-add">
       <span class="eyebrow">${esc(t('om.add'))}</span>
@@ -7064,11 +7130,20 @@ omPanel.addEventListener('click', e => {
   if (a === 'fit' && x) omFit(x.id);
   if (a === 'more' && x) { if (OM.open.has(x.id)) OM.open.delete(x.id); else { OM.open.add(x.id); omLive(x.mid); omHist(x.mid); } renderOm(); }
   if (a === 'tl') { toggleTimeline(true); renderOm(); }
+  if ((a === 'lvall' || a === 'lvnone') && x) { const r = OM.res.get(x.id) || (OM.live.get(x.mid) || {}).res; if (r) omSetLayers(x, r.layers.map(lvKey), a === 'lvall'); }
+  if (a === 'lvdef' && x && canOm()) {
+    const r = OM.res.get(x.id) || (OM.live.get(x.mid) || {}).res; if (!r) return;
+    const off = r.layers.map(lvKey).filter(n => !omLayerOn(x, n));
+    omForgetLayers(x); omSave({ ...x, hl: off.length ? off : undefined }); toast(t('om.lvSaved'));
+  }
   if (a === 'rm' && x && canOm()) { S.others.delete(x.id); omClear(x.id); commit(); omFx(); renderOm(); toast(t('om.removed', { name: x.title || t('om.untitled') }), '', { label: t('toast.undo'), fn: undo }); }
 });
 omPanel.addEventListener('change', e => {
   const el = e.target;
   if (el.dataset.omvis) { const x = S.others.get(el.dataset.omvis); if (x) { omSetVisible(x, el.checked); if (el.checked) { omLive(x.mid); omHist(x.mid); } } return; }
+  if (el.dataset.omlv !== undefined && el.dataset.oid) { const x = S.others.get(el.dataset.oid); if (x) omSetLayers(x, [el.dataset.omlv], el.checked); return; }
+  if (el.id === 'om-hidemine') { prefs.omHideMine = el.checked; savePrefs(); return; }
+  if (el.id === 'om-mineoff') { setMineOff(el.checked); return; }
   if (el.id === 'om-changes') { prefs.omChanges = el.checked; savePrefs(); OM.fxKey = ''; omFx(); return; }
   const x = el.dataset.oid && S.others.get(el.dataset.oid);
   if (!x || !canOm()) return;
@@ -7087,10 +7162,14 @@ omPanel.addEventListener('input', e => {
   const el = e.target; if (!el.dataset.omst) return;
   const out = el.closest('.field') && el.closest('.field').querySelector('output'); if (out) out.textContent = Math.round(el.value * 100) + '%';
 });
+omPanel.addEventListener('toggle', e => { const v = e.target.closest && e.target.closest('[data-omlvdet]'); if (v) OM.lvOpen = v.open ? v.dataset.omlvdet : (OM.lvOpen === v.dataset.omlvdet ? null : OM.lvOpen); }, true);
 omPanel.addEventListener('toggle', e => { const d = e.target.closest && e.target.closest('[data-omdet]'); if (d) OM.styleOpen = d.open ? d.dataset.omdet : (OM.styleOpen === d.dataset.omdet ? null : OM.styleOpen); }, true);
 omPanel.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.id === 'om-url' || e.target.id === 'om-title')) { e.preventDefault(); omAdd(); } });
 // Keep switched-on maps fresh, like linked My Maps layers.
 if (SITE.mymapsProxy) setInterval(() => { if (document.hidden) return; omEntries().filter(omVisible).forEach(e => { omLive(e.mid, true); omHist(e.mid, true); }); }, Math.max(1, +SITE.mymapsRefreshMinutes || 10) * 60000);
+
+$('#mineEye').addEventListener('click', () => { setMineOff(!S.mineOff); renderOm(); });
+syncMineEye();
 
 /* =========================================================================
    Feature model
@@ -7119,7 +7198,25 @@ const layerParent = l => { const p = l && l.parent && getLayer(l.parent); return
 function ancestors(l) { const out = []; let p = layerParent(l); while (p && out.length < 50 && !out.includes(p)) { out.push(p); p = layerParent(p); } return out; }
 const subLayersOf = id => S.layers.filter(l => l.parent === id);
 const isInside = (l, anc) => ancestors(l).includes(anc);
-const layerShown = l => !!l && l.visible && ancestors(l).every(a => a.visible);
+const layerShown = l => !!l && !S.mineOff && l.visible && ancestors(l).every(a => a.visible);
+/* The eye above the layer list hides this whole map from view, without touching any layer's
+   own eye. Other maps can switch it on while they are shown (S.mineAuto) and off again after. */
+function setMineOff(on, auto) {
+  if (S.mineOff === on && (!on || !auto)) { S.mineAuto = on && S.mineAuto; return; }
+  S.mineOff = on; S.mineAuto = on && !!auto;
+  if (on) { map.closePopup(); if (selectedId) deselect(); }
+  syncLayerOrder();
+  document.body.classList.toggle('mine-off', on);
+  syncMineEye();
+}
+function syncMineEye() {
+  const b = $('#mineEye'); if (!b) return;
+  b.innerHTML = icon(S.mineOff ? 'eyeoff' : 'eye');
+  b.setAttribute('aria-pressed', String(S.mineOff));
+  const tip = t(S.mineOff ? 'mine.show' : 'mine.hide');
+  b.setAttribute('aria-label', tip); b.dataset.tip = tip; b.title = tip;
+  const note = $('#mineNote'); if (note) { note.hidden = !S.mineOff; note.textContent = t(S.mineAuto ? 'mine.offAuto' : 'mine.off'); }
+}
 function subtree(l) { const out = [l]; for (let i = 0; i < out.length && out.length < 5000; i++) subLayersOf(out[i].id).forEach(k => { if (!out.includes(k)) out.push(k); }); return S.layers.filter(x => out.includes(x)); }
 // Show a layer and every layer it sits in.
 function revealLayer(l) { if (!l) return false; let changed = false; [l, ...ancestors(l)].forEach(x => { if (!x.visible) { x.visible = true; changed = true; } }); return changed; }
@@ -9400,6 +9497,8 @@ map.pm.setGlobalOptions({ snappable: true, snapDistance: SNAP_PX, allowSelfInter
 let tool = 'select', pendingKind = null, drawing = null;
 function setTool(tl) {
   if (!toolAllowed(tl)) tl = 'select';
+  // Drawing into a hidden map would make invisible shapes: show the map again first.
+  if (S.mineOff && !['select', 'measure', 'sketch'].includes(tl)) { setMineOff(false); toast(t('mine.backForDraw')); }
   FT.pending = null;                     // a "draw inside" waiting is dropped when the tool changes
   if (FC.active) fcCancel(true);
   const pickPoly = tl === 'change' && selectedId && feats.get(selectedId) && feats.get(selectedId)._pw.kind === 'polygon' ? selectedId : null;
