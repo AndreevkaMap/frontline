@@ -435,6 +435,9 @@ details.sub-form:not([open]){gap:0}
 .cd-nowmain{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:4px 0}
 .cd-nowmain b{font-size:15px}
 .cd-nowmain small{font-size:12px;color:var(--muted)}
+.cd-data{margin:0;font-size:12px;line-height:1.45;padding:6px 8px;border-radius:7px}
+.cd-data.ok{color:var(--muted);padding:0}
+.cd-data.warn{background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--fg)}
 .cd-vdesc{display:flex;flex-direction:column;gap:5px;font-size:12px;line-height:1.45}
 .cd-vdesc:empty{display:none}
 .cd-vdesc p{margin:0;color:var(--muted)}
@@ -3853,6 +3856,16 @@ fr: {"cdse.tabMosaic": "Mosaïque"},
 ru: {"cdse.tabMosaic": "Мозаика"}
 });
 
+
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"cdse.dataL2a": "Data: Sentinel-2 L2A, atmospherically corrected (layer {l}).", "cdse.dataL1c": "Layer {l} reads Sentinel-2 L1C: the picture from the top of the atmosphere, before haze is removed. That is why it looks washed out, purple-blue and low in contrast. Pick a built-in view (haze is reduced for you), or add a Sentinel-2 L2A layer to your configuration in the Sentinel Hub dashboard for the same picture as Copernicus Browser.", "cdse.dataL1cFixed": "Your configuration only has Sentinel-2 L1C (layer {l}): the picture before haze is removed, which looks washed out and purple-blue. Haze is reduced here, but for the same picture as Copernicus Browser add a layer with the data source “Sentinel-2 L2A” in the Sentinel Hub dashboard (Configuration Utility → your configuration → Add layer).", "cdse.dataOther": "Layer {l} is not Sentinel-2, so the built-in views cannot use it. Pick a Sentinel-2 layer under More options."},
+uk: {"cdse.dataL2a": "Дані: Sentinel-2 L2A з атмосферною корекцією (шар {l}).", "cdse.dataL1c": "Шар {l} читає Sentinel-2 L1C — знімок з верхньої межі атмосфери, до видалення серпанку. Тому він блідий, фіолетово-синій і малоконтрастний. Виберіть вбудований вид (серпанок буде зменшено) або додайте шар Sentinel-2 L2A до конфігурації на панелі Sentinel Hub, щоб бачити те саме, що в Copernicus Browser.", "cdse.dataL1cFixed": "У вашій конфігурації є лише Sentinel-2 L1C (шар {l}) — знімок до видалення серпанку, блідий і фіолетово-синій. Тут серпанок зменшено, але щоб бачити те саме, що в Copernicus Browser, додайте шар із джерелом даних «Sentinel-2 L2A» на панелі Sentinel Hub (Configuration Utility → ваша конфігурація → Add layer).", "cdse.dataOther": "Шар {l} — не Sentinel-2, тож вбудовані види не можуть його використати. Виберіть шар Sentinel-2 у «Більше параметрів»."},
+pl: {"cdse.dataL2a": "Dane: Sentinel-2 L2A z korekcją atmosferyczną (warstwa {l}).", "cdse.dataL1c": "Warstwa {l} czyta Sentinel-2 L1C: obraz z górnej granicy atmosfery, przed usunięciem zamglenia. Dlatego jest blady, fioletowoniebieski i mało kontrastowy. Wybierz widok wbudowany (zamglenie zostanie zmniejszone) albo dodaj warstwę Sentinel-2 L2A w panelu Sentinel Hub, by mieć ten sam obraz co w Copernicus Browser.", "cdse.dataL1cFixed": "Twoja konfiguracja ma tylko Sentinel-2 L1C (warstwa {l}): obraz przed usunięciem zamglenia, blady i fioletowoniebieski. Zamglenie jest tu zmniejszane, ale dla obrazu jak w Copernicus Browser dodaj warstwę ze źródłem „Sentinel-2 L2A” w panelu Sentinel Hub (Configuration Utility → twoja konfiguracja → Add layer).", "cdse.dataOther": "Warstwa {l} nie jest z Sentinel-2, więc widoki wbudowane nie mogą jej użyć. Wybierz warstwę Sentinel-2 w „Więcej opcji”."},
+de: {"cdse.dataL2a": "Daten: Sentinel-2 L2A, atmosphärenkorrigiert (Ebene {l}).", "cdse.dataL1c": "Die Ebene {l} liest Sentinel-2 L1C: das Bild am oberen Rand der Atmosphäre, vor der Dunstentfernung. Deshalb wirkt es blass, lila-blau und kontrastarm. Wähle eine eingebaute Ansicht (der Dunst wird reduziert) oder füge im Sentinel-Hub-Dashboard eine Sentinel-2-L2A-Ebene hinzu, um dasselbe Bild wie im Copernicus Browser zu bekommen.", "cdse.dataL1cFixed": "Deine Konfiguration hat nur Sentinel-2 L1C (Ebene {l}): das Bild vor der Dunstentfernung, blass und lila-blau. Der Dunst wird hier reduziert; für dasselbe Bild wie im Copernicus Browser füge im Sentinel-Hub-Dashboard eine Ebene mit der Datenquelle „Sentinel-2 L2A“ hinzu (Configuration Utility → deine Konfiguration → Add layer).", "cdse.dataOther": "Die Ebene {l} ist kein Sentinel-2, die eingebauten Ansichten können sie nicht nutzen. Wähle unter „Weitere Optionen“ eine Sentinel-2-Ebene."},
+fr: {"cdse.dataL2a": "Données : Sentinel-2 L2A, corrigées de l’atmosphère (couche {l}).", "cdse.dataL1c": "La couche {l} lit Sentinel-2 L1C : l’image au sommet de l’atmosphère, avant retrait de la brume. D’où son aspect délavé, violet-bleu et peu contrasté. Choisissez une vue intégrée (la brume est réduite) ou ajoutez une couche Sentinel-2 L2A à votre configuration dans le tableau de bord Sentinel Hub pour avoir la même image que Copernicus Browser.", "cdse.dataL1cFixed": "Votre configuration n’a que Sentinel-2 L1C (couche {l}) : l’image avant retrait de la brume, délavée et violet-bleu. La brume est réduite ici, mais pour la même image que Copernicus Browser ajoutez une couche avec la source « Sentinel-2 L2A » dans le tableau de bord Sentinel Hub (Configuration Utility → votre configuration → Add layer).", "cdse.dataOther": "La couche {l} n’est pas Sentinel-2, les vues intégrées ne peuvent pas l’utiliser. Choisissez une couche Sentinel-2 dans « Plus d’options »."},
+ru: {"cdse.dataL2a": "Данные: Sentinel-2 L2A с атмосферной коррекцией (слой {l}).", "cdse.dataL1c": "Слой {l} читает Sentinel-2 L1C — снимок с верхней границы атмосферы, до удаления дымки. Поэтому он бледный, фиолетово-синий и малоконтрастный. Выберите встроенный вид (дымка будет уменьшена) или добавьте слой Sentinel-2 L2A в конфигурацию в панели Sentinel Hub, чтобы получить ту же картинку, что в Copernicus Browser.", "cdse.dataL1cFixed": "В вашей конфигурации есть только Sentinel-2 L1C (слой {l}) — снимок до удаления дымки, бледный и фиолетово-синий. Здесь дымка уменьшается, но для той же картинки, что в Copernicus Browser, добавьте слой с источником данных «Sentinel-2 L2A» в панели Sentinel Hub (Configuration Utility → ваша конфигурация → Add layer).", "cdse.dataOther": "Слой {l} — не Sentinel-2, поэтому встроенные виды не могут его использовать. Выберите слой Sentinel-2 в «Другие параметры»."}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -5864,7 +5877,7 @@ const tone = (midR = 0.13, sat = 1.2) => `const maxR=3.0,midR=${midR},sat=${sat}
   + 'function sAdj(a){return adjGamma(adj(a,midR,1,maxR))}\n'
   + 'function satEnh(r,g,b){const avgS=(r+g+b)/3*(1-sat);return[clip(avgS+r*sat),clip(avgS+g*sat),clip(avgS+b*sat)]}\n'
   + 'const sRGB=c=>c<=0.0031308?12.92*c:1.055*Math.pow(c,0.41666666666)-0.055;\n';
-const evTone = (a, b, c, m, st) => `function setup(){return{input:["${a}","${b}","${c}","dataMask"],output:{bands:4}}}\n${tone(m, st)}const G=__G__,Q=1/__GM__;\nfunction evaluatePixel(s){const v=satEnh(sAdj(G*s.${a}),sAdj(G*s.${b}),sAdj(G*s.${c}));return[Math.pow(sRGB(v[0]),Q),Math.pow(sRGB(v[1]),Q),Math.pow(sRGB(v[2]),Q),s.dataMask]}`;
+const evTone = (a, b, c, m, st) => `function setup(){return{input:["${a}","${b}","${c}","dataMask"],output:{bands:4}}}\n${tone(m, st)}const G=__G__,Q=1/__GM__,H=__H__;\nfunction px(s,k){return Math.max(0,s[k]-(H[k]||0))}\nfunction evaluatePixel(s){const v=satEnh(sAdj(G*px(s,'${a}')),sAdj(G*px(s,'${b}')),sAdj(G*px(s,'${c}')));return[Math.pow(sRGB(v[0]),Q),Math.pow(sRGB(v[1]),Q),Math.pow(sRGB(v[2]),Q),s.dataMask]}`;
 const evRamp = (bands, expr, stops) => `function setup(){return{input:[${bands.map(b => `"${b}"`).join(',')},"dataMask"],output:{bands:4}}}\nfunction nd(a,b){const d=a+b;return d?(a-b)/d:0}\nconst viz=new ColorRampVisualizer([${stops.map(([v, c]) => `[${v},0x${c}]`).join(',')}]);\nfunction evaluatePixel(s){const c=viz.process(${expr});return[c[0],c[1],c[2],s.dataMask]}`;
 const SCL_COL = { 0: [0, 0, 0], 1: [1, 0, 0.016], 2: [0.36, 0.36, 0.36], 3: [0.478, 0.271, 0.071], 4: [0, 0.749, 0.012], 5: [1, 0.902, 0.004], 6: [0.004, 0, 0.961], 7: [0.467, 0.467, 0.467], 8: [0.671, 0.671, 0.671], 9: [0.82, 0.82, 0.82], 10: [0.333, 0.784, 0.988], 11: [1, 0.302, 1] };
 const STOPS = {
@@ -5971,7 +5984,7 @@ function cdseParams(c) {
   const p = { layers: v ? cdseCarrier(c) : (c.layer || 'TRUE_COLOR'), TIME: cdseTime(c), MAXCC: cdseScene(c) ? 100 : (c.cc ?? 30), PRIORITY: c.priority || 'mostRecent' };
   if (v) {
     const fx = c.fx || {}, num = x => String(Math.round(x * 1000) / 1000);
-    const sc = v.tone ? v.script.replace('__G__', num(fx.b ?? 1)).replace('__GM__', num(fx.g ?? 1)) : v.script;
+    const sc = v.tone ? v.script.replace('__G__', num(fx.b ?? 1)).replace('__GM__', num(fx.g ?? 1)).replace('__H__', JSON.stringify(cdseKind(c.id, p.layers) === 'l1c' ? HAZE : {})) : v.script;
     p.EVALSCRIPT = b64('//VERSION=3\n' + sc);
   }
   return p;
@@ -6056,10 +6069,42 @@ function cdseLayers() {
   return c.capsFor === c.id && Array.isArray(c.caps) ? c.caps : [];
 }
 function cdseCarrier(c) {
-  const list = cdseLayers();
-  if (c.carrier && (!list.length || list.some(l => l.name === c.carrier))) return c.carrier;
-  const pick = list.find(l => !NOT_S2.test(l.name + ' ' + l.title)) || list[0];
+  const list = cdseLayers(), kind = n => cdseKind(c.id, n);
+  if (c.carrier && list.some(l => l.name === c.carrier) && kind(c.carrier) !== 'l1c' && kind(c.carrier) !== 'other') return c.carrier;
+  if (c.carrier && !list.length) return c.carrier;
+  // Atmospherically corrected Sentinel-2 (L2A) first: L1C is the raw top-of-atmosphere picture,
+  // which looks hazy, washed out and purple-blue.
+  const pick = list.find(l => kind(l.name) === 'l2a') || list.find(l => !kind(l.name) && !NOT_S2.test(l.name + ' ' + l.title)) || list.find(l => kind(l.name) === 'l1c') || list[0];
   return pick ? pick.name : (c.layer || 'TRUE_COLOR');
+}
+/* ---------- Which kind of data each of your layers reads ----------
+   Copernicus does not say in the layer list, so each layer is tried once with a tiny 8×8 px
+   request: one asking for the SCL band (only Sentinel-2 L2A has it), then B10 (only L1C has it).
+   Image requests need no special permission from the browser, unlike reading the answer. */
+// Typical haze in top-of-atmosphere (L1C) reflectance, taken off before colouring.
+const HAZE = { B01: 0.1, B02: 0.07, B03: 0.045, B04: 0.03, B05: 0.025, B06: 0.02, B07: 0.02, B08: 0.015, B8A: 0.015, B11: 0.008, B12: 0.005 };
+function cdseKind(id, layer) { const k = prefs.cdse.kinds; return k && k.id === (id || '').trim() ? k.map[layer] || '' : ''; }
+const probeImg = src => new Promise(res => { const im = new Image(); const to = setTimeout(() => res(null), 20000); im.onload = () => { clearTimeout(to); res(true); }; im.onerror = () => { clearTimeout(to); res(false); }; im.src = src; });
+async function cdseProbe(id, list) {
+  id = (id || '').trim();
+  const c = prefs.cdse;
+  if (!c.kinds || c.kinds.id !== id) c.kinds = { id, map: {} };
+  const ev = band => b64(`//VERSION=3\nfunction setup(){return{input:["${band}"],output:{bands:1}}}\nfunction evaluatePixel(s){return[0]}`);
+  const url = (layer, band) => `${CDSE_HOST}wms/${encodeURIComponent(id)}?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=${encodeURIComponent(layer)}&CRS=EPSG:3857&BBOX=4170000,6120000,4170800,6120800&WIDTH=8&HEIGHT=8&FORMAT=image/png&TIME=2025-06-01/2025-06-30&MAXCC=100&EVALSCRIPT=${encodeURIComponent(ev(band))}`;
+  let changed = false;
+  for (const l of list) {
+    if (c.kinds.map[l.name] || NOT_S2.test(l.name + ' ' + l.title)) continue;
+    const a = await probeImg(url(l.name, 'SCL'));
+    if (a === null) continue;
+    let kind = 'l2a';
+    if (!a) { const b = await probeImg(url(l.name, 'B10')); if (b === null) continue; kind = b ? 'l1c' : 'other'; }
+    if (prefs.cdse.kinds !== c.kinds) return;
+    c.kinds.map[l.name] = kind; changed = true;
+  }
+  if (!changed) return;
+  savePrefs();
+  // The view may have been drawn from a hazy L1C layer: redraw from the best one now known.
+  if (prefs.base === 'cdse') cdseApply(); else renderCdse();
 }
 function cdseCaps(id, force) {
   id = (id || '').trim();
@@ -6088,11 +6133,15 @@ function cdseCaps(id, force) {
       if (CD.capsId !== id) return null;
       CD.caps = list;
       if ((prefs.cdse.id || '').trim() === id) { prefs.cdse.caps = list; prefs.cdse.capsFor = prefs.cdse.id; savePrefs(); }
+      setTimeout(() => cdseProbe(id, list), 0);
       return list;
     })
     .catch(err => {
       if (CD.capsId !== id) return null;
       CD.capsErr = /fetch|network|load failed/i.test(err.message) ? t('cdse.capsNet') : err.message;
+      // The list could not be read now, but one saved earlier can still be checked.
+      const saved = prefs.cdse.capsFor === prefs.cdse.id && Array.isArray(prefs.cdse.caps) ? prefs.cdse.caps : null;
+      if (saved) setTimeout(() => cdseProbe(id, saved), 0);
       return null;
     })
     .finally(() => { if (CD.capsId === id) CD.capsLoading = null; renderCdse(); });
@@ -6317,7 +6366,17 @@ function vizHtml(c) {
     </select></label>
     ${CD.custom && !v ? `<label class="field"><span>${esc(t('cdse.layerName'))}</span><input id="cdse-layer" type="text" value="${esc(c.layer)}" placeholder="TRUE_COLOR" spellcheck="false" autocomplete="off"></label>` : ''}
     ${!v && !CD.custom && list.length && !known ? `<p class="err">${esc(t('cdse.missing', { name: c.layer }))}</p>` : ''}
+ ${dataLine(c)}
     <div class="cd-vdesc">${v ? `<p>${esc(t('cdv.' + v.id + 'D'))}</p>${legend}<small class="cd-meta">${esc(t('cdse.bands', { b: viewBands(v).join(', ') }))}</small>` : lay ? `<p>${esc(lay.abs || lay.title)}</p><small class="cd-meta">${esc(t('cdse.layerId', { name: lay.name }))}</small>` : ''}</div>`;
+}
+// Which data the picture is drawn from, so a hazy L1C source is never a mystery.
+function dataLine(c) {
+  const v = cdseView(c), used = v ? cdseCarrier(c) : c.layer, kind = cdseKind(c.id, used);
+  if (COLLS[cdseColl(c)].radar && !v) return '';
+  if (kind === 'l2a') return `<p class="cd-data ok">${esc(t('cdse.dataL2a', { l: used }))}</p>`;
+  if (kind === 'l1c') return `<p class="cd-data warn">${esc(t(v && v.tone ? 'cdse.dataL1cFixed' : 'cdse.dataL1c', { l: used }))}</p>`;
+  if (kind === 'other' && v) return `<p class="cd-data warn">${esc(t('cdse.dataOther', { l: used }))}</p>`;
+  return '';
 }
 function fxHtml(c) {
   return `<details class="cd-det" ${CD.fxOpen ? 'open' : ''} data-cddet="fx"><summary>${esc(t('cdse.fx'))}</summary>
@@ -6386,7 +6445,7 @@ function moreHtml(c) {
   const v = cdseView(c), list = cdseLayers();
   return `<details class="sub-form cd-det" ${CD.moreOpen ? 'open' : ''} data-cddet="more"><summary>${esc(t('cdse.more'))}</summary>
       <label class="field"><span>${esc(t('cdse.sat'))}</span><select id="cdse-sat">${['auto', ...Object.keys(COLLS)].map(s => `<option value="${s}" ${(c.sat || 'auto') === s ? 'selected' : ''}>${esc(s === 'auto' ? t('cdse.sat.auto', { s: t('cdse.sat.' + cdseColl({ ...c, sat: 'auto' })) }) : t('cdse.sat.' + s))}</option>`).join('')}</select><small>${esc(t('cdse.satHelp'))}</small></label>
-      ${v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc(l.title === l.name ? l.name : `${l.title} (${l.name})`)}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : ''}
+      ${v && list.length > 1 ? `<label class="field"><span>${esc(t('cdse.carrier'))}</span><select id="cdse-carrier">${list.map(l => `<option value="${esc(l.name)}" ${l.name === cdseCarrier(c) ? 'selected' : ''}>${esc((l.title === l.name ? l.name : `${l.title} (${l.name})`) + ({ l2a: ' · L2A', l1c: ' · L1C' }[cdseKind(c.id, l.name)] || ''))}</option>`).join('')}</select><small>${esc(t('cdse.carrierHelp'))}</small></label>` : ''}
       <label class="check"><input type="checkbox" id="cdse-outline" ${c.outline ? 'checked' : ''}> ${esc(t('cdse.outline2'))}</label>
       <label class="check"><input type="checkbox" id="cdse-under" ${c.under === 'esri' ? 'checked' : ''}> ${esc(t('cdse.under2'))}</label>
       <span class="row"><button type="button" class="btn sm" data-cdse="setup">${esc(t('cdse.changeId'))}</button></span>
