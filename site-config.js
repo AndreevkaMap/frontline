@@ -27,7 +27,7 @@ window.FA_SITE = {
   firmsKey: '2c0d2ee7716d45fd806d4a7e029fe295',
 
   // Live links to Google My Maps (mymaps-worker.js on Cloudflare).
-  mymapsProxy: '',
+  mymapsProxy: 'https://andreevkamymaps.theonethatisdarkness.workers.dev',
   mymapsRefreshMinutes: 10,
 
   viewerRefreshMinutes: 2,       // how often people viewing a shared map get new changes
