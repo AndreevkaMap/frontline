@@ -329,7 +329,10 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .metrics dd .alt{font-size:11.5px;color:var(--muted);font-weight:400}
 .metrics dd .withbtn{display:flex;align-items:center;gap:4px}
 
-.map-ctrls{position:absolute;right:12px;bottom:26px;z-index:820;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.map-ctrls{position:absolute;right:12px;bottom:26px;z-index:820;display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:none}
+/* The box around the controls is wider than the buttons in it: only the buttons take touches and clicks. */
+.map-ctrls > *,.base-row > *{pointer-events:auto}
+.base-row{pointer-events:none}
 .ctrl-stack{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
 .ctrl-stack button{width:38px;height:36px;border:0;background:transparent;display:grid;place-items:center;color:var(--fg)}
 .ctrl-stack button + button{border-top:1px solid var(--line)}
@@ -339,6 +342,8 @@ body:not(.sb-closed) .toolbar{left:calc(var(--sbw) + 20px)}
 .om-ic{width:38px;height:38px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(135deg,#2f5f8f,#6a3b5c);color:#fff}
 .om-ic .ic{width:20px;height:20px}
 .om-count{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--accent-fg);font:700 11px/18px var(--f-ui);text-align:center}
+.om-own{font:600 10px/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;padding:2px 5px;border-radius:4px;background:var(--panel);color:var(--muted);vertical-align:2px}
+.om-sec{margin-top:4px}
 .om-list{display:flex;flex-direction:column;gap:6px}
 .om-item{border:1px solid var(--line);border-radius:10px;background:var(--panel-2)}
 .om-item.on{border-color:var(--accent)}
@@ -1025,7 +1030,8 @@ body.clean .clean-date:not([hidden]){display:block;position:absolute;top:12px;le
   .coords{min-width:0}
   .hint,.save-state{display:none}
   .base-panel{left:58px;right:10px;width:auto}
-  .om-btn small{display:none}
+  .om-btn > span:nth-child(2){display:none}
+  .om-btn{padding:5px}
   .sk-bar{width:100%}
   .sk-bar .vsep{display:none}
   .sk-panel{top:auto;bottom:10px;left:58px;right:10px;width:auto;max-height:48%}
@@ -1292,9 +1298,27 @@ body.clean .clean-date:not([hidden]){display:block;position:absolute;top:12px;le
       b.style.cssText='position:fixed;left:12px;right:12px;bottom:40px;z-index:99999;background:#c23b2e;color:#fff;padding:12px 14px;border-radius:10px;font:13px/1.45 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35);white-space:pre-wrap';
       (document.body||document.documentElement).appendChild(b);}
     b.textContent='Frontline in Ukraine hit an error. Please send this message to get it fixed:\n'+msg;
+    var x=document.createElement('button');x.type='button';x.textContent='\u2715';x.setAttribute('aria-label','Close');
+    x.style.cssText='position:absolute;top:6px;right:8px;border:0;background:none;color:#fff;font-size:16px;cursor:pointer';
+    x.onclick=function(){b.remove();};b.appendChild(x);
   }
-  window.addEventListener('error',function(e){ if(e.message) show(e.message+(e.lineno?' (line '+e.lineno+')':'')); });
-  window.addEventListener('unhandledrejection',function(e){ var r=e.reason; show('Unhandled: '+(r&&r.message?r.message:String(r))); });
+  /* Only problems in this page's own code are shown. Browser extensions and in-app browsers
+     (Instagram, Facebook, Telegram...) add scripts of their own whose errors are not ours. */
+  var here=location.href.split(/[?#]/)[0];
+  function ours(file,stack){
+    if(file) return file.split(/[?#]/)[0]===here;
+    return !!stack && stack.indexOf(here)>=0;
+  }
+  window.addEventListener('error',function(e){
+    if(!e.message||e.message==='Script error.') return;
+    if(!ours(e.filename,e.error&&e.error.stack)) return;
+    show(e.message+(e.lineno?' (line '+e.lineno+')':''));
+  });
+  window.addEventListener('unhandledrejection',function(e){
+    var r=e.reason;
+    if(!ours('',r&&r.stack)) return;
+    show('Unhandled: '+(r&&r.message?r.message:String(r)));
+  });
 })();
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -3977,6 +4001,15 @@ fr: {"lod.title": "Points allégés sur les grandes cartes", "lod.help": "Pour l
 ru: {"lod.title": "Облегчённые точки на больших картах", "lod.help": "Для карт с сотнями точек: значки рисуются только на экране, а когда их больше ~300 одновременно, они становятся маленькими точками, пока не приблизите. Намного плавнее; выключено — все значки остаются. Размер точек зависит от размера маркеров выше."}
 });
 
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+en: {"om.yours": "Added by you", "om.ownTag": "yours", "om.addOwn": "Add a map to compare", "om.addOwnHelp": "Only you see maps you add; they are kept in this browser. The My Maps map must be shared as “Anyone with the link”.", "om.onlyMe": "Only for me (not added to the map for everyone)", "om.ownHelp": "Only you see this map, in this browser.", "om.ownNoHist": "Changes over time are recorded for the maps this map lists for everyone, not for maps you add yourself.", "om.addHelp": "Added here, a map is saved with this map and listed for everyone who opens it (tick “Only for me” to keep it to yourself). Under Settings, “Show when people open this map” switches it on for them automatically. The My Maps map must be shared as “Anyone with the link”."},
+uk: {"om.yours": "Додані вами", "om.ownTag": "ваша", "om.addOwn": "Додати карту для порівняння", "om.addOwnHelp": "Додані вами карти бачите лише ви; вони зберігаються в цьому браузері. Карта My Maps має бути відкрита для «Усіх, хто має посилання».", "om.onlyMe": "Лише для мене (не додавати для всіх)", "om.ownHelp": "Цю карту бачите лише ви, у цьому браузері.", "om.ownNoHist": "Зміни з часом записуються для карт, які ця карта показує всім, а не для доданих вами.", "om.addHelp": "Додана тут карта зберігається з цією картою й показується в списку всім, хто її відкриє (позначте «Лише для мене», щоб залишити її собі). У Налаштуваннях «Показувати, коли відкривають цю карту» вмикає її для всіх автоматично. Карта My Maps має бути відкрита для «Усіх, хто має посилання»."},
+pl: {"om.yours": "Dodane przez ciebie", "om.ownTag": "twoja", "om.addOwn": "Dodaj mapę do porównania", "om.addOwnHelp": "Dodane mapy widzisz tylko ty; są zapisane w tej przeglądarce. Mapa My Maps musi być udostępniona „Każdemu, kto ma link”.", "om.onlyMe": "Tylko dla mnie (nie dodawaj dla wszystkich)", "om.ownHelp": "Tę mapę widzisz tylko ty, w tej przeglądarce.", "om.ownNoHist": "Zmiany w czasie są zapisywane dla map, które ta mapa pokazuje wszystkim, nie dla dodanych przez ciebie.", "om.addHelp": "Dodana tutaj mapa zapisuje się z tą mapą i jest na liście dla każdego, kto ją otworzy (zaznacz „Tylko dla mnie”, by zachować ją dla siebie). W Ustawieniach „Pokazuj po otwarciu tej mapy” włącza ją wszystkim automatycznie. Mapa My Maps musi być udostępniona „Każdemu, kto ma link”."},
+de: {"om.yours": "Von dir hinzugefügt", "om.ownTag": "deine", "om.addOwn": "Karte zum Vergleich hinzufügen", "om.addOwnHelp": "Hinzugefügte Karten siehst nur du; sie bleiben in diesem Browser. Die My-Maps-Karte muss für „Jeder mit dem Link“ freigegeben sein.", "om.onlyMe": "Nur für mich (nicht für alle hinzufügen)", "om.ownHelp": "Diese Karte siehst nur du, in diesem Browser.", "om.ownNoHist": "Änderungen werden für die Karten aufgezeichnet, die diese Karte allen zeigt, nicht für selbst hinzugefügte.", "om.addHelp": "Hier hinzugefügt, wird eine Karte mit dieser Karte gespeichert und allen gezeigt, die sie öffnen („Nur für mich“ behält sie für dich). Unter Einstellungen schaltet „Beim Öffnen dieser Karte zeigen“ sie für alle automatisch ein. Die My-Maps-Karte muss für „Jeder mit dem Link“ freigegeben sein."},
+fr: {"om.yours": "Ajoutées par vous", "om.ownTag": "à vous", "om.addOwn": "Ajouter une carte à comparer", "om.addOwnHelp": "Vous seul voyez les cartes que vous ajoutez ; elles restent dans ce navigateur. La carte My Maps doit être partagée avec « Tous les utilisateurs disposant du lien ».", "om.onlyMe": "Seulement pour moi (pas pour tout le monde)", "om.ownHelp": "Vous seul voyez cette carte, dans ce navigateur.", "om.ownNoHist": "L’évolution est enregistrée pour les cartes que cette carte montre à tous, pas pour celles que vous ajoutez.", "om.addHelp": "Ajoutée ici, une carte est enregistrée avec cette carte et listée pour tous ceux qui l’ouvrent (cochez « Seulement pour moi » pour la garder pour vous). Dans Réglages, « Afficher à l’ouverture de cette carte » l’active automatiquement pour tous. La carte My Maps doit être partagée avec « Tous les utilisateurs disposant du lien »."},
+ru: {"om.yours": "Добавлены вами", "om.ownTag": "ваша", "om.addOwn": "Добавить карту для сравнения", "om.addOwnHelp": "Добавленные карты видите только вы; они хранятся в этом браузере. Карта My Maps должна быть открыта «Всем, у кого есть ссылка».", "om.onlyMe": "Только для меня (не добавлять для всех)", "om.ownHelp": "Эту карту видите только вы, в этом браузере.", "om.ownNoHist": "Изменения записываются для карт, которые эта карта показывает всем, а не для добавленных вами.", "om.addHelp": "Добавленная здесь карта сохраняется с этой картой и видна в списке всем, кто её откроет (отметьте «Только для меня», чтобы оставить её себе). В Настройках «Показывать при открытии этой карты» включает её всем автоматически. Карта My Maps должна быть открыта «Всем, у кого есть ссылка»."}
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
@@ -4335,6 +4368,11 @@ const MAX_Z = 21;
 const map = L.map('map', { zoomControl: false, worldCopyJump: true, minZoom: 2, maxZoom: MAX_Z, boxZoom: true, doubleClickZoom: false, scrollWheelZoom: false });
 map.attributionControl.setPrefix(`<a href="${BRAND.linktree}" target="_blank" rel="noopener">Andreevka Mapping</a> · <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>`);
 map.setView([48.5, 35.5], 6);
+// Phones and tablets: double-tap zooms in while looking around (it is off with a mouse, where a
+// double click belongs to editing), and Safari's own page zoom never takes over a pinch on the map.
+const TOUCH = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+if (TOUCH) map.doubleClickZoom.enable();
+['gesturestart', 'gesturechange'].forEach(t => document.addEventListener(t, e => { if (e.target.closest && e.target.closest('#map')) e.preventDefault(); }, { passive: false }));
 
 /* ---------- Mouse wheel: one notch = one zoom level ----------
    Leaflet's own wheel zoom turns a single notch into one or two levels depending on the mouse and
@@ -6760,9 +6798,17 @@ const OM = {
   fx: null, fxKey: '', diffs: new Map(),
   open: new Set(), adding: false
 };
-const omEntries = () => [...S.others.values()].filter(o => o.id !== '_style' && o.mid).sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || String(a.title).localeCompare(String(b.title)));
+/* Maps added by a visitor for their own comparisons: kept in their browser (per map), never shared,
+   and listed under the map's own ones. Their history isn't recorded (only the editors' maps are). */
+const omMineKey = () => 'frontline:omx:' + (S.mapId || 'local');
+function omOwnList() { try { const a = JSON.parse(store.get(omMineKey()) || '[]'); return Array.isArray(a) ? a.filter(x => x && x.id && x.mid) : []; } catch (e) { return []; } }
+function omOwnSave(list) { store.set(omMineKey(), JSON.stringify(list)); }
+const isOwn = e => !!(e && e.own);
+const omGet = id => S.others.get(id) || omOwnList().map(x => ({ ...x, own: true })).find(x => x.id === id) || null;
+const omShared = mid => [...S.others.values()].some(o => o.mid === mid);
+const omEntries = () => [...[...S.others.values()].filter(o => o.id !== '_style' && o.mid), ...omOwnList().map(x => ({ ...x, own: true }))].sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || String(a.title).localeCompare(String(b.title)));
 const omCommon = () => (S.others.get('_style') || {}).st || {};
-const omSt = e => (e.sync ? omCommon() : e.st) || {};
+const omSt = e => (e.sync && !isOwn(e) ? omCommon() : e.st) || {};
 const omUrl = q => `${SITE.mymapsProxy}${SITE.mymapsProxy.includes('?') ? '&' : '?'}${q}`;
 const midOf = s => { const m = String(s || '').match(/[?&]mid=([\w-]{10,120})/) || String(s || '').match(/^([\w-]{10,120})$/); return m ? m[1] : ''; };
 const dayOfTs = ts => isoDate(new Date(+ts));
@@ -6803,7 +6849,7 @@ function omLive(mid, force) {
   let rec = OM.live.get(mid);
   if (rec && !force && (rec.loading || (rec.res && Date.now() - rec.at < 60000) || (rec.err && Date.now() - rec.at < 30000))) return rec.loading || Promise.resolve(rec);
   rec = { ...(rec || {}), at: Date.now(), err: '' };
-  rec.loading = fetchMyMaps(mid).then(res => { rec.res = res; rec.at = Date.now(); return rec; })
+  rec.loading = fetchMyMaps(mid, omShared(mid) ? '' : '&rec=0').then(res => { rec.res = res; rec.at = Date.now(); return rec; })
     .catch(err => { rec.err = err instanceof ImportError ? err.message : t('ml.fetchErr'); rec.at = Date.now(); return rec; })
     .finally(() => { rec.loading = null; omRefreshMid(mid); });
   OM.live.set(mid, rec);
@@ -6812,6 +6858,7 @@ function omLive(mid, force) {
 }
 // Recorded versions, if the helper keeps them (newer mymaps-worker.js with a KV store).
 function omHist(mid, force) {
+  if (!omShared(mid)) return Promise.resolve(null);   // only the map's own other maps are recorded
   let rec = OM.hist.get(mid);
   if (rec && !force && (rec.loading || Date.now() - rec.at < 120000)) return rec.loading || Promise.resolve(rec);
   rec = { ...(rec || {}), at: Date.now() };
@@ -6883,11 +6930,11 @@ function omPopup(x, e, when) {
 /* ---------- Drawing ---------- */
 function omClear(oid) { const g = OM.groups.get(oid); if (g) { map.removeLayer(g); OM.groups.delete(oid); } OM.drawn.delete(oid); }
 async function omRender(oid) {
-  const e = S.others.get(oid);
+  const e = omGet(oid);
   if (!e || !e.mid || !omVisible(e)) { omClear(oid); omFx(); return; }
   if (!SITE.mymapsProxy) { omClear(oid); return; }
-  omHist(e.mid);
-  const item = TL.on && TL.date ? omItemAt(e.mid, TL.date) : undefined;
+  if (!isOwn(e) || omShared(e.mid)) omHist(e.mid);
+  const item = TL.on && TL.date && (!isOwn(e) || omShared(e.mid)) ? omItemAt(e.mid, TL.date) : undefined;
   let res = null, key = '';
   if (item === null) { omClear(oid); omFx(); renderOm(); return; }
   if (item) {
@@ -6899,7 +6946,7 @@ async function omRender(oid) {
     if (!live || (!live.res && !live.err)) { omLive(e.mid); return; }
     res = live.res; key = 'live' + live.at;
   }
-  const now = S.others.get(oid);
+  const now = omGet(oid);
   if (!now || !omVisible(now)) { omClear(oid); return; }
   if (!res) { omClear(oid); renderOm(); return; }
   const lvOn = res.layers.map(lv => omLayerOn(now, lvKey(lv)));
@@ -6928,7 +6975,7 @@ async function omRender(oid) {
           items.push({ x, ll: L.latLng(x.geom), color: (g0 && (g0.fillColor || g0.color)) || x.style.color || '#d93f2b' });
           return;
         }
-        lyr.bindPopup(() => omPopup(x, S.others.get(oid) || now, when), popOpts(x));
+        lyr.bindPopup(() => omPopup(x, omGet(oid) || now, when), popOpts(x));
         g.addLayer(lyr);
       } catch (err) { /* one broken shape never stops the rest */ }
     });
@@ -6938,9 +6985,9 @@ async function omRender(oid) {
     make: it => {
       const x = it.x;
       if (x.kind === 'label') return L.marker(it.ll, { pane: 'pwOtherPt', interactive: false, keyboard: false, icon: labelIcon({ name: x.name, style: x.style }) });
-      return L.marker(it.ll, { pane: 'pwOtherPt', icon: omMarkerIcon(x, st, icons), keyboard: false }).bindPopup(() => omPopup(x, S.others.get(oid) || now, when), popOpts(x));
+      return L.marker(it.ll, { pane: 'pwOtherPt', icon: omMarkerIcon(x, st, icons), keyboard: false }).bindPopup(() => omPopup(x, omGet(oid) || now, when), popOpts(x));
     },
-    pop: it => omPopup(it.x, S.others.get(oid) || now, when)
+    pop: it => omPopup(it.x, omGet(oid) || now, when)
   };
   g.addTo(map);
   OM.groups.set(oid, g); OM.drawn.set(oid, drawKey);
@@ -6968,7 +7015,7 @@ function omPlacePoints(oid) {
   });
 }
 map.on('moveend', () => OM.groups.forEach((g, oid) => omPlacePoints(oid)));
-function omRenderAll() { [...OM.groups.keys()].forEach(oid => { if (!S.others.has(oid)) omClear(oid); }); omEntries().forEach(e => omRender(e.id)); }
+function omRenderAll() { [...OM.groups.keys()].forEach(oid => { if (!omGet(oid)) omClear(oid); }); omEntries().forEach(e => omRender(e.id)); }
 // Called when the list of other maps changes (an edit here, a collaborator, or a new map loaded).
 function omChanged(id) {
   if (id && id !== '_style') omRender(id); else omRenderAll();
@@ -7058,7 +7105,7 @@ const canOm = () => !S.readOnly && can('layers');
 function syncOmBtn() {
   const btn = $('#omBtn'); if (!btn) return;
   const n = omEntries().length, on = omEntries().filter(omVisible).length;
-  btn.hidden = !n && !canOm();
+  btn.hidden = !n && !canOm() && !SITE.mymapsProxy;
   $('#omCount').textContent = on ? String(on) : '';
   $('#omCount').hidden = !on;
 }
@@ -7084,6 +7131,7 @@ function omStatus(e) {
   return `<small>${esc(parts.join(' · '))}</small>`;
 }
 function histHtml(e) {
+  if (isOwn(e) && !omShared(e.mid)) return `<p class="help">${esc(t('om.ownNoHist'))}</p>`;
   const h = OM.hist.get(e.mid);
   if (!h || h.loading && !h.items) return `<p class="help">${esc(t('om.histLoading'))}</p>`;
   if (!h.enabled) return `<p class="help">${esc(t('om.noHist'))}</p>`;
@@ -7096,15 +7144,15 @@ function histHtml(e) {
 }
 function styleHtml(e) {
   const st = omSt(e), live = OM.live.get(e.mid);
-  const synced = omEntries().filter(x => x.sync);
+  const synced = omEntries().filter(x => x.sync && !isOwn(x));
   const res = e.sync ? null : live && live.res;
   // Colours to map: from this map, or from every map sharing the style.
   const cols = e.sync ? (() => { const m = new Map(); synced.forEach(x => { const r = OM.live.get(x.mid); colorsOf(r && r.res).forEach(c => { const o = m.get(c.c) || { ...c, n: 0 }; o.n += c.n; m.set(c.c, o); }); }); return [...m.values()].sort((a, b) => b.n - a.n); })() : colorsOf(res);
   const opts = sel => `<option value="">${esc(t('om.keep'))}</option>${allStyles().map(s => `<option value="${esc(s.id)}" ${s.id === sel ? 'selected' : ''}>${esc(stName(s))}</option>`).join('')}`;
   const sl = (k, lo, hi, step, v, label) => `<label class="field"><span>${esc(label)} <output>${Math.round(v * 100)}%</output></span><input type="range" data-omst="${k}" data-oid="${esc(e.id)}" min="${lo}" max="${hi}" step="${step}" value="${v}"></label>`;
   const pcols = colorsOf(live && live.res).filter(c => c.kinds.has('polygon'));
-  return `<label class="check"><input type="checkbox" data-omf="sync" data-oid="${esc(e.id)}" ${e.sync ? 'checked' : ''}> ${esc(t('om.sync'))}</label>
-    <small class="help">${esc(t(e.sync ? 'om.syncOnHelp' : 'om.syncHelp', { n: synced.length }))}</small>
+  return `${isOwn(e) ? '' : `<label class="check"><input type="checkbox" data-omf="sync" data-oid="${esc(e.id)}" ${e.sync ? 'checked' : ''}> ${esc(t('om.sync'))}</label>
+    <small class="help">${esc(t(e.sync ? 'om.syncOnHelp' : 'om.syncHelp', { n: synced.length }))}</small>`}
     <div class="seg light om-mode"><button type="button" data-ommode="orig" data-oid="${esc(e.id)}" aria-pressed="${st.mode !== 'mine'}">${esc(t('om.orig'))}</button><button type="button" data-ommode="mine" data-oid="${esc(e.id)}" aria-pressed="${st.mode === 'mine'}">${esc(t('om.mine'))}</button></div>
     ${st.mode === 'mine' ? (cols.length ? `<div class="om-cols">${cols.slice(0, 16).map(c => `<label><span class="om-sw" style="background:${esc(c.c)}"></span><small>${c.n}</small><select data-omcol="${esc(c.c)}" data-oid="${esc(e.id)}">${opts((st.colors || {})[c.c] || '')}</select></label>`).join('')}</div><small class="help">${esc(t('om.mineHelp'))}</small>` : `<p class="help">${esc(t('om.loadFirst'))}</p>`) : ''}
     ${sl('fill', 0, 1.5, 0.05, st.fill ?? 1, t('om.fill'))}
@@ -7115,16 +7163,16 @@ function styleHtml(e) {
 function layersHtml(e) {
   const res = OM.res.get(e.id) || (OM.live.get(e.mid) || {}).res;
   if (!res) return `<p class="help">${esc(t('om.loadFirst'))}</p>`;
-  const ed = canOm(), names = res.layers.map(lvKey);
+  const ed = canOm() && !isOwn(e), names = res.layers.map(lvKey);
   return `<div class="om-lvbar"><button type="button" class="link-btn" data-om="lvall" data-oid="${esc(e.id)}">${esc(t('om.lvAll'))}</button><button type="button" class="link-btn" data-om="lvnone" data-oid="${esc(e.id)}">${esc(t('om.lvNone'))}</button></div>
     <ul class="om-lvs">${res.layers.map((lv, i) => `<li><label class="check"><input type="checkbox" data-omlv="${esc(names[i])}" data-oid="${esc(e.id)}" ${omLayerOn(e, names[i]) ? 'checked' : ''}><span>${esc(names[i] || t('om.untitled'))}<small>${esc(tn('n.features', lv.features.length))}${ed && (e.hl || []).includes(names[i]) ? ' · ' + esc(t('om.lvOffDef')) : ''}</small></span></label></li>`).join('')}</ul>
     ${ed ? `<button type="button" class="btn sm" data-om="lvdef" data-oid="${esc(e.id)}">${esc(t('om.lvDef'))}</button><small class="help">${esc(t('om.lvDefHelp'))}</small>` : ''}`;
 }
 function entryHtml(e) {
-  const on = omVisible(e), open = OM.open.has(e.id), ed = canOm();
+  const on = omVisible(e), open = OM.open.has(e.id), ed = canEditOm(e);
   return `<div class="om-item ${on ? 'on' : ''}" data-oid="${esc(e.id)}">
     <div class="om-row">
-      <label class="om-tog"><input type="checkbox" data-omvis="${esc(e.id)}" ${on ? 'checked' : ''}><span class="om-title"><b>${esc(e.title || t('om.untitled'))}</b>${omStatus(e)}</span></label>
+      <label class="om-tog"><input type="checkbox" data-omvis="${esc(e.id)}" ${on ? 'checked' : ''}><span class="om-title"><b>${esc(e.title || t('om.untitled'))}${isOwn(e) ? ` <span class="om-own">${esc(t('om.ownTag'))}</span>` : ''}</b>${omStatus(e)}</span></label>
       ${on ? `<button type="button" class="icon-btn sm" data-om="fit" data-oid="${esc(e.id)}" aria-label="${esc(t('om.fit'))}" title="${esc(t('om.fit'))}">${icon('fit')}</button>` : ''}
       <button type="button" class="icon-btn sm" data-om="more" data-oid="${esc(e.id)}" aria-expanded="${open}" aria-label="${esc(t('om.details'))}" title="${esc(t('om.details'))}">${icon(open ? 'chevUp' : 'chevron')}</button>
     </div>
@@ -7135,7 +7183,7 @@ function entryHtml(e) {
       ${ed ? `<details class="cd-det" ${OM.styleOpen === e.id ? 'open' : ''} data-omdet="${esc(e.id)}"><summary>${esc(t('om.look'))}</summary>${styleHtml(e)}</details>
       <details class="cd-det"><summary>${esc(t('om.settings'))}</summary>
         <label class="field"><span>${esc(t('om.title'))}</span><input type="text" data-omf="title" data-oid="${esc(e.id)}" value="${esc(e.title || '')}" maxlength="120"></label>
-        <label class="check"><input type="checkbox" data-omf="def" data-oid="${esc(e.id)}" ${e.def ? 'checked' : ''}> ${esc(t('om.def'))}</label>
+        ${isOwn(e) ? `<small class="help">${esc(t('om.ownHelp'))}</small>` : `<label class="check"><input type="checkbox" data-omf="def" data-oid="${esc(e.id)}" ${e.def ? 'checked' : ''}> ${esc(t('om.def'))}</label>`}
         <span class="row"><button type="button" class="btn sm danger" data-om="rm" data-oid="${esc(e.id)}">${icon('trash')}${esc(t('om.remove'))}</button></span>
       </details>` : ''}
     </div>` : ''}
@@ -7149,38 +7197,49 @@ function renderOm() {
     <div class="bp-head"><span class="eyebrow">${esc(t('om.panel'))}</span><button class="icon-btn sm" data-om="close" aria-label="${esc(t('base.close'))}">${icon('close')}</button></div>
     <p class="help">${esc(t('om.intro'))}</p>
     ${!SITE.mymapsProxy ? `<p class="err">${esc(t('ml.needProxy'))}</p>` : ''}
-    <div class="om-list">${list.map(entryHtml).join('') || `<p class="help">${esc(t(ed ? 'om.emptyEd' : 'om.empty'))}</p>`}</div>
+    <div class="om-list">${list.filter(e => !isOwn(e)).map(entryHtml).join('') || `<p class="help">${esc(t(ed ? 'om.emptyEd' : 'om.empty'))}</p>`}</div>
+    ${list.some(isOwn) ? `<span class="eyebrow om-sec">${esc(t('om.yours'))}</span><div class="om-list">${list.filter(isOwn).map(entryHtml).join('')}</div>` : ''}
     ${list.length ? `<label class="check"><input type="checkbox" id="om-hidemine" ${prefs.omHideMine !== false ? 'checked' : ''}> ${esc(t('om.hideMine'))}</label>
     <label class="check"><input type="checkbox" id="om-mineoff" ${S.mineOff ? 'checked' : ''}> ${esc(t('om.mineOffNow'))}</label>` : ''}
     ${list.length && TL.on ? `<label class="check"><input type="checkbox" id="om-changes" ${prefs.omChanges !== false ? 'checked' : ''}> ${esc(t('om.showChanges'))}</label>` : ''}
-    ${ed ? `<div class="sub-form om-add">
-      <span class="eyebrow">${esc(t('om.add'))}</span>
+    ${SITE.mymapsProxy || ed ? `<div class="sub-form om-add">
+      <span class="eyebrow">${esc(t(ed ? 'om.add' : 'om.addOwn'))}</span>
       <label class="field"><span>${esc(t('mm.link'))}</span><input type="url" id="om-url" placeholder="https://www.google.com/maps/d/viewer?mid=…" autocomplete="off" spellcheck="false"></label>
       <label class="field"><span>${esc(t('om.title'))}</span><input type="text" id="om-title" maxlength="120" placeholder="${esc(t('om.titlePh'))}"></label>
+      ${ed ? `<label class="check"><input type="checkbox" id="om-own"> ${esc(t('om.onlyMe'))}</label>` : ''}
       <p class="err" id="om-err" hidden></p>
       <button type="button" class="btn primary sm" data-om="add">${icon('plus')}${esc(t('om.addBtn'))}</button>
-      <small class="help">${esc(t('om.addHelp'))}</small>
+      <small class="help">${esc(t(ed ? 'om.addHelp' : 'om.addOwnHelp'))}</small>
     </div>` : ''}`;
   p.scrollTop = sc;
 }
 function openOm() { $('#basePanel').hidden = true; $('#omPanel').hidden = false; renderOm(); omEntries().forEach(e => { if (SITE.mymapsProxy) { omHist(e.mid); if (OM.open.has(e.id)) omLive(e.mid); } }); }
 
 /* ---------- Editing (editors only; saved with the map and synced like layers) ---------- */
-function omSave(e) { S.others.set(e.id, { ...e }); commit(); omRender(e.id); renderOm(); }
+function omSave(e) {
+  if (isOwn(e)) { const { own, ...v } = e; omOwnSave(omOwnList().map(x => x.id === e.id ? v : x)); }
+  else { S.others.set(e.id, { ...e }); commit(); }
+  omRender(e.id); renderOm();
+}
+// Who may change an entry: editors change the map's own list; anyone changes the maps they added.
+const canEditOm = e => isOwn(e) || canOm();
 function omSaveStyle(e, patch) {
-  if (e.sync) { const c = S.others.get('_style') || { id: '_style', st: {} }; S.others.set('_style', { ...c, st: { ...(c.st || {}), ...patch } }); commit(); omEntries().filter(x => x.sync).forEach(x => omRender(x.id)); renderOm(); }
+  if (e.sync && !isOwn(e)) { const c = S.others.get('_style') || { id: '_style', st: {} }; S.others.set('_style', { ...c, st: { ...(c.st || {}), ...patch } }); commit(); omEntries().filter(x => x.sync).forEach(x => omRender(x.id)); renderOm(); }
   else omSave({ ...e, st: { ...(e.st || {}), ...patch } });
 }
 async function omAdd() {
   const url = $('#om-url').value.trim(), title = $('#om-title').value.trim(), mid = midOf(url), err = $('#om-err');
   if (!mid) { err.textContent = t('mm.bad'); err.hidden = false; return; }
   if (omEntries().some(x => x.mid === mid)) { err.textContent = t('om.dup'); err.hidden = false; return; }
-  const e = { id: 'o' + uid(), mid, title: title || '', order: omEntries().length, def: false, sync: false, st: { mode: 'orig', fill: 1, weight: 1, mscale: 1 } };
-  S.others.set(e.id, e); OM.open.add(e.id);
-  omSetVisible(e, true);
-  commit();
+  // Editors add to the map for everyone (unless they tick "Only for me"); everyone else adds just for themselves.
+  const own = !canOm() || !!($('#om-own') && $('#om-own').checked);
+  const e = { id: (own ? 'p' : 'o') + uid(), mid, title: title || '', order: omEntries().length, def: false, sync: false, st: { mode: 'orig', fill: 1, weight: 1, mscale: 1 } };
+  if (own) omOwnSave([...omOwnList(), e]); else S.others.set(e.id, e);
+  OM.open.add(e.id);
+  omSetVisible(own ? { ...e, own: true } : e, true);
+  if (!own) commit();
   const rec = await omLive(mid);
-  const cur = S.others.get(e.id);
+  const cur = omGet(e.id);
   if (cur && !cur.title && rec && rec.res && rec.res.title) omSave({ ...cur, title: rec.res.title });
   if (rec && rec.res) omFit(e.id);
 }
@@ -7199,31 +7258,34 @@ omPanel.addEventListener('click', e => {
   const day = e.target.closest('[data-omday]');
   if (day) { const d = day.dataset.omday; if (!TL.on) toggleTimeline(true); setTLDate(d); renderOm(); return; }
   const md = e.target.closest('[data-ommode]');
-  if (md) { const x = S.others.get(md.dataset.oid); if (x && canOm()) omSaveStyle(x, { mode: md.dataset.ommode }); return; }
+  if (md) { const x = omGet(md.dataset.oid); if (x && canEditOm(x)) omSaveStyle(x, { mode: md.dataset.ommode }); return; }
   if (!b) return;
-  const a = b.dataset.om, x = b.dataset.oid && S.others.get(b.dataset.oid);
+  const a = b.dataset.om, x = b.dataset.oid && omGet(b.dataset.oid);
   if (a === 'close') omPanel.hidden = true;
   if (a === 'add') omAdd();
   if (a === 'fit' && x) omFit(x.id);
   if (a === 'more' && x) { if (OM.open.has(x.id)) OM.open.delete(x.id); else { OM.open.add(x.id); omLive(x.mid); omHist(x.mid); } renderOm(); }
   if (a === 'tl') { toggleTimeline(true); renderOm(); }
   if ((a === 'lvall' || a === 'lvnone') && x) { const r = OM.res.get(x.id) || (OM.live.get(x.mid) || {}).res; if (r) omSetLayers(x, r.layers.map(lvKey), a === 'lvall'); }
-  if (a === 'lvdef' && x && canOm()) {
+  if (a === 'lvdef' && x && canOm() && !isOwn(x)) {
     const r = OM.res.get(x.id) || (OM.live.get(x.mid) || {}).res; if (!r) return;
     const off = r.layers.map(lvKey).filter(n => !omLayerOn(x, n));
     omForgetLayers(x); omSave({ ...x, hl: off.length ? off : undefined }); toast(t('om.lvSaved'));
   }
-  if (a === 'rm' && x && canOm()) { S.others.delete(x.id); omClear(x.id); commit(); omFx(); renderOm(); toast(t('om.removed', { name: x.title || t('om.untitled') }), '', { label: t('toast.undo'), fn: undo }); }
+  if (a === 'rm' && x && canEditOm(x)) {
+    if (isOwn(x)) omOwnSave(omOwnList().filter(y => y.id !== x.id)); else { S.others.delete(x.id); commit(); }
+    omClear(x.id); omFx(); renderOm();
+    if (isOwn(x)) { toast(t('om.removed', { name: x.title || t('om.untitled') })); return; } toast(t('om.removed', { name: x.title || t('om.untitled') }), '', { label: t('toast.undo'), fn: undo }); }
 });
 omPanel.addEventListener('change', e => {
   const el = e.target;
-  if (el.dataset.omvis) { const x = S.others.get(el.dataset.omvis); if (x) { omSetVisible(x, el.checked); if (el.checked) { omLive(x.mid); omHist(x.mid); } } return; }
-  if (el.dataset.omlv !== undefined && el.dataset.oid) { const x = S.others.get(el.dataset.oid); if (x) omSetLayers(x, [el.dataset.omlv], el.checked); return; }
+  if (el.dataset.omvis) { const x = omGet(el.dataset.omvis); if (x) { omSetVisible(x, el.checked); if (el.checked) { omLive(x.mid); omHist(x.mid); } } return; }
+  if (el.dataset.omlv !== undefined && el.dataset.oid) { const x = omGet(el.dataset.oid); if (x) omSetLayers(x, [el.dataset.omlv], el.checked); return; }
   if (el.id === 'om-hidemine') { prefs.omHideMine = el.checked; savePrefs(); return; }
   if (el.id === 'om-mineoff') { setMineOff(el.checked); return; }
   if (el.id === 'om-changes') { prefs.omChanges = el.checked; savePrefs(); OM.fxKey = ''; omFx(); return; }
-  const x = el.dataset.oid && S.others.get(el.dataset.oid);
-  if (!x || !canOm()) return;
+  const x = el.dataset.oid && omGet(el.dataset.oid);
+  if (!x || !canEditOm(x)) return;
   if (el.dataset.omf === 'title') omSave({ ...x, title: el.value.trim() });
   if (el.dataset.omf === 'def') omSave({ ...x, def: el.checked });
   if (el.dataset.omf === 'sync') {
@@ -9781,6 +9843,7 @@ function setTool(tl) {
     pathOptions: { color: c, fillColor: c, weight: 3, fillOpacity: 0.25 }
   };
   if (!['select', 'measure', 'sketch'].includes(tl)) map.closePopup();
+  if (TOUCH) { if (tl === 'select' || tl === 'measure') map.doubleClickZoom.enable(); else map.doubleClickZoom.disable(); }
   // Whole-map edit tools work on SVG shapes: switch a canvas-drawn heavy map back while they are on.
   const svgTool = ['edit', 'drag', 'rotate', 'delete'].includes(tl);
   if (svgTool !== VEC.forceSvg) { VEC.forceSvg = svgTool; if (VEC.canvas) vecRender(false); }
@@ -12603,9 +12666,9 @@ function onMyMapsClick(e) {
 
 /* ---------- Live link to a My Maps map (through the site's small proxy) ---------- */
 const fnv = str => { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); };
-async function fetchMyMaps(mid) {
+async function fetchMyMaps(mid, extra = '') {
   if (!SITE.mymapsProxy) throw new ImportError(t('ml.needProxy'));
-  const r = await fetch(`${SITE.mymapsProxy}${SITE.mymapsProxy.includes('?') ? '&' : '?'}mid=${encodeURIComponent(mid)}`);
+  const r = await fetch(`${SITE.mymapsProxy}${SITE.mymapsProxy.includes('?') ? '&' : '?'}mid=${encodeURIComponent(mid)}${extra}`);
   if (!r.ok) throw new ImportError(t('ml.fetchErr'));
   const buf = await r.arrayBuffer(), head = new Uint8Array(buf.slice(0, 2));
   if (head[0] === 0x50 && head[1] === 0x4b) {
