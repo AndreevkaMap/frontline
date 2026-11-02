@@ -122,6 +122,7 @@ body.readonly .title-input:hover{border-color:transparent}
 .mi .tick{width:18px;flex:none;color:var(--accent)}
 .menu-pad{padding:6px 10px 10px;display:flex;flex-direction:column;gap:10px}
 .menu-note{font-size:12px;color:var(--muted);margin:0;line-height:1.45}
+.menu-note.app-ver{padding:8px 14px 10px;font-size:11px;border-top:1px solid var(--line);margin-top:6px}
 .seg.light{background:var(--panel-2)}
 .seg.light button{color:var(--muted);font-family:var(--f-ui);font-weight:600}
 .seg.light button[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg)}
@@ -4013,12 +4014,25 @@ fr: {"om.yours": "Ajoutées par vous", "om.ownTag": "à vous", "om.addOwn": "Ajo
 ru: {"om.yours": "Добавлены вами", "om.ownTag": "ваша", "om.addOwn": "Добавить карту для сравнения", "om.addOwnHelp": "Добавленные карты видите только вы; они хранятся в этом браузере. Карта My Maps должна быть открыта «Всем, у кого есть ссылка».", "om.onlyMe": "Только для меня (не добавлять для всех)", "om.ownHelp": "Эту карту видите только вы, в этом браузере.", "om.ownNoHist": "Изменения записываются для карт, которые эта карта показывает всем, а не для добавленных вами.", "om.addHelp": "Добавленная здесь карта сохраняется с этой картой и видна в списке всем, кто её откроет (отметьте «Только для меня», чтобы оставить её себе). В Настройках «Показывать при открытии этой карты» включает её всем автоматически. Карта My Maps должна быть открыта «Всем, у кого есть ссылка»."}
 });
 
+/* Build stamp in the settings menu */
+(function (add) { Object.keys(add).forEach(function (l) { Object.assign(window.FA_STRINGS[l], add[l]); }); })({
+  en: { 'app.version': 'Version {v}' },
+  uk: { 'app.version': 'Версія {v}' },
+  pl: { 'app.version': 'Wersja {v}' },
+  de: { 'app.version': 'Version {v}' },
+  fr: { 'app.version': 'Version {v}' },
+  ru: { 'app.version': 'Версия {v}' }
+});
+
 </script>
 <script>
 /* Frontline in Ukraine by Andreevka Mapping (https://linktr.ee/AndreevkaMapping)
    Open-source map editor. Built from src/*.js. */
 (() => {
 'use strict';
+/* Build stamp, filled in by build.py: shown at the bottom of the settings menu. */
+const FA_BUILD = '2026-11-02 03:15 UTC';
+try { console.info('Frontline in Ukraine build ' + FA_BUILD); } catch (e) { /* no console */ }
 
 if (typeof L === 'undefined' || !L.PM) {
   document.body.insertAdjacentHTML('beforeend', '<div class="fatal"><div><h2>The map libraries did not load</h2><p>Frontline in Ukraine loads Leaflet and Geoman from a CDN. Check your internet connection and reload.</p></div></div>');
@@ -7927,19 +7941,56 @@ function diffSnaps(a, b) {
 
 /* ---------- Applying entity values to the live map ---------- */
 let applying = false;
-function applyChanges(list) {
+function applyChanges(list, remote) {
   if (!list.length) return;
   applying = true;
   const rank = c => c.kind === 'meta' ? 0 : c.val ? { icons: 1, styles: 1, others: 1, layers: 2, features: 3 }[c.kind] : { features: 4, layers: 5, icons: 6, styles: 6, others: 6 }[c.kind];
-  const sel = selectedId;
+  const sel = selectedId, ed = editingId, multi = MS.ids.size > 1;
+  // Does this touch what is open in the panel? Changes elsewhere on the map leave the panel alone,
+  // so typing, scrolling and shape editing carry on while other people work.
+  const rec = sel && feats.get(sel) && feats.get(sel)._pw;
+  const touches = !!sel && list.some(c => (c.kind === 'features' && c.id === sel) ||
+    (c.kind === 'styles' && rec && rec.style && rec.style.ref === c.id) || (c.kind === 'icons' && rec && rec.style && rec.style.icon === c.id) ||
+    (c.kind === 'layers' && rec && (!c.val || c.id === rec.layerId)));
+  const nLayers = S.layers.length;
   [...list].sort((a, b) => rank(a) - rank(b)).forEach(c => {
     try { applyEntity(c.kind, c.id, c.val); } catch (err) { console.warn('Could not apply change', c, err); }
   });
-  S.layers.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  syncLayerOrder();
+  // Layers are only taken off the map and put back (which also drops the handles of a shape being
+  // edited) when layers themselves changed; changed shapes just need the timeline's say on them.
+  const relayer = list.some(c => c.kind === 'layers') || S.layers.length !== nLayers;
+  if (relayer) {
+    S.layers.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    syncLayerOrder();
+    const el = editingId && feats.get(editingId);
+    if (el && el.pm && map.hasLayer(el)) { el.pm.disable(); if (el instanceof L.Marker) el.pm.enable({ draggable: true }); else { vecSvg(el); el.pm.enable(EDIT_OPTS); } }
+  } else applyTimeFilter();
   applying = false;
-  if (sel && feats.has(sel)) { selectedId = null; select(sel); } else if (sel) deselect();
-  renderLayers(); renderTimeline();
+  if (sel && feats.has(sel)) {
+    const lyr = feats.get(sel);
+    setSelVisual(lyr, true);
+    if (touches) renderInspector();
+    // The shape being edited was replaced: carry on editing the new one.
+    if (remote && ed === sel && !editingId && !lockedBy(sel) && canEditFeature(lyr._pw)) {
+      if (lyr instanceof L.Marker) lyr.pm.enable({ draggable: true }); else { vecSvg(lyr); lyr.pm.enable(EDIT_OPTS); }
+      editingId = sel; ptSync(); renderInspector();
+    }
+  } else if (sel) deselect();
+  if (multi) { MS.ids = new Set([...MS.ids].filter(x => feats.has(x))); msRender(); }
+  if (remote) listSoon(); else renderLayers();
+  renderTimeline();
+}
+/* The layer list after remote changes: rebuilt without moving its scroll, and not while you are
+   dragging rows in it (that waits for the drop). */
+let listTimer = 0;
+function listSoon() {
+  clearTimeout(listTimer);
+  listTimer = setTimeout(() => {
+    if (document.body.classList.contains('ms-dragging')) { listSoon(); return; }
+    const sc = $('.sb-scroll'), top = sc ? sc.scrollTop : 0;
+    renderLayers();
+    if (sc && sc.scrollTop !== top) sc.scrollTop = top;
+  }, 120);
 }
 function applyEntity(kind, id, val) {
   if (kind === 'meta') {
@@ -8049,12 +8100,15 @@ function commit() {
   if (H.lock || applying) return;
   reindexLayers();
   const snap = snapshot(), changes = diffSnaps(lastSnap, snap);
+  // lastSnap is updated before sending: Firebase reports our own write back to us straight away
+  // (inside the send call), and it must be recognised as ours, not applied as someone else's edit.
+  // Applying it rebuilt the panel and the list mid-typing, ended shape editing and reset the scroll.
+  lastSnap = snap;
   if (changes.length) {
     H.undo.push(changes); H.redo = [];
     if (H.undo.length > 150) H.undo.shift();
     pushRemote(changes);
   }
-  lastSnap = snap;
   persistLocal();
   renderLayers(); updateUndo(); renderTimeline();
   vecSoon();
@@ -8077,8 +8131,8 @@ function stepHistory(from, to, useBefore) {
   applyChanges(apply);
   reindexLayers();
   const snap = snapshot(), pushed = diffSnaps(lastSnap, snap);
+  lastSnap = snap;   // before sending, as in commit()
   pushRemote(pushed);
-  lastSnap = snap;
   to.push(changes);
   persistLocal(); renderLayers(); updateUndo(); renderInspector();
   if (OP.tool) opRender();
@@ -8120,15 +8174,42 @@ function applyRemoteSnap(snap) {
   flushCommit();
   const changes = diffSnaps(lastSnap, snap);
   if (!changes.length) return;
-  applyChanges(changes.map(c => ({ kind: c.kind, id: c.id, val: c.after })));
+  applyChanges(changes.map(c => ({ kind: c.kind, id: c.id, val: c.after })), true);
   lastSnap = snapshot();
   persistLocal();
+}
+// What one entity looks like on this screen right now, in snapshot form. Features are worked out on
+// their own (cheap); everything else from a full snapshot.
+function liveVal(kind, id) {
+  if (kind === 'features') {
+    const f = feats.get(id);
+    return f ? clean({ ...f._pw, geom: getGeom(f), style: clean(f._pw.style || {}) }) : null;
+  }
+  return snapVal(snapshot(), kind, id);
+}
+// Remote changes to the shape you are editing wait until you finish it, so the edit isn't cut off.
+// If you changed the shape meanwhile, your version is saved over it; if not, the waiting one is shown.
+const HELD = new Map();
+function releaseHeld() {
+  if (!HELD.size || editingId) return;
+  flushCommit();
+  const list = [...HELD]; HELD.clear();
+  list.forEach(([id, h]) => { if (stable(snapVal(lastSnap, 'features', id)) === h.base) applyRemoteEntity('features', id, h.val); });
 }
 // One entity changed remotely.
 function applyRemoteEntity(kind, id, val) {
   if (stable(snapVal(lastSnap, kind, id)) === stable(val)) return;
+  // Already showing exactly this (for example our own write coming back): just note it.
+  if (kind !== 'meta' && !(kind === 'features' && id === editingId)) {
+    const live = liveVal(kind, id);
+    if (stable(live) === stable(val)) { if (val == null) delete lastSnap[kind][id]; else lastSnap[kind][id] = val; return; }
+  }
+  if (kind === 'features' && id === editingId && val && feats.has(id)) {
+    if (!HELD.has(id)) HELD.set(id, { base: stable(snapVal(lastSnap, kind, id)), val }); else HELD.get(id).val = val;
+    return;
+  }
   flushCommit();
-  applyChanges([{ kind, id, val }]);
+  applyChanges([{ kind, id, val }], true);
   const now = snapshot();
   if (kind === 'meta') lastSnap.meta = now.meta;
   else if (now[kind][id]) lastSnap[kind][id] = now[kind][id]; else delete lastSnap[kind][id];
@@ -8245,6 +8326,9 @@ const mockBackend = {
     const tr = this.tree(), full = {};
     Object.entries(updates).forEach(([p, v]) => { if (v && v.at === 'STAMP') v.at = Date.now(); this.setPath(tr, `maps/${id}/${p}`, v); full[p] = v; });
     this.save(tr); this.ch.postMessage({ type: 'update', id, updates: full });
+    // Like Firebase, report the write to this tab's own listeners at once.
+    const local = { type: 'update', id, updates: JSON.parse(JSON.stringify(full)) };
+    this.handlers.forEach(h => h(local));
   },
   stamp() { return 'STAMP'; },
   subscribe(id, onEntity, onMeta) {
@@ -8339,15 +8423,26 @@ function setReadOnly(on) {
 function startPresence() {
   const be = sync.backend, me = sync.me;
   if (!be || !me) return;
+  sync.presSent = selectedId || null;
+  let locks = '';
   sync.pres = be.presence(S.mapId, { uid: me.uid, name: me.name, color: userColor(me.uid), editing: selectedId || null }, users => {
     sync.users = users.filter(u => u.uid !== me.uid);
     renderPresence();
+    // Only who-is-editing-what changes the panel and the list (their lock badges); our own presence
+    // coming back, or someone joining, leaves them alone.
+    const now = stable(sync.users.filter(u => u.editing).map(u => [u.uid, u.editing, u.name || '', u.color || '']).sort());
+    if (now === locks) return;
+    locks = now;
     const lyr = selectedId && feats.get(selectedId);
-    if (lyr && !$('#inspector').hidden && !$('#inspector').contains(document.activeElement)) renderInspector();
-    refreshList();
+    if (lyr && !$('#inspector').hidden && !$('#inspector').contains(document.activeElement) && !editingId) renderInspector();
+    listSoon();
   });
 }
-function presenceEditing(id) { if (sync.pres && !S.readOnly) sync.pres.update({ editing: id || null }); }
+function presenceEditing(id) {
+  if (!sync.pres || S.readOnly || sync.presSent === (id || null)) return;
+  sync.presSent = id || null;
+  sync.pres.update({ editing: id || null });
+}
 const lockedBy = fid => sync.users.find(u => u.editing && u.editing === fid) || null;
 function renderPresence() {
   const el = $('#presence');
@@ -8855,6 +8950,7 @@ function stopSingleEdit() {
   editingId = null;
   if (VEC.canvas) vecSoon();
   ptSync();
+  if (HELD.size) setTimeout(releaseHeld, 0);   // remote changes that waited for this edit to finish
 }
 function metricsHtml(lyr) {
   const m = metrics(lyr), k = lyr._pw.kind, rows = [];
@@ -8902,6 +8998,10 @@ function renderInspector() {
   const same = box.dataset.fid === r.id;
   const keepBody = same ? ($('.ins-body', box) || {}).scrollTop || 0 : 0, keepGrid = same ? ($('.icn-grid', box) || {}).scrollTop || 0 : 0;
   if (!same) icnQuery = '';
+  // ...and the text box you are typing in, with the cursor where it was (otherwise the next key
+  // would go to the map's shortcuts).
+  const fe = same && box.contains(document.activeElement) ? document.activeElement : null;
+  const keepFocus = fe && fe.id ? { id: fe.id, a: fe.selectionStart, b: fe.selectionEnd, d: fe.selectionDirection, v: 'value' in fe ? fe.value : null } : null;
   box.dataset.fid = r.id;
   box.innerHTML = `
     <header class="ins-head"><span class="eyebrow">${esc(KIND(k))}</span><button class="icon-btn" data-ins="close" aria-label="${esc(t('ins.close'))}">${icon('close')}</button></header>
@@ -8956,6 +9056,14 @@ function renderInspector() {
   const bodyEl = $('.ins-body', box), gridEl = $('.icn-grid', box);
   if (bodyEl) bodyEl.scrollTop = keepBody;
   if (gridEl) gridEl.scrollTop = keepGrid;
+  if (keepFocus) {
+    const el = box.querySelector('#' + CSS.escape(keepFocus.id));
+    if (el && !el.disabled) {
+      if (keepFocus.v != null && el.value !== keepFocus.v && /^(INPUT|TEXTAREA)$/.test(el.tagName) && !/^(checkbox|radio|range|color)$/.test(el.type)) { el.value = keepFocus.v; el.dispatchEvent(new Event('input', { bubbles: true })); }   // what you are typing wins
+      el.focus({ preventScroll: true });
+      try { if (keepFocus.a != null) el.setSelectionRange(keepFocus.a, keepFocus.b, keepFocus.d || 'none'); } catch (e) { /* not a text box */ }
+    }
+  }
   fillElevation(lyr);
 }
 const refreshList = debounce(() => renderLayers(), 250);
@@ -9710,7 +9818,7 @@ $('#layerList').addEventListener('pointerdown', e => {
 });
 // Esc clears the group; Delete removes it (with Undo).
 document.addEventListener('keydown', e => {
-  if (e.target.matches('input, textarea, select, [contenteditable="true"]') || MS.ids.size < 2) return;
+  if (isTypingTarget(e.target) || MS.ids.size < 2) return;
   if (e.key === 'Escape') { msClear(); e.stopPropagation(); }
   if ((e.key === 'Delete' || e.key === 'Backspace') && tool === 'select' && !S.readOnly) { e.preventDefault(); e.stopPropagation(); deleteMany([...MS.ids]); }
 }, true);
@@ -10067,7 +10175,8 @@ function renderUnitsMenu() {
     <div class="menu-pad">
       <label class="check perm-row"><input type="checkbox" id="u-wm" ${wmOn() ? 'checked' : ''}><span><b>${esc(t('wm.mine'))}</b><small>${esc(t('wm.mineHelp'))}</small></span></label>
       ${can('meta') ? `<label class="check perm-row"><input type="checkbox" id="u-wmdef" ${S.wm ? 'checked' : ''}><span><b>${esc(t('wm.def'))}</b><small>${esc(t(S.mode === 'online' ? 'wm.defHelpShared' : 'wm.defHelp'))}</small></span></label>` : ''}
-    </div>`;
+    </div>
+    <p class="menu-note app-ver">${esc(t('app.version', { v: FA_BUILD }))}</p>`;
 }
 function msRow(id, v, label, help) {
   return `<div class="field"><span>${esc(label)} <span class="num-wrap"><input type="number" class="num-in" id="${id}n" min="${MS_MIN * 100}" max="${MS_MAX * 100}" step="1" value="${Math.round(v * 100)}" inputmode="decimal">%</span>${v !== 1 ? `<button type="button" class="link-btn" data-ms-reset="${id}">${esc(t('ms.reset'))}</button>` : ''}</span><input type="range" id="${id}" min="${MS_MIN}" max="${MS_MAX}" step="0.01" value="${v}" aria-label="${esc(label)}"><small class="help">${esc(help)}</small></div>`;
@@ -14279,9 +14388,16 @@ document.addEventListener('click', e => {
   if (!inside('#basePanel') && !inside('#baseBtn') && !inside('#map')) $('#basePanel').hidden = true;
 });
 
+// A key pressed in a text box (or a text box inside the panel that has just been redrawn) is typing,
+// never a map shortcut.
+function isTypingTarget(el) {
+  const a = document.activeElement;
+  const field = n => !!n && n instanceof Element && (n.isContentEditable || !!n.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])'));
+  return field(el) || field(a);
+}
 const KEYS = { v: 'select', m: 'marker', t: 'label', l: 'line', p: 'polygon', r: 'rectangle', c: 'circle', d: 'measure', e: 'edit', b: 'sketch', g: 'change', x: 'cut', j: 'join', k: 'simplify' };
 document.addEventListener('keydown', e => {
-  const typing = e.target.matches('input, textarea, select, [contenteditable="true"]');
+  const typing = isTypingTarget(e.target);
   const mod = e.ctrlKey || e.metaKey;
   if (e.key === 'Escape' && !typing && document.body.classList.contains('clean')) { toggleClean(false); return; }
   if (SK.active && skKey(e)) return;
